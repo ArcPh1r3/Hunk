@@ -1,0 +1,12 @@
+C:\Users\rseid\OneDrive\Documents\GitHub\SteelMechorilla\MechorillaProject\bin\Debug\netstandard2.0\SteelMechorilla.deps.json
+C:\Users\rseid\OneDrive\Documents\GitHub\SteelMechorilla\MechorillaProject\bin\Debug\netstandard2.0\SteelMechorilla.dll
+C:\Users\rseid\OneDrive\Documents\GitHub\SteelMechorilla\MechorillaProject\bin\Debug\netstandard2.0\SteelMechorilla.pdb
+C:\Users\rseid\OneDrive\Documents\GitHub\SteelMechorilla\MechorillaProject\bin\Debug\netstandard2.0\Unity.Postprocessing.Runtime.dll
+C:\Users\rseid\OneDrive\Documents\GitHub\SteelMechorilla\MechorillaProject\obj\Debug\netstandard2.0\SteelMechorilla.csproj.AssemblyReference.cache
+C:\Users\rseid\OneDrive\Documents\GitHub\SteelMechorilla\MechorillaProject\obj\Debug\netstandard2.0\SteelMechorilla.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\rseid\OneDrive\Documents\GitHub\SteelMechorilla\MechorillaProject\obj\Debug\netstandard2.0\SteelMechorilla.AssemblyInfoInputs.cache
+C:\Users\rseid\OneDrive\Documents\GitHub\SteelMechorilla\MechorillaProject\obj\Debug\netstandard2.0\SteelMechorilla.AssemblyInfo.cs
+C:\Users\rseid\OneDrive\Documents\GitHub\SteelMechorilla\MechorillaProject\obj\Debug\netstandard2.0\SteelMechorilla.csproj.CoreCompileInputs.cache
+C:\Users\rseid\OneDrive\Documents\GitHub\SteelMechorilla\MechorillaProject\obj\Debug\netstandard2.0\SteelMechorilla.csproj.CopyComplete
+C:\Users\rseid\OneDrive\Documents\GitHub\SteelMechorilla\MechorillaProject\obj\Debug\netstandard2.0\SteelMechorilla.dll
+C:\Users\rseid\OneDrive\Documents\GitHub\SteelMechorilla\MechorillaProject\obj\Debug\netstandard2.0\SteelMechorilla.pdb

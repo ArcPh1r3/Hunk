@@ -1,0 +1,12 @@
+C:\Users\rseid\OneDrive\Documents\GitHub\NinjaMod\NinjaProject\bin\Debug\netstandard2.0\NinjaMod.deps.json
+C:\Users\rseid\OneDrive\Documents\GitHub\NinjaMod\NinjaProject\bin\Debug\netstandard2.0\NinjaMod.dll
+C:\Users\rseid\OneDrive\Documents\GitHub\NinjaMod\NinjaProject\bin\Debug\netstandard2.0\NinjaMod.pdb
+C:\Users\rseid\OneDrive\Documents\GitHub\NinjaMod\NinjaProject\bin\Debug\netstandard2.0\Unity.Postprocessing.Runtime.dll
+C:\Users\rseid\OneDrive\Documents\GitHub\NinjaMod\NinjaProject\obj\Debug\netstandard2.0\NinjaMod.csproj.AssemblyReference.cache
+C:\Users\rseid\OneDrive\Documents\GitHub\NinjaMod\NinjaProject\obj\Debug\netstandard2.0\NinjaMod.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\rseid\OneDrive\Documents\GitHub\NinjaMod\NinjaProject\obj\Debug\netstandard2.0\NinjaMod.AssemblyInfoInputs.cache
+C:\Users\rseid\OneDrive\Documents\GitHub\NinjaMod\NinjaProject\obj\Debug\netstandard2.0\NinjaMod.AssemblyInfo.cs
+C:\Users\rseid\OneDrive\Documents\GitHub\NinjaMod\NinjaProject\obj\Debug\netstandard2.0\NinjaMod.csproj.CoreCompileInputs.cache
+C:\Users\rseid\OneDrive\Documents\GitHub\NinjaMod\NinjaProject\obj\Debug\netstandard2.0\NinjaMod.csproj.CopyComplete
+C:\Users\rseid\OneDrive\Documents\GitHub\NinjaMod\NinjaProject\obj\Debug\netstandard2.0\NinjaMod.dll
+C:\Users\rseid\OneDrive\Documents\GitHub\NinjaMod\NinjaProject\obj\Debug\netstandard2.0\NinjaMod.pdb
