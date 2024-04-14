@@ -27,8 +27,6 @@ namespace HunkMod.SkillStates.Hunk
             this.PlayAnim();
             Util.PlaySound("sfx_driver_aim_foley", this.gameObject);
 
-            this.skillLocator.primary.SetSkillOverride(this, this.hunk.weaponDef.primarySkillDef, GenericSkill.SkillOverridePriority.Network);
-
             base.PlayCrossfade("AimPitch", "AimPitchAiming", 0.1f);
 
             //this.FindModelChild("PistolSight").gameObject.SetActive(true);
@@ -77,7 +75,11 @@ namespace HunkMod.SkillStates.Hunk
                 this.skillLocator.primary.UnsetSkillOverride(this, this.hunk.weaponDef.primarySkillDef, GenericSkill.SkillOverridePriority.Network);
                 this.skillLocator.primary.SetSkillOverride(this, Modules.Survivors.Hunk.reloadSkillDef, GenericSkill.SkillOverridePriority.Network);
             }
-            else this.skillLocator.primary.UnsetSkillOverride(this, Modules.Survivors.Hunk.reloadSkillDef, GenericSkill.SkillOverridePriority.Network);
+            else
+            {
+                this.skillLocator.primary.SetSkillOverride(this, this.hunk.weaponDef.primarySkillDef, GenericSkill.SkillOverridePriority.Network);
+                this.skillLocator.primary.UnsetSkillOverride(this, Modules.Survivors.Hunk.reloadSkillDef, GenericSkill.SkillOverridePriority.Network);
+            }
 
             //this.UpdateLightEffect();
 

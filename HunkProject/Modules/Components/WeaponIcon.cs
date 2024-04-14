@@ -56,9 +56,10 @@ namespace HunkMod.Modules.Components
         {
 			if (this.iDrive.maxAmmo > 0f)
             {
-				this.durationDisplay.SetActive(true);
+				//this.durationDisplay.SetActive(true);
+				this.durationDisplay.SetActive(false);
 
-				float fill = Util.Remap(this.iDrive.ammo, 0f, this.iDrive.maxAmmo, 0f, 1f);
+				/*float fill = Util.Remap(this.iDrive.ammo, 0f, this.iDrive.maxAmmo, 0f, 1f);
 
 				if (this.durationBarRed)
 				{
@@ -66,7 +67,7 @@ namespace HunkMod.Modules.Components
 					this.durationBarRed.fillAmount = Mathf.Lerp(this.durationBarRed.fillAmount, fill, Time.deltaTime * 2f);
 				}
 
-				this.durationBar.fillAmount = fill;
+				this.durationBar.fillAmount = fill;*/
             }
 			else
             {
