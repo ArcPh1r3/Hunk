@@ -46,7 +46,6 @@ namespace HunkMod.Modules.Components
 
         public float reloadTimer;
         private WeaponNotificationQueue notificationQueue;
-        private bool needReload = false;
         private EntityStateMachine weaponStateMachine;
 
         private void Awake()
@@ -82,7 +81,7 @@ namespace HunkMod.Modules.Components
             this.CheckForNeedler();
         }
 
-        private HunkWeaponTracker weaponTracker
+        public HunkWeaponTracker weaponTracker
         {
             get
             {
@@ -132,11 +131,9 @@ namespace HunkMod.Modules.Components
             this.reloadTimer = 2f;
             this.ammo--;
 
-            this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo--;
             this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo--;
 
             if (this.ammo <= 0) this.ammo = 0;
-            if (this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo <= 0) this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo = 0;
             if (this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo <= 0) this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo = 0;
         }
 
@@ -148,20 +145,11 @@ namespace HunkMod.Modules.Components
             {
                 this.TryReload();
             }
-
-            if (this.ammo <= 0 && this.maxAmmo > 0)
-            {
-                if (!this.needReload)
-                {
-                    this.needReload = true;
-                    this.skillLocator.primary.SetSkillOverride(this, HunkMod.Modules.Survivors.Hunk.reloadSkillDef, GenericSkill.SkillOverridePriority.Upgrade);
-                }
-            }
         }
 
         private void TryReload()
         {
-            this.weaponStateMachine.SetInterruptState(new SkillStates.Hunk.Reload(), EntityStates.InterruptPriority.Any);
+            if (this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo > 0) this.weaponStateMachine.SetInterruptState(new SkillStates.Hunk.Reload(), EntityStates.InterruptPriority.Any);
         }
 
         public void ServerGetStoredWeapon(HunkWeaponDef newWeapon, float ammo, HunkController hunkController)
@@ -182,10 +170,21 @@ namespace HunkMod.Modules.Components
         
         public void FinishReload()
         {
-            this.skillLocator.primary.UnsetSkillOverride(this, HunkMod.Modules.Survivors.Hunk.reloadSkillDef, GenericSkill.SkillOverridePriority.Upgrade);
-            this.needReload = false;
+            int diff = this.maxAmmo - this.ammo;
 
-            this.ammo = this.maxAmmo;
+            if (this.ammo + this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo >= this.weaponDef.magSize)
+            {
+                this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo = this.weaponDef.magSize;
+                this.ammo = this.weaponDef.magSize;
+            }
+            else
+            {
+                this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo = this.ammo + this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo;
+                this.ammo = this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo;
+            }
+
+            this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo -= diff;
+            if (this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo <= 0) this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo = 0;
         }
 
         public void PickUpWeapon(HunkWeaponDef newWeapon)
@@ -230,10 +229,10 @@ namespace HunkMod.Modules.Components
         {
             this.weaponTracker.equippedIndex = index;
 
-            HunkWeaponDef weaponDef = this.weaponTracker.weaponData[index].weaponDef;
+            this.weaponDef = this.weaponTracker.weaponData[index].weaponDef;
 
             // ammo
-            this.maxAmmo = weaponDef.magSize;
+            this.maxAmmo = this.weaponDef.magSize;
             this.ammo = this.weaponTracker.weaponData[index].currentAmmo;
 
             // model swap

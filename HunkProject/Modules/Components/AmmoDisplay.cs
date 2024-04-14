@@ -12,6 +12,14 @@ namespace HunkMod.Modules.Components
 
         private HunkController hunk;
 
+        private int totalAmmo
+        {
+            get
+            {
+                return this.hunk.weaponTracker.weaponData[this.hunk.weaponTracker.equippedIndex].totalAmmo;
+            }
+        }
+
         private void FixedUpdate()
         {
             if (this.targetHUD)
@@ -34,11 +42,18 @@ namespace HunkMod.Modules.Components
 
                     if (this.hunk.ammo <= 0f)
                     {
-                        this.targetText.token = "<color=#C80000>0 / " + Mathf.CeilToInt(this.hunk.maxAmmo).ToString() + Helpers.colorSuffix;
+                        if (this.totalAmmo > 0)
+                        {
+                            this.targetText.token = "<color=#C80000>0 / " + this.totalAmmo + Helpers.colorSuffix;
+                        }
+                        else
+                        {
+                            this.targetText.token = "<color=#C80000>0 / 0" + Helpers.colorSuffix;
+                        }
                     }
                     else
                     {
-                        this.targetText.token = Mathf.CeilToInt(this.hunk.ammo).ToString() + " / " + Mathf.CeilToInt(this.hunk.maxAmmo).ToString();
+                        this.targetText.token = Mathf.CeilToInt(this.hunk.ammo).ToString() + " / " + Mathf.CeilToInt(this.totalAmmo).ToString();
                     }
                 }
                 else

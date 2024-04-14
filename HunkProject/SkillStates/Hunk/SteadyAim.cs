@@ -22,12 +22,14 @@ namespace HunkMod.SkillStates.Hunk
             //this.animator = this.GetModelAnimator();
             if (!this.camParamsOverrideHandle.isValid) this.camParamsOverrideHandle = Modules.CameraParams.OverrideCameraParams(base.cameraTargetParams, HunkCameraParams.AIM, 0.5f);
 
-            base.PlayAnimation("AimPitch", "SteadyAimPitch");
-
             if (NetworkServer.active) this.characterBody.AddBuff(RoR2Content.Buffs.Slow50);
 
             this.PlayAnim();
             Util.PlaySound("sfx_driver_aim_foley", this.gameObject);
+
+            this.skillLocator.primary.SetSkillOverride(this, this.hunk.weaponDef.primarySkillDef, GenericSkill.SkillOverridePriority.Network);
+
+            base.PlayCrossfade("AimPitch", "AimPitchAiming", 0.1f);
 
             //this.FindModelChild("PistolSight").gameObject.SetActive(true);
 
@@ -42,12 +44,12 @@ namespace HunkMod.SkillStates.Hunk
 
         protected virtual void PlayAnim()
         {
-            base.PlayAnimation("Gesture, Override", "SteadyAim", "Action.playbackRate", 0.25f);
+            base.PlayCrossfade("Gesture, Override", "AimIn", "Action.playbackRate", 0.25f, 0.05f);
         }
 
         protected virtual void PlayExitAnim()
         {
-            base.PlayAnimation("Gesture, Override", "SteadyAimEnd", "Action.playbackRate", 0.2f);
+            base.PlayCrossfade("Gesture, Override", "AimOut", "Action.playbackRate", 0.4f, 0.05f);
         }
 
         /*private void UpdateLightEffect()
@@ -69,6 +71,13 @@ namespace HunkMod.SkillStates.Hunk
             this.characterBody.outOfCombatStopwatch = 0f;
             this.characterBody.isSprinting = false;
             base.characterBody.SetAimTimer(0.2f);
+
+            if (this.hunk.ammo <= 0)
+            {
+                this.skillLocator.primary.UnsetSkillOverride(this, this.hunk.weaponDef.primarySkillDef, GenericSkill.SkillOverridePriority.Network);
+                this.skillLocator.primary.SetSkillOverride(this, Modules.Survivors.Hunk.reloadSkillDef, GenericSkill.SkillOverridePriority.Network);
+            }
+            else this.skillLocator.primary.UnsetSkillOverride(this, Modules.Survivors.Hunk.reloadSkillDef, GenericSkill.SkillOverridePriority.Network);
 
             //this.UpdateLightEffect();
 
@@ -96,6 +105,9 @@ namespace HunkMod.SkillStates.Hunk
                 HudOverlayManager.RemoveOverlay(this.overlayController);
                 this.overlayController = null;
             }
+
+            this.skillLocator.primary.UnsetSkillOverride(this, this.hunk.weaponDef.primarySkillDef, GenericSkill.SkillOverridePriority.Network);
+            this.skillLocator.primary.UnsetSkillOverride(this, Modules.Survivors.Hunk.reloadSkillDef, GenericSkill.SkillOverridePriority.Network);
 
             //this.FindModelChild("PistolSight").gameObject.SetActive(false);
         }

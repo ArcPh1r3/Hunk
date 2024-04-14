@@ -22,10 +22,8 @@ namespace HunkMod.SkillStates.Hunk.Weapon.SMG
         {
             base.OnEnter();
             this.duration = Shoot.baseDuration / this.attackSpeedStat;
-            this.characterBody.isSprinting = false;
 
-            base.characterBody.SetAimTimer(2f);
-            this.muzzleString = "PistolMuzzle";
+            this.muzzleString = "MuzzleSMG";
 
             this.isCrit = base.RollCrit();
 
@@ -102,9 +100,9 @@ namespace HunkMod.SkillStates.Hunk.Weapon.SMG
                         };
 
                         effectData.SetHurtBoxReference(hitInfo.hitHurtBox);
-                        EffectManager.SpawnEffect(Modules.Assets.headshotEffect, effectData, true);
+                        //EffectManager.SpawnEffect(Modules.Assets.headshotEffect, effectData, true);
                         Util.PlaySound("sfx_driver_headshot", base.gameObject);
-                        hitInfo.hitHurtBox.healthComponent.gameObject.AddComponent<Modules.Components.HunkHeadshotTracker>();
+                        //hitInfo.hitHurtBox.healthComponent.gameObject.AddComponent<Modules.Components.HunkHeadshotTracker>();
                     }
                 };
 

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2566066557
+CRC: 3414439091
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 63df8e26b57136b0bfe502241fb0fca2
+    Hash: 2b5abf2acbceb9670369397ba2fbd1bc
   TypeTreeHash:
     serializedVersion: 2
     Hash: 4eec1177a4c3fc73a207cdc096ab8d4c
@@ -61,15 +61,19 @@ ClassTypes:
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
+- Assets/Hunk/FBX/AimIdle.anim
 - Assets/Hunk/Icons/Skill/texSlugShotgunIcon.png
 - Assets/Hunk/Textures/equipment_albm.png
 - Assets/Hunk/Animations/animHunkCSS.controller
 - Assets/Hunk/Icons/Skill/texDashIcon.png
-- Assets/Hunk/Textures/matHunk06.mat
+- Assets/Hunk/Materials/matHunk06.mat
+- Assets/Hunk/FBX/maskHunkGesture.mask
 - Assets/Hunk/Icons/Skill/texPistolIcon.png
 - Assets/Hunk/Icons/Skill/texGoldenGunSecondaryIcon.png
 - Assets/Hunk/VFX/BloodSpurtEffect.prefab
 - Assets/Hunk/HUD/ChargeBar.prefab
+- Assets/Hunk/FBX/meshSMG.mesh
+- Assets/Hunk/FBX/Descend.anim
 - Assets/Hunk/Icons/Skill/texLunarShardIcon.png
 - Assets/Hunk/VFX/matShockwave.mat
 - Assets/Hunk/FBX/Hunk.fbx
@@ -77,6 +81,7 @@ Assets:
 - Assets/Hunk/Icons/Skill/texLunarRifleIcon.png
 - Assets/Hunk/VFX/ShotgunShell.prefab
 - Assets/Hunk/VFX/Badass/BigExplosion.prefab
+- Assets/Hunk/FBX/AimPitchAiming.anim
 - Assets/Hunk/VFX/Badass/MetalHitEffect.prefab
 - Assets/Hunk/Textures/texAmmoPickup.png
 - Assets/Hunk/Textures/SMG/Leon_LI5_D.png
@@ -88,18 +93,19 @@ Assets:
 - Assets/Hunk/Icons/Skill/texPlasmaCannonIcon.png
 - Assets/Hunk/Icons/Skill/texAltPassiveLegacyIcon.png
 - Assets/Hunk/HunkDisplay.prefab
-- Assets/Hunk/Textures/matHunk02.mat
+- Assets/Hunk/Materials/matHunk02.mat
 - Assets/Hunk/FBX/ammoBox.fbx
 - Assets/Hunk/FBX/DefaultPose.anim
 - Assets/Hunk/FBX/AimPitch.anim
 - Assets/Hunk/Icons/Skill/texArmCannonIcon.png
 - Assets/Hunk/Textures/jacket_n.png
+- Assets/Hunk/FBX/animHunkSMG.fbx
 - Assets/Hunk/Animations/animHunk.controller
 - Assets/Hunk/FBX/AimYaw.anim
 - Assets/Hunk/mdlHunk.prefab
 - Assets/Hunk/Icons/Skill/texLunarHammerIcon.png
 - Assets/Hunk/Icons/Skill/texSkateboardIcon.png
-- Assets/Hunk/Textures/matHunk03.mat
+- Assets/Hunk/Materials/matHunk03.mat
 - Assets/Hunk/Icons/Skill/texKnifeIcon.png
 - Assets/Hunk/VFX/texShockwave.png
 - Assets/Hunk/Icons/Skill/texGolemGunIcon.png
@@ -110,7 +116,6 @@ Assets:
 - Assets/Hunk/Icons/Skill/texSyringeIcon.png
 - Assets/Hunk/Icons/Skill/texSupplyDropIcon.png
 - Assets/Hunk/Icons/texMainSkin.png
-- Assets/Hunk/FBX/Idle.anim
 - Assets/Hunk/Icons/texDriverIcon.png
 - Assets/Hunk/FBX/maskHunkAimPitch.mask
 - Assets/Hunk/VFX/ShotgunSlug.prefab
@@ -122,24 +127,26 @@ Assets:
 - Assets/Hunk/HUD/WeaponChargeBar.prefab
 - Assets/Hunk/Icons/Skill/texMachineGunIcon.png
 - Assets/Hunk/VFX/GunLight.prefab
-- Assets/Hunk/Textures/matHunk05.mat
+- Assets/Hunk/FBX/Idle.anim
+- Assets/Hunk/Materials/matHunk05.mat
 - Assets/Hunk/Icons/Skill/texLeadfootIcon.png
 - Assets/Hunk/Icons/Skill/texStunGrenadeIcon.png
 - Assets/Hunk/Icons/Skill/texPassiveIcon.png
 - Assets/Hunk/Textures/jacket_albm.png
 - Assets/Hunk/Textures/equipment_n.png
+- Assets/Hunk/FBX/AimPitchMoving.anim
 - Assets/Hunk/VFX/Badass/TinyExplosion.prefab
 - Assets/Hunk/VFX/Badass/SandHitEffect.prefab
 - Assets/Hunk/Textures/usp_albm.png
 - Assets/Hunk/HUD/ChargeRing.prefab
-- Assets/Hunk/Textures/matHunk01.mat
+- Assets/Hunk/Materials/matHunk01.mat
 - Assets/Hunk/Icons/Skill/texSupplyDropLegacyScepterIcon.png
 - Assets/Hunk/Icons/Skill/texPistolSecondaryIcon.png
 - Assets/Hunk/Icons/Skill/texRocketLauncherSecondaryIcon.png
 - Assets/Hunk/Icons/Skill/texKnifeScepterIcon.png
 - Assets/Hunk/Textures/SMG/Leon_LI5_S.png
 - Assets/Hunk/Icons/Skill/texSyringeLegacyIcon.png
-- Assets/Hunk/Textures/matHunk04.mat
+- Assets/Hunk/Materials/matHunk04.mat
 - Assets/Hunk/Icons/Skill/texZapIcon.png
 - Assets/Hunk/VFX/HunkRocketGhost.prefab
 - Assets/Hunk/HUD/Textures/texChargeRing.png
@@ -153,6 +160,7 @@ Assets:
 - Assets/Hunk/Icons/Skill/texNemmandoPrimaryIcon.png
 - Assets/Hunk/FBX/maskHunkAimYaw.mask
 - Assets/Hunk/Textures/SMG/Leon_LI5_N.png
+- Assets/Hunk/FBX/RunF.anim
 - Assets/Hunk/Icons/Weapon/texPistolWeaponIcon.png
 - Assets/Hunk/Icons/Skill/texSlideIcon.png
 - Assets/Hunk/Materials/matAmmoPickup.mat

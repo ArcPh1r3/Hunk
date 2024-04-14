@@ -1,0 +1,387 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: maskHunkGesture
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: '0000_Resident Evil 7: 1'
+    m_Weight: 0
+  - m_Path: '0001_Resident Evil 7: 2'
+    m_Weight: 0
+  - m_Path: '0002_Resident Evil 7: 3'
+    m_Weight: 0
+  - m_Path: '0003_Resident Evil 7: 4'
+    m_Weight: 0
+  - m_Path: '0004_Resident Evil 7: 1'
+    m_Weight: 0
+  - m_Path: '0005_Resident Evil 7: 2'
+    m_Weight: 0
+  - m_Path: Armature
+    m_Weight: 0
+  - m_Path: Armature/COG
+    m_Weight: 0
+  - m_Path: Armature/ROOT
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/l_leg_back_muscleOffset
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/l_leg_back_muscleOffset/l_leg_back_muscle
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/l_leg_femur
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/l_leg_femur/l_leg_femur_twist_0_H
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/l_leg_femur/l_leg_femur_twist_1_H
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/l_leg_femur/l_leg_femur_twist_1_H/bags_leftLegBag_offset
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/l_leg_femur/l_leg_femur_twist_1_H/bags_leftLegBag_offset/bags_leftLegBag
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/l_leg_femur/l_leg_femur_twist_1_H/l_leg_thigh_muscleOffset
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/l_leg_femur/l_leg_femur_twist_1_H/l_leg_thigh_muscleOffset/l_leg_thigh_muscle
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/l_leg_femur/l_leg_femur_twist_2_H
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/l_leg_femur/l_leg_tibia
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/l_leg_femur/l_leg_tibia/l_kneeProtector_start
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/l_leg_femur/l_leg_tibia/l_leg_ankle
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/l_leg_femur/l_leg_tibia/l_leg_ankle/l_leg_ball
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/l_leg_femur/l_leg_tibia/l_leg_tibia_twist_0_H
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/l_leg_femur/l_leg_tibia/l_leg_tibia_twist_1_H
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/l_leg_femur/l_leg_tibia/l_leg_tibia_twist_2_H
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/l_leg_front_muscleOffset
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/l_leg_front_muscleOffset/l_leg_front_muscle
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/l_leg_side_muscleOffset
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/l_leg_side_muscleOffset/l_leg_side_muscle
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/r_leg_back_muscleOffset
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/r_leg_back_muscleOffset/r_leg_back_muscle
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/r_leg_femur
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/r_leg_femur/r_holster_femurOffset
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/r_leg_femur/r_holster_femurOffset/r_holster_offset_jnt
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/r_leg_femur/r_holster_femurOffset/r_holster_offset_jnt/r_holster_main
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/r_leg_femur/r_holster_femurOffset/r_holster_offset_jnt/r_holster_main/holsterStrap_FK_0
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/r_leg_femur/r_holster_femurOffset/r_holster_offset_jnt/r_holster_main/holsterStrap_FK_0/holsterStrap_FK_1
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/r_leg_femur/r_holster_femurOffset/r_holster_offset_jnt/r_holster_main/holsterStrap_FK_0/holsterStrap_FK_1/holsterStrap_FK_2
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/r_leg_femur/r_leg_femur_twist_0_H
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/r_leg_femur/r_leg_femur_twist_1_H
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/r_leg_femur/r_leg_femur_twist_1_H/r_leg_thigh_muscleOffset
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/r_leg_femur/r_leg_femur_twist_1_H/r_leg_thigh_muscleOffset/r_leg_thigh_muscle
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/r_leg_femur/r_leg_femur_twist_2_H
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/r_leg_femur/r_leg_tibia
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/r_leg_femur/r_leg_tibia/r_kneeProtector_start
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/r_leg_femur/r_leg_tibia/r_leg_ankle
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/r_leg_femur/r_leg_tibia/r_leg_ankle/r_leg_ball
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/r_leg_femur/r_leg_tibia/r_leg_tibia_twist_0_H
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/r_leg_femur/r_leg_tibia/r_leg_tibia_twist_1_H
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/r_leg_femur/r_leg_tibia/r_leg_tibia_twist_2_H
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/r_leg_front_muscleOffset
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/r_leg_front_muscleOffset/r_leg_front_muscle
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/r_leg_side_muscleOffset
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/hips/r_leg_side_muscleOffset/r_leg_side_muscle
+    m_Weight: 0
+  - m_Path: Armature/ROOT/base/spine_0
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/bags_backBagMain_offset
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/bags_backBagMain_offset/bags_backBagMain_upper
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/bags_backBagMain_offset/bags_backBagMain_upper/bags_backBagVolume_start
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/bags_backBagMain_offset/bags_backBagMain_upper/bags_backBagVolume_start/bags_backBagTasselLeft_start
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/bags_backBagMain_offset/bags_backBagMain_upper/bags_backBagVolume_start/bags_backBagTasselRight_start
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/bags_backRightBag_offset
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/bags_backRightBag_offset/bags_backRightBag_upper
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/bags_left_mags_offset
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/bags_left_mags_offset/bags_left_mags_upper
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/bags_left_mags_offset/bags_left_mags_upper/bags_left_mags_lower_offset
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/bags_left_mags_offset/bags_left_mags_upper/bags_left_mags_lower_offset/bags_left_mags_lower
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/bags_backpackRadio_offset
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/bags_backpackRadio_offset/bags_backpackRadio
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_humerus_twist_0_H
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_humerus_twist_1_H
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_humerus_twist_2_H
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_humerus_twist_2_H/l_deltBack_muscleOffset
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_humerus_twist_2_H/l_deltBack_muscleOffset/l_deltBack_muscle
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_humerus_twist_2_H/l_deltFront_muscleOffset
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_humerus_twist_2_H/l_deltFront_muscleOffset/l_deltFront_muscle
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_humerus_twist_2_H/l_deltUp_muscleOffset
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_humerus_twist_2_H/l_deltUp_muscleOffset/l_deltUp_muscle
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_protector_rigid_start
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_protector_rigid_start/l_arm_protector_softLower_start
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_protector_rigid_start/l_arm_protector_softUpper_start
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_radius
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_radius/l_arm_radius_twist_0_H
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_radius/l_arm_radius_twist_1_H
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_radius/l_arm_radius_twist_2_H
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_radius/l_arm_radius_twist_3_H
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_radius/l_arm_wrist
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_radius/l_arm_wrist/l_hand_index_0
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_radius/l_arm_wrist/l_hand_index_0/l_hand_index_1
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_radius/l_arm_wrist/l_hand_index_0/l_hand_index_1/l_hand_index_2
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_radius/l_arm_wrist/l_hand_little_0
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_radius/l_arm_wrist/l_hand_little_0/l_hand_little_1
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_radius/l_arm_wrist/l_hand_little_0/l_hand_little_1/l_hand_little_2
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_radius/l_arm_wrist/l_hand_little_0/l_hand_little_1/l_hand_little_2/l_hand_little_3
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_radius/l_arm_wrist/l_hand_middle_0
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_radius/l_arm_wrist/l_hand_middle_0/l_hand_middle_1
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_radius/l_arm_wrist/l_hand_middle_0/l_hand_middle_1/l_hand_middle_2
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_radius/l_arm_wrist/l_hand_ring_0
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_radius/l_arm_wrist/l_hand_ring_0/l_hand_ring_1
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_radius/l_arm_wrist/l_hand_ring_0/l_hand_ring_1/l_hand_ring_2
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_radius/l_arm_wrist/l_hand_ring_0/l_hand_ring_1/l_hand_ring_2/l_hand_ring_3
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_radius/l_arm_wrist/l_hand_thumb_0
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_radius/l_arm_wrist/l_hand_thumb_0/l_hand_thumb_1
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_arm_humerus/l_arm_radius/l_arm_wrist/l_hand_thumb_0/l_hand_thumb_1/l_hand_thumb_2
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_pecA_muscleOffset
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_pecA_muscleOffset/l_pecA_muscle
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_arm_clavicle/l_scapula_0
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_backVest_start
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_frontVest_start
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_latA_muscleOffset
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_latA_muscleOffset/l_latA_muscle
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_pecB_muscleOffset
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_pecB_muscleOffset/l_pecB_muscle
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_serratusA_muscleOffset
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_serratusA_muscleOffset/l_serratusA_muscle
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_trapA_muscleOffset
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/l_trapA_muscleOffset/l_trapA_muscle
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/neck_0
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/neck_0/neck_1
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/neck_0/neck_1/head
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_humerus_twist_0_H
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_humerus_twist_1_H
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_humerus_twist_2_H
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_humerus_twist_2_H/r_deltBack_muscleOffset
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_humerus_twist_2_H/r_deltBack_muscleOffset/r_deltBack_muscle
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_humerus_twist_2_H/r_deltFront_muscleOffset
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_humerus_twist_2_H/r_deltFront_muscleOffset/r_deltFront_muscle
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_humerus_twist_2_H/r_deltUp_muscleOffset
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_humerus_twist_2_H/r_deltUp_muscleOffset/r_deltUp_muscle
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_protector_rigid_start
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_protector_rigid_start/r_arm_protector_softLower_start
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_protector_rigid_start/r_arm_protector_softUpper_start
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_radius
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_radius/r_arm_radius_twist_0_H
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_radius/r_arm_radius_twist_1_H
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_radius/r_arm_radius_twist_2_H
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_radius/r_arm_radius_twist_3_H
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_radius/r_arm_wrist
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_radius/r_arm_wrist/r_hand_index_0
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_radius/r_arm_wrist/r_hand_index_0/r_hand_index_1
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_radius/r_arm_wrist/r_hand_index_0/r_hand_index_1/r_hand_index_2
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_radius/r_arm_wrist/r_hand_little_0
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_radius/r_arm_wrist/r_hand_little_0/r_hand_little_1
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_radius/r_arm_wrist/r_hand_little_0/r_hand_little_1/r_hand_little_2
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_radius/r_arm_wrist/r_hand_little_0/r_hand_little_1/r_hand_little_2/r_hand_little_3
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_radius/r_arm_wrist/r_hand_middle_0
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_radius/r_arm_wrist/r_hand_middle_0/r_hand_middle_1
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_radius/r_arm_wrist/r_hand_middle_0/r_hand_middle_1/r_hand_middle_2
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_radius/r_arm_wrist/r_hand_ring_0
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_radius/r_arm_wrist/r_hand_ring_0/r_hand_ring_1
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_radius/r_arm_wrist/r_hand_ring_0/r_hand_ring_1/r_hand_ring_2
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_radius/r_arm_wrist/r_hand_ring_0/r_hand_ring_1/r_hand_ring_2/r_hand_ring_3
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_radius/r_arm_wrist/r_hand_thumb_0
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_radius/r_arm_wrist/r_hand_thumb_0/r_hand_thumb_1
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_radius/r_arm_wrist/r_hand_thumb_0/r_hand_thumb_1/r_hand_thumb_2
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_radius/r_arm_wrist/weapon.r
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_arm_humerus/r_arm_radius/r_arm_wrist/weapon.r/dummy
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_pecA_muscleOffset
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_pecA_muscleOffset/r_pecA_muscle
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_arm_clavicle/r_scapula_0
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_backVest_start
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_frontVest_start
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_latA_muscleOffset
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_latA_muscleOffset/r_latA_muscle
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_pecB_muscleOffset
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_pecB_muscleOffset/r_pecB_muscle
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_serratusA_muscleOffset
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_serratusA_muscleOffset/r_serratusA_muscle
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_trapA_muscleOffset
+    m_Weight: 1
+  - m_Path: Armature/ROOT/base/spine_0/spine_1/spine_2/r_trapA_muscleOffset/r_trapA_muscle
+    m_Weight: 1
+  - m_Path: Armature/ROOT/elbow.ik.l
+    m_Weight: 0
+  - m_Path: Armature/ROOT/elbow.ik.r
+    m_Weight: 0
+  - m_Path: Armature/ROOT/ik.foot.l
+    m_Weight: 0
+  - m_Path: Armature/ROOT/ik.foot.r
+    m_Weight: 0
+  - m_Path: Armature/ROOT/ik.hand.l
+    m_Weight: 0
+  - m_Path: Armature/ROOT/ik.hand.r
+    m_Weight: 0
+  - m_Path: Armature/ROOT/ik.knee.l
+    m_Weight: 0
+  - m_Path: Armature/ROOT/ik.knee.r
+    m_Weight: 0
+  - m_Path: meshSMG
+    m_Weight: 0
