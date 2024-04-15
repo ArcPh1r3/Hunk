@@ -188,6 +188,14 @@ namespace HunkMod.Modules.Components
                 this.ammo = this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo;
             }
 
+            if (this.characterBody.master)
+            {
+                if (this.characterBody.master.inventory)
+                {
+                    this.ammo += this.characterBody.master.inventory.GetItemCount(RoR2Content.Items.SecondarySkillMagazine);
+                }
+            }
+
             this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo -= diff;
             if (this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo <= 0) this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo = 0;
         }

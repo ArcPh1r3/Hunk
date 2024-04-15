@@ -53,7 +53,14 @@ namespace HunkMod.Modules.Components
                     }
                     else
                     {
-                        this.targetText.token = Mathf.CeilToInt(this.hunk.ammo).ToString() + " / " + Mathf.CeilToInt(this.totalAmmo).ToString();
+                        if (this.hunk.ammo > this.hunk.maxAmmo)
+                        {
+                            this.targetText.token = "<color=#00FF66>" + Mathf.CeilToInt(this.hunk.ammo).ToString() + Helpers.colorSuffix + " / " + Mathf.CeilToInt(this.totalAmmo).ToString();
+                        }
+                        else
+                        {
+                            this.targetText.token = Mathf.CeilToInt(this.hunk.ammo).ToString() + " / " + Mathf.CeilToInt(this.totalAmmo).ToString();
+                        }
                     }
                 }
                 else
