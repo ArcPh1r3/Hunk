@@ -31,7 +31,7 @@ namespace HunkMod.SkillStates.Hunk
             }
             else
             {
-                base.PlayCrossfade("Reload", this.animString, "Action.playbackRate", this.duration * 1.1f, 0.1f);
+                base.PlayCrossfade("Reload", this.animString, "Action.playbackRate", this.duration * 1.1f, 0.25f);
                 this.success = true;
                 Util.PlaySound("sfx_driver_reload_01", this.gameObject);
             }

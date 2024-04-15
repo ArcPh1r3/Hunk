@@ -48,6 +48,30 @@ ModelImporter:
   - first:
       74: 7332139420686511986
     second: Armature|Reload
+  - first:
+      74: 1138058251333943779
+    second: Armature|Ascend
+  - first:
+      74: 1079665108409675491
+    second: Armature|Jump
+  - first:
+      74: 6350413328148286187
+    second: Armature|SprintF
+  - first:
+      74: -8775012353808503318
+    second: Armature|SprintJump
+  - first:
+      74: -4281082018218880012
+    second: Armature|IdleIn
+  - first:
+      74: 2016551237921944054
+    second: Armature|LightImpact
+  - first:
+      74: 6589755540219670814
+    second: Armature|Crouch
+  - first:
+      74: 6297932315521584044
+    second: Armature|SprintF2
   externalObjects: {}
   materials:
     materialImportMode: 1

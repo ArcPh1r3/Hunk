@@ -147,6 +147,11 @@ namespace HunkMod.Modules.Components
             }
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.V)) this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo += this.maxAmmo;
+        }
+
         private void TryReload()
         {
             if (this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo > 0) this.weaponStateMachine.SetInterruptState(new SkillStates.Hunk.Reload(), EntityStates.InterruptPriority.Any);
