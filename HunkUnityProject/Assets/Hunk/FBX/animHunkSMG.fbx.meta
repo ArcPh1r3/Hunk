@@ -84,6 +84,18 @@ ModelImporter:
   - first:
       74: -6094900968212461035
     second: Armature|SwingKnife
+  - first:
+      74: -5632033421798331006
+    second: Armature|DodgeF
+  - first:
+      74: 3622692439140812653
+    second: Armature|DodgeFull
+  - first:
+      74: 3319992719938486349
+    second: Armature|DodgeRollF
+  - first:
+      74: -4809550843377111140
+    second: Armature|DodgeStart
   externalObjects: {}
   materials:
     materialImportMode: 1
