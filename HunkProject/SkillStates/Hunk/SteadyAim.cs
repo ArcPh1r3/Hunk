@@ -47,7 +47,7 @@ namespace HunkMod.SkillStates.Hunk
 
         protected virtual void PlayExitAnim()
         {
-            base.PlayCrossfade("Gesture, Override", "AimOut", "Action.playbackRate", 0.6f, 0.05f);
+            if (!this.hunk.isReloading) base.PlayCrossfade("Gesture, Override", "AimOut", "Action.playbackRate", 0.6f, 0.05f);
         }
 
         /*private void UpdateLightEffect()

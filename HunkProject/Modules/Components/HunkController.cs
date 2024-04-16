@@ -53,6 +53,7 @@ namespace HunkMod.Modules.Components
         public float defaultYOffset { get; private set; }
         private float yOffset;
         public bool isRolling;
+        public bool isReloading;
         private GameObject backWeaponInstance;
         private HunkWeaponDef backWeaponDef;
 
@@ -79,7 +80,7 @@ namespace HunkMod.Modules.Components
         {
             this.InitShells();
 
-            this.EquipWeapon(0);
+            this.EquipWeapon(this.weaponTracker.equippedIndex);
         }
 
         private void SetInventoryHook()

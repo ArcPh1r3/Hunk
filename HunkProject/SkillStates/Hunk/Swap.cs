@@ -14,7 +14,6 @@ namespace HunkMod.SkillStates.Hunk
             this.hunk.reloadTimer = 1f;
 
             base.PlayCrossfade("Gesture, Override", "StoreGun", "Swap.playbackRate", this.duration * 0.5f, 0.1f);
-            base.PlayAnimation("Reload", "BufferEmpty");
 
             Util.PlaySound("sfx_hunk_store_gun", this.gameObject);
         }

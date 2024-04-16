@@ -19,6 +19,7 @@ namespace HunkMod.SkillStates.Hunk
         {
             base.OnEnter();
             this.duration = this.baseDuration / this.attackSpeedStat;
+            this.hunk.isReloading = true;
             this.wasAiming = this.hunk.isAiming;
 
             if (this.hunk.weaponTracker.weaponData[this.hunk.weaponTracker.equippedIndex].totalAmmo <= 0)
@@ -29,10 +30,16 @@ namespace HunkMod.SkillStates.Hunk
             }
             else
             {
-                base.PlayCrossfade("Reload", this.animString, "Action.playbackRate", this.duration, 0.25f);
+                base.PlayCrossfade("Gesture, Override", this.animString, "Reload.playbackRate", this.duration, 0.25f);
                 this.success = true;
                 Util.PlaySound("sfx_hunk_smg_reload_01", this.gameObject);
             }
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+            this.hunk.isReloading = false;
         }
 
         public override void FixedUpdate()
@@ -44,12 +51,11 @@ namespace HunkMod.SkillStates.Hunk
 
             if (base.isAuthority && this.inputBank.skill2.down && !this.wasAiming) // aiming to cancel a passive reload
             {
-                base.PlayCrossfade("Reload", "BufferEmpty", 0.01f);
                 this.outer.SetNextStateToMain();
                 return;
             }
 
-            if (base.fixedAge >= (0.77f * this.duration) && !this.cummed)
+            if (base.fixedAge >= (0.84f * this.duration) && !this.cummed)
             {
                 this.cummed = true;
                 if (this.success) this.hunk.FinishReload();
@@ -57,7 +63,6 @@ namespace HunkMod.SkillStates.Hunk
 
             if (base.isAuthority && this.inputBank.skill3.down && this.skillLocator.utility.stock > 0) // roll cancel
             {
-                base.PlayCrossfade("Reload", "BufferEmpty", 0.01f);
                 this.outer.SetNextStateToMain();
                 return;
             }

@@ -53,7 +53,6 @@ namespace HunkMod.SkillStates.Hunk
 
             base.OnEnter();
 
-            base.PlayAnimation("Reload", "BufferEmpty");
             Util.PlaySound("sfx_hunk_foley_knife", this.gameObject);
         }
 

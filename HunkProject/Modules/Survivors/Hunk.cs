@@ -516,7 +516,7 @@ namespace HunkMod.Modules.Survivors
                 skillNameToken = prefix + "_HUNK_BODY_UTILITY_DODGE_NAME",
                 skillDescriptionToken = prefix + "_HUNK_BODY_UTILITY_DODGE_DESCRIPTION",
                 skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texDodgeIcon"),
-                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Dodge)),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Roll)),
                 activationStateMachineName = "Weapon",
                 baseMaxStock = 1,
                 baseRechargeInterval = 3f,

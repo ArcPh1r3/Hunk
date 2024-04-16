@@ -64,7 +64,7 @@ namespace HunkMod.Modules
 
             #region Utility
             LanguageAPI.Add(prefix + "UTILITY_DODGE_NAME", "Tactical Dodge");
-            LanguageAPI.Add(prefix + "UTILITY_DODGE_DESCRIPTION", "<style=cIsUtility>Dash</style> a short distance.");
+            LanguageAPI.Add(prefix + "UTILITY_DODGE_DESCRIPTION", "<style=cIsUtility>Dash</style> a short distance. If used to <style=cIsUtility>avoid an attack</style>, <style=cIsUtility>roll</style> instead, letting you temporarily <style=cIsDamage>lock onto weakpoints</style>.");
             #endregion
 
             #region Special

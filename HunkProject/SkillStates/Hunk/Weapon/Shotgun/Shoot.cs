@@ -37,9 +37,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Shotgun
             if (this.isCrit) Util.PlaySound("sfx_hunk_riot_shotgun_shoot_critical", base.gameObject);
             else Util.PlaySound("sfx_hunk_riot_shotgun_shoot", base.gameObject);
 
-            //this.PlayAnimation("Reload", "BufferEmpty");
             this.PlayAnimation("Gesture, Override", "ShootShotgun", "Shoot.playbackRate", this.duration);
-            //this.PlayAnimation("Reload", "ShootShotgun", "Shoot.playbackRate", this.duration);
 
             this.fireDuration = 0;
 

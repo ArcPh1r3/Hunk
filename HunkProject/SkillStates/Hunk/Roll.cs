@@ -1,14 +1,15 @@
 ﻿using EntityStates;
 using RoR2;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace HunkMod.SkillStates.Hunk
 {
-    public class Dodge : BaseHunkSkillState
+    public class Roll : BaseHunkSkillState
     {
         protected Vector3 slipVector = Vector3.zero;
         public float duration = 1.1f;
-        private Vector3 cachedForward;
+        //private Vector3 cachedForward;
         private bool peepee;
         private float coeff = 24f;
         private bool skidibi;
@@ -18,20 +19,19 @@ namespace HunkMod.SkillStates.Hunk
             base.OnEnter();
             this.hunk.isRolling = true;
             this.slipVector = ((base.inputBank.moveVector == Vector3.zero) ? base.characterDirection.forward : base.inputBank.moveVector).normalized;
-            this.cachedForward = this.characterDirection.forward;
+            //this.cachedForward = this.characterDirection.forward;
 
-            Animator anim = this.GetModelAnimator();
+            /*Animator anim = this.GetModelAnimator();
 
             Vector3 rhs = base.characterDirection ? base.characterDirection.forward : this.slipVector;
             Vector3 rhs2 = Vector3.Cross(Vector3.up, rhs);
             float num = Vector3.Dot(this.slipVector, rhs);
             float num2 = Vector3.Dot(this.slipVector, rhs2);
             anim.SetFloat("dashF", num);
-            anim.SetFloat("dashR", num2);
+            anim.SetFloat("dashR", num2);*/
 
-            base.PlayAnimation("Reload", "BufferEmpty");
             base.PlayCrossfade("FullBody, Override", "DodgeRoll", "Dodge.playbackRate", this.duration * 1.4f, 0.05f);
-            //base.PlayAnimation("Gesture, Override", "BufferEmpty");
+            base.PlayAnimation("Gesture, Override", "BufferEmpty");
 
             Util.PlaySound("sfx_driver_dash", this.gameObject);
 
@@ -47,6 +47,7 @@ namespace HunkMod.SkillStates.Hunk
 
         public virtual void ApplyBuff()
         {
+            if (NetworkServer.active) this.characterBody.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 0.5f);
             //if (base.isAuthority) base.healthComponent.AddBarrierAuthority(StaticValues.dashBarrierAmount * base.healthComponent.fullBarrier);
         }
 
@@ -104,7 +105,6 @@ namespace HunkMod.SkillStates.Hunk
         {
             this.DampenVelocity();
             this.hunk.isRolling = false;
-            //base.PlayAnimation("FullBody, Override", "BufferEmpty");
             this.hunk.desiredYOffset = this.hunk.defaultYOffset;
 
             base.OnExit();
