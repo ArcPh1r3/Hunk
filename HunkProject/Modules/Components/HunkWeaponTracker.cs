@@ -15,6 +15,8 @@ namespace HunkMod.Modules.Components
         public HunkWeaponData[] weaponData = new HunkWeaponData[0];
         public int equippedIndex = 0;
 
+        private int lastEquippedIndex = 1;
+
         private void Awake()
         {
             this.Init();
@@ -27,16 +29,34 @@ namespace HunkMod.Modules.Components
                 new HunkWeaponData
                 {
                     weaponDef = Modules.Weapons.SMG.instance.weaponDef,
-                    totalAmmo = Modules.Weapons.SMG.instance.magSize * 3,
+                    totalAmmo = Modules.Weapons.SMG.instance.magSize * 6,
                     currentAmmo = Modules.Weapons.SMG.instance.magSize
                 },
                 new HunkWeaponData
                 {
-                    weaponDef = Modules.Weapons.SMG.instance.weaponDef,
-                    totalAmmo = Modules.Weapons.SMG.instance.magSize * 3,
-                    currentAmmo = 12
+                    weaponDef = Modules.Weapons.Shotgun.instance.weaponDef,
+                    totalAmmo = Modules.Weapons.Shotgun.instance.magSize * 3,
+                    currentAmmo = Modules.Weapons.Shotgun.instance.magSize
+                },
+                new HunkWeaponData
+                {
+                    weaponDef = Modules.Weapons.Slugger.instance.weaponDef,
+                    totalAmmo = Modules.Weapons.Slugger.instance.magSize * 3,
+                    currentAmmo = Modules.Weapons.Slugger.instance.magSize
                 }
             };
+        }
+
+        public void SwapToLastWeapon()
+        {
+            // temporary until radial is in
+            this.equippedIndex++;
+            if (this.equippedIndex >= this.weaponData.Length) this.equippedIndex = 0;
+            return;
+
+            int penis = this.equippedIndex;
+            this.equippedIndex = this.lastEquippedIndex;
+            this.lastEquippedIndex = penis;
         }
 
         public void AddWeapon(HunkWeaponDef weaponDef)
@@ -46,7 +66,7 @@ namespace HunkMod.Modules.Components
             this.weaponData[this.weaponData.Length - 1] = new HunkWeaponData
             {
                 weaponDef = weaponDef,
-                totalAmmo = weaponDef.magSize * 2,
+                totalAmmo = 0,
                 currentAmmo = weaponDef.magSize
             };
         }

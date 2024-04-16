@@ -15,11 +15,11 @@ namespace HunkMod.Modules.Components
 
 		public void Update()
 		{
-			if (this.icon.iDrive)
+			if (this.icon.hunk)
             {
-				if (this.icon.iDrive.maxAmmo > 0f)
+				if (this.icon.hunk.maxAmmo > 0f)
                 {
-					float value = Util.Remap(this.icon.iDrive.ammo, 0f, this.icon.iDrive.maxAmmo, 0f, 1f);
+					float value = Util.Remap(this.icon.hunk.ammo, 0f, this.icon.hunk.maxAmmo, 0f, 1f);
 					this.mask.fillAmount = value;
                 }
 				else

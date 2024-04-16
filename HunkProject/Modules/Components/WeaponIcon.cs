@@ -9,7 +9,7 @@ namespace HunkMod.Modules.Components
     public class WeaponIcon : MonoBehaviour
     {
 		public HUD targetHUD;
-		public HunkController iDrive;
+		public HunkController hunk;
 
 		public GameObject displayRoot;
 		public PlayerCharacterMasterController playerCharacterMasterController;
@@ -26,7 +26,7 @@ namespace HunkMod.Modules.Components
 		private void Update()
         {
 			// REWRITE THIS ASAP
-			if (!this.iDrive)
+			if (!this.hunk)
             {
 				if (!this.playerCharacterMasterController)
                 {
@@ -45,16 +45,16 @@ namespace HunkMod.Modules.Components
             }
         }
 
-		public void SetTarget(HunkController driver)
+		public void SetTarget(HunkController h)
         {
-			this.iDrive = driver;
-			this.iDrive.onWeaponUpdate += this.SetDisplay;
-			this.SetDisplay(this.iDrive);
+			this.hunk = h;
+			this.hunk.onWeaponUpdate += this.SetDisplay;
+			this.SetDisplay(this.hunk);
         }
 
 		private void UpdateDisplay()
         {
-			if (this.iDrive.maxAmmo > 0f)
+			if (this.hunk.maxAmmo > 0f)
             {
 				//this.durationDisplay.SetActive(true);
 				this.durationDisplay.SetActive(false);
@@ -77,7 +77,7 @@ namespace HunkMod.Modules.Components
 
 		private void SetDisplay(HunkController z)
 		{
-			if (!this.iDrive) return;
+			if (!this.hunk) return;
 
 			this.DoStockFlash();
 
@@ -86,14 +86,15 @@ namespace HunkMod.Modules.Components
 
             if (this.iconImage)
 			{
-				this.iconImage.texture = this.iDrive.weaponDef.icon;
+				this.iconImage.texture = this.hunk.weaponDef.icon;
 				this.iconImage.color = Color.white;
 				this.iconImage.enabled = true;
 			}
+
             if (this.tooltipProvider)
 			{
-				this.tooltipProvider.titleToken = this.iDrive.weaponDef.nameToken;
-				this.tooltipProvider.bodyToken = this.iDrive.weaponDef.descriptionToken;
+				this.tooltipProvider.titleToken = this.hunk.weaponDef.nameToken;
+				this.tooltipProvider.bodyToken = this.hunk.weaponDef.descriptionToken;
 				this.tooltipProvider.titleColor = Modules.Survivors.Hunk.characterColor;
 				this.tooltipProvider.bodyColor = Color.gray;
 			}

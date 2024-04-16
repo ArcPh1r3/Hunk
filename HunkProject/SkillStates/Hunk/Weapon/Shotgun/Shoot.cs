@@ -11,7 +11,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Shotgun
         public static float damageCoefficient = 1.4f;
         public static float procCoefficient = 0.75f;
         public float baseDuration = 1.5f;
-        public static int bulletCount = 6;
+        public static int bulletCount = 8;
         public static float bulletSpread = 2f;
         public static float bulletRecoil = 8f;
         public static float bulletRange = 64;
@@ -29,7 +29,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Shotgun
         {
             base.OnEnter();
             this.characterBody.SetAimTimer(5f);
-            this.muzzleString = "ShotgunMuzzle";
+            this.muzzleString = "MuzzleSMG";
             this.hasFired = false;
             this.duration = this.baseDuration / this.attackSpeedStat;
             this.isCrit = base.RollCrit();
@@ -38,8 +38,8 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Shotgun
             if (this.isCrit) Util.PlaySound("sfx_driver_riot_shotgun_shoot_critical", base.gameObject);
             else Util.PlaySound("sfx_driver_riot_shotgun_shoot", base.gameObject);
 
-            base.PlayAnimation("Gesture, Override", "FireRiotShotgun", "Shoot.playbackRate", this.duration);
-            base.PlayAnimation("AimPitch", "Shoot");
+            this.PlayAnimation("Reload", "BufferEmpty");
+            this.PlayAnimation("Gesture, Override", "Shoot", "Shoot.playbackRate", this.duration);
 
             this.fireDuration = 0;
 
@@ -104,6 +104,26 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Shotgun
 
                     bulletAttack.minSpread = 0;
                     bulletAttack.maxSpread = 0;
+
+                    bulletAttack.modifyOutgoingDamageCallback = delegate (BulletAttack _bulletAttack, ref BulletAttack.BulletHit hitInfo, DamageInfo damageInfo)
+                    {
+                        if (BulletAttack.IsSniperTargetHit(hitInfo))
+                        {
+                            damageInfo.damage *= 1.25f;
+                            damageInfo.damageColorIndex = DamageColorIndex.Sniper;
+                            EffectData effectData = new EffectData
+                            {
+                                origin = hitInfo.point,
+                                rotation = Quaternion.LookRotation(-hitInfo.direction)
+                            };
+
+                            effectData.SetHurtBoxReference(hitInfo.hitHurtBox);
+                            //EffectManager.SpawnEffect(Modules.Assets.headshotEffect, effectData, true);
+                            Util.PlaySound("sfx_driver_headshot", hitInfo.hitHurtBox.gameObject);
+                            //hitInfo.hitHurtBox.healthComponent.gameObject.AddComponent<Modules.Components.HunkHeadshotTracker>();
+                        }
+                    };
+
                     bulletAttack.bulletCount = 1;
                     bulletAttack.Fire();
 

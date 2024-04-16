@@ -20,8 +20,8 @@ namespace HunkMod.Modules
 
         internal static void InitializeParams()
         {
-            defaultCameraParams = NewCameraParams("ccpRobHunk", 70f, 0.6f, new Vector3(0.5f, 0f, -3f));
-            aimCameraParams = NewCameraParams("ccpRobHunkAim", 70f, 0.65f, new Vector3(0.8f, 0f, -2f));
+            defaultCameraParams = NewCameraParams("ccpRobHunk", 70f, 0.15f, new Vector3(0.6f, 0.75f, -3.5f));
+            aimCameraParams = NewCameraParams("ccpRobHunkAim", 70f, 0.1f, new Vector3(1.3f, 0.8f, -3f));
             sniperAimCameraParams = NewCameraParams("ccpRobHunkSniperAim", 70f, 0.8f, new Vector3(0f, 0f, 0.75f));
             emoteCameraParams = NewCameraParams("ccpRobHunkEmote", 70f, 0.4f, new Vector3(0f, 0f, -6f));
         }

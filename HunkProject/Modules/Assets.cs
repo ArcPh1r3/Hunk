@@ -652,6 +652,7 @@ namespace HunkMod.Modules
             mat.SetColor("_EmColor", emissionColor);
             mat.SetFloat("_EmPower", emission);
             mat.SetTexture("_EmTex", tempMat.GetTexture("_EmissionMap"));
+            if (normalStrength > 0f) mat.SetTexture("_NormalTex", tempMat.GetTexture("_NormalMap"));
             mat.SetFloat("_NormalStrength", normalStrength);
 
             mat.DisableKeyword("DITHER");

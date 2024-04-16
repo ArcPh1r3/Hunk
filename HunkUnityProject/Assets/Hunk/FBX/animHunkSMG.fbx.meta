@@ -72,6 +72,18 @@ ModelImporter:
   - first:
       74: 6297932315521584044
     second: Armature|SprintF2
+  - first:
+      74: -3112965366749432192
+    second: Armature|Sprint
+  - first:
+      74: 2151182186357557533
+    second: Armature|SprintBad
+  - first:
+      74: 3801639673374246413
+    second: Armature|SprintFast
+  - first:
+      74: -6094900968212461035
+    second: Armature|SwingKnife
   externalObjects: {}
   materials:
     materialImportMode: 1

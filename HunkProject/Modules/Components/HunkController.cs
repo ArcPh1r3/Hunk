@@ -44,6 +44,7 @@ namespace HunkMod.Modules.Components
         public GameObject crosshairPrefab;
         public ParticleSystem machineGunVFX;
 
+        private GameObject heldWeaponInstance;
         public float reloadTimer;
         private WeaponNotificationQueue notificationQueue;
         private EntityStateMachine weaponStateMachine;
@@ -121,6 +122,12 @@ namespace HunkMod.Modules.Components
             }*/
         }
 
+        public void SwapToLastWeapon()
+        {
+            this.weaponTracker.SwapToLastWeapon();
+            this.EquipWeapon(this.weaponTracker.equippedIndex);
+        }
+
         private void Inventory_onInventoryChanged()
         {
             this.CheckForNeedler();
@@ -145,6 +152,12 @@ namespace HunkMod.Modules.Components
             {
                 this.TryReload();
             }
+
+            if (this.heldWeaponInstance)
+            {
+                if (this.characterModel && this.characterModel.invisibilityCount > 0) this.heldWeaponInstance.SetActive(false);
+                else this.heldWeaponInstance.SetActive(true);
+            }
         }
 
         private void Update()
@@ -154,7 +167,13 @@ namespace HunkMod.Modules.Components
 
         private void TryReload()
         {
-            if (this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo > 0) this.weaponStateMachine.SetInterruptState(new SkillStates.Hunk.Reload(), EntityStates.InterruptPriority.Any);
+            if (this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo > 0)
+            {
+                this.weaponStateMachine.SetInterruptState(new SkillStates.Hunk.Reload
+                {
+                    interruptPriority = EntityStates.InterruptPriority.Skill
+                }, EntityStates.InterruptPriority.Any);
+            }
         }
 
         public void ServerGetStoredWeapon(HunkWeaponDef newWeapon, float ammo, HunkController hunkController)
@@ -249,10 +268,21 @@ namespace HunkMod.Modules.Components
             this.ammo = this.weaponTracker.weaponData[index].currentAmmo;
 
             // model swap
-            if (this.weaponDef.mesh)
+            if (this.weaponDef.modelPrefab)
             {
-                this.weaponRenderer.sharedMesh = this.weaponDef.mesh;
-                this.characterModel.baseRendererInfos[this.characterModel.baseRendererInfos.Length - 1].defaultMaterial = this.weaponDef.material;
+                this.weaponRenderer.gameObject.SetActive(false);
+                if (this.heldWeaponInstance) Destroy(this.heldWeaponInstance);
+
+                this.heldWeaponInstance = GameObject.Instantiate(this.weaponDef.modelPrefab);
+                this.heldWeaponInstance.transform.parent = this.childLocator.FindChild("Weapon");
+                this.heldWeaponInstance.transform.localPosition = Vector3.zero;
+                this.heldWeaponInstance.transform.localRotation = Quaternion.identity;
+                this.heldWeaponInstance.transform.localScale = Vector3.one;
+            }
+            else
+            {
+                this.weaponRenderer.gameObject.SetActive(true);
+                if (this.heldWeaponInstance) Destroy(this.heldWeaponInstance);
             }
 
             // crosshair

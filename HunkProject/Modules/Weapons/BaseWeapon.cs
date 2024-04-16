@@ -26,8 +26,7 @@ namespace HunkMod.Modules.Weapons
         public abstract GameObject crosshairPrefab { get; }
         public abstract int magSize { get; }
         public abstract SkillDef primarySkillDef { get; }
-        public abstract Mesh mesh { get; }
-        public abstract Material material { get; }
+        public abstract GameObject modelPrefab { get; }
         public abstract HunkWeaponDef.AnimationSet animationSet { get; }
 
         public abstract void Init();
@@ -45,17 +44,18 @@ namespace HunkMod.Modules.Weapons
 
             weaponDef = HunkWeaponDef.CreateWeaponDefFromInfo(new HunkWeaponDefInfo
             {
-                nameToken = "ROB_DRIVER_WEAPON_" + weaponNameToken + "_NAME",
-                descriptionToken = "ROB_DRIVER_WEAPON_" + weaponNameToken + "_DESC",
+                nameToken = "ROB_HUNK_WEAPON_" + weaponNameToken + "_NAME",
+                descriptionToken = "ROB_HUNK_WEAPON_" + weaponNameToken + "_DESC",
                 icon = icon,
                 crosshairPrefab = crosshairPrefab,
                 magSize = magSize,
                 primarySkillDef = primarySkillDef,
-                mesh = mesh,
-                material = material,
+                modelPrefab = modelPrefab,
                 animationSet = animationSet
             });
             HunkWeaponCatalog.AddWeapon(weaponDef);
+
+            if (modelPrefab) Modules.Assets.ConvertAllRenderersToHopooShader(modelPrefab);
         }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using EntityStates;
 using UnityEngine;
 using RoR2;
-using static RoR2.CameraTargetParams;
-using UnityEngine.Networking;
 
 namespace HunkMod.SkillStates.Hunk
 {
@@ -10,8 +8,7 @@ namespace HunkMod.SkillStates.Hunk
     {
         public float baseDuration = 2.4f;
         public string animString = "Reload";
-        public InterruptPriority interruptPriority = InterruptPriority.PrioritySkill;
-        public CameraParamsOverrideHandle camParamsOverrideHandle;
+        public InterruptPriority interruptPriority = InterruptPriority.Skill;
 
         private float duration;
         private bool wasAiming;
@@ -42,8 +39,11 @@ namespace HunkMod.SkillStates.Hunk
             base.FixedUpdate();
             this.hunk.reloadTimer = 2f;
 
-            if (this.hunk.isAiming && !this.wasAiming) // aiming to cancel a passive reload
+            if (!this.hunk.isAiming) this.wasAiming = false;
+
+            if (base.isAuthority && this.inputBank.skill2.down && !this.wasAiming) // aiming to cancel a passive reload
             {
+                base.PlayCrossfade("Reload", "BufferEmpty", 0.01f);
                 this.outer.SetNextStateToMain();
                 return;
             }
@@ -54,11 +54,6 @@ namespace HunkMod.SkillStates.Hunk
                 this.outer.SetNextStateToMain();
                 return;
             }
-        }
-
-        public override InterruptPriority GetMinimumInterruptPriority()
-        {
-            return this.interruptPriority;
         }
     }
 }

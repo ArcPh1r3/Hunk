@@ -85,7 +85,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.SMG
                     spreadPitchScale = 1f,
                     spreadYawScale = 1f,
                     queryTriggerInteraction = QueryTriggerInteraction.UseGlobal,
-                    hitEffectPrefab = EntityStates.Commando.CommandoWeapon.FirePistol2.hitEffectPrefab,
+                    hitEffectPrefab = EntityStates.Commando.CommandoWeapon.FireBarrage.hitEffectPrefab,
                 };
 
                 bulletAttack.modifyOutgoingDamageCallback = delegate (BulletAttack _bulletAttack, ref BulletAttack.BulletHit hitInfo, DamageInfo damageInfo)
@@ -102,7 +102,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.SMG
 
                         effectData.SetHurtBoxReference(hitInfo.hitHurtBox);
                         //EffectManager.SpawnEffect(Modules.Assets.headshotEffect, effectData, true);
-                        Util.PlaySound("sfx_driver_headshot", base.gameObject);
+                        Util.PlaySound("sfx_driver_headshot", hitInfo.hitHurtBox.gameObject);
                         //hitInfo.hitHurtBox.healthComponent.gameObject.AddComponent<Modules.Components.HunkHeadshotTracker>();
                     }
                 };

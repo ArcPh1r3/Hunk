@@ -7,13 +7,12 @@ namespace HunkMod.Modules.Weapons
     public class SMG : BaseWeapon<SMG>
     {
         public override string weaponNameToken => "SMG";
-        public override string weaponName => "Submachine Gun";
-        public override string weaponDesc => "Close-range gun with high damage and equally high spread.";
-        public override string iconName => "texSMGWeaponIcon";
+        public override string weaponName => "LE 5";
+        public override string weaponDesc => "";
+        public override string iconName => "texSMGIcon";
         public override GameObject crosshairPrefab => Modules.Assets.smgCrosshairPrefab;
         public override int magSize => 32;
-        public override Mesh mesh => Modules.Assets.LoadMesh("meshSMG");
-        public override Material material => Addressables.LoadAssetAsync<Material>("RoR2/Base/Commando/matCommandoDualies.mat").WaitForCompletion();
+        public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlSMG");
         public override HunkWeaponDef.AnimationSet animationSet => HunkWeaponDef.AnimationSet.SMG;
 
         public override SkillDef primarySkillDef => Modules.Skills.CreatePrimarySkillDef(
@@ -21,7 +20,7 @@ new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Weapon.SMG.
 "Weapon",
 "ROB_DRIVER_BODY_PRIMARY_BFG_NAME",
 "ROB_DRIVER_BODY_PRIMARY_BFG_DESCRIPTION",
-Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texRocketLauncherIcon"),
+Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texShootIcon"),
 false);
 
         public override void Init()

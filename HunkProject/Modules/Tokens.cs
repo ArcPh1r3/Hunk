@@ -27,9 +27,9 @@ namespace HunkMod.Modules
             lore += "And you have proved to be\n\n\n";
             lore += "A real human being and a real hero";
 
-            LanguageAPI.Add(prefix + "NAME", "Hunk");
+            LanguageAPI.Add(prefix + "NAME", "HUNK");
             LanguageAPI.Add(prefix + "DESCRIPTION", desc);
-            LanguageAPI.Add(prefix + "SUBTITLE", "The Grim Reaper");
+            LanguageAPI.Add(prefix + "SUBTITLE", "Grim Reaper");
             LanguageAPI.Add(prefix + "LORE", lore);
             LanguageAPI.Add(prefix + "OUTRO_FLAVOR", outro);
             LanguageAPI.Add(prefix + "OUTRO_FAILURE", outroFailure);
@@ -42,15 +42,6 @@ namespace HunkMod.Modules
             LanguageAPI.Add(prefix + "PASSIVE_NAME", "Survivalist");
             LanguageAPI.Add(prefix + "PASSIVE_DESCRIPTION", $"Enemies have a chance to drop a new <style=cIsUtility>weapon</style>. These give you <style=cIsDamage>powerful attacks</style> for a limited time!");
 
-            LanguageAPI.Add(prefix + "PASSIVE2_NAME", "Marksman (Legacy)");
-            LanguageAPI.Add(prefix + "PASSIVE2_DESCRIPTION", $"Your trusty <style=cIsHealth>pistol</style> is all you need.");
-
-            LanguageAPI.Add(prefix + "PASSIVE3_NAME", "Leadfoot");
-            LanguageAPI.Add(prefix + "PASSIVE3_DESCRIPTION", $"My words are my <style=cIsHealth>bullets</style>.");
-
-            LanguageAPI.Add(prefix + "PASSIVE4_NAME", "Godsling");
-            LanguageAPI.Add(prefix + "PASSIVE4_DESCRIPTION", $"I <style=cIsHealth>drive</style>.");
-
             LanguageAPI.Add(prefix + "CONFIRM_NAME", "Confirm");
             LanguageAPI.Add(prefix + "CONFIRM_DESCRIPTION", "Proceed with the current skill.");
 
@@ -59,23 +50,23 @@ namespace HunkMod.Modules
             #endregion
 
             #region Primary
-            LanguageAPI.Add(prefix + "PRIMARY_FIRE_NAME", "Fire");
-            LanguageAPI.Add(prefix + "PRIMARY_FIRE_DESCRIPTION", $"Fire your pistol for <style=cIsDamage>{100f * 2}% damage</style>.\n<style=cIsDamage>Critical hits shoot twice.</style>");
+            LanguageAPI.Add(prefix + "PRIMARY_KNIFE_NAME", "Combat Knife");
+            LanguageAPI.Add(prefix + "PRIMARY_KNIFE_DESCRIPTION", $"Slash close-range combatants for <style=cIsDamage>{100f * 3.5}% damage</style>.");
             #endregion
 
             #region Secondary
             LanguageAPI.Add(prefix + "SECONDARY_AIM_NAME", "Steady Aim");
-            LanguageAPI.Add(prefix + "SECONDARY_AIM_DESCRIPTION", $"Take aim and charge a shot for up to <style=cIsDamage>{100f * 5}% damage</style>. <style=cIsUtility>Boosts rate of fire and accuracy.</style>");
+            LanguageAPI.Add(prefix + "SECONDARY_AIM_DESCRIPTION", $"Take aim, <style=cIsUtility>exposing enemy weak points</style>. <style=cIsDamage>Using primary while aiming fires your held gun.</style>");
             #endregion
 
             #region Utility
             LanguageAPI.Add(prefix + "UTILITY_DODGE_NAME", "Tactical Dodge");
-            LanguageAPI.Add(prefix + "UTILITY_DODGE_DESCRIPTION", "<style=cIsUtility>Dash</style> a short distance. You can <style=cIsUtility>hold up to 2 charges.</style>");
+            LanguageAPI.Add(prefix + "UTILITY_DODGE_DESCRIPTION", "<style=cIsUtility>Dash</style> a short distance.");
             #endregion
 
             #region Special
-            LanguageAPI.Add(prefix + "SPECIAL_GRENADE_NAME", "Flashbang");
-            LanguageAPI.Add(prefix + "SPECIAL_GRENADE_DESCRIPTION", $"Throw a grenade that <style=cIsUtility>dazes</style> enemies for <style=cIsDamage>{100f * 1}% damage</style>. <style=cIsUtility>Dazed enemies aim in random directions for 10 seconds.</style>");
+            LanguageAPI.Add(prefix + "SPECIAL_SWAP_NAME", "idk");
+            LanguageAPI.Add(prefix + "SPECIAL_SWAP_DESCRIPTION", $"<style=cIsUtility>Swap</style> to a different <style=cIsDamage>gun</style>. Tap to swap to your <style=cIsUtility>last held gun</style>.");
             #endregion
 
             #region Achievements

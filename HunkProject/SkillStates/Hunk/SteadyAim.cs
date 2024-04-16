@@ -87,6 +87,11 @@ namespace HunkMod.SkillStates.Hunk
             {
                 this.outer.SetNextStateToMain();
             }
+
+            if (this.inputBank.skill4.down && base.isAuthority)
+            {
+                this.outer.SetNextStateToMain();
+            }
         }
 
         public override void OnExit()

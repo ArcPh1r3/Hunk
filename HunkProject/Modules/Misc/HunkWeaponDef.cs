@@ -23,8 +23,7 @@ public class HunkWeaponDef : ScriptableObject
     public SkillDef primarySkillDef;
 
     [Header("Visuals")]
-    public Mesh mesh;
-    public Material material;
+    public GameObject modelPrefab;
     public AnimationSet animationSet = AnimationSet.Default;
 
     [HideInInspector]
@@ -54,8 +53,7 @@ public class HunkWeaponDef : ScriptableObject
 
         weaponDef.primarySkillDef = weaponDefInfo.primarySkillDef;
 
-        weaponDef.mesh = weaponDefInfo.mesh;
-        weaponDef.material = weaponDefInfo.material;
+        weaponDef.modelPrefab = weaponDefInfo.modelPrefab;
         weaponDef.animationSet = weaponDefInfo.animationSet;
 
         return weaponDef;
@@ -73,7 +71,6 @@ public struct HunkWeaponDefInfo
 
     public SkillDef primarySkillDef;
 
-    public Mesh mesh;
-    public Material material;
+    public GameObject modelPrefab;
     public HunkWeaponDef.AnimationSet animationSet;
 }

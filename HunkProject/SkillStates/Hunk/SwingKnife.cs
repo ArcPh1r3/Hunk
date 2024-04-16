@@ -8,22 +8,23 @@ namespace HunkMod.SkillStates.Hunk
 {
     public class SwingKnife : BaseMeleeAttack
     {
+        protected override string prop => "KnifeModel";
         private GameObject swingEffectInstance;
 
         public override void OnEnter()
         {
             this.hitboxName = "Knife";
 
-            this.damageCoefficient = 4.7f;
+            this.damageCoefficient = 3.5f;
             this.pushForce = 200f;
-            this.baseDuration = 1.2f;
-            this.baseEarlyExitTime = 0.5f;
+            this.baseDuration = 1.1f;
+            this.baseEarlyExitTime = 0.55f;
             this.attackRecoil = 5f / this.attackSpeedStat;
 
-            this.attackStartTime = 0.13f;
+            this.attackStartTime = 0.265f;
             this.attackEndTime = 0.5f;
 
-            this.hitStopDuration = 0.18f;
+            this.hitStopDuration = 0.12f;
             this.smoothHitstop = true;
 
             this.swingSoundString = "sfx_driver_swing_knife";
@@ -32,13 +33,25 @@ namespace HunkMod.SkillStates.Hunk
             this.hitEffectPrefab = Modules.Assets.knifeImpactEffect;
             this.impactSound = Modules.Assets.knifeImpactSoundDef.index;
 
-            this.damageType = DamageType.ApplyMercExpose;
+            this.damageType = DamageType.Generic;
 
             this.muzzleString = "KnifeSwingMuzzle";
 
             base.OnEnter();
 
+            base.PlayCrossfade("Reload", "BufferEmpty", 0.01f);
             Util.PlaySound("sfx_driver_foley_knife", this.gameObject);
+        }
+
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+
+            if (this.hunk.isAiming && base.isAuthority)
+            {
+                this.outer.SetNextStateToMain();
+                return;
+            }
         }
 
         protected override void FireAttack()
