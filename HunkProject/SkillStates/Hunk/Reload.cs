@@ -30,7 +30,7 @@ namespace HunkMod.SkillStates.Hunk
             }
             else
             {
-                base.PlayCrossfade("Gesture, Override", this.animString, "Reload.playbackRate", this.duration, 0.25f);
+                base.PlayCrossfade("Gesture, Override", this.animString, "Reload.playbackRate", this.duration, 0.05f);
                 this.success = true;
                 Util.PlaySound("sfx_hunk_smg_reload_01", this.gameObject);
             }
