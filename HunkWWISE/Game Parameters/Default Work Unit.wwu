@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{86A48E9A-08D2-42C8-A690-503176424BE7}" SchemaVersion="97">
+	<GameParameters>
+		<WorkUnit Name="Default Work Unit" ID="{86A48E9A-08D2-42C8-A690-503176424BE7}" PersistMode="Standalone">
+			<ChildrenList>
+				<GameParameter Name="Volume_SFX" ID="{4FF50BF4-04DE-43F4-BCE1-1243931798A7}"/>
+				<GameParameter Name="Driver_SkateSpeed" ID="{DF1ADB74-2BB5-4085-9CCA-1C807F71C2BB}"/>
+			</ChildrenList>
+		</WorkUnit>
+	</GameParameters>
+</WwiseDocument>

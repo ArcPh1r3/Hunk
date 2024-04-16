@@ -38,16 +38,23 @@ namespace HunkMod.Modules.Components
         public int maxAmmo;
         public int ammo;
 
+        private Transform cameraPivot;
         private SkinnedMeshRenderer weaponRenderer;
         private HunkWeaponTracker _weaponTracker;
 
         public GameObject crosshairPrefab;
         public ParticleSystem machineGunVFX;
+        public float desiredYOffset;
 
         private GameObject heldWeaponInstance;
         public float reloadTimer;
         private WeaponNotificationQueue notificationQueue;
         private EntityStateMachine weaponStateMachine;
+        public float defaultYOffset { get; private set; }
+        private float yOffset;
+        public bool isRolling;
+        private GameObject backWeaponInstance;
+        private HunkWeaponDef backWeaponDef;
 
         private void Awake()
         {
@@ -60,6 +67,10 @@ namespace HunkMod.Modules.Components
             //this.machineGunVFX = this.childLocator.FindChild("MachineGunVFX").gameObject.GetComponent<ParticleSystem>();
             this.weaponRenderer = this.childLocator.FindChild("WeaponModel").GetComponent<SkinnedMeshRenderer>();
             this.weaponStateMachine = EntityStateMachine.FindByCustomName(this.gameObject, "Weapon");
+            this.cameraPivot = modelLocator.modelBaseTransform.Find("CameraPivot").transform;
+            this.defaultYOffset = 1.59f;
+            this.desiredYOffset = this.defaultYOffset;
+            this.yOffset = this.desiredYOffset;
 
             this.Invoke("SetInventoryHook", 0.5f);
         }
@@ -69,7 +80,6 @@ namespace HunkMod.Modules.Components
             this.InitShells();
 
             this.EquipWeapon(0);
-
         }
 
         private void SetInventoryHook()
@@ -158,6 +168,9 @@ namespace HunkMod.Modules.Components
                 if (this.characterModel && this.characterModel.invisibilityCount > 0) this.heldWeaponInstance.SetActive(false);
                 else this.heldWeaponInstance.SetActive(true);
             }
+
+            this.yOffset = Mathf.Lerp(this.yOffset, this.desiredYOffset, 5f * Time.fixedDeltaTime);
+            this.cameraPivot.localPosition = new Vector3(0f, this.yOffset, 0f);
         }
 
         private void Update()
@@ -171,7 +184,7 @@ namespace HunkMod.Modules.Components
             {
                 this.weaponStateMachine.SetInterruptState(new SkillStates.Hunk.Reload
                 {
-                    interruptPriority = EntityStates.InterruptPriority.Skill
+                    interruptPriority = EntityStates.InterruptPriority.Any
                 }, EntityStates.InterruptPriority.Any);
             }
         }
@@ -302,6 +315,29 @@ namespace HunkMod.Modules.Components
                     this.EnableLayer("Body, Hammer");
                     break;
             }*/
+
+            this.HandleBackWeapon();
+
+            if (this.onWeaponUpdate == null) return;
+            this.onWeaponUpdate(this);
+        }
+
+        private void HandleBackWeapon()
+        {
+            if (this.backWeaponInstance)
+            {
+                if (this.backWeaponDef && this.backWeaponDef == this.weaponTracker.weaponData[this.weaponTracker.lastEquippedIndex].weaponDef)
+                {
+                    return;
+                }
+                Destroy(this.backWeaponInstance);
+            }
+            this.backWeaponDef = this.weaponTracker.weaponData[this.weaponTracker.lastEquippedIndex].weaponDef;
+            this.backWeaponInstance = GameObject.Instantiate(this.backWeaponDef.modelPrefab);
+            this.backWeaponInstance.transform.parent = this.childLocator.FindChild("BackWeapon");
+            this.backWeaponInstance.transform.localPosition = Vector3.zero;
+            this.backWeaponInstance.transform.localRotation = Quaternion.identity;
+            this.backWeaponInstance.transform.localScale = Vector3.one;
         }
 
         private void EnableLayer(string layerName)

@@ -25,7 +25,7 @@ namespace HunkMod.SkillStates.Hunk
             if (NetworkServer.active) this.characterBody.AddBuff(RoR2Content.Buffs.Slow50);
 
             this.PlayAnim();
-            Util.PlaySound("sfx_driver_aim_foley", this.gameObject);
+            Util.PlaySound("sfx_hunk_smg_aim", this.gameObject);
 
             base.PlayCrossfade("AimPitch", "AimPitchAiming", 0.1f);
 
@@ -68,7 +68,8 @@ namespace HunkMod.SkillStates.Hunk
             this.hunk.reloadTimer = 2f;
             this.characterBody.outOfCombatStopwatch = 0f;
             this.characterBody.isSprinting = false;
-            base.characterBody.SetAimTimer(0.2f);
+
+            if (!this.hunk.isRolling) base.characterBody.SetAimTimer(0.2f);
 
             if (this.hunk.ammo <= 0)
             {

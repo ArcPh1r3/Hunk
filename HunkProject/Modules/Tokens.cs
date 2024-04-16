@@ -51,7 +51,10 @@ namespace HunkMod.Modules
 
             #region Primary
             LanguageAPI.Add(prefix + "PRIMARY_KNIFE_NAME", "Combat Knife");
-            LanguageAPI.Add(prefix + "PRIMARY_KNIFE_DESCRIPTION", $"Slash close-range combatants for <style=cIsDamage>{100f * 3.5}% damage</style>.");
+            LanguageAPI.Add(prefix + "PRIMARY_KNIFE_DESCRIPTION", $"<style=cIsDamage>Slash</style> close-range combatants for <style=cIsDamage>{100f * 3.5}% damage</style>.");
+
+            LanguageAPI.Add(prefix + "PRIMARY_KNIFEALT_NAME", "Tactical Knife");
+            LanguageAPI.Add(prefix + "PRIMARY_KNIFEALT_DESCRIPTION", $"<style=cIsDamage>Slash</style> close-range combatants for <style=cIsDamage>{100f * 2.2}% damage</style>. <style=cIsDamage>Attacks from behind are Critical Strikes.</style>");
             #endregion
 
             #region Secondary

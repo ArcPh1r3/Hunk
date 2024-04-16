@@ -15,6 +15,8 @@ namespace HunkMod.SkillStates.Hunk
         {
             this.hitboxName = "Knife";
 
+            this.swingIndex = Random.Range(0, 3);
+
             this.damageCoefficient = 3.5f;
             this.pushForce = 200f;
             this.baseDuration = 1.1f;
@@ -27,7 +29,7 @@ namespace HunkMod.SkillStates.Hunk
             this.hitStopDuration = 0.12f;
             this.smoothHitstop = true;
 
-            this.swingSoundString = "sfx_driver_swing_knife";
+            this.swingSoundString = "sfx_hunk_swing_knife";
             this.swingEffectPrefab = Modules.Assets.knifeSwingEffect;
             this.hitSoundString = "";
             this.hitEffectPrefab = Modules.Assets.knifeImpactEffect;
@@ -35,12 +37,23 @@ namespace HunkMod.SkillStates.Hunk
 
             this.damageType = DamageType.Generic;
 
-            this.muzzleString = "KnifeSwingMuzzle";
+            switch (this.swingIndex)
+            {
+                case 0:
+                    this.muzzleString = "KnifeSwingMuzzle";
+                    break;
+                case 1:
+                    this.muzzleString = "KnifeSwingMuzzle2";
+                    break;
+                case 2:
+                    this.muzzleString = "KnifeSwingMuzzle3";
+                    break;
+            }
 
             base.OnEnter();
 
-            base.PlayCrossfade("Reload", "BufferEmpty", 0.01f);
-            Util.PlaySound("sfx_driver_foley_knife", this.gameObject);
+            base.PlayAnimation("Reload", "BufferEmpty");
+            Util.PlaySound("sfx_hunk_foley_knife", this.gameObject);
         }
 
         public override void FixedUpdate()
@@ -75,6 +88,7 @@ namespace HunkMod.SkillStates.Hunk
                 if (muzzleTransform)
                 {
                     this.swingEffectInstance = UnityEngine.Object.Instantiate<GameObject>(this.swingEffectPrefab, muzzleTransform);
+                    if (this.swingIndex == 1) this.swingEffectInstance.transform.localScale *= 0.75f;
                     ScaleParticleSystemDuration fuck = this.swingEffectInstance.GetComponent<ScaleParticleSystemDuration>();
                     if (fuck) fuck.newDuration = fuck.initialDuration;
                 }
@@ -105,7 +119,7 @@ namespace HunkMod.SkillStates.Hunk
 
         protected override void PlayAttackAnimation()
         {
-            base.PlayCrossfade("Gesture, Override", "SwingKnife", "Knife.playbackRate", this.duration, 0.1f);
+            base.PlayCrossfade("Gesture, Override", "SwingKnife" + (1 + this.swingIndex), "Knife.playbackRate", this.duration, 0.1f);
         }
 
         protected override void SetNextState()

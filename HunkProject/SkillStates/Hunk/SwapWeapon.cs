@@ -9,19 +9,29 @@ namespace HunkMod.SkillStates.Hunk
         public override void OnEnter()
         {
             base.OnEnter();
+
+            EntityStateMachine.FindByCustomName(this.gameObject, "Aim").SetNextStateToMain();
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+            this.hunk.reloadTimer = 2f;
+
+            this.skillLocator.secondary.stock = 0;
+            this.skillLocator.secondary.rechargeStopwatch = 0f;
 
             if (base.isAuthority && !this.inputBank.skill4.down)
             {
-                this.hunk.SwapToLastWeapon();
-                base.PlayAnimation("Reload", "BufferEmpty");
+                EntityStateMachine.FindByCustomName(this.gameObject, "Weapon").SetInterruptState(new Swap(), InterruptPriority.Frozen);
                 this.outer.SetNextStateToMain();
                 return;
             }
+        }
+
+        public override InterruptPriority GetMinimumInterruptPriority()
+        {
+            return InterruptPriority.Death;
         }
     }
 }

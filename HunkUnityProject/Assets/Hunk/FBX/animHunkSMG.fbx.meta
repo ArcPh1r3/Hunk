@@ -96,6 +96,18 @@ ModelImporter:
   - first:
       74: -4809550843377111140
     second: Armature|DodgeStart
+  - first:
+      74: -7997862851191185331
+    second: Armature|EquipGun
+  - first:
+      74: 2449990995943773183
+    second: Armature|StoreGun
+  - first:
+      74: -3237626289442736738
+    second: Armature|SwingKnife2
+  - first:
+      74: -8576782569239416384
+    second: Armature|SwingKnife3
   externalObjects: {}
   materials:
     materialImportMode: 1

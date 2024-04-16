@@ -41,7 +41,7 @@ namespace HunkMod.Modules.Components
                 }, false);
 
                 GameObject.Instantiate(Modules.Assets.bloodSpurtEffect, this.headTransform);
-                Util.PlaySound("sfx_driver_blood_gurgle", this.headTransform.gameObject);
+                Util.PlaySound("sfx_hunk_blood_gurgle", this.headTransform.gameObject);
             }
         }
 

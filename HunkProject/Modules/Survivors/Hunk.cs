@@ -470,8 +470,15 @@ namespace HunkMod.Modules.Survivors
                 Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
             knife.interruptPriority = EntityStates.InterruptPriority.Skill;
 
+            SkillDef knifeAlt = Modules.Skills.CreatePrimarySkillDef(new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.SwingAltKnife)),
+    "Weapon",
+    prefix + "_HUNK_BODY_PRIMARY_KNIFEALT_NAME",
+    prefix + "_HUNK_BODY_PRIMARY_KNIFEALT_DESCRIPTION",
+    Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
+            knife.interruptPriority = EntityStates.InterruptPriority.Skill;
+
             Modules.Skills.AddPrimarySkills(prefab,
-                knife);
+                knife, knifeAlt);
             #endregion
 
             #region Secondary
@@ -484,7 +491,7 @@ namespace HunkMod.Modules.Survivors
                 activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.SteadyAim)),
                 activationStateMachineName = "Aim",
                 baseMaxStock = 1,
-                baseRechargeInterval = 6f,
+                baseRechargeInterval = 0.4f,
                 beginSkillCooldownOnSkillEnd = false,
                 canceledFromSprinting = false,
                 forceSprintDuringState = false,
@@ -495,7 +502,7 @@ namespace HunkMod.Modules.Survivors
                 mustKeyPress = false,
                 cancelSprintingOnActivation = true,
                 rechargeStock = 1,
-                requiredStock = 0,
+                requiredStock = 1,
                 stockToConsume = 0,
             });
 
@@ -595,7 +602,7 @@ namespace HunkMod.Modules.Survivors
             List<SkinDef> skins = new List<SkinDef>();
 
             #region DefaultSkin
-            SkinDef defaultSkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_DRIVER_BODY_DEFAULT_SKIN_NAME",
+            SkinDef defaultSkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_DEFAULT_SKIN_NAME",
                 Assets.mainAssetBundle.LoadAsset<Sprite>("texMainSkin"),
                 defaultRenderers,
                 mainRenderer,
@@ -611,6 +618,35 @@ namespace HunkMod.Modules.Survivors
             };*/
 
             skins.Add(defaultSkin);
+            #endregion
+
+            #region MasterySkin
+            SkinDef masterySkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_MONSOON_SKIN_NAME",
+                Assets.mainAssetBundle.LoadAsset<Sprite>("texMainSkin"),
+                defaultRenderers,
+                mainRenderer,
+                model);
+
+            masterySkin.meshReplacements = new SkinDef.MeshReplacement[]
+            {
+                new SkinDef.MeshReplacement
+                {
+                    renderer = mainRenderer,
+                    mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("meshHunkB01")
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = mainRenderer,
+                    mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("meshHunkB02")
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = mainRenderer,
+                    mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("meshHunkB03")
+                }
+            };
+
+            skins.Add(masterySkin);
             #endregion
 
             skinController.skins = skins.ToArray();

@@ -32,7 +32,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.SMG
                 this.Fire();
             }
 
-            this.PlayAnimation("Reload", "BufferEmpty");
+            //this.PlayAnimation("Reload", "BufferEmpty");
             this.PlayAnimation("Gesture, Override", "Shoot", "Shoot.playbackRate", 0.9f);
 
             if (this.hunk)
@@ -46,8 +46,8 @@ namespace HunkMod.SkillStates.Hunk.Weapon.SMG
         {
             EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab, base.gameObject, this.muzzleString, false);
 
-            if (this.isCrit) Util.PlaySound("sfx_driver_machinegun_shoot_critical", base.gameObject);
-            else Util.PlaySound("sfx_driver_machinegun_shoot", base.gameObject);
+            if (this.isCrit) Util.PlaySound("sfx_hunk_smg_shoot", base.gameObject);
+            else Util.PlaySound("sfx_hunk_smg_shoot", base.gameObject);
 
             if (base.isAuthority)
             {
@@ -102,7 +102,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.SMG
 
                         effectData.SetHurtBoxReference(hitInfo.hitHurtBox);
                         //EffectManager.SpawnEffect(Modules.Assets.headshotEffect, effectData, true);
-                        Util.PlaySound("sfx_driver_headshot", hitInfo.hitHurtBox.gameObject);
+                        Util.PlaySound("sfx_hunk_headshot", hitInfo.hitHurtBox.gameObject);
                         //hitInfo.hitHurtBox.healthComponent.gameObject.AddComponent<Modules.Components.HunkHeadshotTracker>();
                     }
                 };

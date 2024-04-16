@@ -15,7 +15,7 @@ namespace HunkMod.Modules.Components
         public HunkWeaponData[] weaponData = new HunkWeaponData[0];
         public int equippedIndex = 0;
 
-        private int lastEquippedIndex = 1;
+        public int lastEquippedIndex = 1;
 
         private void Awake()
         {
@@ -50,6 +50,7 @@ namespace HunkMod.Modules.Components
         public void SwapToLastWeapon()
         {
             // temporary until radial is in
+            this.lastEquippedIndex = this.equippedIndex;
             this.equippedIndex++;
             if (this.equippedIndex >= this.weaponData.Length) this.equippedIndex = 0;
             return;

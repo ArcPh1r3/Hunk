@@ -8,7 +8,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Slugger
     {
         public static float damageCoefficient = 16f;
         public static float procCoefficient = 1f;
-        public float baseDuration = 1.5f;
+        public float baseDuration = 1.2f;
         public static float bulletRecoil = 8f;
         public static float bulletRange = 128f;
         public static float bulletThiccness = 1f;
@@ -24,18 +24,18 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Slugger
         public override void OnEnter()
         {
             base.OnEnter();
-            this.characterBody.SetAimTimer(5f);
             this.muzzleString = "MuzzleSMG";
             this.hasFired = false;
             this.duration = this.baseDuration / this.attackSpeedStat;
             this.isCrit = base.RollCrit();
-            this.earlyExitTime = 0.75f * this.duration;
+            this.earlyExitTime = 1f * this.duration;
 
-            if (this.isCrit) Util.PlaySound("sfx_driver_riot_shotgun_shoot_critical", base.gameObject);
-            else Util.PlaySound("sfx_driver_riot_shotgun_shoot", base.gameObject);
+            if (this.isCrit) Util.PlaySound("sfx_hunk_slugger_shoot_critical", base.gameObject);
+            else Util.PlaySound("sfx_hunk_slugger_shoot", base.gameObject);
 
-            this.PlayAnimation("Reload", "BufferEmpty");
-            this.PlayAnimation("Gesture, Override", "Shoot", "Shoot.playbackRate", this.duration);
+            //this.PlayAnimation("Reload", "BufferEmpty");
+            this.PlayAnimation("Gesture, Override", "ShootShotgun", "Shoot.playbackRate", this.duration);
+            //this.PlayAnimation("Reload", "ShootShotgun", "Shoot.playbackRate", this.duration);
 
             this.fireDuration = 0;
 
@@ -114,8 +114,8 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Slugger
 
                             effectData.SetHurtBoxReference(hitInfo.hitHurtBox);
                             //EffectManager.SpawnEffect(Modules.Assets.headshotEffect, effectData, true);
-                            Util.PlaySound("sfx_driver_headshot", hitInfo.hitHurtBox.gameObject);
-                            //hitInfo.hitHurtBox.healthComponent.gameObject.AddComponent<Modules.Components.HunkHeadshotTracker>();
+                            Util.PlaySound("sfx_hunk_headshot", hitInfo.hitHurtBox.gameObject);
+                            hitInfo.hitHurtBox.healthComponent.gameObject.AddComponent<Modules.Components.HunkHeadshotTracker>();
                         }
                     };
 

@@ -113,7 +113,7 @@ namespace HunkMod.SkillStates.BaseStates
 
         public override void OnExit()
         {
-            if (!this.hasFired) this.FireAttack();
+            if (!this.hasFired && !this.inputBank.skill2.down) this.FireAttack();
 
             if (this.inHitPause)
             {

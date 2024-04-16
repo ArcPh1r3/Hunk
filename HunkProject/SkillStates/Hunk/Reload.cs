@@ -13,6 +13,7 @@ namespace HunkMod.SkillStates.Hunk
         private float duration;
         private bool wasAiming;
         private bool success;
+        private bool cummed = false;
 
         public override void OnEnter()
         {
@@ -24,13 +25,13 @@ namespace HunkMod.SkillStates.Hunk
             {
                 this.duration = 0.3f;
                 this.success = false;
-                Util.PlaySound("sfx_driver_reload_01", this.gameObject);
+                Util.PlaySound("sfx_hunk_gun_click", this.gameObject);
             }
             else
             {
-                base.PlayCrossfade("Reload", this.animString, "Action.playbackRate", this.duration * 1.1f, 0.25f);
+                base.PlayCrossfade("Reload", this.animString, "Action.playbackRate", this.duration, 0.25f);
                 this.success = true;
-                Util.PlaySound("sfx_driver_reload_01", this.gameObject);
+                Util.PlaySound("sfx_hunk_smg_reload_01", this.gameObject);
             }
         }
 
@@ -48,12 +49,29 @@ namespace HunkMod.SkillStates.Hunk
                 return;
             }
 
-            if (base.isAuthority && base.fixedAge >= this.duration)
+            if (base.fixedAge >= (0.77f * this.duration) && !this.cummed)
             {
+                this.cummed = true;
                 if (this.success) this.hunk.FinishReload();
+            }
+
+            if (base.isAuthority && this.inputBank.skill3.down && this.skillLocator.utility.stock > 0) // roll cancel
+            {
+                base.PlayCrossfade("Reload", "BufferEmpty", 0.01f);
                 this.outer.SetNextStateToMain();
                 return;
             }
+
+            if (base.isAuthority && base.fixedAge >= this.duration)
+            {
+                this.outer.SetNextStateToMain();
+                return;
+            }
+        }
+
+        public override InterruptPriority GetMinimumInterruptPriority()
+        {
+            return this.interruptPriority;
         }
     }
 }
