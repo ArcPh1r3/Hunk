@@ -1,0 +1,175 @@
+ManifestFileVersion: 0
+CRC: 515578686
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 3fc1108b170e1bd79415d03ccb748323
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 4eec1177a4c3fc73a207cdc096ab8d4c
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 54
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 90
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
+- Class: 108
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 67079b849227b734694872d8810229b8, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 136
+  Script: {instanceID: 0}
+- Class: 137
+  Script: {instanceID: 0}
+- Class: 198
+  Script: {instanceID: 0}
+- Class: 199
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 222
+  Script: {instanceID: 0}
+- Class: 224
+  Script: {instanceID: 0}
+- Class: 319
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Hunk/FBX/AimIdle.anim
+- Assets/Hunk/Textures/equipment_albm.png
+- Assets/Hunk/Animations/animHunkCSS.controller
+- Assets/Hunk/Icons/Skill/texDodgeIcon.png
+- Assets/Hunk/FBX/LightImpact.anim
+- Assets/Hunk/Materials/matHunk06.mat
+- Assets/Hunk/Textures/Shotgun/Leon_RemingtonM1100P_D.png
+- Assets/Hunk/FBX/maskHunkGesture.mask
+- Assets/Hunk/Icons/Skill/texShootIcon.png
+- Assets/Hunk/VFX/BloodSpurtEffect.prefab
+- Assets/Hunk/FBX/meshHunkB03.mesh
+- Assets/Hunk/HUD/ChargeBar.prefab
+- Assets/Hunk/FBX/meshSMG.mesh
+- Assets/Hunk/VFX/matShockwave.mat
+- Assets/Hunk/FBX/Hunk.fbx
+- Assets/Hunk/VFX/ShotgunShell.prefab
+- Assets/Hunk/VFX/Badass/BigExplosion.prefab
+- Assets/Hunk/FBX/AimPitchAiming.anim
+- Assets/Hunk/VFX/Badass/MetalHitEffect.prefab
+- Assets/Hunk/Textures/texAmmoPickup.png
+- Assets/Hunk/Textures/SMG/Leon_LI5_D.png
+- Assets/Hunk/HUD/Textures/texBulletIndicator.png
+- Assets/Hunk/FBX/ShootShotgun.anim
+- Assets/Hunk/VFX/matShockwave2.mat
+- Assets/Hunk/Textures/face_albm.png
+- Assets/Hunk/FBX/animHunkShotgun.fbx
+- Assets/Hunk/VFX/Badass/StoneHitEffect.prefab
+- Assets/Hunk/Textures/Knife/Leon_Knife_S.png
+- Assets/Hunk/HunkDisplay.prefab
+- Assets/Hunk/Materials/matHunk02.mat
+- Assets/Hunk/FBX/maskHunkImpact.mask
+- Assets/Hunk/FBX/ammoBox.fbx
+- Assets/Hunk/FBX/DefaultPose.anim
+- Assets/Hunk/FBX/AimPitch.anim
+- Assets/Hunk/FBX/Ascend.anim
+- Assets/Hunk/FBX/Sprint.anim
+- Assets/Hunk/Textures/jacket_n.png
+- Assets/Hunk/FBX/animHunkSMG.fbx
+- Assets/Hunk/Materials/matKnife.mat
+- Assets/Hunk/Animations/animHunk.controller
+- Assets/Hunk/FBX/AimYaw.anim
+- Assets/Hunk/mdlHunk.prefab
+- Assets/Hunk/Textures/Knife/Leon_Knife_D.png
+- Assets/Hunk/Materials/matHunk03.mat
+- Assets/Hunk/Icons/Skill/texKnifeIcon.png
+- Assets/Hunk/VFX/texShockwave.png
+- Assets/Hunk/Icons/Skill/texConfirmIcon.png
+- Assets/Hunk/Textures/jacket_Spec.png
+- Assets/Hunk/Icons/Weapon/texShotgunIcon.png
+- Assets/Hunk/Textures/equipment_Spec.png
+- Assets/Hunk/Icons/texHunkAchievement.png
+- Assets/Hunk/FBX/meshHunkB02.mesh
+- Assets/Hunk/FBX/Descend.anim
+- Assets/Hunk/Icons/texMainSkin.png
+- Assets/Hunk/Icons/texHunkIcon.png
+- Assets/Hunk/FBX/maskHunkAimPitch.mask
+- Assets/Hunk/HUD/Textures/texWeakPointIndicator.png
+- Assets/Hunk/Icons/Weapon/texPlaceholderIcon.png
+- Assets/Hunk/VFX/ShotgunSlug.prefab
+- Assets/Hunk/AmmoPickup.prefab
+- Assets/Hunk/Textures/body_n.png
+- Assets/Hunk/FBX/meshHunkB01.mesh
+- Assets/Hunk/VFX/HunkMissileGhost.prefab
+- Assets/Hunk/HUD/WeaponChargeBar.prefab
+- Assets/Hunk/VFX/GunLight.prefab
+- Assets/Hunk/FBX/Idle.anim
+- Assets/Hunk/Materials/matHunk05.mat
+- Assets/Hunk/Icons/Skill/texPassiveIcon.png
+- Assets/Hunk/Textures/jacket_albm.png
+- Assets/Hunk/Weapons/mdlSMG.prefab
+- Assets/Hunk/Textures/equipment_n.png
+- Assets/Hunk/FBX/AimPitchMoving.anim
+- Assets/Hunk/VFX/Badass/TinyExplosion.prefab
+- Assets/Hunk/VFX/Badass/SandHitEffect.prefab
+- Assets/Hunk/Textures/usp_albm.png
+- Assets/Hunk/HUD/ChargeRing.prefab
+- Assets/Hunk/Materials/matHunk01.mat
+- Assets/Hunk/Icons/Skill/texAimIcon.png
+- Assets/Hunk/Textures/Shotgun/matShotgun.mat
+- Assets/Hunk/FBX/HunkWeapons.fbx
+- Assets/Hunk/Textures/SMG/Leon_LI5_S.png
+- Assets/Hunk/Materials/matHunk04.mat
+- Assets/Hunk/Weapons/mdlShotgun.prefab
+- Assets/Hunk/Textures/Shotgun/Leon_RemingtonM1100_D.png
+- Assets/Hunk/VFX/HunkRocketGhost.prefab
+- Assets/Hunk/HUD/Textures/texChargeRing.png
+- Assets/Hunk/Textures/Knife/Leon_Knife_N.png
+- Assets/Hunk/FBX/HunkLightweight.fbx
+- Assets/Hunk/Textures/body_albm.png
+- Assets/Hunk/FBX/Rockets.fbx
+- Assets/Hunk/VFX/HunkBigRocketGhost.prefab
+- Assets/Hunk/FBX/SprintFast.anim
+- Assets/Hunk/Textures/SMG/Leon_LI5_M.png
+- Assets/Hunk/Materials/matSMG.mat
+- Assets/Hunk/Textures/Shotgun/Leon_RemingtonM1100P_N.png
+- Assets/Hunk/Icons/Weapon/texSMGIcon.png
+- Assets/Hunk/FBX/maskHunkAimYaw.mask
+- Assets/Hunk/Textures/SMG/Leon_LI5_N.png
+- Assets/Hunk/FBX/RunF.anim
+- Assets/Hunk/Icons/Weapon/texPistolIcon.png
+- Assets/Hunk/Icons/Skill/texSlideIcon.png
+- Assets/Hunk/Materials/matAmmoPickup.mat
+- Assets/Hunk/Icons/Skill/texCancelIcon.png
+- Assets/Hunk/VFX/Badass/WoodHitEffect.prefab
+- Assets/Hunk/VFX/Badass/SmallExplosion.prefab
+- Assets/Hunk/HUD/Textures/texSniperBulletIndicator.png
+- Assets/Hunk/FBX/Reload.anim
+- Assets/Hunk/FBX/Shell.dae
+- Assets/Hunk/Textures/body_Spec.png
+- Assets/Hunk/HUD/Textures/texWhite.png
+- Assets/Hunk/Textures/Shotgun/Leon_RemingtonM1100_N.png
+Dependencies: []
