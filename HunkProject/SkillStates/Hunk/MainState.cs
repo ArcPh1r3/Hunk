@@ -4,11 +4,13 @@ using EntityStates;
 using HunkMod.Modules;
 using HunkMod.SkillStates.Emote;
 using BepInEx.Configuration;
+using HunkMod.Modules.Components;
 
 namespace HunkMod.SkillStates.Hunk
 {
     public class MainState : GenericCharacterMain
     {
+		private HunkController hunk;
 		private Animator animator;
 		public LocalUser localUser;
 
@@ -16,6 +18,7 @@ namespace HunkMod.SkillStates.Hunk
         {
             base.OnEnter();
 			this.animator = this.modelAnimator;
+			this.hunk = this.GetComponent<HunkController>();
 			this.FindLocalUser();
         }
 
@@ -32,7 +35,11 @@ namespace HunkMod.SkillStates.Hunk
 
 				if (this.isGrounded) this.animator.SetFloat("airBlend", 0f);
 				else this.animator.SetFloat("airBlend", 1f);
-            }
+
+				this.animator.SetBool("isAiming", this.hunk.isAiming);
+				if (this.hunk.isAiming) this.animator.SetFloat("aimBlend", 1f);
+				else this.animator.SetFloat("aimBlend", 0f);
+			}
 
 			//emotes
 			if (base.isAuthority && base.characterMotor.isGrounded)

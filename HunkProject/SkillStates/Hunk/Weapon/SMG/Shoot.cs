@@ -32,7 +32,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.SMG
                 this.Fire();
             }
 
-            this.PlayAnimation("Gesture, Override", "Shoot", "Shoot.playbackRate", 0.9f);
+            this.PlayAnimation("Gesture, Override", "Shoot", "Shoot.playbackRate", 0.4f);
 
             if (this.hunk)
             {

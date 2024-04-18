@@ -52,6 +52,10 @@ namespace HunkMod.SkillStates.Hunk
 
             base.OnEnter();
 
+            EntityStateMachine.FindByCustomName(this.gameObject, "Aim").SetNextStateToMain();
+            this.skillLocator.secondary.stock = 0;
+            this.skillLocator.secondary.rechargeStopwatch = 0f;
+
             Util.PlaySound("sfx_hunk_foley_knife", this.gameObject);
         }
 
@@ -128,7 +132,7 @@ namespace HunkMod.SkillStates.Hunk
         public override InterruptPriority GetMinimumInterruptPriority()
         {
             if (this.stopwatch >= (0.5f * this.duration)) return InterruptPriority.Any;
-            else return InterruptPriority.Pain;
+            else return InterruptPriority.PrioritySkill;
         }
     }
 }

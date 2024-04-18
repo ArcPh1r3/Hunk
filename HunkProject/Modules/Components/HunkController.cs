@@ -170,6 +170,12 @@ namespace HunkMod.Modules.Components
                 else this.heldWeaponInstance.SetActive(true);
             }
 
+            if (this.backWeaponInstance)
+            {
+                if (this.characterModel && this.characterModel.invisibilityCount > 0) this.backWeaponInstance.SetActive(false);
+                else this.backWeaponInstance.SetActive(true);
+            }
+
             this.yOffset = Mathf.Lerp(this.yOffset, this.desiredYOffset, 5f * Time.fixedDeltaTime);
             this.cameraPivot.localPosition = new Vector3(0f, this.yOffset, 0f);
         }
