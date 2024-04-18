@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using RoR2;
+using UnityEngine;
 
 namespace HunkMod.Modules
 {
@@ -25,6 +26,23 @@ namespace HunkMod.Modules
         internal static string ScepterDescription(string desc)
         {
             return "\n<color=#d299ff>SCEPTER: " + desc + "</color>";
+        }
+
+        public static bool isHunkInPlay
+        {
+            get
+            {
+                bool isHunkOnPlayerTeam = false;
+                foreach (CharacterBody i in CharacterBody.readOnlyInstancesList)
+                {
+                    if (i && i.teamComponent && i.teamComponent.teamIndex == TeamIndex.Player && i.baseNameToken == Modules.Survivors.Hunk.bodyNameToken)
+                    {
+                        isHunkOnPlayerTeam = true;
+                        break;
+                    }
+                }
+                return isHunkOnPlayerTeam;
+            }
         }
     }
 }

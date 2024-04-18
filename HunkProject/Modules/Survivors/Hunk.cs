@@ -534,7 +534,31 @@ namespace HunkMod.Modules.Survivors
                 stockToConsume = 1
             });
 
-            Modules.Skills.AddUtilitySkills(prefab, dodgeSkillDef);
+            SkillDef dodgeSkillDefTEMP = Modules.Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = prefix + "_HUNK_BODY_UTILITY_DODGE_NAME",
+                skillNameToken = prefix + "_HUNK_BODY_UTILITY_DODGE_NAME",
+                skillDescriptionToken = prefix + "_HUNK_BODY_UTILITY_DODGE_DESCRIPTION",
+                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texDodgeIcon"),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Roll)),
+                activationStateMachineName = "Weapon",
+                baseMaxStock = 1,
+                baseRechargeInterval = 4f,
+                beginSkillCooldownOnSkillEnd = false,
+                canceledFromSprinting = false,
+                forceSprintDuringState = true,
+                fullRestockOnAssign = true,
+                interruptPriority = EntityStates.InterruptPriority.PrioritySkill,
+                resetCooldownTimerOnUse = false,
+                isCombatSkill = false,
+                mustKeyPress = false,
+                cancelSprintingOnActivation = false,
+                rechargeStock = 1,
+                requiredStock = 1,
+                stockToConsume = 1
+            });
+
+            Modules.Skills.AddUtilitySkills(prefab, dodgeSkillDef, dodgeSkillDefTEMP);
             #endregion
 
             #region Special
@@ -932,15 +956,31 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
         private static void Hook()
         {
+            // headshots and ammo drops
             RoR2.GlobalEventManager.onCharacterDeathGlobal += GlobalEventManager_onCharacterDeathGlobal;
 
+            // custom hud
             RoR2.UI.HUD.onHudTargetChangedGlobal += HUDSetup;
+
+            // rummage passive
+            On.RoR2.ChestBehavior.ItemDrop += ChestBehavior_ItemDrop;
 
             // heresy anims
             //On.EntityStates.GlobalSkills.LunarNeedle.FireLunarNeedle.OnEnter += PlayVisionsAnimation;
             //On.EntityStates.GlobalSkills.LunarNeedle.ChargeLunarSecondary.PlayChargeAnimation += PlayChargeLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarNeedle.ThrowLunarSecondary.PlayThrowAnimation += PlayThrowLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += PlayRuinAnimation;
+        }
+
+        private static void ChestBehavior_ItemDrop(On.RoR2.ChestBehavior.orig_ItemDrop orig, ChestBehavior self)
+        {
+            orig(self);
+
+            // spawn the custom interactable here. i don't know how to create this, just laying the groundwork for now.
+            if (Modules.Helpers.isHunkInPlay)
+            {
+
+            }
         }
 
         private static void LoadoutPanelController_Rebuild(On.RoR2.UI.LoadoutPanelController.orig_Rebuild orig, LoadoutPanelController self)
@@ -961,18 +1001,8 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
         {
             if (damageReport.attackerBody && damageReport.attackerMaster && damageReport.victim)
             {
-                bool isHunkOnPlayerTeam = false;
-                foreach (CharacterBody i in CharacterBody.readOnlyInstancesList)
-                {
-                    if (i && i.teamComponent && i.teamComponent.teamIndex == TeamIndex.Player && i.baseNameToken == Hunk.bodyNameToken)
-                    {
-                        isHunkOnPlayerTeam = true;
-                        break;
-                    }
-                }
-
                 // ammo drops
-                if (isHunkOnPlayerTeam)
+                if (Modules.Helpers.isHunkInPlay)
                 {
                     // headshot first
                     if (damageReport.attackerBody.baseNameToken == Hunk.bodyNameToken)
@@ -987,7 +1017,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                         }
                     }
 
-                    // 7
+                    // 4
                     float chance = Modules.Config.baseDropRate.Value;
                     bool fuckMyAss = chance >= 100f;
 
@@ -1015,6 +1045,9 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     // stop dropping ammo when void monsters kill each other plz this is an annoying bug
                     if (damageReport.attackerTeamIndex != TeamIndex.Player) dropped = false;
 
+                    // only drop on sacrifice- otherwise he must rummage
+                    if (Run.instance && !RoR2.RunArtifactManager.instance.IsArtifactEnabled(RoR2Content.Artifacts.Sacrifice)) dropped = false;
+
                     if (dropped)
                     {
                         Hunk.instance.pityMultiplier = 0.8f;
@@ -1025,9 +1058,6 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                         {
                             position = damageReport.victim.transform.position;
                         }
-
-                        // bosses drop a new weapon instead- todo
-                        //if (damageReport.victimBody.isChampion) weaponTier = DriverWeaponTier.Legendary;
 
                         //GameObject ammoPickup = UnityEngine.Object.Instantiate<GameObject>(weaponDef.pickupPrefab, position, UnityEngine.Random.rotation);
 
