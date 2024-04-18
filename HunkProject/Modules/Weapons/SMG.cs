@@ -8,7 +8,7 @@ namespace HunkMod.Modules.Weapons
     {
         public override string weaponNameToken => "SMG";
         public override string weaponName => "LE 5";
-        public override string weaponDesc => "";
+        public override string weaponDesc => "32-shot capacity .380 ACP machine gun. Uses a closed bolt and has high accuracy.";
         public override string iconName => "texSMGIcon";
         public override GameObject crosshairPrefab => Modules.Assets.smgCrosshairPrefab;
         public override int magSize => 32;

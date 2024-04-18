@@ -16,6 +16,7 @@ namespace HunkMod.Modules
         public static ConfigEntry<float> baseDropRate;
         public static ConfigEntry<bool> dynamicCrosshair;
         public static ConfigEntry<bool> enableRecoil;
+        public static ConfigEntry<bool> overTheShoulderCamera;
         public static ConfigEntry<bool> cursed;
 
         public static ConfigEntry<float> baseHealth;
@@ -31,15 +32,6 @@ namespace HunkMod.Modules
         public static ConfigEntry<KeyboardShortcut> restKey;
         public static ConfigEntry<KeyboardShortcut> tauntKey;
         public static ConfigEntry<KeyboardShortcut> danceKey;
-
-        public static List<WeaponConfigBinding> weaponConfigBinding = new List<WeaponConfigBinding>();
-
-        public struct WeaponConfigBinding
-        {
-            public string identifier;
-            public ConfigEntry<bool> enabled;
-            public ConfigEntry<int> shotCount;
-        }
 
         internal static void ReadConfig()
         {
@@ -61,6 +53,12 @@ true,
 "Enable Recoil",
 true,
 "Set to false to disable recoil from shooting guns.");
+
+            overTheShoulderCamera
+= Config.BindAndOptions("01 - General",
+"Enable Over The Shoulder Camera",
+true,
+"Set to false to use more standard camera positioning.", true);
 
             cursed
 = Config.BindAndOptions("01 - General",

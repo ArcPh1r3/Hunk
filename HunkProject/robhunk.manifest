@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1293682977
+CRC: 1709999846
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 403878af091e364e84f525ddcd1da4c7
+    Hash: e6ca71c4b1cfe82b89eb07a34a6ec00a
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 4eec1177a4c3fc73a207cdc096ab8d4c
+    Hash: 301e2c247082c83efdce4cb295e86c10
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -41,6 +41,8 @@ ClassTypes:
   Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 67079b849227b734694872d8810229b8, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2334069450a65d042a95a873e5229b20, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 136
@@ -109,6 +111,7 @@ Assets:
 - Assets/Hunk/VFX/texShockwave.png
 - Assets/Hunk/Icons/Skill/texConfirmIcon.png
 - Assets/Hunk/Textures/jacket_Spec.png
+- Assets/Hunk/FBX/RunL.anim
 - Assets/Hunk/Icons/Weapon/texShotgunIcon.png
 - Assets/Hunk/Textures/equipment_Spec.png
 - Assets/Hunk/Icons/texHunkAchievement.png
@@ -121,6 +124,7 @@ Assets:
 - Assets/Hunk/Icons/Weapon/texPlaceholderIcon.png
 - Assets/Hunk/VFX/ShotgunSlug.prefab
 - Assets/Hunk/AmmoPickup.prefab
+- Assets/Hunk/FBX/RunR.anim
 - Assets/Hunk/Textures/body_n.png
 - Assets/Hunk/FBX/meshHunkB01.mesh
 - Assets/Hunk/VFX/HunkMissileGhost.prefab
@@ -167,6 +171,7 @@ Assets:
 - Assets/Hunk/VFX/Badass/WoodHitEffect.prefab
 - Assets/Hunk/VFX/Badass/SmallExplosion.prefab
 - Assets/Hunk/HUD/Textures/texSniperBulletIndicator.png
+- Assets/Hunk/FBX/RunB.anim
 - Assets/Hunk/FBX/Reload.anim
 - Assets/Hunk/FBX/Shell.dae
 - Assets/Hunk/Textures/body_Spec.png
