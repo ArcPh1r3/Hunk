@@ -9,23 +9,17 @@ namespace HunkMod.Modules
         {
             string prefix = MainPlugin.developerPrefix + "_HUNK_BODY_";
 
-            string desc = "The Driver is literally me.<color=#CCD3E0>" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > Each weapon has its own unique strengths and weaknesses so be sure to pick the right tool for the job." + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > Focus greatly increases your damage output, but be careful not to get flanked while aiming." + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > Combat Slide while shooting to make sure your damage has no downtime." + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > Flashbang can be used to make a clean getaway in a pinch." + Environment.NewLine + Environment.NewLine;
+            string desc = "HUNK is an elite infiltrator who carries a large arsenal of weapons claimed via OSP (on-site procurement).<color=#CCD3E0>" + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > Use your Combat Knife against weaker foes to save ammo." + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > Find UES Keycards to unlock Weapon Cases to add to your armaments on each stage." + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > Use Step carefully to Roll between enemy attacks while taking them down at the same time." + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > Scrounge around in opened chests for a chance to fine ammo for your current weapons." + Environment.NewLine + Environment.NewLine;
 
-            string outro = "..and so he left, still the same as he was when he began.";
-            string outroFailure = "..and so he vanished, never to become a real human being.";
+            string outro = "..and so he left, fine.";
+            string outroFailure = "..and so he vanished, human unit never killed.";
 
-            string lore = "Back against the wall and odds\n";
-            lore += "With the strength of a will and a cause\n";
-            lore += "Your pursuits are called outstanding\n";
-            lore += "You’re emotionally complex\n\n";
-            lore += "Against the grain of dystopic claims\n";
-            lore += "Not the thoughts your actions entertain\n";
-            lore += "And you have proved to be\n\n\n";
-            lore += "A real human being and a real hero";
+            string lore = "You're not any less of a man if you don't pull the trigger.\n";
+            lore += "You're not necessarily a man if you do.\n";
 
             LanguageAPI.Add(prefix + "NAME", "HUNK");
             LanguageAPI.Add(prefix + "DESCRIPTION", desc);
