@@ -39,6 +39,8 @@ namespace HunkMod.SkillStates.Hunk
             this.skillLocator.secondary.stock = 0;
             this.skillLocator.secondary.rechargeStopwatch = 0f;
 
+            this.skillLocator.utility.AddOneStock();
+
             this.hunk.desiredYOffset = 0.6f;
 
             this.ApplyBuff();

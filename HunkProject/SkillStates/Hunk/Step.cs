@@ -1,5 +1,8 @@
 ﻿using EntityStates;
 using RoR2;
+using RoR2.Projectile;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -14,6 +17,20 @@ namespace HunkMod.SkillStates.Hunk
         private bool slowFlag = false;
         private bool slowFlag2 = false;
         private bool slowFlag3 = false;
+
+        public float checkRadius = 6f;
+        public float checkInterval = 0.0333333f;
+        private float checkStopwatch;
+        private SphereSearch search;
+        private List<HurtBox> hits;
+
+        private CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
+        private CharacterCameraParamsData stepCameraParams = new CharacterCameraParamsData
+        {
+            idealLocalCameraPos = stepCameraPosition,
+        };
+
+        public static Vector3 stepCameraPosition = new Vector3(1.85f, 0.08f, -3.8f);
 
         public override void OnEnter()
         {
@@ -31,12 +48,30 @@ namespace HunkMod.SkillStates.Hunk
             anim.SetFloat("dashF", num);
             anim.SetFloat("dashR", num2);*/
 
+            CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
+            {
+                cameraParamsData = stepCameraParams,
+                priority = 0f
+            };
+
+            camOverrideHandle = cameraTargetParams.AddParamsOverride(request, 0.2f);
+
+            hits = new List<HurtBox>();
+            search = new SphereSearch();
+            search.mask = LayerIndex.entityPrecise.mask;
+            search.radius = checkRadius;
+
+
             base.PlayCrossfade("FullBody, Override", "DodgeFull", "Dodge.playbackRate", this.duration * 1.4f, 0.05f);
             base.PlayAnimation("Gesture, Override", "BufferEmpty");
 
             Util.PlaySound("sfx_driver_dash", this.gameObject);
 
             EntityStateMachine.FindByCustomName(this.gameObject, "Aim").SetNextStateToMain();
+
+            this.skillLocator.primary.stock = 0;
+            this.skillLocator.primary.rechargeStopwatch = -0.3f;
+
             this.skillLocator.secondary.stock = 0;
             this.skillLocator.secondary.rechargeStopwatch = -0.3f;
 
@@ -50,6 +85,46 @@ namespace HunkMod.SkillStates.Hunk
             effectData.origin = base.characterBody.corePosition;
 
             EffectManager.SpawnEffect(Modules.Assets.dashFX, effectData, false);*/
+        }
+
+        public void SearchAttacker()
+        {
+            hits.Clear();
+            search.ClearCandidates();
+            search.origin = characterBody.corePosition;
+            search.RefreshCandidates();
+            search.FilterCandidatesByDistinctHurtBoxEntities();
+            search.FilterCandidatesByHurtBoxTeam(TeamMask.GetUnprotectedTeams(teamComponent.teamIndex));
+            search.GetHurtBoxes(hits);
+            foreach (HurtBox h in hits)
+            {
+                HealthComponent hp = h.healthComponent;
+                if (hp)
+                {
+                    if (hp.body.outOfCombatStopwatch <= 0.5f)
+                    {
+                        Roll nextState = new Roll();
+                        outer.SetNextState(nextState);
+                        return;
+                    }
+                }
+            }
+
+            Collider[] array = Physics.OverlapSphere(characterBody.corePosition, checkRadius * 0.5f, LayerIndex.projectile.mask);
+            
+            for (int i = 0; i < array.Length; i++)
+            {
+                ProjectileController pc = array[i].GetComponentInParent<ProjectileController>();
+                if (pc)
+                {
+                    if (pc.teamFilter.teamIndex != characterBody.teamComponent.teamIndex)
+                    {
+                        Roll nextState = new Roll();
+                        outer.SetNextState(nextState);
+                        return;
+                    }
+                }
+            }
         }
 
         public override void FixedUpdate()
@@ -70,6 +145,20 @@ namespace HunkMod.SkillStates.Hunk
                 }
             }
 
+            if (!slowFlag2)
+            {
+                if (NetworkServer.active)
+                {
+                    checkStopwatch += Time.fixedDeltaTime;
+                    if (checkStopwatch >= checkInterval)
+                    {
+                        checkInterval -= checkInterval;
+                        SearchAttacker();
+                    }
+                }
+            }
+
+            // this feels fucking stupid but idc enough to refactor
             if (!this.slowFlag && base.fixedAge >= (0.05f * this.duration))
             {
                 this.slowFlag = true;
@@ -102,6 +191,11 @@ namespace HunkMod.SkillStates.Hunk
         {
             this.DampenVelocity();
             this.hunk.isRolling = false;
+
+            if (cameraTargetParams)
+            {
+                cameraTargetParams.RemoveParamsOverride(camOverrideHandle, 0.2f);
+            }
 
             base.OnExit();
         }

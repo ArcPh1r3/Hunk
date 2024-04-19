@@ -518,18 +518,18 @@ namespace HunkMod.Modules.Survivors
                 skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texDodgeIcon"),
                 activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Step)),
                 activationStateMachineName = "Weapon",
-                baseMaxStock = 1,
-                baseRechargeInterval = 4f,
-                beginSkillCooldownOnSkillEnd = false,
+                baseMaxStock = 2, //1
+                baseRechargeInterval = 6f, //4
+                beginSkillCooldownOnSkillEnd = true, //false
                 canceledFromSprinting = false,
                 forceSprintDuringState = true,
                 fullRestockOnAssign = true,
                 interruptPriority = EntityStates.InterruptPriority.PrioritySkill,
-                resetCooldownTimerOnUse = false,
+                resetCooldownTimerOnUse = true, //false
                 isCombatSkill = false,
-                mustKeyPress = false,
+                mustKeyPress = true,
                 cancelSprintingOnActivation = false,
-                rechargeStock = 1,
+                rechargeStock = 99, //1
                 requiredStock = 1,
                 stockToConsume = 1
             });
