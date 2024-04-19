@@ -61,7 +61,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Slugger
                 {
                     float damage = Shoot.damageCoefficient * this.damageStat;
 
-                    Ray aimRay = GetAimRay();
+                    Ray aimRay = GetAimRay2();
 
                     float force = 1500;
 

@@ -8,7 +8,7 @@ namespace HunkMod.SkillStates.Hunk
 {
     public class SwingAltKnife : BaseMeleeAttack
     {
-        protected override string prop => "KnifeModel";
+        protected override string prop => "HiddenKnifeModel";
         private GameObject swingEffectInstance;
 
         public override void OnEnter()

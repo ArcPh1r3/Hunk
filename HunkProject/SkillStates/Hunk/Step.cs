@@ -11,7 +11,7 @@ namespace HunkMod.SkillStates.Hunk
     public class Step : BaseHunkSkillState
     {
         protected Vector3 slipVector = Vector3.zero;
-        public float duration = 1.1f;
+        public float duration = 0.9f;
         //private Vector3 cachedForward;
         private float coeff = 24f;
         private bool slowFlag = false;
@@ -19,18 +19,16 @@ namespace HunkMod.SkillStates.Hunk
         private bool slowFlag3 = false;
 
         public float checkRadius = 6f;
-        public float checkInterval = 0.0333333f;
-        private float checkStopwatch;
         private SphereSearch search;
         private List<HurtBox> hits;
 
-        private CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
+        /*private CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
         private CharacterCameraParamsData stepCameraParams = new CharacterCameraParamsData
         {
             idealLocalCameraPos = stepCameraPosition,
-        };
+        };*/
 
-        public static Vector3 stepCameraPosition = new Vector3(1.85f, 0.08f, -3.8f);
+        public static Vector3 stepCameraPosition = new Vector3(0.4f, 0.65f, -3.8f);//new Vector3(1.85f, 0.08f, -3.8f);
 
         public override void OnEnter()
         {
@@ -48,21 +46,24 @@ namespace HunkMod.SkillStates.Hunk
             anim.SetFloat("dashF", num);
             anim.SetFloat("dashR", num2);*/
 
-            CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
+            /*CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
             {
                 cameraParamsData = stepCameraParams,
                 priority = 0f
             };
 
-            camOverrideHandle = cameraTargetParams.AddParamsOverride(request, 0.2f);
+            camOverrideHandle = cameraTargetParams.AddParamsOverride(request, 0.75f);*/
 
             hits = new List<HurtBox>();
             search = new SphereSearch();
             search.mask = LayerIndex.entityPrecise.mask;
             search.radius = checkRadius;
 
+            if (!this.SearchAttacker())
+            {
+                base.PlayCrossfade("FullBody, Override", "DodgeFull", "Dodge.playbackRate", this.duration * 1.4f, 0.05f);
+            }
 
-            base.PlayCrossfade("FullBody, Override", "DodgeFull", "Dodge.playbackRate", this.duration * 1.4f, 0.05f);
             base.PlayAnimation("Gesture, Override", "BufferEmpty");
 
             Util.PlaySound("sfx_driver_dash", this.gameObject);
@@ -87,8 +88,10 @@ namespace HunkMod.SkillStates.Hunk
             EffectManager.SpawnEffect(Modules.Assets.dashFX, effectData, false);*/
         }
 
-        public void SearchAttacker()
+        public bool SearchAttacker()
         {
+            this.hunk.targetHurtbox = null;
+
             hits.Clear();
             search.ClearCandidates();
             search.origin = characterBody.corePosition;
@@ -104,8 +107,17 @@ namespace HunkMod.SkillStates.Hunk
                     if (hp.body.outOfCombatStopwatch <= 0.5f)
                     {
                         Roll nextState = new Roll();
+                       
+                        /*foreach (HurtBox i in h.hurtBoxGroup.hurtBoxes)
+                        {
+                            if (i.isSniperTarget)
+                            {
+                                this.hunk.targetHurtbox = i;
+                            }
+                        }*/
+
                         outer.SetNextState(nextState);
-                        return;
+                        return true;
                     }
                 }
             }
@@ -121,10 +133,12 @@ namespace HunkMod.SkillStates.Hunk
                     {
                         Roll nextState = new Roll();
                         outer.SetNextState(nextState);
-                        return;
+                        return true;
                     }
                 }
             }
+
+            return false;
         }
 
         public override void FixedUpdate()
@@ -147,14 +161,9 @@ namespace HunkMod.SkillStates.Hunk
 
             if (!slowFlag2)
             {
-                if (NetworkServer.active)
+                if (base.isAuthority)
                 {
-                    checkStopwatch += Time.fixedDeltaTime;
-                    if (checkStopwatch >= checkInterval)
-                    {
-                        checkInterval -= checkInterval;
-                        SearchAttacker();
-                    }
+                    SearchAttacker();
                 }
             }
 
@@ -192,10 +201,10 @@ namespace HunkMod.SkillStates.Hunk
             this.DampenVelocity();
             this.hunk.isRolling = false;
 
-            if (cameraTargetParams)
+            /*if (cameraTargetParams)
             {
                 cameraTargetParams.RemoveParamsOverride(camOverrideHandle, 0.2f);
-            }
+            }*/
 
             base.OnExit();
         }

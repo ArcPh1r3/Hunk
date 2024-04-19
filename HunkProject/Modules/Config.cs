@@ -17,6 +17,7 @@ namespace HunkMod.Modules
         public static ConfigEntry<bool> dynamicCrosshair;
         public static ConfigEntry<bool> enableRecoil;
         public static ConfigEntry<bool> overTheShoulderCamera;
+        public static ConfigEntry<bool> overTheShoulderCamera2;
         public static ConfigEntry<bool> cursed;
 
         public static ConfigEntry<float> baseHealth;
@@ -59,6 +60,12 @@ true,
 "Enable Over The Shoulder Camera",
 true,
 "Set to false to use more standard camera positioning.", true);
+
+            overTheShoulderCamera2
+= Config.BindAndOptions("01 - General",
+"Enable Resident Evil Style Camera",
+false,
+"Set to true to use a more tight camera position based on Resident Evil 2.", true);
 
             cursed
 = Config.BindAndOptions("01 - General",

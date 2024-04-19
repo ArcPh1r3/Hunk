@@ -37,14 +37,10 @@
           "System.Reflection.Emit": "4.7.0"
         },
         "compile": {
-          "lib/netstandard2.0/0Harmony.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/0Harmony.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/0Harmony.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/0Harmony.dll": {}
         }
       },
       "Microsoft.NETCore.Platforms/1.1.0": {
@@ -77,32 +73,16 @@
       "Mono.Cecil/0.11.4": {
         "type": "package",
         "compile": {
-          "lib/netstandard2.0/Mono.Cecil.Mdb.dll": {
-            "related": ".pdb"
-          },
-          "lib/netstandard2.0/Mono.Cecil.Pdb.dll": {
-            "related": ".pdb"
-          },
-          "lib/netstandard2.0/Mono.Cecil.Rocks.dll": {
-            "related": ".pdb"
-          },
-          "lib/netstandard2.0/Mono.Cecil.dll": {
-            "related": ".Mdb.pdb;.pdb;.Pdb.pdb;.Rocks.pdb"
-          }
+          "lib/netstandard2.0/Mono.Cecil.Mdb.dll": {},
+          "lib/netstandard2.0/Mono.Cecil.Pdb.dll": {},
+          "lib/netstandard2.0/Mono.Cecil.Rocks.dll": {},
+          "lib/netstandard2.0/Mono.Cecil.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/Mono.Cecil.Mdb.dll": {
-            "related": ".pdb"
-          },
-          "lib/netstandard2.0/Mono.Cecil.Pdb.dll": {
-            "related": ".pdb"
-          },
-          "lib/netstandard2.0/Mono.Cecil.Rocks.dll": {
-            "related": ".pdb"
-          },
-          "lib/netstandard2.0/Mono.Cecil.dll": {
-            "related": ".Mdb.pdb;.pdb;.Pdb.pdb;.Rocks.pdb"
-          }
+          "lib/netstandard2.0/Mono.Cecil.Mdb.dll": {},
+          "lib/netstandard2.0/Mono.Cecil.Pdb.dll": {},
+          "lib/netstandard2.0/Mono.Cecil.Rocks.dll": {},
+          "lib/netstandard2.0/Mono.Cecil.dll": {}
         }
       },
       "MonoMod.RuntimeDetour/21.12.13.1": {
@@ -118,14 +98,10 @@
           "System.Reflection.TypeExtensions": "4.7.0"
         },
         "compile": {
-          "lib/netstandard2.0/MonoMod.RuntimeDetour.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/MonoMod.RuntimeDetour.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/MonoMod.RuntimeDetour.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/MonoMod.RuntimeDetour.dll": {}
         }
       },
       "MonoMod.Utils/21.12.13.1": {
@@ -140,14 +116,10 @@
           "System.Reflection.TypeExtensions": "4.7.0"
         },
         "compile": {
-          "lib/netstandard2.0/MonoMod.Utils.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/MonoMod.Utils.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/MonoMod.Utils.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/MonoMod.Utils.dll": {}
         }
       },
       "NETStandard.Library/2.0.3": {
@@ -173,14 +145,10 @@
           "UnityEngine.Modules": "2019.4.26"
         },
         "compile": {
-          "lib/netstandard2.0/R2API.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/R2API.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/R2API.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/R2API.dll": {}
         }
       },
       "RiskOfRain2.GameLibs/1.2.4-r.0": {
@@ -228,9 +196,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/_._": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.3/_._": {}
         }
       },
       "System.Collections.NonGeneric/4.3.0": {
@@ -244,9 +210,7 @@
           "System.Threading": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/System.Collections.NonGeneric.dll": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.3/System.Collections.NonGeneric.dll": {}
         },
         "runtime": {
           "lib/netstandard1.3/System.Collections.NonGeneric.dll": {}
@@ -264,9 +228,7 @@
           "System.Threading": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/_._": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.3/_._": {}
         },
         "runtime": {
           "lib/netstandard1.3/System.Collections.Specialized.dll": {}
@@ -278,9 +240,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.0/System.ComponentModel.dll": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.0/System.ComponentModel.dll": {}
         },
         "runtime": {
           "lib/netstandard1.3/System.ComponentModel.dll": {}
@@ -294,9 +254,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.0/System.ComponentModel.Primitives.dll": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.0/System.ComponentModel.Primitives.dll": {}
         },
         "runtime": {
           "lib/netstandard1.0/System.ComponentModel.Primitives.dll": {}
@@ -322,9 +280,7 @@
           "System.Threading": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.5/System.ComponentModel.TypeConverter.dll": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.5/System.ComponentModel.TypeConverter.dll": {}
         },
         "runtime": {
           "lib/netstandard1.5/System.ComponentModel.TypeConverter.dll": {}
@@ -338,9 +294,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/_._": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.3/_._": {}
         }
       },
       "System.Globalization/4.3.0": {
@@ -351,9 +305,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/System.Globalization.dll": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.3/System.Globalization.dll": {}
         }
       },
       "System.Globalization.Extensions/4.3.0": {
@@ -367,9 +319,7 @@
           "System.Runtime.InteropServices": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/_._": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.3/_._": {}
         },
         "runtimeTargets": {
           "runtimes/unix/lib/netstandard1.3/System.Globalization.Extensions.dll": {
@@ -392,9 +342,7 @@
           "System.Threading.Tasks": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.5/System.IO.dll": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.5/System.IO.dll": {}
         }
       },
       "System.IO.FileSystem.Primitives/4.3.0": {
@@ -403,9 +351,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/System.IO.FileSystem.Primitives.dll": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.3/System.IO.FileSystem.Primitives.dll": {}
         },
         "runtime": {
           "lib/netstandard1.3/System.IO.FileSystem.Primitives.dll": {}
@@ -421,9 +367,7 @@
           "System.Runtime.Extensions": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.6/_._": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.6/_._": {}
         },
         "runtime": {
           "lib/netstandard1.6/System.Linq.dll": {}
@@ -439,9 +383,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.5/System.Reflection.dll": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.5/System.Reflection.dll": {}
         }
       },
       "System.Reflection.Emit/4.7.0": {
@@ -450,27 +392,19 @@
           "System.Reflection.Emit.ILGeneration": "4.7.0"
         },
         "compile": {
-          "ref/netstandard2.0/System.Reflection.Emit.dll": {
-            "related": ".xml"
-          }
+          "ref/netstandard2.0/System.Reflection.Emit.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/System.Reflection.Emit.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/System.Reflection.Emit.dll": {}
         }
       },
       "System.Reflection.Emit.ILGeneration/4.7.0": {
         "type": "package",
         "compile": {
-          "ref/netstandard2.0/System.Reflection.Emit.ILGeneration.dll": {
-            "related": ".xml"
-          }
+          "ref/netstandard2.0/System.Reflection.Emit.ILGeneration.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/System.Reflection.Emit.ILGeneration.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/System.Reflection.Emit.ILGeneration.dll": {}
         }
       },
       "System.Reflection.Emit.Lightweight/4.7.0": {
@@ -479,14 +413,10 @@
           "System.Reflection.Emit.ILGeneration": "4.7.0"
         },
         "compile": {
-          "ref/netstandard2.0/System.Reflection.Emit.Lightweight.dll": {
-            "related": ".xml"
-          }
+          "ref/netstandard2.0/System.Reflection.Emit.Lightweight.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/System.Reflection.Emit.Lightweight.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/System.Reflection.Emit.Lightweight.dll": {}
         }
       },
       "System.Reflection.Extensions/4.3.0": {
@@ -498,9 +428,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.0/_._": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.0/_._": {}
         }
       },
       "System.Reflection.Primitives/4.3.0": {
@@ -511,22 +439,16 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.0/System.Reflection.Primitives.dll": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.0/System.Reflection.Primitives.dll": {}
         }
       },
       "System.Reflection.TypeExtensions/4.7.0": {
         "type": "package",
         "compile": {
-          "ref/netstandard2.0/System.Reflection.TypeExtensions.dll": {
-            "related": ".xml"
-          }
+          "ref/netstandard2.0/System.Reflection.TypeExtensions.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/System.Reflection.TypeExtensions.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.0/System.Reflection.TypeExtensions.dll": {}
         }
       },
       "System.Resources.ResourceManager/4.3.0": {
@@ -539,9 +461,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.0/_._": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.0/_._": {}
         }
       },
       "System.Runtime/4.3.0": {
@@ -551,9 +471,7 @@
           "Microsoft.NETCore.Targets": "1.1.0"
         },
         "compile": {
-          "ref/netstandard1.5/System.Runtime.dll": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.5/System.Runtime.dll": {}
         }
       },
       "System.Runtime.Extensions/4.3.0": {
@@ -564,9 +482,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.5/_._": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.5/_._": {}
         }
       },
       "System.Runtime.Handles/4.3.0": {
@@ -577,9 +493,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/_._": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.3/_._": {}
         }
       },
       "System.Runtime.InteropServices/4.3.0": {
@@ -593,9 +507,7 @@
           "System.Runtime.Handles": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.5/_._": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.5/_._": {}
         }
       },
       "System.Text.Encoding/4.3.0": {
@@ -606,9 +518,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/System.Text.Encoding.dll": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.3/System.Text.Encoding.dll": {}
         }
       },
       "System.Threading/4.3.0": {
@@ -618,9 +528,7 @@
           "System.Threading.Tasks": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/_._": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.3/_._": {}
         },
         "runtime": {
           "lib/netstandard1.3/System.Threading.dll": {}
@@ -634,9 +542,7 @@
           "System.Runtime": "4.3.0"
         },
         "compile": {
-          "ref/netstandard1.3/System.Threading.Tasks.dll": {
-            "related": ".xml"
-          }
+          "ref/netstandard1.3/System.Threading.Tasks.dll": {}
         }
       },
       "UnityEngine.Modules/2019.4.26": {
@@ -2971,7 +2877,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
-      "BepInEx.Analyzers >= 1.0.8",
+      "BepInEx.Analyzers >= 1.0.*",
       "BepInEx.Core >= 5.4.19",
       "MMHOOK.RoR2 >= 2022.4.19",
       "NETStandard.Library >= 2.0.3",
@@ -2981,20 +2887,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\hanan\\.nuget\\packages\\": {}
+    "C:\\Users\\rseid\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\hanan\\Documents\\GitHub\\Hunk\\HunkProject\\HunkMod.csproj",
+      "projectUniqueName": "C:\\Users\\rseid\\OneDrive\\Documents\\GitHub\\Hunk\\HunkProject\\HunkMod.csproj",
       "projectName": "HunkMod",
-      "projectPath": "C:\\Users\\hanan\\Documents\\GitHub\\Hunk\\HunkProject\\HunkMod.csproj",
-      "packagesPath": "C:\\Users\\hanan\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\hanan\\Documents\\GitHub\\Hunk\\HunkProject\\obj\\",
+      "projectPath": "C:\\Users\\rseid\\OneDrive\\Documents\\GitHub\\Hunk\\HunkProject\\HunkMod.csproj",
+      "packagesPath": "C:\\Users\\rseid\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\rseid\\OneDrive\\Documents\\GitHub\\Hunk\\HunkProject\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\hanan\\Documents\\GitHub\\Hunk\\NuGet.Config",
-        "C:\\Users\\hanan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\rseid\\OneDrive\\Documents\\GitHub\\Hunk\\NuGet.Config",
+        "C:\\Users\\rseid\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3003,8 +2914,7 @@
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {},
-        "https://nuget.bepinex.dev/v3/index.json": {},
-        "https://thunderstore.io/": {}
+        "https://nuget.bepinex.dev/v3/index.json": {}
       },
       "frameworks": {
         "netstandard2.0": {
@@ -3026,7 +2936,7 @@
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
             "suppressParent": "All",
             "target": "Package",
-            "version": "[1.0.8, )"
+            "version": "[1.0.*, )"
           },
           "BepInEx.Core": {
             "target": "Package",
@@ -3064,12 +2974,11 @@
           "net47",
           "net471",
           "net472",
-          "net48",
-          "net481"
+          "net48"
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.408\\RuntimeIdentifierGraph.json"
       }
     }
   }

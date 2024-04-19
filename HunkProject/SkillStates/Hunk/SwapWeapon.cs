@@ -9,6 +9,7 @@ namespace HunkMod.SkillStates.Hunk
         public override void OnEnter()
         {
             base.OnEnter();
+            this.hunk.ammoKillTimer = -1f;
 
             EntityStateMachine.FindByCustomName(this.gameObject, "Aim").SetNextStateToMain();
         }

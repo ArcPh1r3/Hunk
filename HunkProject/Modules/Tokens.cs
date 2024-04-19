@@ -10,10 +10,10 @@ namespace HunkMod.Modules
             string prefix = MainPlugin.developerPrefix + "_HUNK_BODY_";
 
             string desc = "HUNK is an elite infiltrator who carries a large arsenal of weapons claimed via OSP (on-site procurement).<color=#CCD3E0>" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > Use your Combat Knife against weaker foes to save ammo." + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > Use your Combat Knife against weaker foes to conserve ammo." + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > Find UES Keycards to unlock Weapon Cases to add to your armaments on each stage." + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > Use Step carefully to Roll between enemy attacks while taking them down at the same time." + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > Scrounge around in opened chests for a chance to fine ammo for your current weapons." + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > Scrounge around in opened chests for a chance to find ammo for your current weapons." + Environment.NewLine + Environment.NewLine;
 
             string outro = "..and so he left, fine.";
             string outroFailure = "..and so he vanished, human unit never killed.";
@@ -47,7 +47,7 @@ namespace HunkMod.Modules
             LanguageAPI.Add(prefix + "PRIMARY_KNIFE_NAME", "Combat Knife");
             LanguageAPI.Add(prefix + "PRIMARY_KNIFE_DESCRIPTION", $"<style=cIsDamage>Slash</style> close-range combatants for <style=cIsDamage>{100f * 3.5}% damage</style>.");
 
-            LanguageAPI.Add(prefix + "PRIMARY_KNIFEALT_NAME", "Tactical Knife");
+            LanguageAPI.Add(prefix + "PRIMARY_KNIFEALT_NAME", "Hidden Blade");
             LanguageAPI.Add(prefix + "PRIMARY_KNIFEALT_DESCRIPTION", $"<style=cIsDamage>Slash</style> close-range combatants for <style=cIsDamage>{100f * 2.2}% damage</style>. <style=cIsDamage>Attacks from behind are Critical Strikes.</style>");
             #endregion
 
@@ -71,9 +71,9 @@ namespace HunkMod.Modules
             LanguageAPI.Add(prefix + "UNLOCKABLE_ACHIEVEMENT_NAME", "A Real Hero");
             LanguageAPI.Add(prefix + "UNLOCKABLE_ACHIEVEMENT_DESC", "Reach stage 3 in less than 15 minutes.");
 
-            LanguageAPI.Add(prefix + "MONSOONUNLOCKABLE_UNLOCKABLE_NAME", "Driver: Mastery");
-            LanguageAPI.Add(prefix + "MONSOONUNLOCKABLE_ACHIEVEMENT_NAME", "Driver: Mastery");
-            LanguageAPI.Add(prefix + "MONSOONUNLOCKABLE_ACHIEVEMENT_DESC", "As Driver, beat the game or obliterate on Monsoon.");
+            LanguageAPI.Add(prefix + "MONSOONUNLOCKABLE_UNLOCKABLE_NAME", "HUNK: Mastery");
+            LanguageAPI.Add(prefix + "MONSOONUNLOCKABLE_ACHIEVEMENT_NAME", "HUNK: Mastery");
+            LanguageAPI.Add(prefix + "MONSOONUNLOCKABLE_ACHIEVEMENT_DESC", "As HUNK, beat the game or obliterate on Monsoon.");
             #endregion
         }
     }

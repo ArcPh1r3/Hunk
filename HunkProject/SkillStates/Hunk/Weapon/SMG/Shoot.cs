@@ -50,7 +50,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.SMG
 
             if (base.isAuthority)
             {
-                Ray aimRay = base.GetAimRay();
+                Ray aimRay = base.GetAimRay2();
 
                 float recoilAmplitude = Shoot.recoil / this.attackSpeedStat;
 

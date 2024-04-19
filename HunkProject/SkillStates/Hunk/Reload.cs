@@ -46,6 +46,7 @@ namespace HunkMod.SkillStates.Hunk
         {
             base.FixedUpdate();
             this.hunk.reloadTimer = 2f;
+            this.hunk.ammoKillTimer = 3f;
 
             if (!this.hunk.isAiming) this.wasAiming = false;
 

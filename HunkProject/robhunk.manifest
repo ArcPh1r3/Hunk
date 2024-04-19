@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2818413102
+CRC: 3088525994
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: c7140748126801ecaa16992d5c26ebeb
+    Hash: 4cf15ea876f95987b404b0c8501f043f
   TypeTreeHash:
     serializedVersion: 2
     Hash: 301e2c247082c83efdce4cb295e86c10
@@ -76,6 +76,7 @@ Assets:
 - Assets/Hunk/FBX/meshHunkB03.mesh
 - Assets/Hunk/HUD/ChargeBar.prefab
 - Assets/Hunk/FBX/meshSMG.mesh
+- Assets/Hunk/Materials/matInfiniteKnife.mat
 - Assets/Hunk/VFX/matShockwave.mat
 - Assets/Hunk/FBX/Hunk.fbx
 - Assets/Hunk/VFX/ShotgunShell.prefab
@@ -117,6 +118,7 @@ Assets:
 - Assets/Hunk/Icons/texHunkAchievement.png
 - Assets/Hunk/FBX/meshHunkB02.mesh
 - Assets/Hunk/FBX/Descend.anim
+- Assets/Hunk/Textures/InfiniteKnife/Leon_InfiniteKnife_D.png
 - Assets/Hunk/Icons/texMainSkin.png
 - Assets/Hunk/Icons/texHunkIcon.png
 - Assets/Hunk/FBX/maskHunkAimPitch.mask
@@ -150,6 +152,7 @@ Assets:
 - Assets/Hunk/Weapons/mdlShotgun.prefab
 - Assets/Hunk/Textures/Shotgun/Leon_RemingtonM1100_D.png
 - Assets/Hunk/VFX/HunkRocketGhost.prefab
+- Assets/Hunk/Textures/InfiniteKnife/Leon_InfiniteKnife_N.png
 - Assets/Hunk/HUD/Textures/texChargeRing.png
 - Assets/Hunk/Textures/Knife/Leon_Knife_N.png
 - Assets/Hunk/FBX/HunkLightweight.fbx

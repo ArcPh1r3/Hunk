@@ -11,6 +11,7 @@ namespace HunkMod.Modules.Components
         public LanguageTextMeshController targetText;
 
         private HunkController hunk;
+        private float alpha;
 
         private int totalAmmo
         {
@@ -62,6 +63,17 @@ namespace HunkMod.Modules.Components
                             this.targetText.token = Mathf.CeilToInt(this.hunk.ammo).ToString() + " / " + Mathf.CeilToInt(this.totalAmmo).ToString();
                         }
                     }
+
+                    Color col = this.targetText.textMeshPro.color;
+
+                    if (this.hunk.ammoKillTimer <= 0f) this.alpha -= 4f * Time.fixedDeltaTime;
+                    else this.alpha += 4f * Time.fixedDeltaTime;
+
+                    this.alpha = Mathf.Clamp01(this.alpha);
+                    
+                    col.a = this.alpha;
+
+                    this.targetText.textMeshPro.color = col;
                 }
                 else
                 {

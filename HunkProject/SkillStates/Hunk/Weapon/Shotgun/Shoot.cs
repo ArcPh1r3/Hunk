@@ -65,7 +65,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Shotgun
                 {
                     float damage = Shoot.damageCoefficient * this.damageStat;
 
-                    Ray aimRay = GetAimRay();
+                    Ray aimRay = GetAimRay2();
 
                     float spread = Shoot.bulletSpread;
                     float thiccness = Shoot.bulletThiccness;

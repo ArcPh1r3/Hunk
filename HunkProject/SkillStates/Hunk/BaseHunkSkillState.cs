@@ -10,8 +10,22 @@ namespace HunkMod.SkillStates.Hunk
 
         public virtual void AddRecoil2(float x1, float x2, float y1, float y2)
         {
+            if (this.hunk.lockOnTimer > 0f) return;
             if (!Modules.Config.enableRecoil.Value) return;
             this.AddRecoil(x1, x2, y1, y2);
+        }
+
+        public virtual Ray GetAimRay2()
+        {
+            if (this.hunk.lockOnTimer > 0f && this.hunk.isAiming)
+            {
+                return new Ray
+                {
+                    origin = this.characterBody.aimOrigin,
+                    direction = (this.hunk.targetHurtbox.transform.position - this.characterBody.aimOrigin).normalized
+                };
+            }
+            return this.GetAimRay();
         }
 
         protected virtual bool hideGun

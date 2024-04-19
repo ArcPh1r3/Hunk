@@ -66,6 +66,7 @@ namespace HunkMod.SkillStates.Hunk
         {
             base.FixedUpdate();
             this.hunk.reloadTimer = 2f;
+            this.hunk.ammoKillTimer = 3f;
             this.characterBody.outOfCombatStopwatch = 0f;
             this.characterBody.isSprinting = false;
 
@@ -82,16 +83,22 @@ namespace HunkMod.SkillStates.Hunk
                 this.skillLocator.primary.UnsetSkillOverride(this, Modules.Survivors.Hunk.reloadSkillDef, GenericSkill.SkillOverridePriority.Network);
             }
 
+            //if (base.fixedAge >= 0.25f) this.skillLocator.primary.stock = 1;
+            //else this.skillLocator.primary.stock = 0;
+
             //this.UpdateLightEffect();
 
-            if (!this.inputBank.skill2.down && base.isAuthority)
+            if (base.fixedAge >= 0.1f)
             {
-                this.outer.SetNextStateToMain();
-            }
+                if (!this.inputBank.skill2.down && base.isAuthority)
+                {
+                    this.outer.SetNextStateToMain();
+                }
 
-            if (this.inputBank.skill4.down && base.isAuthority)
-            {
-                this.outer.SetNextStateToMain();
+                if (this.inputBank.skill4.down && base.isAuthority)
+                {
+                    this.outer.SetNextStateToMain();
+                }
             }
         }
 
@@ -100,6 +107,7 @@ namespace HunkMod.SkillStates.Hunk
             base.OnExit();
             this.characterBody.hideCrosshair = true;
             this.hunk.isAiming = false;
+            this.hunk.lockOnTimer = -1f;
             //if (this.lightEffectInstance) Destroy(this.lightEffectInstance);
 
             if (NetworkServer.active) this.characterBody.RemoveBuff(RoR2Content.Buffs.Slow50);

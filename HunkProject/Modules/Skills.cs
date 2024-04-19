@@ -160,6 +160,7 @@ namespace HunkMod.Modules
         internal static SkillDef CreatePrimarySkillDef(SerializableEntityStateType state, string stateMachine, string skillNameToken, string skillDescriptionToken, Sprite skillIcon, bool agile) {
 
             SkillDefInfo info = new SkillDefInfo(skillNameToken, skillNameToken, skillDescriptionToken, skillIcon, state, stateMachine, agile);
+            info.requiredStock = 1;
 
             return CreateSkillDef(info);
         }

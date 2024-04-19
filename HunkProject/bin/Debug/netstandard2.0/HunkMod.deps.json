@@ -18,11 +18,38 @@
           "UnityEngine.Modules": "2019.4.26",
           "AncientScepter": "1.0.0.0",
           "ClassicItemsReturns": "1.0.0.0",
+          "Decalicious": "0.0.0.0",
+          "EOS": "0.0.0.0",
+          "Facepunch.Steamworks": "0.0.0.0",
+          "GenericIK": "0.0.0.0",
+          "HGSignup": "0.0.0.0",
           "LostInTransit": "0.0.0.0",
+          "ModLoader": "0.0.0.0",
+          "Mono.Security": "4.0.0.0",
+          "Rewired_Windows": "1.0.0.0",
           "RiskOfOptions": "1.0.0.0",
           "RiskUI": "1.0.0.0",
+          "SimpleJSON": "0.0.0.0",
           "Starstorm2": "1.0.0.0",
-          "Unity.Postprocessing.Runtime": "0.0.0.0"
+          "System.Configuration": "4.0.0.0",
+          "System.Diagnostics.StackTrace": "4.1.1.0",
+          "System.EnterpriseServices": "4.0.0.0",
+          "System.Globalization.Extensions.Reference": "4.1.1.0",
+          "System.ServiceModel.Internals": "0.0.0.0",
+          "System.Xml.XPath.XDocument": "4.1.1.0",
+          "Unity.Postprocessing.Runtime": "0.0.0.0",
+          "Unity.ProBuilder.Csg": "0.0.0.0",
+          "Unity.ProBuilder": "0.0.0.0",
+          "Unity.ProBuilder.KdTree": "0.0.0.0",
+          "Unity.ProBuilder.Poly2Tri": "0.0.0.0",
+          "Unity.ProBuilder.Stl": "0.0.0.0",
+          "Unity.RenderPipelines.Core.Runtime": "0.0.0.0",
+          "Unity.RenderPipelines.Core.ShaderLibrary": "0.0.0.0",
+          "Unity.ScriptableBuildPipeline": "0.0.0.0",
+          "Unity.Timeline": "1.0.0.0",
+          "UnityEngine.SpatialTracking": "0.0.0.0",
+          "UnityEngine.XR.LegacyInputHelpers": "0.0.0.0",
+          "Zio": "0.7.3.0"
         },
         "runtime": {
           "HunkMod.dll": {}
@@ -737,11 +764,75 @@
           }
         }
       },
+      "Decalicious/0.0.0.0": {
+        "runtime": {
+          "Decalicious.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "EOS/0.0.0.0": {
+        "runtime": {
+          "EOS.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "Facepunch.Steamworks/0.0.0.0": {
+        "runtime": {
+          "Facepunch.Steamworks.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "GenericIK/0.0.0.0": {
+        "runtime": {
+          "GenericIK.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "HGSignup/0.0.0.0": {
+        "runtime": {
+          "HGSignup.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
       "LostInTransit/0.0.0.0": {
         "runtime": {
           "LostInTransit.dll": {
             "assemblyVersion": "0.0.0.0",
             "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "ModLoader/0.0.0.0": {
+        "runtime": {
+          "ModLoader.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "Mono.Security/4.0.0.0": {
+        "runtime": {
+          "Mono.Security.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.0.0"
+          }
+        }
+      },
+      "Rewired_Windows/1.0.0.0": {
+        "runtime": {
+          "Rewired_Windows.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
           }
         }
       },
@@ -761,6 +852,14 @@
           }
         }
       },
+      "SimpleJSON/0.0.0.0": {
+        "runtime": {
+          "SimpleJSON.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
       "Starstorm2/1.0.0.0": {
         "runtime": {
           "Starstorm2.dll": {
@@ -769,11 +868,155 @@
           }
         }
       },
+      "System.Configuration/4.0.0.0": {
+        "runtime": {
+          "System.Configuration.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "System.Diagnostics.StackTrace/4.1.1.0": {
+        "runtime": {
+          "System.Diagnostics.StackTrace.dll": {
+            "assemblyVersion": "4.1.1.0",
+            "fileVersion": "4.0.0.0"
+          }
+        }
+      },
+      "System.EnterpriseServices/4.0.0.0": {
+        "runtime": {
+          "System.EnterpriseServices.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "System.Globalization.Extensions.Reference/4.1.1.0": {
+        "runtime": {
+          "System.Globalization.Extensions.dll": {
+            "assemblyVersion": "4.1.1.0",
+            "fileVersion": "4.0.0.0"
+          }
+        }
+      },
+      "System.ServiceModel.Internals/0.0.0.0": {
+        "runtime": {
+          "System.ServiceModel.Internals.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "4.0.30319.17020"
+          }
+        }
+      },
+      "System.Xml.XPath.XDocument/4.1.1.0": {
+        "runtime": {
+          "System.Xml.XPath.XDocument.dll": {
+            "assemblyVersion": "4.1.1.0",
+            "fileVersion": "4.0.0.0"
+          }
+        }
+      },
       "Unity.Postprocessing.Runtime/0.0.0.0": {
         "runtime": {
           "Unity.Postprocessing.Runtime.dll": {
             "assemblyVersion": "0.0.0.0",
             "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "Unity.ProBuilder.Csg/0.0.0.0": {
+        "runtime": {
+          "Unity.ProBuilder.Csg.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "Unity.ProBuilder/0.0.0.0": {
+        "runtime": {
+          "Unity.ProBuilder.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "Unity.ProBuilder.KdTree/0.0.0.0": {
+        "runtime": {
+          "Unity.ProBuilder.KdTree.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "Unity.ProBuilder.Poly2Tri/0.0.0.0": {
+        "runtime": {
+          "Unity.ProBuilder.Poly2Tri.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "Unity.ProBuilder.Stl/0.0.0.0": {
+        "runtime": {
+          "Unity.ProBuilder.Stl.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "Unity.RenderPipelines.Core.Runtime/0.0.0.0": {
+        "runtime": {
+          "Unity.RenderPipelines.Core.Runtime.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "Unity.RenderPipelines.Core.ShaderLibrary/0.0.0.0": {
+        "runtime": {
+          "Unity.RenderPipelines.Core.ShaderLibrary.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "Unity.ScriptableBuildPipeline/0.0.0.0": {
+        "runtime": {
+          "Unity.ScriptableBuildPipeline.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "Unity.Timeline/1.0.0.0": {
+        "runtime": {
+          "Unity.Timeline.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "UnityEngine.SpatialTracking/0.0.0.0": {
+        "runtime": {
+          "UnityEngine.SpatialTracking.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "UnityEngine.XR.LegacyInputHelpers/0.0.0.0": {
+        "runtime": {
+          "UnityEngine.XR.LegacyInputHelpers.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "Zio/0.7.3.0": {
+        "runtime": {
+          "Zio.dll": {
+            "assemblyVersion": "0.7.3.0",
+            "fileVersion": "0.7.3.0"
           }
         }
       }
@@ -1082,7 +1325,47 @@
       "serviceable": false,
       "sha512": ""
     },
+    "Decalicious/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "EOS/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Facepunch.Steamworks/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "GenericIK/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "HGSignup/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
     "LostInTransit/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ModLoader/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Mono.Security/4.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Rewired_Windows/1.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""
@@ -1097,12 +1380,107 @@
       "serviceable": false,
       "sha512": ""
     },
+    "SimpleJSON/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
     "Starstorm2/1.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""
     },
+    "System.Configuration/4.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.Diagnostics.StackTrace/4.1.1.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.EnterpriseServices/4.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.Globalization.Extensions.Reference/4.1.1.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.ServiceModel.Internals/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.Xml.XPath.XDocument/4.1.1.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
     "Unity.Postprocessing.Runtime/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Unity.ProBuilder.Csg/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Unity.ProBuilder/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Unity.ProBuilder.KdTree/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Unity.ProBuilder.Poly2Tri/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Unity.ProBuilder.Stl/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Unity.RenderPipelines.Core.Runtime/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Unity.RenderPipelines.Core.ShaderLibrary/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Unity.ScriptableBuildPipeline/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Unity.Timeline/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "UnityEngine.SpatialTracking/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "UnityEngine.XR.LegacyInputHelpers/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Zio/0.7.3.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""

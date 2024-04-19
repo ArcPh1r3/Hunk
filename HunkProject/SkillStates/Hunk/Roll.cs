@@ -17,6 +17,7 @@ namespace HunkMod.SkillStates.Hunk
         public override void OnEnter()
         {
             base.OnEnter();
+            this.hunk.lockOnTimer = 1.5f;
             this.hunk.isRolling = true;
             this.slipVector = ((base.inputBank.moveVector == Vector3.zero) ? base.characterDirection.forward : base.inputBank.moveVector).normalized;
             //this.cachedForward = this.characterDirection.forward;
@@ -40,6 +41,8 @@ namespace HunkMod.SkillStates.Hunk
             this.skillLocator.secondary.rechargeStopwatch = 0f;
 
             this.skillLocator.utility.AddOneStock();
+
+            this.skillLocator.primary.SetSkillOverride(this, Modules.Survivors.Hunk.counterSkillDef, GenericSkill.SkillOverridePriority.Contextual);
 
             this.hunk.desiredYOffset = 0.6f;
 
@@ -108,6 +111,7 @@ namespace HunkMod.SkillStates.Hunk
             this.DampenVelocity();
             this.hunk.isRolling = false;
             this.hunk.desiredYOffset = this.hunk.defaultYOffset;
+            this.skillLocator.primary.UnsetSkillOverride(this, Modules.Survivors.Hunk.counterSkillDef, GenericSkill.SkillOverridePriority.Contextual);
 
             base.OnExit();
         }

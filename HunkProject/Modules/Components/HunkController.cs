@@ -19,6 +19,8 @@ namespace HunkMod.Modules.Components
         private HunkWeaponDef lastWeaponDef;
 
         public float chargeValue;
+        public float lockOnTimer;
+        public HurtBox targetHurtbox;
 
         private CharacterBody characterBody;
         private ChildLocator childLocator;
@@ -56,6 +58,8 @@ namespace HunkMod.Modules.Components
         public bool isReloading;
         private GameObject backWeaponInstance;
         private HunkWeaponDef backWeaponDef;
+        private CameraRigController cameraController;
+        public float ammoKillTimer = 0f;
 
         private void Awake()
         {
@@ -158,6 +162,22 @@ namespace HunkMod.Modules.Components
         private void FixedUpdate()
         {
             this.reloadTimer -= Time.fixedDeltaTime;
+            this.lockOnTimer -= Time.fixedDeltaTime;
+            this.ammoKillTimer -= Time.fixedDeltaTime;
+
+            if (!this.cameraController)
+            {
+                if (this.characterBody && this.characterBody.master)
+                {
+                    if (this.characterBody.master.playerCharacterMasterController)
+                    {
+                        if (this.characterBody.master.playerCharacterMasterController.networkUser)
+                        {
+                            this.cameraController = this.characterBody.master.playerCharacterMasterController.networkUser.cameraRigController;
+                        }
+                    }
+                }
+            }
 
             if (this.reloadTimer <= 0f && this.ammo < this.maxAmmo)
             {
@@ -176,6 +196,11 @@ namespace HunkMod.Modules.Components
                 else this.backWeaponInstance.SetActive(true);
             }
 
+            if (this.lockOnTimer > 0f)
+            {
+                this.TryLockOn();
+            }
+
             this.yOffset = Mathf.Lerp(this.yOffset, this.desiredYOffset, 5f * Time.fixedDeltaTime);
             this.cameraPivot.localPosition = new Vector3(0f, this.yOffset, 0f);
         }
@@ -183,6 +208,24 @@ namespace HunkMod.Modules.Components
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.V)) this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo += this.maxAmmo;
+        }
+
+        private void TryLockOn()
+        {
+            if (this.cameraController)
+            {
+                if (this.targetHurtbox)
+                {
+                    Vector3 targetVector = (this.targetHurtbox.healthComponent.transform.position - this.cameraPivot.position).normalized;
+                    Vector3 lookVector = Vector3.Lerp(this.characterBody.inputBank.aimDirection, targetVector, 12f * Time.fixedDeltaTime);
+
+                    ((RoR2.CameraModes.CameraModePlayerBasic.InstanceData)this.cameraController.cameraMode.camToRawInstanceData[this.cameraController]).SetPitchYawFromLookVector(lookVector);
+                }
+                else
+                {
+
+                }
+            }
         }
 
         private void TryReload()

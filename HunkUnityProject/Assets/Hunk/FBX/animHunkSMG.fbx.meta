@@ -117,6 +117,9 @@ ModelImporter:
   - first:
       74: -7304068189903988303
     second: Armature|RunR
+  - first:
+      74: 1283589356175656668
+    second: Armature|KnifeCounter
   externalObjects: {}
   materials:
     materialImportMode: 1

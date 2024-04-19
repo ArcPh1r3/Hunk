@@ -28,6 +28,7 @@ namespace HunkMod.SkillStates.Hunk
                 this.hunk.SwapToLastWeapon();
                 base.PlayAnimation("Gesture, Override", "EquipGun", "Swap.playbackRate", this.duration);
                 Util.PlaySound("sfx_hunk_equip_smg", this.gameObject);
+                this.hunk.ammoKillTimer = 1.5f;
             }
 
             if (base.fixedAge >= this.duration && base.isAuthority)

@@ -48,6 +48,7 @@ namespace HunkMod.Modules.Survivors
 
         // skill overrides
         internal static SkillDef reloadSkillDef;
+        internal static SkillDef counterSkillDef;
 
         internal static SkillDef confirmSkillDef;
         internal static SkillDef cancelSkillDef;
@@ -204,12 +205,18 @@ namespace HunkMod.Modules.Survivors
                 },
                 new CustomRendererInfo
                 {
+                    childName = "HiddenKnifeModel",
+                    material = Modules.Assets.CreateMaterial("matInfiniteKnife", 0f, Color.black, 1f)
+                },
+                new CustomRendererInfo
+                {
                     childName = "WeaponModel",
                     material = Modules.Assets.CreateMaterial("matSMG")
                 } }, bodyRendererIndex);
             #endregion
 
             childLocator.FindChild("KnifeModel").gameObject.SetActive(false);
+            childLocator.FindChild("HiddenKnifeModel").gameObject.SetActive(false);
 
             CreateHitboxes(newPrefab);
             SetupHurtboxes(newPrefab);
@@ -475,7 +482,14 @@ namespace HunkMod.Modules.Survivors
     prefix + "_HUNK_BODY_PRIMARY_KNIFEALT_NAME",
     prefix + "_HUNK_BODY_PRIMARY_KNIFEALT_DESCRIPTION",
     Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
-            knife.interruptPriority = EntityStates.InterruptPriority.Skill;
+            knifeAlt.interruptPriority = EntityStates.InterruptPriority.Skill;
+
+            counterSkillDef = Modules.Skills.CreatePrimarySkillDef(new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.KnifeCounter)),
+    "Weapon",
+    prefix + "_HUNK_BODY_PRIMARY_KNIFE_NAME",
+    prefix + "_HUNK_BODY_PRIMARY_KNIFE_DESCRIPTION",
+    Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
+            counterSkillDef.interruptPriority = EntityStates.InterruptPriority.PrioritySkill;
 
             Modules.Skills.AddPrimarySkills(prefab,
                 knife, knifeAlt);

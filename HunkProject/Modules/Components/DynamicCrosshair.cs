@@ -11,9 +11,11 @@ namespace HunkMod.Modules.Components
         public float range = 256f;
         public float interval = 0.15f;
 
+        private HunkController hunk;
         private CrosshairController crosshairController;
         private Image[] crosshairSprites;
         private float stopwatch;
+        private Vector3 originPos;
 
         private void Awake()
         {
@@ -27,6 +29,7 @@ namespace HunkMod.Modules.Components
             }
 
             this.crosshairSprites = hhhh.ToArray();
+            this.originPos = this.transform.position;
         }
 
         private void FixedUpdate()
@@ -37,6 +40,31 @@ namespace HunkMod.Modules.Components
             {
                 this.Simulate();
             }
+        }
+
+        private void LateUpdate()
+        {
+            /*if (this.crosshairController && this.crosshairController.hudElement)
+            {
+                if (this.crosshairController.hudElement.targetCharacterBody && this.crosshairController.hudElement.targetCharacterBody.hasAuthority)
+                {
+                    if (!this.hunk)
+                    {
+                        this.hunk = this.crosshairController.hudElement.targetCharacterBody.GetComponent<HunkController>();
+                    }
+
+                    if (this.hunk)
+                    {
+                        if (this.hunk.lockOnTimer > 0f && this.hunk.targetHurtbox)
+                        {
+                            Vector3 worldPos = new Vector3(this.hunk.targetHurtbox.transform.position.x, this.hunk.targetHurtbox.transform.position.y, this.hunk.targetHurtbox.transform.position.z);
+                            Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPos);
+                            this.transform.position = new Vector3(screenPos.x, screenPos.y, screenPos.z);
+                        }
+                        else this.transform.position = this.originPos;
+                    }
+                }
+            }*/
         }
 
         private void Simulate()
