@@ -92,6 +92,8 @@ namespace HunkMod
         private void CreateWeapons()
         {
             new Modules.Weapons.SMG().Init();
+            new Modules.Weapons.M19().Init();
+            new Modules.Weapons.Magnum().Init();
             new Modules.Weapons.Shotgun().Init();
             new Modules.Weapons.Slugger().Init();
         }

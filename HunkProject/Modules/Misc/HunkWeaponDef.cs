@@ -7,8 +7,7 @@ public class HunkWeaponDef : ScriptableObject
 {
     public enum AnimationSet
     {
-        Default,
-        Knife,
+        Pistol,
         SMG
     }
 
@@ -24,21 +23,13 @@ public class HunkWeaponDef : ScriptableObject
 
     [Header("Visuals")]
     public GameObject modelPrefab;
-    public AnimationSet animationSet = AnimationSet.Default;
+    public AnimationSet animationSet = AnimationSet.SMG;
+    public bool storedOnBack = true;
 
     [HideInInspector]
     public ushort index; // assigned at runtime
     [HideInInspector]
     public GameObject pickupPrefab; // same thing
-
-    public string equipAnimationString
-    {
-        get
-        {
-            if (this.animationSet == AnimationSet.Default) return "BufferEmpty";
-            return "BufferEmpty";
-        }
-    }
 
     public static HunkWeaponDef CreateWeaponDefFromInfo(HunkWeaponDefInfo weaponDefInfo)
     {
@@ -55,6 +46,7 @@ public class HunkWeaponDef : ScriptableObject
 
         weaponDef.modelPrefab = weaponDefInfo.modelPrefab;
         weaponDef.animationSet = weaponDefInfo.animationSet;
+        weaponDef.storedOnBack = weaponDefInfo.storedOnBack;
 
         return weaponDef;
     }
@@ -73,4 +65,5 @@ public struct HunkWeaponDefInfo
 
     public GameObject modelPrefab;
     public HunkWeaponDef.AnimationSet animationSet;
+    public bool storedOnBack;
 }

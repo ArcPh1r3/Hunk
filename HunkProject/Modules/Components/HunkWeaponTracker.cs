@@ -43,6 +43,18 @@ namespace HunkMod.Modules.Components
                     weaponDef = Modules.Weapons.Slugger.instance.weaponDef,
                     totalAmmo = Modules.Weapons.Slugger.instance.magSize * 3,
                     currentAmmo = Modules.Weapons.Slugger.instance.magSize
+                },
+                new HunkWeaponData
+                {
+                    weaponDef = Modules.Weapons.M19.instance.weaponDef,
+                    totalAmmo = Modules.Weapons.M19.instance.magSize * 3,
+                    currentAmmo = Modules.Weapons.M19.instance.magSize
+                },
+                new HunkWeaponData
+                {
+                    weaponDef = Modules.Weapons.Magnum.instance.weaponDef,
+                    totalAmmo = Modules.Weapons.Magnum.instance.magSize * 3,
+                    currentAmmo = Modules.Weapons.Magnum.instance.magSize
                 }
             };
         }

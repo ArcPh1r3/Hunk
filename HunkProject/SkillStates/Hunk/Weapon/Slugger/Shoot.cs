@@ -6,7 +6,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Slugger
 {
     public class Shoot : BaseHunkSkillState
     {
-        public static float damageCoefficient = 16f;
+        public static float damageCoefficient = 9f;
         public static float procCoefficient = 1f;
         public float baseDuration = 1.2f;
         public static float bulletRecoil = 8f;
@@ -46,7 +46,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Slugger
             {
                 this.hasFired = true;
 
-                this.hunk.DropShell(-this.GetModelBaseTransform().transform.right * -Random.Range(4, 12));
+                //this.hunk.DropShell(-this.GetModelBaseTransform().transform.right * -Random.Range(4, 12));
 
                 float recoilAmplitude = Shoot.bulletRecoil / this.attackSpeedStat;
 

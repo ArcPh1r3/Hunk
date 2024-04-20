@@ -28,8 +28,13 @@ namespace HunkMod.Modules.Weapons
         public abstract SkillDef primarySkillDef { get; }
         public abstract GameObject modelPrefab { get; }
         public abstract HunkWeaponDef.AnimationSet animationSet { get; }
+        public abstract bool storedOnBack { get; }
 
-        public abstract void Init();
+        public virtual void Init()
+        {
+            CreateLang();
+            CreateWeapon();
+        }
 
         protected void CreateLang()
         {
@@ -51,7 +56,8 @@ namespace HunkMod.Modules.Weapons
                 magSize = magSize,
                 primarySkillDef = primarySkillDef,
                 modelPrefab = modelPrefab,
-                animationSet = animationSet
+                animationSet = animationSet,
+                storedOnBack = storedOnBack
             });
             HunkWeaponCatalog.AddWeapon(weaponDef);
 

@@ -8,8 +8,8 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Magnum
     {
         public static float damageCoefficient = 12f;
         public static float procCoefficient = 1f;
-        public static float baseDuration = 0.9f;
-        public static float force = 500f;
+        public static float baseDuration = 0.8f;
+        public static float force = 1500f;
         public static float recoil = 3f;
         public static float range = 2000f;
         public static GameObject tracerEffectPrefab = RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/Tracers/TracerCommandoDefault");
@@ -25,7 +25,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Magnum
             this.characterBody.isSprinting = false;
 
             base.characterBody.SetAimTimer(2f);
-            this.muzzleString = "PistolMuzzle";
+            this.muzzleString = "MuzzlePistol";
 
             this.isCrit = base.RollCrit();
 
@@ -34,7 +34,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Magnum
                 this.Fire();
             }
 
-            this.PlayAnimation("Gesture, Override", "Shoot", "Shoot.playbackRate", 0.9f);
+            this.PlayAnimation("Gesture, Override", "ShootMagnum", "Shoot.playbackRate", this.duration);
 
             if (this.hunk)
             {
@@ -46,9 +46,9 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Magnum
         private void Fire()
         {
             EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab, base.gameObject, this.muzzleString, false);
-
-            if (this.isCrit) Util.PlaySound("sfx_driver_machinegun_shoot_critical", base.gameObject);
-            else Util.PlaySound("sfx_driver_machinegun_shoot", base.gameObject);
+            
+            if (this.isCrit) Util.PlaySound("sfx_driver_pistol_shoot_charged", base.gameObject);
+            else Util.PlaySound("sfx_driver_pistol_shoot_charged", base.gameObject);
 
             if (base.isAuthority)
             {
@@ -135,7 +135,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Magnum
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            float kek = 0.5f;
+            float kek = 0.8f;
 
             if (base.fixedAge >= kek * this.duration)
             {

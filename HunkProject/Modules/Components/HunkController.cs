@@ -198,7 +198,7 @@ namespace HunkMod.Modules.Components
 
             if (this.lockOnTimer > 0f)
             {
-                this.TryLockOn();
+                //this.TryLockOn();
             }
 
             this.yOffset = Mathf.Lerp(this.yOffset, this.desiredYOffset, 5f * Time.fixedDeltaTime);
@@ -353,18 +353,18 @@ namespace HunkMod.Modules.Components
             this.characterBody._defaultCrosshairPrefab = this.crosshairPrefab;
 
             // animator layer
-            /*switch (this.weaponDef.animationSet)
+            this.ToggleLayer("Body (Pistol)", false);
+            this.ToggleLayer("Gesture (Pistol)", false);
+            this.ToggleLayer("FullBody (Pistol)", false);
+
+            switch (this.weaponDef.animationSet)
             {
-                case DriverWeaponDef.AnimationSet.Default:
-                    this.EnableLayer("");
+                case HunkWeaponDef.AnimationSet.Pistol:
+                    this.ToggleLayer("Body (Pistol)", true);
+                    this.ToggleLayer("Gesture (Pistol)", true);
+                    this.ToggleLayer("FullBody (Pistol)", true);
                     break;
-                case DriverWeaponDef.AnimationSet.TwoHanded:
-                    this.EnableLayer("Body, Shotgun");
-                    break;
-                case DriverWeaponDef.AnimationSet.BigMelee:
-                    this.EnableLayer("Body, Hammer");
-                    break;
-            }*/
+            }
 
             this.HandleBackWeapon();
 
@@ -382,24 +382,24 @@ namespace HunkMod.Modules.Components
                 }
                 Destroy(this.backWeaponInstance);
             }
-            this.backWeaponDef = this.weaponTracker.weaponData[this.weaponTracker.lastEquippedIndex].weaponDef;
-            this.backWeaponInstance = GameObject.Instantiate(this.backWeaponDef.modelPrefab);
-            this.backWeaponInstance.transform.parent = this.childLocator.FindChild("BackWeapon");
-            this.backWeaponInstance.transform.localPosition = Vector3.zero;
-            this.backWeaponInstance.transform.localRotation = Quaternion.identity;
-            this.backWeaponInstance.transform.localScale = Vector3.one;
+            if (this.weaponTracker.weaponData[this.weaponTracker.lastEquippedIndex].weaponDef.storedOnBack)
+            {
+                this.backWeaponDef = this.weaponTracker.weaponData[this.weaponTracker.lastEquippedIndex].weaponDef;
+                this.backWeaponInstance = GameObject.Instantiate(this.backWeaponDef.modelPrefab);
+                this.backWeaponInstance.transform.parent = this.childLocator.FindChild("BackWeapon");
+                this.backWeaponInstance.transform.localPosition = Vector3.zero;
+                this.backWeaponInstance.transform.localRotation = Quaternion.identity;
+                this.backWeaponInstance.transform.localScale = Vector3.one;
+            }
         }
 
-        private void EnableLayer(string layerName)
+        private void ToggleLayer(string layerName, bool toEnable)
         {
             if (!this.animator) return;
-
-            //this.animator.SetLayerWeight(this.animator.GetLayerIndex("Body, Shotgun"), 0f);
-            //this.animator.SetLayerWeight(this.animator.GetLayerIndex("Body, Hammer"), 0f);
-
             if (layerName == "") return;
 
-            this.animator.SetLayerWeight(this.animator.GetLayerIndex(layerName), 1f);
+            if (toEnable) this.animator.SetLayerWeight(this.animator.GetLayerIndex(layerName), 1f);
+            else this.animator.SetLayerWeight(this.animator.GetLayerIndex(layerName), 0f);
         }
 
         private void InitShells()

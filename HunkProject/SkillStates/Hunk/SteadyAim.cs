@@ -70,6 +70,8 @@ namespace HunkMod.SkillStates.Hunk
             this.characterBody.outOfCombatStopwatch = 0f;
             this.characterBody.isSprinting = false;
 
+            this.characterBody.hideCrosshair = this.hunk.isReloading;
+
             if (!this.hunk.isRolling) base.characterBody.SetAimTimer(0.2f);
 
             if (this.hunk.ammo <= 0)

@@ -14,6 +14,7 @@ namespace HunkMod.Modules.Weapons
         public override int magSize => 2;
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlShotgun");
         public override HunkWeaponDef.AnimationSet animationSet => HunkWeaponDef.AnimationSet.SMG;
+        public override bool storedOnBack => true;
 
         public override SkillDef primarySkillDef => Modules.Skills.CreatePrimarySkillDef(
 new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Weapon.Slugger.Shoot)),
@@ -22,11 +23,5 @@ new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Weapon.Slug
 "ROB_DRIVER_BODY_PRIMARY_BFG_DESCRIPTION",
 Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texShootIcon"),
 false);
-
-        public override void Init()
-        {
-            CreateLang();
-            CreateWeapon();
-        }
     }
 }
