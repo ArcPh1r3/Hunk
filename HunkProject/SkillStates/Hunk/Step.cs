@@ -18,7 +18,7 @@ namespace HunkMod.SkillStates.Hunk
         private bool slowFlag2 = false;
         private bool slowFlag3 = false;
 
-        public float checkRadius = 6f;
+        public float checkRadius = 10f;
         private SphereSearch search;
         private List<HurtBox> hits;
 
@@ -104,7 +104,7 @@ namespace HunkMod.SkillStates.Hunk
                 HealthComponent hp = h.healthComponent;
                 if (hp)
                 {
-                    if (hp.body.outOfCombatStopwatch <= 0.5f)
+                    if (hp.body.outOfCombatStopwatch <= 0.8f)
                     {
                         Roll nextState = new Roll();
                        
