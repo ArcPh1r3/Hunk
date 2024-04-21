@@ -33,13 +33,13 @@ namespace HunkMod.SkillStates.Hunk
                 if (this.hunk.weaponDef.animationSet == HunkWeaponDef.AnimationSet.Pistol)
                 {
                     this.animString = "ReloadPistol";
-                    base.PlayCrossfade("Gesture, Override", this.animString, "Reload.playbackRate", this.duration, 0.05f);
+                    base.PlayCrossfade("Gesture, Override", this.animString, "Reload.playbackRate", this.duration, 0.1f);
                     this.success = true;
                     Util.PlaySound("sfx_hunk_pistol_reload_01", this.gameObject);
                 }
                 else
                 {
-                    base.PlayCrossfade("Gesture, Override", this.animString, "Reload.playbackRate", this.duration, 0.05f);
+                    base.PlayCrossfade("Gesture, Override", this.animString, "Reload.playbackRate", this.duration, 0.1f);
                     this.success = true;
                     Util.PlaySound("sfx_hunk_smg_reload_01", this.gameObject);
                 }
@@ -87,6 +87,7 @@ namespace HunkMod.SkillStates.Hunk
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
+            if (base.fixedAge <= 0.1f) return InterruptPriority.Frozen;
             return this.interruptPriority;
         }
     }

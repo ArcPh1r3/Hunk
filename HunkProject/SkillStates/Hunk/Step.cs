@@ -64,7 +64,7 @@ namespace HunkMod.SkillStates.Hunk
                 base.PlayCrossfade("FullBody, Override", "DodgeFull", "Dodge.playbackRate", this.duration * 1.4f, 0.05f);
             }
 
-            base.PlayAnimation("Gesture, Override", "BufferEmpty");
+            //base.PlayAnimation("Gesture, Override", "BufferEmpty");
 
             Util.PlaySound("sfx_driver_dash", this.gameObject);
 
@@ -159,7 +159,7 @@ namespace HunkMod.SkillStates.Hunk
                 }
             }
 
-            if (!slowFlag2)
+            if (!slowFlag2 && base.fixedAge > 0.05f)
             {
                 if (base.isAuthority)
                 {

@@ -32,7 +32,7 @@ namespace HunkMod.SkillStates.Hunk
             anim.SetFloat("dashR", num2);*/
 
             base.PlayCrossfade("FullBody, Override", "DodgeRoll", "Dodge.playbackRate", this.duration * 1.4f, 0.05f);
-            base.PlayAnimation("Gesture, Override", "BufferEmpty");
+            //base.PlayAnimation("Gesture, Override", "BufferEmpty");
 
             Util.PlaySound("sfx_driver_dash", this.gameObject);
 

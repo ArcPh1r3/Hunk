@@ -85,8 +85,8 @@ namespace HunkMod.SkillStates.Hunk
                 this.skillLocator.primary.UnsetSkillOverride(this, Modules.Survivors.Hunk.reloadSkillDef, GenericSkill.SkillOverridePriority.Network);
             }
 
-            //if (base.fixedAge >= 0.25f) this.skillLocator.primary.stock = 1;
-            //else this.skillLocator.primary.stock = 0;
+            if (base.fixedAge > 0.05f) this.skillLocator.primary.stock = 1;
+            else this.skillLocator.primary.stock = 0;
 
             //this.UpdateLightEffect();
 
