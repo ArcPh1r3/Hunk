@@ -96,7 +96,7 @@ namespace HunkMod.Modules
             headshotOverlay.transform.Find("ScopeOverlay").gameObject.SetActive(false);
 
             headshotVisualizer = viewer.visualizerPrefab.InstantiateClone("HunkHeadshotVisualizer", false);
-            headshotVisualizer.GetComponentInChildren<ObjectScaleCurve>().baseScale = Vector3.one * 0.1f;
+            headshotVisualizer.GetComponentInChildren<ObjectScaleCurve>().baseScale = Vector3.one * 0.05f;
             Image headshotImage = headshotVisualizer.transform.Find("Scaler/Rectangle").GetComponent<Image>();
             headshotVisualizer.transform.Find("Scaler/Outer").gameObject.SetActive(false);
             headshotImage.color = new Color(1f, 1f, 1f, 0.95f);
