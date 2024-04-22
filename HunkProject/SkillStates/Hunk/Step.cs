@@ -61,7 +61,7 @@ namespace HunkMod.SkillStates.Hunk
 
             if (!this.SearchAttacker())
             {
-                base.PlayCrossfade("FullBody, Override", "DodgeFull", "Dodge.playbackRate", this.duration * 1.4f, 0.05f);
+                base.PlayAnimation("FullBody, Override", "DodgeFull", "Dodge.playbackRate", this.duration * 1.4f);
             }
 
             //base.PlayAnimation("Gesture, Override", "BufferEmpty");

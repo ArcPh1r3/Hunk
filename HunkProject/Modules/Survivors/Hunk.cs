@@ -392,6 +392,8 @@ namespace HunkMod.Modules.Survivors
             string prefix = MainPlugin.developerPrefix;
             SkillLocator skillLocator = prefab.GetComponent<SkillLocator>();
 
+            Modules.Skills.CreateSkillFamilies(prefab);
+
             skillLocator.passiveSkill.enabled = false;
             //skillLocator.passiveSkill.skillNameToken = prefix + "_DRIVER_BODY_PASSIVE_NAME";
             //skillLocator.passiveSkill.skillDescriptionToken = prefix + "_DRIVER_BODY_PASSIVE_DESCRIPTION";
@@ -468,6 +470,81 @@ namespace HunkMod.Modules.Survivors
                 requiredStock = 1,
                 stockToConsume = 0,
             });
+
+
+            #region Passive
+            /*passive.defaultPassive = Modules.Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = prefix + "_DRIVER_BODY_PASSIVE_NAME",
+                skillNameToken = prefix + "_DRIVER_BODY_PASSIVE_NAME",
+                skillDescriptionToken = prefix + "_DRIVER_BODY_PASSIVE_DESCRIPTION",
+                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texPassiveIcon"),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Idle)),
+                activationStateMachineName = "",
+                baseMaxStock = 1,
+                baseRechargeInterval = 0f,
+                beginSkillCooldownOnSkillEnd = false,
+                canceledFromSprinting = false,
+                forceSprintDuringState = false,
+                fullRestockOnAssign = true,
+                interruptPriority = EntityStates.InterruptPriority.Any,
+                resetCooldownTimerOnUse = false,
+                isCombatSkill = false,
+                mustKeyPress = false,
+                cancelSprintingOnActivation = false,
+                rechargeStock = 1,
+                requiredStock = 2,
+                stockToConsume = 1
+            });
+
+            passive.fourthSurvivorPassive = Modules.Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = prefix + "_DRIVER_BODY_PASSIVE3_NAME",
+                skillNameToken = prefix + "_DRIVER_BODY_PASSIVE3_NAME",
+                skillDescriptionToken = prefix + "_DRIVER_BODY_PASSIVE3_DESCRIPTION",
+                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texLeadfootIcon"),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Idle)),
+                activationStateMachineName = "",
+                baseMaxStock = 1,
+                baseRechargeInterval = 0f,
+                beginSkillCooldownOnSkillEnd = false,
+                canceledFromSprinting = false,
+                forceSprintDuringState = false,
+                fullRestockOnAssign = true,
+                interruptPriority = EntityStates.InterruptPriority.Any,
+                resetCooldownTimerOnUse = false,
+                isCombatSkill = false,
+                mustKeyPress = false,
+                cancelSprintingOnActivation = false,
+                rechargeStock = 1,
+                requiredStock = 2,
+                stockToConsume = 1
+            });
+
+            if (Modules.Config.cursed.Value)
+            {
+                Modules.Skills.AddPassiveSkills(passive.passiveSkillSlot.skillFamily, new SkillDef[]{
+                    passive.defaultPassive,
+                    passive.bulletsPassive,
+                    passive.godslingPassive,
+                    passive.pistolOnlyPassive,
+                });
+
+                Modules.Skills.AddUnlockablesToFamily(passive.passiveSkillSlot.skillFamily,
+                null, pistolPassiveUnlockableDef, godslingPassiveUnlockableDef, pistolPassiveUnlockableDef);
+            }
+            else
+            {
+                Modules.Skills.AddPassiveSkills(passive.passiveSkillSlot.skillFamily, new SkillDef[]{
+                    passive.defaultPassive,
+                    passive.bulletsPassive,
+                    passive.godslingPassive
+                });
+
+                Modules.Skills.AddUnlockablesToFamily(passive.passiveSkillSlot.skillFamily,
+                null, pistolPassiveUnlockableDef, godslingPassiveUnlockableDef);
+            }*/
+            #endregion
 
             #region Primary
             SkillDef knife = Modules.Skills.CreatePrimarySkillDef(new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.SwingKnife)),
@@ -548,31 +625,7 @@ namespace HunkMod.Modules.Survivors
                 stockToConsume = 1
             });
 
-            SkillDef dodgeSkillDefTEMP = Modules.Skills.CreateSkillDef(new SkillDefInfo
-            {
-                skillName = prefix + "_HUNK_BODY_UTILITY_DODGE_NAME",
-                skillNameToken = prefix + "_HUNK_BODY_UTILITY_DODGE_NAME",
-                skillDescriptionToken = prefix + "_HUNK_BODY_UTILITY_DODGE_DESCRIPTION",
-                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texDodgeIcon"),
-                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Roll)),
-                activationStateMachineName = "Weapon",
-                baseMaxStock = 1,
-                baseRechargeInterval = 4f,
-                beginSkillCooldownOnSkillEnd = false,
-                canceledFromSprinting = false,
-                forceSprintDuringState = true,
-                fullRestockOnAssign = true,
-                interruptPriority = EntityStates.InterruptPriority.PrioritySkill,
-                resetCooldownTimerOnUse = false,
-                isCombatSkill = false,
-                mustKeyPress = false,
-                cancelSprintingOnActivation = false,
-                rechargeStock = 1,
-                requiredStock = 1,
-                stockToConsume = 1
-            });
-
-            Modules.Skills.AddUtilitySkills(prefab, dodgeSkillDef, dodgeSkillDefTEMP);
+            Modules.Skills.AddUtilitySkills(prefab, dodgeSkillDef);
             #endregion
 
             #region Special
@@ -657,7 +710,7 @@ namespace HunkMod.Modules.Survivors
 
             skins.Add(defaultSkin);
             #endregion
-
+            /*
             #region MasterySkin
             SkinDef masterySkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_MONSOON_SKIN_NAME",
                 Assets.mainAssetBundle.LoadAsset<Sprite>("texMainSkin"),
@@ -686,7 +739,7 @@ namespace HunkMod.Modules.Survivors
 
             skins.Add(masterySkin);
             #endregion
-
+            */
             skinController.skins = skins.ToArray();
         }
 

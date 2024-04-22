@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RoR2;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ namespace HunkMod
     {
         public static Dictionary<string, HunkWeaponDef> weaponDrops = new Dictionary<string, HunkWeaponDef>();
         public static HunkWeaponDef[] weaponDefs = new HunkWeaponDef[0];
+        public static List<ItemDef> itemDefs = new List<ItemDef>(0);
 
         public static void AddWeapon(HunkWeaponDef weaponDef)
         {
@@ -47,6 +49,8 @@ namespace HunkMod
                         break;
                 }
             }*/
+
+            itemDefs.Add(weaponDef.itemDef);
 
             Debug.Log("Added " + weaponDef.nameToken + " to catalog with index: " + weaponDef.index);
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RoR2;
+using System;
 using UnityEngine;
 
 namespace HunkMod.Modules.Components
@@ -17,8 +18,11 @@ namespace HunkMod.Modules.Components
 
         public int lastEquippedIndex = 1;
 
+        private Inventory inventory;
+
         private void Awake()
         {
+            this.inventory = this.GetComponent<Inventory>();
             this.Init();
         }
 
@@ -57,6 +61,12 @@ namespace HunkMod.Modules.Components
                     currentAmmo = Modules.Weapons.Magnum.instance.magSize
                 }
             };
+
+            this.inventory.GiveItem(Modules.Weapons.SMG.instance.itemDef);
+            this.inventory.GiveItem(Modules.Weapons.Shotgun.instance.itemDef);
+            this.inventory.GiveItem(Modules.Weapons.Slugger.instance.itemDef);
+            this.inventory.GiveItem(Modules.Weapons.M19.instance.itemDef);
+            this.inventory.GiveItem(Modules.Weapons.Magnum.instance.itemDef);
         }
 
         public void SwapToLastWeapon()
@@ -89,6 +99,8 @@ namespace HunkMod.Modules.Components
                 totalAmmo = 0,
                 currentAmmo = weaponDef.magSize
             };
+
+            if (this.inventory.GetItemCount(weaponDef.itemDef) <= 0) this.inventory.GiveItem(weaponDef.itemDef);
         }
     }
 }

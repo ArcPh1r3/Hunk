@@ -25,6 +25,7 @@ namespace HunkMod.Modules
             contentPack.buffDefs.Add(Buffs.bulletDefs.ToArray());
             contentPack.effectDefs.Add(Assets.effectDefs.ToArray());
             contentPack.entityStateTypes.Add(States.entityStates.ToArray());
+            contentPack.itemDefs.Add(HunkWeaponCatalog.itemDefs.ToArray());
             contentPack.masterPrefabs.Add(Prefabs.masterPrefabs.ToArray());
             contentPack.networkSoundEventDefs.Add(Assets.networkSoundEventDefs.ToArray());
             contentPack.projectilePrefabs.Add(Prefabs.projectilePrefabs.ToArray());

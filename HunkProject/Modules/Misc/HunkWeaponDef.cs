@@ -38,6 +38,8 @@ public class HunkWeaponDef : ScriptableObject
     public ushort index; // assigned at runtime
     [HideInInspector]
     public GameObject pickupPrefab; // same thing
+    [HideInInspector]
+    public ItemDef itemDef;
 
     public static HunkWeaponDef CreateWeaponDefFromInfo(HunkWeaponDefInfo weaponDefInfo)
     {

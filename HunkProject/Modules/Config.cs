@@ -112,7 +112,7 @@ false,
             baseArmor
                 = Config.BindAndOptionsSlider("03 - Character Stats",
                                      "Base Armor",
-                                     0f,
+                                     20f,
                                      "", 0f, 20f, true);
             armorGrowth
                 = Config.BindAndOptionsSlider("03 - Character Stats",

@@ -56,10 +56,13 @@ namespace HunkMod.SkillStates.Hunk
                 }
                 else
                 {
-                    EntityStateMachine.FindByCustomName(this.gameObject, "Weapon").SetInterruptState(new Swap
+                    if (base.fixedAge <= 0.75f)
                     {
-                        index = -1
-                    }, InterruptPriority.Frozen);
+                        EntityStateMachine.FindByCustomName(this.gameObject, "Weapon").SetInterruptState(new Swap
+                        {
+                            index = -1
+                        }, InterruptPriority.Frozen);
+                    }
                 }
 
                 this.outer.SetNextStateToMain();

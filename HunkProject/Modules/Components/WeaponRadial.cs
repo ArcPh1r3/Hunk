@@ -28,7 +28,7 @@ namespace HunkMod.Modules.Components
         internal RoR2.UI.MPInput input = GameObject.Find("MPEventSystem Player0").GetComponent<RoR2.UI.MPInput>();
         internal RoR2.UI.MPEventSystem events;
 
-        private float scaleSpeed = 8f;
+        private float scaleSpeed = 10f;
 
         private void Awake()
         {
@@ -181,6 +181,12 @@ namespace HunkMod.Modules.Components
                 this.statsPanel.SetActive(false);
                 this.cursor.SetActive(false);
                 this.index = -1;
+
+                for (int i = 0; i < this.icons.Length; i++)
+                {
+                    this.icons[i].gameObject.transform.localScale = Vector3.one * this.iconSize;
+                }
+
                 return;
             }
 

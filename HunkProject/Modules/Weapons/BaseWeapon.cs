@@ -1,4 +1,5 @@
 ﻿using R2API;
+using RoR2;
 using RoR2.Skills;
 using System;
 using UnityEngine;
@@ -18,7 +19,8 @@ namespace HunkMod.Modules.Weapons
 
     public abstract class BaseWeapon
     {
-        public HunkWeaponDef weaponDef { get; set; }
+        public HunkWeaponDef weaponDef { get; private set; }
+        public ItemDef itemDef { get; private set; }
         public abstract string weaponNameToken { get; }
         public abstract string weaponName { get; }
         public abstract string weaponDesc { get; }
@@ -71,6 +73,28 @@ namespace HunkMod.Modules.Weapons
                 reloadFillValue = reloadFillValue,
                 accuracyFillValue = accuracyFillValue,
             });
+
+            itemDef = (ItemDef)ScriptableObject.CreateInstance(typeof(ItemDef));
+            itemDef.name = "ROB_HUNK_WEAPON_" + weaponNameToken + "_NAME";
+            itemDef.nameToken = "ROB_HUNK_WEAPON_" + weaponNameToken + "_NAME";
+            itemDef.descriptionToken = "ROB_HUNK_WEAPON_" + weaponNameToken + "_DESC";
+            itemDef.canRemove = false;
+            itemDef.hidden = true;
+            itemDef.loreToken = "";
+            itemDef.pickupIconSprite = weaponDef.icon;
+            itemDef.pickupToken = "";
+            itemDef.requiredExpansion = null;
+            itemDef.tags = new ItemTag[]
+            {
+                ItemTag.AIBlacklist,
+                ItemTag.BrotherBlacklist,
+                ItemTag.CannotCopy,
+                ItemTag.CannotDuplicate,
+                ItemTag.CannotSteal,
+                ItemTag.WorldUnique
+            };
+
+            weaponDef.itemDef = itemDef;
             HunkWeaponCatalog.AddWeapon(weaponDef);
 
             if (modelPrefab) Modules.Assets.ConvertAllRenderersToHopooShader(modelPrefab);

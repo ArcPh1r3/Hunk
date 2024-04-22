@@ -12,49 +12,45 @@ namespace HunkMod.Modules.Components
         private void Awake()
         {
             CharacterBody characterBody = this.GetComponent<CharacterBody>();
-            ModelLocator modelLocator = this.GetComponent<ModelLocator>();
-            if (characterBody) modelLocator = characterBody.modelLocator;
+            Transform modelTransform = this.transform;
+            if (characterBody && characterBody.modelLocator && characterBody.modelLocator.modelTransform) modelTransform = characterBody.modelLocator.modelTransform;
 
-            if (modelLocator)
+            if (modelTransform)
             {
-                Transform modelTransform = modelLocator.modelTransform;
-                if (modelTransform)
+                ChildLocator childLocator = modelTransform.GetComponent<ChildLocator>();
+                if (childLocator)
                 {
-                    ChildLocator childLocator = modelTransform.GetComponent<ChildLocator>();
-                    if (childLocator)
+                    Transform head = childLocator.FindChild("Head");
+                    Transform head2 = childLocator.FindChild("HeadCenter");
+
+                    if (head) this.headTransform = head;
+                    if (!head && head2) this.headTransform = head2;
+
+                    if (!this.headTransform)
                     {
-                        Transform head = childLocator.FindChild("Head");
-                        Transform head2 = childLocator.FindChild("HeadCenter");
-
-                        if (head) this.headTransform = head;
-                        if (!head && head2) this.headTransform = head2;
-
-                        if (!this.headTransform)
+                        if (modelTransform.gameObject.name == "mdlFlyingVermin")
                         {
-                            if (modelLocator.modelTransform.gameObject.name == "mdlFlyingVermin")
-                            {
-                                this.IFUCKINGHATEYOUBASTARDFUCKYOUFUCKYOU(modelLocator.modelTransform);
-                            }
+                            this.IFUCKINGHATEYOUBASTARDFUCKYOUFUCKYOU(modelTransform);
+                        }
 
-                            if (modelLocator.modelTransform.gameObject.name == "mdlHermitCrab")
-                            {
-                                this.ThisIsALittleWorse(modelLocator.modelTransform);
-                            }
+                        if (modelTransform.gameObject.name == "mdlHermitCrab")
+                        {
+                            this.ThisIsALittleWorse(modelTransform);
+                        }
 
-                            if (modelLocator.modelTransform.gameObject.name == "mdlImp" || modelLocator.modelTransform.gameObject.name == "mdlImpBoss")
-                            {
-                                this.headTransform = childLocator.FindChild("Chest");
-                            }
+                        if (modelTransform.gameObject.name == "mdlImp" || modelTransform.gameObject.name == "mdlImpBoss")
+                        {
+                            this.headTransform = childLocator.FindChild("Chest");
+                        }
 
-                            if (modelLocator.modelTransform.gameObject.name == "mdlNullifier")
-                            {
-                                this.headTransform = childLocator.FindChild("Muzzle");
-                            }
+                        if (modelTransform.gameObject.name == "mdlNullifier")
+                        {
+                            this.headTransform = childLocator.FindChild("Muzzle");
+                        }
 
-                            if (modelLocator.modelTransform.gameObject.name == "mdlVoidMegaCrab")
-                            {
-                                this.headTransform = modelTransform.Find("VoidMegaCrabArmature/ROOT/base/body/eye");
-                            }
+                        if (modelTransform.gameObject.name == "mdlVoidMegaCrab")
+                        {
+                            this.headTransform = modelTransform.Find("VoidMegaCrabArmature/ROOT/base/body/eye");
                         }
                     }
                 }
