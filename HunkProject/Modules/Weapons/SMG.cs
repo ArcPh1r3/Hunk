@@ -12,9 +12,15 @@ namespace HunkMod.Modules.Weapons
         public override string iconName => "texSMGIcon";
         public override GameObject crosshairPrefab => Modules.Assets.smgCrosshairPrefab;
         public override int magSize => 32;
+        public override float reloadDuration => 2.4f;
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlSMG");
         public override HunkWeaponDef.AnimationSet animationSet => HunkWeaponDef.AnimationSet.SMG;
         public override bool storedOnBack => true;
+        public override float damageFillValue => 0.5f;
+        public override float rangefillValue => 0.7f;
+        public override float fireRateFillValue => 0.9f;
+        public override float reloadFillValue => 0.5f;
+        public override float accuracyFillValue => 0.5f;
 
         public override SkillDef primarySkillDef => Modules.Skills.CreatePrimarySkillDef(
 new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Weapon.SMG.Shoot)),

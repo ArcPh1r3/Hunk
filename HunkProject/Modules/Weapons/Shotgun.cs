@@ -12,9 +12,15 @@ namespace HunkMod.Modules.Weapons
         public override string iconName => "texShotgunIcon";
         public override GameObject crosshairPrefab => Modules.Assets.shotgunCrosshairPrefab;
         public override int magSize => 4;
+        public override float reloadDuration => 3f;
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlShotgun");
         public override HunkWeaponDef.AnimationSet animationSet => HunkWeaponDef.AnimationSet.SMG;
         public override bool storedOnBack => true;
+        public override float damageFillValue => 0.7f;
+        public override float rangefillValue => 0.4f;
+        public override float fireRateFillValue => 0.3f;
+        public override float reloadFillValue => 0.2f;
+        public override float accuracyFillValue => 0.6f;
 
         public override SkillDef primarySkillDef => Modules.Skills.CreatePrimarySkillDef(
 new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Weapon.Shotgun.Shoot)),

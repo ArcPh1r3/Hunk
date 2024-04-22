@@ -6,7 +6,7 @@ namespace HunkMod.Modules.Components
     public class WeaponRadial : MonoBehaviour
     {
         public int index;
-        public int offset;
+
         private GameObject cursor;
         private Transform center;
         private Image[] icons;
@@ -28,7 +28,7 @@ namespace HunkMod.Modules.Components
             int _index = 0;
             int j = 0;
             int storedAngle = 0;
-            for (int i = this.offset; i < 360; i += 45)
+            for (int i = 0; i < 360; i += 45)
             {
                 if (angle >= i && angle < i + 45)
                 {
@@ -41,44 +41,34 @@ namespace HunkMod.Modules.Components
             switch (_index)
             {
                 case 0:
-                    _index = 0;
-                    this.index = 0;
-                    break;
-                case 1:
-                    _index = 7;
                     this.index = 5;
                     break;
+                case 1:
+                    this.index = 0;
+                    break;
                 case 2:
-                    _index = 6;
-                    this.index = 3;
+                    this.index = 4;
                     break;
                 case 3:
-                    _index = 5;
-                    this.index = 7;
-                    break;
-                case 4:
-                    _index = 4;
-                    this.index = 1;
-                    break;
-                case 5:
-                    _index = 3;
-                    this.index = 6;
-                    break;
-                case 6:
-                    _index = 2;
                     this.index = 2;
                     break;
+                case 4:
+                    this.index = 6;
+                    break;
+                case 5:
+                    this.index = 1;
+                    break;
+                case 6:
+                    this.index = 7;
+                    break;
                 case 7:
-                    _index = 1;
-                    this.index = 4;
+                    this.index = 3;
                     break;
             }
 
-            Debug.Log("Selected weapon index is " + _index);
-
             for (int i = 0; i < this.icons.Length; i++)
             {
-                if (i == _index) this.icons[i].gameObject.transform.localScale = Vector3.one * iconSize * 1.2f;
+                if (i == this.index) this.icons[i].gameObject.transform.localScale = Vector3.one * iconSize * 1.2f;
                 else this.icons[i].gameObject.transform.localScale = Vector3.one * iconSize;
             }
 

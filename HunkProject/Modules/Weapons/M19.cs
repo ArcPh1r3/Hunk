@@ -12,9 +12,15 @@ namespace HunkMod.Modules.Weapons
         public override string iconName => "texM19Icon";
         public override GameObject crosshairPrefab => Modules.Assets.pistolCrosshairPrefab;
         public override int magSize => 7;
+        public override float reloadDuration => 1.8f;
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlM19");
         public override HunkWeaponDef.AnimationSet animationSet => HunkWeaponDef.AnimationSet.Pistol;
         public override bool storedOnBack => false;
+        public override float damageFillValue => 0.3f;
+        public override float rangefillValue => 0.7f;
+        public override float fireRateFillValue => 0.75f;
+        public override float reloadFillValue => 0.9f;
+        public override float accuracyFillValue => 0.8f;
 
         public override SkillDef primarySkillDef => Modules.Skills.CreatePrimarySkillDef(
 new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Weapon.M19.Shoot)),

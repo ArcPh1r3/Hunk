@@ -12,10 +12,10 @@ namespace HunkMod.Modules.Components
 
 			if (weaponDef.icon != null)
 			{
-				this.iconImage.texture = weaponDef.icon;
+				this.iconImage.texture = weaponDef.icon.texture;
 			}
 
-			this.titleTMP.color = Modules.Helpers.greenItemColor;
+			this.titleTMP.color = Modules.Helpers.redItemColor;
 		}
 	}
 }

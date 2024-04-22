@@ -14,9 +14,10 @@ public class HunkWeaponDef : ScriptableObject
     [Header("General")]
     public string nameToken = "";
     public string descriptionToken = "";
-    public Texture icon = null;
+    public Sprite icon = null;
     public GameObject crosshairPrefab = null;
     public int magSize = 8;
+    public float reloadDuration = 2.4f;
 
     [Header("Skills")]
     public SkillDef primarySkillDef;
@@ -25,6 +26,13 @@ public class HunkWeaponDef : ScriptableObject
     public GameObject modelPrefab;
     public AnimationSet animationSet = AnimationSet.SMG;
     public bool storedOnBack = true;
+
+    [Header("UI")]
+    public float damageFillValue;
+    public float rangefillValue;
+    public float fireRateFillValue;
+    public float reloadFillValue;
+    public float accuracyFillValue;
 
     [HideInInspector]
     public ushort index; // assigned at runtime
@@ -41,12 +49,19 @@ public class HunkWeaponDef : ScriptableObject
         weaponDef.icon = weaponDefInfo.icon;
         weaponDef.crosshairPrefab = weaponDefInfo.crosshairPrefab;
         weaponDef.magSize = weaponDefInfo.magSize;
+        weaponDef.reloadDuration = weaponDefInfo.reloadDuration;
 
         weaponDef.primarySkillDef = weaponDefInfo.primarySkillDef;
 
         weaponDef.modelPrefab = weaponDefInfo.modelPrefab;
         weaponDef.animationSet = weaponDefInfo.animationSet;
         weaponDef.storedOnBack = weaponDefInfo.storedOnBack;
+
+        weaponDef.damageFillValue = weaponDefInfo.damageFillValue;
+        weaponDef.rangefillValue = weaponDefInfo.rangefillValue;
+        weaponDef.fireRateFillValue = weaponDefInfo.fireRateFillValue;
+        weaponDef.reloadFillValue = weaponDefInfo.reloadFillValue;
+        weaponDef.accuracyFillValue = weaponDefInfo.accuracyFillValue;
 
         return weaponDef;
     }
@@ -57,13 +72,20 @@ public struct HunkWeaponDefInfo
 {
     public string nameToken;
     public string descriptionToken;
-    public Texture icon;
+    public Sprite icon;
     public GameObject crosshairPrefab;
     public int magSize;
+    public float reloadDuration;
 
     public SkillDef primarySkillDef;
 
     public GameObject modelPrefab;
     public HunkWeaponDef.AnimationSet animationSet;
     public bool storedOnBack;
+
+    public float damageFillValue;
+    public float rangefillValue;
+    public float fireRateFillValue;
+    public float reloadFillValue;
+    public float accuracyFillValue;
 }

@@ -25,10 +25,16 @@ namespace HunkMod.Modules.Weapons
         public abstract string iconName { get; }
         public abstract GameObject crosshairPrefab { get; }
         public abstract int magSize { get; }
+        public abstract float reloadDuration { get; }
         public abstract SkillDef primarySkillDef { get; }
         public abstract GameObject modelPrefab { get; }
         public abstract HunkWeaponDef.AnimationSet animationSet { get; }
         public abstract bool storedOnBack { get; }
+        public abstract float damageFillValue { get; }
+        public abstract float rangefillValue { get; }
+        public abstract float fireRateFillValue { get; }
+        public abstract float reloadFillValue { get; }
+        public abstract float accuracyFillValue { get; }
 
         public virtual void Init()
         {
@@ -44,8 +50,8 @@ namespace HunkMod.Modules.Weapons
 
         protected void CreateWeapon()
         {
-            Texture icon = null;
-            if (iconName != "") icon = Modules.Assets.mainAssetBundle.LoadAsset<Texture>(iconName);
+            Sprite icon = null;
+            if (iconName != "") icon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>(iconName);
 
             weaponDef = HunkWeaponDef.CreateWeaponDefFromInfo(new HunkWeaponDefInfo
             {
@@ -54,10 +60,16 @@ namespace HunkMod.Modules.Weapons
                 icon = icon,
                 crosshairPrefab = crosshairPrefab,
                 magSize = magSize,
+                reloadDuration = reloadDuration,
                 primarySkillDef = primarySkillDef,
                 modelPrefab = modelPrefab,
                 animationSet = animationSet,
-                storedOnBack = storedOnBack
+                storedOnBack = storedOnBack,
+                damageFillValue = damageFillValue,
+                rangefillValue = rangefillValue,
+                fireRateFillValue = fireRateFillValue,
+                reloadFillValue = reloadFillValue,
+                accuracyFillValue = accuracyFillValue,
             });
             HunkWeaponCatalog.AddWeapon(weaponDef);
 

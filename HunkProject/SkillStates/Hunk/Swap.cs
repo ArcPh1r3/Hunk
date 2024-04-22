@@ -5,6 +5,8 @@ namespace HunkMod.SkillStates.Hunk
 {
     public class Swap : BaseHunkSkillState
     {
+        public int index;
+
         private float duration = 0.5f;
         private bool swapped;
 
@@ -25,7 +27,10 @@ namespace HunkMod.SkillStates.Hunk
             if (base.fixedAge >= (0.5f * this.duration) && !this.swapped)
             {
                 this.swapped = true;
-                this.hunk.SwapToLastWeapon();
+
+                if (this.index != -1) this.hunk.SwapToWeapon(this.index);
+                else this.hunk.SwapToLastWeapon();
+
                 base.PlayAnimation("Gesture, Override", "EquipGun", "Swap.playbackRate", this.duration);
                 Util.PlaySound("sfx_hunk_equip_smg", this.gameObject);
                 this.hunk.ammoKillTimer = 1.5f;

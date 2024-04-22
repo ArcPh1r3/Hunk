@@ -61,15 +61,22 @@ namespace HunkMod.Modules.Components
 
         public void SwapToLastWeapon()
         {
-            // temporary until radial is in
-            this.lastEquippedIndex = this.equippedIndex;
-            this.equippedIndex++;
-            if (this.equippedIndex >= this.weaponData.Length) this.equippedIndex = 0;
-            return;
-
             int penis = this.equippedIndex;
             this.equippedIndex = this.lastEquippedIndex;
             this.lastEquippedIndex = penis;
+        }
+
+        public void CycleWeapon()
+        {
+            this.lastEquippedIndex = this.equippedIndex;
+            this.equippedIndex++;
+            if (this.equippedIndex >= this.weaponData.Length) this.equippedIndex = 0;
+        }
+
+        public void SwapToWeapon(int index)
+        {
+            this.lastEquippedIndex = this.equippedIndex;
+            this.equippedIndex = index;
         }
 
         public void AddWeapon(HunkWeaponDef weaponDef)

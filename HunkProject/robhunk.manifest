@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1077724003
+CRC: 938450012
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 7fd004479e9bc610348d54b794686357
+    Hash: 47d36ea8fbab5937b7f935ca5aaa3b07
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 301e2c247082c83efdce4cb295e86c10
+    Hash: 7229672de4cae9db5a5fd00c63ea84a7
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -43,7 +43,13 @@ ClassTypes:
   Script: {fileID: 11500000, guid: 67079b849227b734694872d8810229b8, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 2334069450a65d042a95a873e5229b20, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
 - Class: 115
+  Script: {instanceID: 0}
+- Class: 128
   Script: {instanceID: 0}
 - Class: 136
   Script: {instanceID: 0}
@@ -92,6 +98,7 @@ Assets:
 - Assets/Hunk/Textures/face_albm.png
 - Assets/Hunk/FBX/animHunkShotgun.fbx
 - Assets/Hunk/VFX/Badass/StoneHitEffect.prefab
+- Assets/Hunk/HUD/Textures/texRadialSelection.png
 - Assets/Hunk/Textures/Knife/Leon_Knife_S.png
 - Assets/Hunk/HunkDisplay.prefab
 - Assets/Hunk/Materials/matHunk02.mat
@@ -123,10 +130,12 @@ Assets:
 - Assets/Hunk/Icons/Weapon/texShotgunIcon.png
 - Assets/Hunk/Textures/M19/Leon_M1911_N.png
 - Assets/Hunk/Textures/equipment_Spec.png
+- Assets/Hunk/HUD/Textures/texRadialDefault.png
 - Assets/Hunk/FBX/RunR.anim
 - Assets/Hunk/Icons/texHunkAchievement.png
 - Assets/Hunk/FBX/meshHunkB02.mesh
 - Assets/Hunk/FBX/animHunkPistol.fbx
+- Assets/Hunk/HUD/Textures/texRadialInner.png
 - Assets/Hunk/FBX/Animations/Default/Descend.anim
 - Assets/Hunk/FBX/RunB.anim
 - Assets/Hunk/Textures/InfiniteKnife/Leon_InfiniteKnife_D.png
@@ -145,7 +154,9 @@ Assets:
 - Assets/Hunk/FBX/meshHunkB01.mesh
 - Assets/Hunk/VFX/HunkMissileGhost.prefab
 - Assets/Hunk/HUD/WeaponChargeBar.prefab
+- Assets/Hunk/HUD/Textures/texRadialSelectionOuter.png
 - Assets/Hunk/VFX/GunLight.prefab
+- Assets/Hunk/HUD/Textures/texRadialOuter.png
 - Assets/Hunk/FBX/Animations/Default/Idle.anim
 - Assets/Hunk/Materials/matHunk05.mat
 - Assets/Hunk/FBX/SprintFast.anim
@@ -188,6 +199,7 @@ Assets:
 - Assets/Hunk/Materials/matSMG.mat
 - Assets/Hunk/Textures/Shotgun/Leon_RemingtonM1100P_N.png
 - Assets/Hunk/Icons/Weapon/texSMGIcon.png
+- Assets/Hunk/HUD/WeaponRadial.prefab
 - Assets/Hunk/FBX/Animations/maskHunkAimYaw.mask
 - Assets/Hunk/Textures/SMG/Leon_LI5_N.png
 - Assets/Hunk/FBX/Animations/Default/RunF.anim

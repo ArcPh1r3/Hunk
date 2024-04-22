@@ -86,7 +86,7 @@ namespace HunkMod.Modules.Components
 
             if (this.iconImage)
 			{
-				this.iconImage.texture = this.hunk.weaponDef.icon;
+				this.iconImage.texture = this.hunk.weaponDef.icon.texture;
 				this.iconImage.color = Color.white;
 				this.iconImage.enabled = true;
 			}

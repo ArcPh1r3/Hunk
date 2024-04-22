@@ -32,8 +32,9 @@ namespace HunkMod.Modules.Components
             GameObject bodyObject = Util.FindNetworkObject(this.netId);
             if (!bodyObject) return;
 
-            bodyObject.AddComponent<Decapitation>();
-            //Util.PlaySound(penis.skinDef.consumeSoundString, this.target.gameObject);
+            ModelLocator modelLocator = bodyObject.GetComponent<ModelLocator>();
+            if (modelLocator && modelLocator.modelTransform) modelLocator.modelTransform.gameObject.AddComponent<Decapitation>();
+            else bodyObject.AddComponent<Decapitation>();
         }
 
         public void Serialize(NetworkWriter writer)

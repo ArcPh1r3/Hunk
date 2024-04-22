@@ -143,6 +143,18 @@ namespace HunkMod.Modules.Components
             this.EquipWeapon(this.weaponTracker.equippedIndex);
         }
 
+        public void CycleWeapon()
+        {
+            this.weaponTracker.CycleWeapon();
+            this.EquipWeapon(this.weaponTracker.equippedIndex);
+        }
+
+        public void SwapToWeapon(int index)
+        {
+            this.weaponTracker.SwapToWeapon(index);
+            this.EquipWeapon(this.weaponTracker.equippedIndex);
+        }
+
         private void Inventory_onInventoryChanged()
         {
             this.CheckForNeedler();

@@ -18,7 +18,7 @@ namespace HunkMod.SkillStates.Hunk
         public override void OnEnter()
         {
             base.OnEnter();
-            this.duration = this.baseDuration / this.attackSpeedStat;
+            this.duration = this.cachedWeaponDef.reloadDuration / this.attackSpeedStat;
             this.hunk.isReloading = true;
             this.wasAiming = this.hunk.isAiming;
 

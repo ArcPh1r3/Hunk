@@ -67,7 +67,11 @@ namespace HunkMod.Modules
         public static GameObject shotgunTracer;
         public static GameObject shotgunTracerCrit;
 
+        public static GameObject weaponRadial;
+
         internal static Material woundOverlayMat;
+
+        internal static TMP_FontAsset hgFont;
 
         internal static void PopulateAssets()
         {
@@ -85,6 +89,16 @@ namespace HunkMod.Modules
                 manifestResourceStream2.Read(array, 0, array.Length);
                 SoundAPI.SoundBanks.Add(array);
             }
+
+            weaponRadial = mainAssetBundle.LoadAsset<GameObject>("WeaponRadial");
+            weaponRadial.AddComponent<WeaponRadial>();
+
+            hgFont = Addressables.LoadAssetAsync<TMP_FontAsset>("RoR2/Base/Common/Fonts/Bombardier/tmpBombDropshadow.asset").WaitForCompletion();
+
+            /*GameObject textObjecthH = GameObject.Instantiate(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/HUDSimple.prefab").WaitForCompletion().transform.Find("MainContainer/MainUIArea/SpringCanvas/BottomLeftCluster/BarRoots/LevelDisplayCluster/PrefixText").gameObject);
+            textObjecthH.transform.parent = weaponRadial.transform.Find("Center/Inner");
+            textObjecthH.transform.localPosition = Vector3.zero;
+            textObjecthH.GetComponentInChildren<LanguageTextMeshController>().token = "Lightning Hawk";*/
 
             woundOverlayMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/ArmorReductionOnHit/matPulverizedOverlay.mat").WaitForCompletion());
             woundOverlayMat.SetColor("_TintColor", Color.red);
@@ -707,7 +721,7 @@ namespace HunkMod.Modules
             mat.SetColor("_EmColor", emissionColor);
             mat.SetFloat("_EmPower", emission);
             mat.SetTexture("_EmTex", tempMat.GetTexture("_EmissionMap"));
-            if (normalStrength > 0f) mat.SetTexture("_NormalTex", tempMat.GetTexture("_NormalMap"));
+            if (normalStrength > 0f) mat.SetTexture("_NormalTex", tempMat.GetTexture("_BumpMap"));
             mat.SetFloat("_NormalStrength", normalStrength);
 
             mat.DisableKeyword("DITHER");
