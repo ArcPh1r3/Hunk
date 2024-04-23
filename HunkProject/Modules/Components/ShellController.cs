@@ -26,7 +26,7 @@ namespace HunkMod.Modules.Components
             if (!this.triggered)
             {
                 this.triggered = true;
-                Util.PlaySound("sfx_driver_shell", this.gameObject);
+                Util.PlaySound("sfx_hunk_shell", this.gameObject);
             }
         }
     }

@@ -8,5 +8,15 @@ namespace HunkMod.Modules.Components
         {
 
         }
+
+        public void PumpShotgun()
+        {
+
+        }
+
+        public void PumpSlugger()
+        {
+
+        }
     }
 }

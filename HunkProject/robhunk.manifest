@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 938450012
+CRC: 157021436
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 47d36ea8fbab5937b7f935ca5aaa3b07
+    Hash: 8e92c563a4ba4a2d688e2db0cab1a4d6
   TypeTreeHash:
     serializedVersion: 2
     Hash: 7229672de4cae9db5a5fd00c63ea84a7
@@ -93,7 +93,6 @@ Assets:
 - Assets/Hunk/Textures/texAmmoPickup.png
 - Assets/Hunk/Textures/SMG/Leon_LI5_D.png
 - Assets/Hunk/HUD/Textures/texBulletIndicator.png
-- Assets/Hunk/FBX/Animations/Default/ShootShotgun.anim
 - Assets/Hunk/VFX/matShockwave2.mat
 - Assets/Hunk/Textures/face_albm.png
 - Assets/Hunk/FBX/animHunkShotgun.fbx
@@ -108,6 +107,7 @@ Assets:
 - Assets/Hunk/FBX/Animations/Default/AimPitch.anim
 - Assets/Hunk/FBX/Animations/Default/Ascend.anim
 - Assets/Hunk/FBX/Sprint.anim
+- Assets/Hunk/FBX/ShootShotgun.anim
 - Assets/Hunk/FBX/Animations/Default/Sprint.anim
 - Assets/Hunk/Textures/jacket_n.png
 - Assets/Hunk/FBX/animHunkSMG.fbx
@@ -115,8 +115,10 @@ Assets:
 - Assets/Hunk/FBX/Animations/animHunk.controller
 - Assets/Hunk/FBX/Animations/Default/AimYaw.anim
 - Assets/Hunk/mdlHunk.prefab
+- Assets/Hunk/Materials/matShotgunShell.mat
 - Assets/Hunk/FBX/Reload.anim
 - Assets/Hunk/Textures/Knife/Leon_Knife_D.png
+- Assets/Hunk/FBX/ShootSlugger.anim
 - Assets/Hunk/Icons/Weapon/texRevolverIcon.png
 - Assets/Hunk/FBX/Descend.anim
 - Assets/Hunk/Materials/matHunk03.mat
@@ -154,6 +156,7 @@ Assets:
 - Assets/Hunk/FBX/meshHunkB01.mesh
 - Assets/Hunk/VFX/HunkMissileGhost.prefab
 - Assets/Hunk/HUD/WeaponChargeBar.prefab
+- Assets/Hunk/Materials/matShotgunSlug.mat
 - Assets/Hunk/HUD/Textures/texRadialSelectionOuter.png
 - Assets/Hunk/VFX/GunLight.prefab
 - Assets/Hunk/HUD/Textures/texRadialOuter.png
@@ -189,6 +192,7 @@ Assets:
 - Assets/Hunk/Textures/Knife/Leon_Knife_N.png
 - Assets/Hunk/FBX/HunkLightweight.fbx
 - Assets/Hunk/Textures/Magnum/Leon_LightningHawkNormBarrel_D.png
+- Assets/Hunk/Textures/Misc/texSlug.png
 - Assets/Hunk/Textures/body_albm.png
 - Assets/Hunk/Weapons/mdlMagnum.prefab
 - Assets/Hunk/FBX/Rockets.fbx
@@ -215,6 +219,7 @@ Assets:
 - Assets/Hunk/FBX/Animations/Default/Reload.anim
 - Assets/Hunk/FBX/Shell.dae
 - Assets/Hunk/Icons/Weapon/texMagnumIcon.png
+- Assets/Hunk/Textures/Misc/texShell.png
 - Assets/Hunk/Textures/body_Spec.png
 - Assets/Hunk/HUD/Textures/texWhite.png
 - Assets/Hunk/Textures/Shotgun/Leon_RemingtonM1100_N.png

@@ -19,8 +19,14 @@ namespace HunkMod.Modules.Components
 
         public void PumpShotgun()
         {
-            Util.PlaySound("", this.gameObject);
+            Util.PlaySound("sfx_hunk_shotgun_pump", this.gameObject);
             if (this.hunk) this.hunk.DropShell(-this.transform.right * -Random.Range(4, 12));
+        }
+
+        public void PumpSlugger()
+        {
+            Util.PlaySound("sfx_hunk_shotgun_pump", this.gameObject);
+            if (this.hunk) this.hunk.DropSlug(-this.transform.right * -Random.Range(4, 12));
         }
     }
 }

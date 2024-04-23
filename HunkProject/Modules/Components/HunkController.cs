@@ -69,7 +69,7 @@ namespace HunkMod.Modules.Components
             this.animator = modelLocator.modelBaseTransform.GetComponentInChildren<Animator>();
             this.characterModel = modelLocator.modelBaseTransform.GetComponentInChildren<CharacterModel>();
             this.skillLocator = this.GetComponent<SkillLocator>();
-            //this.machineGunVFX = this.childLocator.FindChild("MachineGunVFX").gameObject.GetComponent<ParticleSystem>();
+            this.machineGunVFX = this.childLocator.FindChild("MachineGunVFX").gameObject.GetComponent<ParticleSystem>();
             this.weaponRenderer = this.childLocator.FindChild("WeaponModel").GetComponent<SkinnedMeshRenderer>();
             this.weaponStateMachine = EntityStateMachine.FindByCustomName(this.gameObject, "Weapon");
             this.cameraPivot = modelLocator.modelBaseTransform.Find("CameraPivot").transform;
@@ -424,8 +424,8 @@ namespace HunkMod.Modules.Components
 
             for (int i = 0; i < this.maxShellCount; i++)
             {
-                this.shellObjects[i] = GameObject.Instantiate(desiredShell, this.childLocator.FindChild("Weapon"), false);
-                this.shellObjects[i].transform.localScale = Vector3.one * 1.1f;
+                this.shellObjects[i] = GameObject.Instantiate(desiredShell, this.childLocator.FindChild("MuzzleShell"), false);
+                this.shellObjects[i].transform.localScale = Vector3.one * 0.75f;
                 this.shellObjects[i].SetActive(false);
                 this.shellObjects[i].GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.Continuous;
 
@@ -441,8 +441,8 @@ namespace HunkMod.Modules.Components
 
             for (int i = 0; i < this.maxShellCount; i++)
             {
-                this.slugObjects[i] = GameObject.Instantiate(desiredShell, this.childLocator.FindChild("Weapon"), false);
-                this.slugObjects[i].transform.localScale = Vector3.one * 1.2f;
+                this.slugObjects[i] = GameObject.Instantiate(desiredShell, this.childLocator.FindChild("MuzzleShell"), false);
+                this.slugObjects[i].transform.localScale = Vector3.one * 0.85f;
                 this.slugObjects[i].SetActive(false);
                 this.slugObjects[i].GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.Continuous;
 
@@ -457,12 +457,13 @@ namespace HunkMod.Modules.Components
 
             if (this.shellObjects[this.currentShell] == null) return;
 
-            Transform origin = this.childLocator.FindChild("Weapon");
+            Transform origin = this.childLocator.FindChild("MuzzleShell");
 
             this.shellObjects[this.currentShell].SetActive(false);
 
             this.shellObjects[this.currentShell].transform.position = origin.position;
             this.shellObjects[this.currentShell].transform.SetParent(null);
+            this.shellObjects[this.currentShell].transform.localScale = Vector3.one * 0.75f;
 
             this.shellObjects[this.currentShell].SetActive(true);
 
@@ -479,12 +480,13 @@ namespace HunkMod.Modules.Components
 
             if (this.slugObjects[this.currentSlug] == null) return;
 
-            Transform origin = this.childLocator.FindChild("Weapon");
+            Transform origin = this.childLocator.FindChild("MuzzleShell");
 
             this.slugObjects[this.currentSlug].SetActive(false);
 
             this.slugObjects[this.currentSlug].transform.position = origin.position;
             this.slugObjects[this.currentSlug].transform.SetParent(null);
+            this.slugObjects[this.currentSlug].transform.localScale = Vector3.one * 0.85f;
 
             this.slugObjects[this.currentSlug].SetActive(true);
 

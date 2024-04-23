@@ -164,7 +164,7 @@ namespace HunkMod.Modules.Components
 
         private void UpdateScale()
         {
-            this.transform.localScale = Vector3.Slerp(this.transform.localScale, Vector3.one * 2f, Time.deltaTime * this.scaleSpeed);
+            this.transform.localScale = Vector3.Slerp(this.transform.localScale, Vector3.one * 2f, Time.unscaledDeltaTime * this.scaleSpeed);
         }
 
         private void Update()

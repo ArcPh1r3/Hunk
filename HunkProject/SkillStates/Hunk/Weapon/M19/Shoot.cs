@@ -39,7 +39,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.M19
             if (this.hunk)
             {
                 this.hunk.ConsumeAmmo();
-                //this.iDrive.machineGunVFX.Play();
+                this.hunk.machineGunVFX.Play();
             }
         }
 

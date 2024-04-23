@@ -37,7 +37,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Shotgun
             if (this.isCrit) Util.PlaySound("sfx_hunk_riot_shotgun_shoot_critical", base.gameObject);
             else Util.PlaySound("sfx_hunk_riot_shotgun_shoot", base.gameObject);
 
-            this.PlayAnimation("Gesture, Override", "ShootShotgun", "Shoot.playbackRate", this.duration);
+            this.PlayAnimation("Gesture, Override", "ShootShotgun", "Shoot.playbackRate", this.duration * 1.2f);
 
             this.fireDuration = 0;
 
@@ -49,8 +49,6 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Shotgun
             if (!this.hasFired)
             {
                 this.hasFired = true;
-
-                this.hunk.DropShell(-this.GetModelBaseTransform().transform.right * -Random.Range(4, 12));
 
                 float recoilAmplitude = Shoot.bulletRecoil / this.attackSpeedStat;
 

@@ -26,6 +26,15 @@ namespace HunkMod.Modules.Components
             this.Init();
         }
 
+        private void Start()
+        {
+            this.inventory.GiveItem(Modules.Weapons.SMG.instance.itemDef);
+            this.inventory.GiveItem(Modules.Weapons.Shotgun.instance.itemDef);
+            this.inventory.GiveItem(Modules.Weapons.Slugger.instance.itemDef);
+            this.inventory.GiveItem(Modules.Weapons.M19.instance.itemDef);
+            this.inventory.GiveItem(Modules.Weapons.Magnum.instance.itemDef);
+        }
+
         private void Init()
         {
             this.weaponData = new HunkWeaponData[]
@@ -61,12 +70,6 @@ namespace HunkMod.Modules.Components
                     currentAmmo = Modules.Weapons.Magnum.instance.magSize
                 }
             };
-
-            this.inventory.GiveItem(Modules.Weapons.SMG.instance.itemDef);
-            this.inventory.GiveItem(Modules.Weapons.Shotgun.instance.itemDef);
-            this.inventory.GiveItem(Modules.Weapons.Slugger.instance.itemDef);
-            this.inventory.GiveItem(Modules.Weapons.M19.instance.itemDef);
-            this.inventory.GiveItem(Modules.Weapons.Magnum.instance.itemDef);
         }
 
         public void SwapToLastWeapon()

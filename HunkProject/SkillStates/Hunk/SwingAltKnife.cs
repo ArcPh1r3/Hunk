@@ -10,6 +10,7 @@ namespace HunkMod.SkillStates.Hunk
     {
         protected override string prop => "HiddenKnifeModel";
         private GameObject swingEffectInstance;
+        private bool knifeHidden;
 
         public override void OnEnter()
         {
@@ -64,6 +65,12 @@ namespace HunkMod.SkillStates.Hunk
             {
                 this.outer.SetNextStateToMain();
                 return;
+            }
+
+            if (!this.knifeHidden && this.stopwatch >= (0.85f * this.duration))
+            {
+                this.knifeHidden = true;
+                this.FindModelChild(this.prop).gameObject.SetActive(false);
             }
         }
 

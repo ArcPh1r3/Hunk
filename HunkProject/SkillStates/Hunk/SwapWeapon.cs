@@ -9,6 +9,8 @@ namespace HunkMod.SkillStates.Hunk
     public class SwapWeapon : BaseHunkSkillState
     {
         private WeaponRadial radial;
+        private bool slowing;
+        private float currentTimeScale = 1f;
 
         public override void OnEnter()
         {
@@ -31,6 +33,12 @@ namespace HunkMod.SkillStates.Hunk
                 }
             }
 
+            if (RoR2Application.isInSinglePlayer)
+            {
+                this.slowing = true;
+                this.currentTimeScale = 0.1f;
+            }
+
             EntityStateMachine.FindByCustomName(this.gameObject, "Aim").SetNextStateToMain();
         }
 
@@ -41,6 +49,17 @@ namespace HunkMod.SkillStates.Hunk
 
             this.skillLocator.secondary.stock = 0;
             this.skillLocator.secondary.rechargeStopwatch = 0f;
+
+            if (this.slowing)
+            {
+                this.currentTimeScale += Time.unscaledDeltaTime * 1.25f;
+                if (this.currentTimeScale >= 1f)
+                {
+                    this.slowing = false;
+                    this.currentTimeScale = 1f;
+                }
+                Time.timeScale = this.currentTimeScale;
+            }
 
             if (base.isAuthority && !this.inputBank.skill4.down)
             {
@@ -56,7 +75,7 @@ namespace HunkMod.SkillStates.Hunk
                 }
                 else
                 {
-                    if (base.fixedAge <= 0.75f)
+                    if (base.fixedAge <= 0.5f)
                     {
                         EntityStateMachine.FindByCustomName(this.gameObject, "Weapon").SetInterruptState(new Swap
                         {
@@ -74,6 +93,11 @@ namespace HunkMod.SkillStates.Hunk
         {
             base.OnExit();
             if (this.radial) Destroy(this.radial.gameObject);
+
+            if (RoR2Application.isInSinglePlayer)
+            {
+                Time.timeScale = 1f;
+            }
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()
