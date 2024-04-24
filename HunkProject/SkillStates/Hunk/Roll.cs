@@ -34,13 +34,14 @@ namespace HunkMod.SkillStates.Hunk
             base.PlayCrossfade("FullBody, Override", "DodgeRoll", "Dodge.playbackRate", this.duration * 1.4f, 0.05f);
             //base.PlayAnimation("Gesture, Override", "BufferEmpty");
 
-            Util.PlaySound("sfx_driver_dash", this.gameObject);
+            //Util.PlaySound("sfx_driver_dash", this.gameObject);
 
             EntityStateMachine.FindByCustomName(this.gameObject, "Aim").SetNextStateToMain();
             this.skillLocator.secondary.stock = 0;
             this.skillLocator.secondary.rechargeStopwatch = 0f;
 
             this.skillLocator.utility.AddOneStock();
+            this.skillLocator.utility.stock = this.skillLocator.utility.maxStock;
 
             this.skillLocator.primary.SetSkillOverride(this, Modules.Survivors.Hunk.counterSkillDef, GenericSkill.SkillOverridePriority.Contextual);
 

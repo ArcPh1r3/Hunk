@@ -102,9 +102,9 @@ namespace HunkMod.SkillStates.Hunk.Weapon.M19
                         };
 
                         effectData.SetHurtBoxReference(hitInfo.hitHurtBox);
-                        EffectManager.SpawnEffect(Modules.Assets.headshotEffect, effectData, true);
+                        //EffectManager.SpawnEffect(Modules.Assets.headshotEffect, effectData, true);
                         Util.PlaySound("sfx_driver_headshot", base.gameObject);
-                        hitInfo.hitHurtBox.healthComponent.gameObject.AddComponent<Modules.Components.HunkHeadshotTracker>();
+                        if (this.isCrit) hitInfo.hitHurtBox.healthComponent.gameObject.AddComponent<Modules.Components.HunkHeadshotTracker>();
                     }
                 };
 

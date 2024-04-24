@@ -94,10 +94,13 @@ namespace HunkMod.Modules.Components
 
         private void OnDestroy()
         {
-            Util.PlaySound("sfx_hunk_menu_click", this.gameObject);
+            if (this.events)
+            {
+                Util.PlaySound("sfx_hunk_menu_click", this.gameObject);
 
-            this.events.cursorOpenerForGamepadCount -= 1;
-            this.events.cursorOpenerCount -= 1;
+                this.events.cursorOpenerForGamepadCount -= 1;
+                this.events.cursorOpenerCount -= 1;
+            }
         }
 
         public bool isValidIndex

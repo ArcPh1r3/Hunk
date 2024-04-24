@@ -217,10 +217,10 @@ namespace HunkMod.Modules.Components
             this.cameraPivot.localPosition = new Vector3(0f, this.yOffset, 0f);
         }
 
-        private void Update()
+        /*private void Update()
         {
             if (Input.GetKeyDown(KeyCode.V)) this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo += this.maxAmmo;
-        }
+        }*/
 
         private void TryLockOn()
         {
@@ -244,10 +244,20 @@ namespace HunkMod.Modules.Components
         {
             if (this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo > 0)
             {
-                this.weaponStateMachine.SetInterruptState(new SkillStates.Hunk.Reload
+                if (this.ammo == 0)
                 {
-                    interruptPriority = EntityStates.InterruptPriority.Any
-                }, EntityStates.InterruptPriority.Any);
+                    this.weaponStateMachine.SetInterruptState(new SkillStates.Hunk.Reload
+                    {
+                        interruptPriority = EntityStates.InterruptPriority.Skill
+                    }, EntityStates.InterruptPriority.Any);
+                }
+                else
+                {
+                    this.weaponStateMachine.SetInterruptState(new SkillStates.Hunk.Reload
+                    {
+                        interruptPriority = EntityStates.InterruptPriority.Any
+                    }, EntityStates.InterruptPriority.Any);
+                }
             }
         }
 
@@ -519,6 +529,13 @@ namespace HunkMod.Modules.Components
             {
                 this.characterBody.master.inventory.onInventoryChanged -= this.Inventory_onInventoryChanged;
             }
+        }
+
+        public void AddRandomAmmo()
+        {
+            int index = UnityEngine.Random.Range(0, this.weaponTracker.weaponData.Length - 1);
+            this.weaponTracker.weaponData[index].totalAmmo += this.weaponTracker.weaponData[index].weaponDef.magSize;
+            Chat.AddMessage("Picked up " + this.weaponTracker.weaponData[index].weaponDef.magSize + " " + Language.GetString(this.weaponTracker.weaponData[index].weaponDef.nameToken) + " ammo!");
         }
     }
 }

@@ -1048,7 +1048,13 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             // spawn the custom interactable here. i don't know how to create this, just laying the groundwork for now.
             if (Modules.Helpers.isHunkInPlay)
             {
-
+                foreach (HunkController i in GameObject.FindObjectsOfType<HunkController>())
+                {
+                    if (i)
+                    {
+                        i.AddRandomAmmo();
+                    }
+                }
             }
         }
 
@@ -1158,11 +1164,11 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
                 Transform skillsContainer = hud.transform.Find("MainContainer").Find("MainUIArea").Find("SpringCanvas").Find("BottomRightCluster").Find("Scaler");
 
-                if (skillsContainer.Find("SprintCluster").gameObject.activeSelf)
+                if (skillsContainer && skillsContainer.Find("SprintCluster") && skillsContainer.Find("SprintCluster").gameObject.activeSelf)
                 {
                     // no one will notice these missing
-                    skillsContainer.Find("SprintCluster").gameObject.name = "GTFO";
                     skillsContainer.Find("SprintCluster").gameObject.SetActive(false);
+                    skillsContainer.Find("SprintCluster").gameObject.name = "GTFO";
                     skillsContainer.Find("InventoryCluster").gameObject.SetActive(false);
 
                     GameObject weaponSlot = GameObject.Instantiate(skillsContainer.Find("EquipmentSlot").gameObject, skillsContainer);

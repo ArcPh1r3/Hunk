@@ -26,6 +26,11 @@ namespace HunkMod.SkillStates.Hunk
 
             if (!this.hunk.isReloading)
             {
+                this.PlayAnim();
+                Util.PlaySound("sfx_hunk_smg_aim", this.gameObject);
+            }
+            else
+            {
                 if (this.hunk.ammo > 0)
                 {
                     this.PlayAnim();
