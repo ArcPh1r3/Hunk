@@ -31,9 +31,7 @@ namespace HunkMod.SkillStates.Hunk
             this.smoothHitstop = true;
 
             this.swingSoundString = "sfx_hunk_swing_knife";
-            this.swingEffectPrefab = Modules.Assets.knifeSwingEffect;
             this.hitSoundString = "";
-            this.hitEffectPrefab = Modules.Assets.knifeImpactEffect;
             this.impactSound = Modules.Assets.knifeImpactSoundDef.index;
 
             this.damageType = DamageType.Generic;
@@ -58,6 +56,17 @@ namespace HunkMod.SkillStates.Hunk
             this.skillLocator.secondary.rechargeStopwatch = 0f;
 
             Util.PlaySound("sfx_hunk_foley_knife", this.gameObject);
+
+            if (this.isCrit)
+            {
+                this.swingEffectPrefab = Modules.Assets.knifeSwingEffectRed;
+                this.hitEffectPrefab = Modules.Assets.knifeImpactEffectRed;
+            }
+            else
+            {
+                this.swingEffectPrefab = Modules.Assets.knifeSwingEffect;
+                this.hitEffectPrefab = Modules.Assets.knifeImpactEffect;
+            }
         }
 
         public override void FixedUpdate()

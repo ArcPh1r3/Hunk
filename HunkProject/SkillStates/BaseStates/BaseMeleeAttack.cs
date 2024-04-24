@@ -49,6 +49,7 @@ namespace HunkMod.SkillStates.BaseStates
         protected Animator animator;
         private BaseState.HitStopCachedState hitStopCachedState;
         private Vector3 storedVelocity;
+        protected bool isCrit;
 
         protected List<HurtBox> hitResults = new List<HurtBox>();
 
@@ -61,6 +62,7 @@ namespace HunkMod.SkillStates.BaseStates
             this.animator = base.GetModelAnimator();
             base.StartAimMode(0.5f + this.duration, false);
             base.characterBody.outOfCombatStopwatch = 0f;
+            this.isCrit = this.RollCrit();
             //this.animator.SetBool("attacking", true);
 
             this.PlayAttackAnimation();
@@ -96,7 +98,7 @@ namespace HunkMod.SkillStates.BaseStates
             this.attack.forceVector = this.bonusForce;
             this.attack.pushAwayForce = this.pushForce;
             this.attack.hitBoxGroup = hitBoxGroup;
-            this.attack.isCrit = base.RollCrit();
+            this.attack.isCrit = this.isCrit;
             this.attack.impactSound = this.impactSound;
         }
 
