@@ -18,6 +18,7 @@ public class HunkWeaponDef : ScriptableObject
     public GameObject crosshairPrefab = null;
     public int magSize = 8;
     public float reloadDuration = 2.4f;
+    public string ammoName = "";
 
     [Header("Skills")]
     public SkillDef primarySkillDef;
@@ -52,6 +53,7 @@ public class HunkWeaponDef : ScriptableObject
         weaponDef.crosshairPrefab = weaponDefInfo.crosshairPrefab;
         weaponDef.magSize = weaponDefInfo.magSize;
         weaponDef.reloadDuration = weaponDefInfo.reloadDuration;
+        weaponDef.ammoName = weaponDefInfo.ammoName;
 
         weaponDef.primarySkillDef = weaponDefInfo.primarySkillDef;
 
@@ -78,6 +80,7 @@ public struct HunkWeaponDefInfo
     public GameObject crosshairPrefab;
     public int magSize;
     public float reloadDuration;
+    public string ammoName;
 
     public SkillDef primarySkillDef;
 

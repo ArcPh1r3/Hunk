@@ -56,6 +56,7 @@ namespace HunkMod.Modules.Survivors
         internal static string bodyNameToken;
 
         internal GameObject ammoPickupInteractable;
+        internal GameObject ammoPickupInteractableSmall;
 
         internal void CreateCharacter()
         {
@@ -70,6 +71,7 @@ namespace HunkMod.Modules.Survivors
                 //if (!forceUnlock.Value) characterUnlockableDef = R2API.UnlockableAPI.AddUnlockable<Achievements.DriverUnlockAchievement>();
 
                 CreateAmmoInteractable();
+                CreateBarrelAmmoInteractable();
 
                 characterPrefab = CreateBodyPrefab(true);
 
@@ -1029,9 +1031,46 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
         private void CreateAmmoInteractable()
         {
-            ammoPickupInteractable = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/Railgunner/RailgunnerScopeLightOverlay.prefab").WaitForCompletion().InstantiateClone("HunkAmmoPickupInteractable", false);
-        
-        
+            ammoPickupInteractable = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Barrel1/Barrel1.prefab").WaitForCompletion().InstantiateClone("HunkAmmoPickupInteractable", true);
+
+            MainPlugin.Destroy(ammoPickupInteractable.GetComponent<BarrelInteraction>());
+            MainPlugin.Destroy(ammoPickupInteractable.GetComponent<Highlight>());
+            MainPlugin.Destroy(ammoPickupInteractable.GetComponent<GenericDisplayNameProvider>());
+
+            ammoPickupInteractable.GetComponent<SfxLocator>().openSound = "sfx_hunk_pickup";
+
+            Transform modelTransform = ammoPickupInteractable.GetComponent<ModelLocator>().modelTransform;
+            ammoPickupInteractable.AddComponent<AmmoPickupInteraction>().destroyOnOpen = modelTransform.gameObject;
+            modelTransform.GetComponent<Animator>().enabled = false;
+            modelTransform.Find("BarrelMesh").GetComponent<SkinnedMeshRenderer>().enabled = false;
+            ammoPickupInteractable.GetComponent<AmmoPickupInteraction>().multiplier = 1.5f;
+
+            GameObject interactionEffect = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("AmmoInteraction"));
+            interactionEffect.transform.SetParent(modelTransform, false);
+            interactionEffect.transform.localPosition = new Vector3(0f, 0.75f, 0f);
+            interactionEffect.transform.localRotation = Quaternion.identity;
+        }
+
+        private void CreateBarrelAmmoInteractable()
+        {
+            ammoPickupInteractableSmall = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Barrel1/Barrel1.prefab").WaitForCompletion().InstantiateClone("HunkAmmoPickupInteractableSmall", true);
+
+            MainPlugin.Destroy(ammoPickupInteractableSmall.GetComponent<BarrelInteraction>());
+            MainPlugin.Destroy(ammoPickupInteractableSmall.GetComponent<Highlight>());
+            MainPlugin.Destroy(ammoPickupInteractableSmall.GetComponent<GenericDisplayNameProvider>());
+
+            ammoPickupInteractableSmall.GetComponent<SfxLocator>().openSound = "sfx_hunk_pickup";
+
+            Transform modelTransform = ammoPickupInteractableSmall.GetComponent<ModelLocator>().modelTransform;
+            ammoPickupInteractableSmall.AddComponent<AmmoPickupInteraction>().destroyOnOpen = modelTransform.gameObject;
+            modelTransform.GetComponent<Animator>().enabled = false;
+            modelTransform.Find("BarrelMesh").GetComponent<SkinnedMeshRenderer>().enabled = false;
+            ammoPickupInteractableSmall.GetComponent<AmmoPickupInteraction>().multiplier = 0.25f;
+
+            GameObject interactionEffect = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("AmmoInteraction"));
+            interactionEffect.transform.SetParent(modelTransform, false);
+            interactionEffect.transform.localPosition = new Vector3(0f, 1f, 0f);
+            interactionEffect.transform.localRotation = Quaternion.identity;
         }
 
         private static void Hook()
@@ -1044,6 +1083,10 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
             // rummage passive
             On.RoR2.ChestBehavior.ItemDrop += ChestBehavior_ItemDrop;
+            On.RoR2.BarrelInteraction.CoinDrop += BarrelInteraction_CoinDrop;
+
+            // bandolier
+            On.RoR2.SkillLocator.ApplyAmmoPack += SkillLocator_ApplyAmmoPack;
 
             // heresy anims
             //On.EntityStates.GlobalSkills.LunarNeedle.FireLunarNeedle.OnEnter += PlayVisionsAnimation;
@@ -1052,11 +1095,35 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             //On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += PlayRuinAnimation;
         }
 
+        private static void SkillLocator_ApplyAmmoPack(On.RoR2.SkillLocator.orig_ApplyAmmoPack orig, SkillLocator self)
+        {
+            orig(self);
+
+            if (self && self.secondary.baseSkill.skillNameToken == MainPlugin.developerPrefix + "_HUNK_BODY_SECONDARY_AIM_NAME")
+            {
+                HunkController hunk = self.GetComponent<HunkController>();
+                if (hunk)
+                {
+                    hunk.ApplyBandolier();
+                }
+            }
+        }
+
+        private static void BarrelInteraction_CoinDrop(On.RoR2.BarrelInteraction.orig_CoinDrop orig, BarrelInteraction self)
+        {
+            orig(self);
+
+            if (Modules.Helpers.isHunkInPlay)
+            {
+                GameObject pickup = GameObject.Instantiate(Hunk.instance.ammoPickupInteractableSmall, self.transform.position, self.transform.rotation);
+                NetworkServer.Spawn(pickup); // barrel opening is server-sided
+            }
+        }
+
         private static void ChestBehavior_ItemDrop(On.RoR2.ChestBehavior.orig_ItemDrop orig, ChestBehavior self)
         {
             orig(self);
 
-            // spawn the custom interactable here. i don't know how to create this, just laying the groundwork for now.
             if (Modules.Helpers.isHunkInPlay)
             {
                 GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, self.transform.rotation);
@@ -1278,76 +1345,79 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
         {
             Transform skillsContainer = hud.transform.Find("MainContainer").Find("MainUIArea").Find("SpringCanvas").Find("BottomRightCluster").Find("Scaler");
 
-            GameObject weaponSlot = GameObject.Instantiate(skillsContainer.Find("EquipmentSlotPos1").Find("EquipIcon").gameObject, skillsContainer);
-            weaponSlot.name = "WeaponSlot";
+            if (!skillsContainer.Find("WeaponSlot"))
+            {
+                GameObject weaponSlot = GameObject.Instantiate(skillsContainer.Find("EquipmentSlotPos1").Find("EquipIcon").gameObject, skillsContainer);
+                weaponSlot.name = "WeaponSlot";
 
-            EquipmentIcon equipmentIconComponent = weaponSlot.GetComponent<EquipmentIcon>();
-            Components.WeaponIcon weaponIconComponent = weaponSlot.AddComponent<Components.WeaponIcon>();
+                EquipmentIcon equipmentIconComponent = weaponSlot.GetComponent<EquipmentIcon>();
+                Components.WeaponIcon weaponIconComponent = weaponSlot.AddComponent<Components.WeaponIcon>();
 
-            weaponIconComponent.iconImage = equipmentIconComponent.iconImage;
-            weaponIconComponent.displayRoot = equipmentIconComponent.displayRoot;
-            weaponIconComponent.flashPanelObject = equipmentIconComponent.stockFlashPanelObject;
-            weaponIconComponent.reminderFlashPanelObject = equipmentIconComponent.reminderFlashPanelObject;
-            weaponIconComponent.isReadyPanelObject = equipmentIconComponent.isReadyPanelObject;
-            weaponIconComponent.tooltipProvider = equipmentIconComponent.tooltipProvider;
-            weaponIconComponent.targetHUD = hud;
+                weaponIconComponent.iconImage = equipmentIconComponent.iconImage;
+                weaponIconComponent.displayRoot = equipmentIconComponent.displayRoot;
+                weaponIconComponent.flashPanelObject = equipmentIconComponent.stockFlashPanelObject;
+                weaponIconComponent.reminderFlashPanelObject = equipmentIconComponent.reminderFlashPanelObject;
+                weaponIconComponent.isReadyPanelObject = equipmentIconComponent.isReadyPanelObject;
+                weaponIconComponent.tooltipProvider = equipmentIconComponent.tooltipProvider;
+                weaponIconComponent.targetHUD = hud;
 
-            MaterialHud.MaterialEquipmentIcon x = weaponSlot.GetComponent<MaterialHud.MaterialEquipmentIcon>();
-            Components.MaterialWeaponIcon y = weaponSlot.AddComponent<Components.MaterialWeaponIcon>();
+                MaterialHud.MaterialEquipmentIcon x = weaponSlot.GetComponent<MaterialHud.MaterialEquipmentIcon>();
+                Components.MaterialWeaponIcon y = weaponSlot.AddComponent<Components.MaterialWeaponIcon>();
 
-            y.icon = weaponIconComponent;
-            y.onCooldown = x.onCooldown;
-            y.mask = x.mask;
-            y.stockText = x.stockText;
+                y.icon = weaponIconComponent;
+                y.onCooldown = x.onCooldown;
+                y.mask = x.mask;
+                y.stockText = x.stockText;
 
-            RectTransform iconRect = weaponSlot.GetComponent<RectTransform>();
-            iconRect.localScale = new Vector3(2f, 2f, 2f);
-            iconRect.anchoredPosition = new Vector2(-128f, 60f);
+                RectTransform iconRect = weaponSlot.GetComponent<RectTransform>();
+                iconRect.localScale = new Vector3(2f, 2f, 2f);
+                iconRect.anchoredPosition = new Vector2(-128f, 60f);
 
-            HGTextMeshProUGUI keyText = weaponSlot.transform.Find("DisplayRoot").Find("BottomContainer").Find("SkillBackgroundPanel").Find("SkillKeyText").gameObject.GetComponent<HGTextMeshProUGUI>();
-            keyText.gameObject.GetComponent<InputBindingDisplayController>().enabled = false;
-            keyText.text = "Weapon";
+                HGTextMeshProUGUI keyText = weaponSlot.transform.Find("DisplayRoot").Find("BottomContainer").Find("SkillBackgroundPanel").Find("SkillKeyText").gameObject.GetComponent<HGTextMeshProUGUI>();
+                keyText.gameObject.GetComponent<InputBindingDisplayController>().enabled = false;
+                keyText.text = "Weapon";
 
-            weaponSlot.transform.Find("DisplayRoot").Find("BottomContainer").Find("StockTextContainer").gameObject.SetActive(false);
-            weaponSlot.transform.Find("DisplayRoot").Find("CooldownText").gameObject.SetActive(false);
+                weaponSlot.transform.Find("DisplayRoot").Find("BottomContainer").Find("StockTextContainer").gameObject.SetActive(false);
+                weaponSlot.transform.Find("DisplayRoot").Find("CooldownText").gameObject.SetActive(false);
 
-            // duration bar
-            GameObject chargeBar = GameObject.Instantiate(Assets.mainAssetBundle.LoadAsset<GameObject>("WeaponChargeBar"));
-            chargeBar.transform.SetParent(weaponSlot.transform.Find("DisplayRoot"));
+                // duration bar
+                GameObject chargeBar = GameObject.Instantiate(Assets.mainAssetBundle.LoadAsset<GameObject>("WeaponChargeBar"));
+                chargeBar.transform.SetParent(weaponSlot.transform.Find("DisplayRoot"));
 
-            RectTransform rect = chargeBar.GetComponent<RectTransform>();
+                RectTransform rect = chargeBar.GetComponent<RectTransform>();
 
-            rect.localScale = new Vector3(0.75f, 0.1f, 1f);
-            rect.anchorMin = new Vector2(0f, 0f);
-            rect.anchorMax = new Vector2(0f, 0f);
-            rect.pivot = new Vector2(0.5f, 0f);
-            rect.localPosition = new Vector3(0f, 0f, 0f);
-            rect.anchoredPosition = new Vector2(-8f, 36f);
-            rect.rotation = Quaternion.Euler(new Vector3(0f, 0f, 90f));
+                rect.localScale = new Vector3(0.75f, 0.1f, 1f);
+                rect.anchorMin = new Vector2(0f, 0f);
+                rect.anchorMax = new Vector2(0f, 0f);
+                rect.pivot = new Vector2(0.5f, 0f);
+                rect.localPosition = new Vector3(0f, 0f, 0f);
+                rect.anchoredPosition = new Vector2(-8f, 36f);
+                rect.rotation = Quaternion.Euler(new Vector3(0f, 0f, 90f));
 
-            weaponIconComponent.durationDisplay = chargeBar;
-            weaponIconComponent.durationBar = chargeBar.transform.GetChild(1).gameObject.GetComponent<UnityEngine.UI.Image>();
-            weaponIconComponent.durationBarRed = chargeBar.transform.GetChild(0).gameObject.GetComponent<UnityEngine.UI.Image>();
+                weaponIconComponent.durationDisplay = chargeBar;
+                weaponIconComponent.durationBar = chargeBar.transform.GetChild(1).gameObject.GetComponent<UnityEngine.UI.Image>();
+                weaponIconComponent.durationBarRed = chargeBar.transform.GetChild(0).gameObject.GetComponent<UnityEngine.UI.Image>();
 
-            MonoBehaviour.Destroy(equipmentIconComponent);
-            MonoBehaviour.Destroy(x);
+                MonoBehaviour.Destroy(equipmentIconComponent);
+                MonoBehaviour.Destroy(x);
 
 
-            // weapon pickup notification
+                // weapon pickup notification
 
-            GameObject notificationPanel = GameObject.Instantiate(hud.transform.Find("MainContainer").Find("NotificationArea").gameObject);
-            notificationPanel.transform.SetParent(hud.transform.Find("MainContainer"), true);
-            notificationPanel.GetComponent<RectTransform>().localPosition = new Vector3(0f, -210f, -50f);
-            notificationPanel.transform.localScale = Vector3.one;
+                GameObject notificationPanel = GameObject.Instantiate(hud.transform.Find("MainContainer").Find("NotificationArea").gameObject);
+                notificationPanel.transform.SetParent(hud.transform.Find("MainContainer"), true);
+                notificationPanel.GetComponent<RectTransform>().localPosition = new Vector3(0f, -210f, -50f);
+                notificationPanel.transform.localScale = Vector3.one;
 
-            NotificationUIController _old = notificationPanel.GetComponent<NotificationUIController>();
-            WeaponNotificationUIController _new = notificationPanel.AddComponent<WeaponNotificationUIController>();
+                NotificationUIController _old = notificationPanel.GetComponent<NotificationUIController>();
+                WeaponNotificationUIController _new = notificationPanel.AddComponent<WeaponNotificationUIController>();
 
-            _new.hud = _old.hud;
-            _new.genericNotificationPrefab = Modules.Assets.weaponNotificationPrefab;
-            _new.notificationQueue = hud.targetMaster.gameObject.AddComponent<WeaponNotificationQueue>();
+                _new.hud = _old.hud;
+                _new.genericNotificationPrefab = Modules.Assets.weaponNotificationPrefab;
+                _new.notificationQueue = hud.targetMaster.gameObject.AddComponent<WeaponNotificationQueue>();
 
-            _old.enabled = false;
+                _old.enabled = false;
+            }
         }
 
         private static void PlayVisionsAnimation(On.EntityStates.GlobalSkills.LunarNeedle.FireLunarNeedle.orig_OnEnter orig, EntityStates.GlobalSkills.LunarNeedle.FireLunarNeedle self)

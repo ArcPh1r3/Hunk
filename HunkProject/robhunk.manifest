@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1286540767
+CRC: 1686630086
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 6a90179200c43dc5dcc972196315bb20
+    Hash: c5ec543e0415a7e58c7ca3a5cf23f9b7
   TypeTreeHash:
     serializedVersion: 2
     Hash: 7229672de4cae9db5a5fd00c63ea84a7
@@ -83,6 +83,7 @@ Assets:
 - Assets/Hunk/FBX/meshHunkB03.mesh
 - Assets/Hunk/HUD/ChargeBar.prefab
 - Assets/Hunk/FBX/meshSMG.mesh
+- Assets/Hunk/VFX/matSpark.mat
 - Assets/Hunk/Materials/matInfiniteKnife.mat
 - Assets/Hunk/VFX/matShockwave.mat
 - Assets/Hunk/FBX/Hunk.fbx
@@ -99,6 +100,8 @@ Assets:
 - Assets/Hunk/VFX/Badass/StoneHitEffect.prefab
 - Assets/Hunk/HUD/Textures/texRadialSelection.png
 - Assets/Hunk/Textures/Knife/Leon_Knife_S.png
+- Assets/Hunk/VFX/texChargeRing.png
+- Assets/Hunk/VFX/matChargeRing.mat
 - Assets/Hunk/HunkDisplay.prefab
 - Assets/Hunk/Materials/matHunk02.mat
 - Assets/Hunk/FBX/Animations/maskHunkImpact.mask
@@ -114,6 +117,7 @@ Assets:
 - Assets/Hunk/Materials/matKnife.mat
 - Assets/Hunk/FBX/Animations/animHunk.controller
 - Assets/Hunk/FBX/Animations/Default/AimYaw.anim
+- Assets/Hunk/VFX/matMoons.mat
 - Assets/Hunk/mdlHunk.prefab
 - Assets/Hunk/Materials/matShotgunShell.mat
 - Assets/Hunk/FBX/Animations/Pistol/Reload.anim
@@ -133,7 +137,9 @@ Assets:
 - Assets/Hunk/Textures/M19/Leon_M1911_N.png
 - Assets/Hunk/Textures/equipment_Spec.png
 - Assets/Hunk/HUD/Textures/texRadialDefault.png
+- Assets/Hunk/VFX/texChargeSpark.png
 - Assets/Hunk/FBX/Animations/Pistol/RunR.anim
+- Assets/Hunk/VFX/texMoonsThin.png
 - Assets/Hunk/Icons/texHunkAchievement.png
 - Assets/Hunk/FBX/meshHunkB02.mesh
 - Assets/Hunk/FBX/animHunkPistol.fbx
@@ -209,6 +215,8 @@ Assets:
 - Assets/Hunk/FBX/Animations/maskHunkFreefall.mask
 - Assets/Hunk/Textures/Shotgun/Leon_RemingtonM1100P_N.png
 - Assets/Hunk/Icons/Weapon/texSMGIcon.png
+- Assets/Hunk/AmmoInteraction.prefab
+- Assets/Hunk/VFX/texMoons.png
 - Assets/Hunk/HUD/WeaponRadial.prefab
 - Assets/Hunk/FBX/Animations/maskHunkAimYaw.mask
 - Assets/Hunk/Textures/SMG/Leon_LI5_N.png

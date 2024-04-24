@@ -54,7 +54,7 @@ namespace HunkMod.Modules.Components
                     }
                     else
                     {
-                        if (this.hunk.ammo > this.hunk.maxAmmo)
+                        if (this.hunk.ammo > this.hunk.weaponTracker.weaponData[hunk.weaponTracker.equippedIndex].currentAmmo)
                         {
                             this.targetText.token = "<color=#00FF66>" + Mathf.CeilToInt(this.hunk.ammo).ToString() + Helpers.colorSuffix + " / " + Mathf.CeilToInt(this.totalAmmo).ToString();
                         }

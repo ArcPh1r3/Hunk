@@ -163,12 +163,21 @@ namespace HunkMod.Modules.Components
         public void ConsumeAmmo()
         {
             this.reloadTimer = 2f;
-            this.ammo--;
 
-            this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo--;
+            // fake ammo sync
+            if (this.ammo <= this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo) this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo--;
+
+            this.ammo--;
 
             if (this.ammo <= 0) this.ammo = 0;
             if (this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo <= 0) this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo = 0;
+        }
+
+        public void ApplyBandolier()
+        {
+            if (this.ammo - this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo >= this.maxAmmo && this.ammo != this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo) return;
+
+            this.ammo += Mathf.CeilToInt(this.maxAmmo * 0.5f);
         }
 
         private void FixedUpdate()
@@ -531,11 +540,19 @@ namespace HunkMod.Modules.Components
             }
         }
 
-        public void AddRandomAmmo()
+        public void AddRandomAmmo(float multiplier = 1f)
         {
+            // TODO
+            // change this to a weighted selection, so stronger weapons are less likely to get ammo
+
             int index = UnityEngine.Random.Range(0, this.weaponTracker.weaponData.Length - 1);
-            this.weaponTracker.weaponData[index].totalAmmo += this.weaponTracker.weaponData[index].weaponDef.magSize;
-            Chat.AddMessage("Picked up " + this.weaponTracker.weaponData[index].weaponDef.magSize + " " + Language.GetString(this.weaponTracker.weaponData[index].weaponDef.nameToken) + " ammo!");
+            int amount = Mathf.CeilToInt(this.weaponTracker.weaponData[index].weaponDef.magSize * multiplier);
+
+            this.weaponTracker.weaponData[index].totalAmmo += amount;
+
+            GameObject effect = GameObject.Instantiate(Modules.Assets.ammoPickupEffectPrefab, this.characterBody.aimOrigin + (Vector3.up * 0.85f) + (this.characterBody.inputBank.aimDirection * 1f), Quaternion.identity);
+
+            effect.GetComponentInChildren<RoR2.UI.LanguageTextMeshController>().token = "+" + amount + " " + this.weaponTracker.weaponData[index].weaponDef.ammoName;
         }
     }
 }

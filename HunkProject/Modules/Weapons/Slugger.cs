@@ -13,6 +13,7 @@ namespace HunkMod.Modules.Weapons
         public override GameObject crosshairPrefab => Modules.Assets.shotgunCrosshairPrefab;
         public override int magSize => 4;
         public override float reloadDuration => 3f;
+        public override string ammoName => "Shotgun Slugs";
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlShotgun");
         public override HunkWeaponDef.AnimationSet animationSet => HunkWeaponDef.AnimationSet.SMG;
         public override bool storedOnBack => true;

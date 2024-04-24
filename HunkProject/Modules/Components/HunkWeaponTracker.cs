@@ -28,11 +28,11 @@ namespace HunkMod.Modules.Components
 
         private void Start()
         {
-            this.inventory.GiveItem(Modules.Weapons.SMG.instance.itemDef);
-            this.inventory.GiveItem(Modules.Weapons.Shotgun.instance.itemDef);
-            this.inventory.GiveItem(Modules.Weapons.Slugger.instance.itemDef);
-            this.inventory.GiveItem(Modules.Weapons.M19.instance.itemDef);
-            this.inventory.GiveItem(Modules.Weapons.Magnum.instance.itemDef);
+            this.AddWeaponItem(Modules.Weapons.SMG.instance.weaponDef);
+            this.AddWeaponItem(Modules.Weapons.Shotgun.instance.weaponDef);
+            this.AddWeaponItem(Modules.Weapons.Slugger.instance.weaponDef);
+            this.AddWeaponItem(Modules.Weapons.M19.instance.weaponDef);
+            this.AddWeaponItem(Modules.Weapons.Magnum.instance.weaponDef);
         }
 
         private void Init()
@@ -103,6 +103,11 @@ namespace HunkMod.Modules.Components
                 currentAmmo = weaponDef.magSize
             };
 
+            this.AddWeaponItem(weaponDef);
+        }
+
+        private void AddWeaponItem(HunkWeaponDef weaponDef)
+        {
             if (this.inventory.GetItemCount(weaponDef.itemDef) <= 0) this.inventory.GiveItem(weaponDef.itemDef);
         }
     }

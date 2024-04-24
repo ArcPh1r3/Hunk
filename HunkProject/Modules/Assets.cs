@@ -31,6 +31,7 @@ namespace HunkMod.Modules
 
         public static GameObject headshotEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Junk/Common/VFX/WeakPointProcEffect.prefab").WaitForCompletion();
 
+        public static GameObject ammoPickupEffectPrefab;
         public static GameObject explosionEffect;
         public static GameObject smallExplosionEffect;
 
@@ -90,8 +91,14 @@ namespace HunkMod.Modules
                 SoundAPI.SoundBanks.Add(array);
             }
 
+            ammoPickupEffectPrefab = CreateTextPopupEffect("HunkAmmoPickupEffect", "");
+
             weaponRadial = mainAssetBundle.LoadAsset<GameObject>("WeaponRadial");
             weaponRadial.AddComponent<WeaponRadial>();
+
+            GameObject iLovePenis = mainAssetBundle.LoadAsset<GameObject>("AmmoInteraction");
+            iLovePenis.transform.Find("Ring/Pillar").GetComponent<ParticleSystemRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/VFX/matTracerBright.mat").WaitForCompletion();
+            iLovePenis.transform.Find("Ring/Spark").GetComponent<ParticleSystemRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/VFX/matWideGlow.mat").WaitForCompletion();
 
             hgFont = Addressables.LoadAssetAsync<TMP_FontAsset>("RoR2/Base/Common/Fonts/Bombardier/tmpBombDropshadow.asset").WaitForCompletion();
 

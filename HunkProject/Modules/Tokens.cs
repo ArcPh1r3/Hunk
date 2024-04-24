@@ -34,7 +34,10 @@ namespace HunkMod.Modules
 
             #region Passive
             LanguageAPI.Add(prefix + "PASSIVE_NAME", "Survivalist");
-            LanguageAPI.Add(prefix + "PASSIVE_DESCRIPTION", $"Enemies have a chance to drop a new <style=cIsUtility>weapon</style>. These give you <style=cIsDamage>powerful attacks</style> for a limited time!");
+            LanguageAPI.Add(prefix + "PASSIVE_DESCRIPTION", $"Hunk is able to <style=cIsDamage>rummage</style> through <style=cIsUtility>chests and barrels</style> for spare ammo, <style=cIsHealth>only once per</style>.");
+
+            LanguageAPI.Add(prefix + "PASSIVE2_NAME", "The Fourth Survivor");
+            LanguageAPI.Add(prefix + "PASSIVE2_DESCRIPTION", $"Spawn with a <style=cIsDamage>full arsenal</style>,  <style=cIsHealth>BUT</style> you are now <style=cIsHealth>unable to gain any more ammo</style>.");
 
             LanguageAPI.Add(prefix + "CONFIRM_NAME", "Confirm");
             LanguageAPI.Add(prefix + "CONFIRM_DESCRIPTION", "Proceed with the current skill.");
@@ -75,6 +78,9 @@ namespace HunkMod.Modules
             LanguageAPI.Add(prefix + "MONSOONUNLOCKABLE_ACHIEVEMENT_NAME", "HUNK: Mastery");
             LanguageAPI.Add(prefix + "MONSOONUNLOCKABLE_ACHIEVEMENT_DESC", "As HUNK, beat the game or obliterate on Monsoon.");
             #endregion
+
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_AMMO_NAME", "Ammo");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_AMMO_CONTEXT", "Rummage for ammo");
         }
     }
 }
