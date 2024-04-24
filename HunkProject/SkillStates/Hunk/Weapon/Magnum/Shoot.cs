@@ -47,8 +47,8 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Magnum
         {
             EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab, base.gameObject, this.muzzleString, false);
             
-            if (this.isCrit) Util.PlaySound("sfx_driver_pistol_shoot_charged", base.gameObject);
-            else Util.PlaySound("sfx_driver_pistol_shoot_charged", base.gameObject);
+            if (this.isCrit) Util.PlaySound("sfx_hunk_magnum_shoot", base.gameObject);
+            else Util.PlaySound("sfx_hunk_magnum_shoot", base.gameObject);
 
             if (base.isAuthority)
             {

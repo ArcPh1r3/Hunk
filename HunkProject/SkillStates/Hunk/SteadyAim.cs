@@ -24,8 +24,14 @@ namespace HunkMod.SkillStates.Hunk
 
             if (NetworkServer.active) this.characterBody.AddBuff(RoR2Content.Buffs.Slow50);
 
-            this.PlayAnim();
-            Util.PlaySound("sfx_hunk_smg_aim", this.gameObject);
+            if (!this.hunk.isReloading)
+            {
+                if (this.hunk.ammo > 0)
+                {
+                    this.PlayAnim();
+                    Util.PlaySound("sfx_hunk_smg_aim", this.gameObject);
+                }
+            }
 
             base.PlayCrossfade("AimPitch", "AimPitchAiming", 0.1f);
 

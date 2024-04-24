@@ -206,12 +206,14 @@ namespace HunkMod.Modules.Survivors
                 new CustomRendererInfo
                 {
                     childName = "HiddenKnifeModel",
-                    material = Modules.Assets.CreateMaterial("matInfiniteKnife", 0f, Color.black, 1f)
+                    material = Modules.Assets.CreateMaterial("matInfiniteKnife", 0f, Color.black, 1f),
+                    ignoreOverlays = true
                 },
                 new CustomRendererInfo
                 {
                     childName = "WeaponModel",
-                    material = Modules.Assets.CreateMaterial("matSMG")
+                    material = Modules.Assets.CreateMaterial("matSMG"),
+                    ignoreOverlays = true
                 } }, bodyRendererIndex);
             #endregion
 
@@ -1159,6 +1161,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                 if (skillsContainer.Find("SprintCluster").gameObject.activeSelf)
                 {
                     // no one will notice these missing
+                    skillsContainer.Find("SprintCluster").gameObject.name = "GTFO";
                     skillsContainer.Find("SprintCluster").gameObject.SetActive(false);
                     skillsContainer.Find("InventoryCluster").gameObject.SetActive(false);
 

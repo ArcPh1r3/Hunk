@@ -410,6 +410,61 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="sfx_hunk_menu_cursor" ID="{4C0E4FCE-31D3-4365-A09A-4E0C6C53AE4F}">
+					<ChildrenList>
+						<Action Name="" ID="{4FF59106-DE4F-4A2A-B5A8-18CB320DF5B6}" ShortID="288161922">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_menu_cursor" ID="{30609E45-C2EB-4567-9173-9C9E97973922}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_menu_click" ID="{898A86DB-EE9B-49D5-A877-B330E648A887}">
+					<ChildrenList>
+						<Action Name="" ID="{CCF424F5-1E4A-461E-B12C-FD54DA70E214}" ShortID="777364591">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_menu_click" ID="{8A766A5C-214F-48BB-9DCF-69C0A7B041E9}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_menu_open" ID="{493BC8F2-F26B-4D84-8E80-013E9E6DD8B1}">
+					<ChildrenList>
+						<Action Name="" ID="{B7FA8F16-FEC6-4013-B98A-8F95B3A71927}" ShortID="717048372">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_menu_open" ID="{3D5449D6-DE36-4A1F-93B9-07DAB4A42C0A}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_m19_shoot" ID="{0F44CBEE-7E1C-43E8-903E-F4C49AC443E8}">
+					<ChildrenList>
+						<Action Name="" ID="{6B45F17E-D453-4578-8EA5-2C6A978EE2F6}" ShortID="677669729">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="m19_shoot" ID="{398DA17D-EB6C-4C65-956F-D7E4C1BB3A61}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_magnum_shoot" ID="{45DF0157-11BD-4DE8-BBA1-D90D55EE18E2}">
+					<ChildrenList>
+						<Action Name="" ID="{6ECCDA5E-FDD6-4632-A228-5BEA044717E3}" ShortID="512039155">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="magnum_shoot" ID="{C9354F23-393B-4E36-9151-6C3D4ADB9AE3}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

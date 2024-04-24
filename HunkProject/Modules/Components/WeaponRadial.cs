@@ -62,6 +62,20 @@ namespace HunkMod.Modules.Components
                 this.transform.Find("Center/Inner/StatsPanel/StatBar (4)/FillBar").GetComponent<Image>()
             };
 
+            TMP_FontAsset hgFont = Modules.Assets.hgFont;
+
+            this.label.font = hgFont;
+            this.ammoCount.font = hgFont;
+            foreach (TextMeshProUGUI i in this.statText)
+            {
+                i.font = hgFont;
+            }
+        }
+
+        private void Start()
+        {
+            Util.PlaySound("sfx_hunk_menu_open", this.gameObject);
+
             if (this.localUser == null)
             {
                 if (this.body)
@@ -76,19 +90,12 @@ namespace HunkMod.Modules.Components
                     }
                 }
             }
-
-            TMP_FontAsset hgFont = Modules.Assets.hgFont;
-
-            this.label.font = hgFont;
-            this.ammoCount.font = hgFont;
-            foreach (TextMeshProUGUI i in this.statText)
-            {
-                i.font = hgFont;
-            }
         }
 
         private void OnDestroy()
         {
+            Util.PlaySound("sfx_hunk_menu_click", this.gameObject);
+
             this.events.cursorOpenerForGamepadCount -= 1;
             this.events.cursorOpenerCount -= 1;
         }
@@ -206,6 +213,8 @@ namespace HunkMod.Modules.Components
                 }
                 j++;
             }
+
+            if (_index != this.index) Util.PlaySound("sfx_hunk_menu_cursor", this.gameObject);
 
             this.index = _index;
 

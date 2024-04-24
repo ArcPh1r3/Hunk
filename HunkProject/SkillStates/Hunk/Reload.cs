@@ -11,7 +11,6 @@ namespace HunkMod.SkillStates.Hunk
         public InterruptPriority interruptPriority = InterruptPriority.Skill;
 
         private float duration;
-        private bool wasAiming;
         private bool success;
         private bool cummed = false;
 
@@ -20,7 +19,6 @@ namespace HunkMod.SkillStates.Hunk
             base.OnEnter();
             this.duration = this.cachedWeaponDef.reloadDuration / this.attackSpeedStat;
             this.hunk.isReloading = true;
-            this.wasAiming = this.hunk.isAiming;
 
             if (this.hunk.weaponTracker.weaponData[this.hunk.weaponTracker.equippedIndex].totalAmmo <= 0)
             {
@@ -58,9 +56,7 @@ namespace HunkMod.SkillStates.Hunk
             this.hunk.reloadTimer = 2f;
             this.hunk.ammoKillTimer = 3f;
 
-            if (!this.hunk.isAiming) this.wasAiming = false;
-
-            if (base.isAuthority && this.inputBank.skill2.down && !this.wasAiming) // aiming to cancel a passive reload
+            if (base.isAuthority && this.inputBank.skill2.down && this.interruptPriority == InterruptPriority.Any && this.hunk.ammo > 0) // aiming to cancel a passive reload
             {
                 this.outer.SetNextStateToMain();
                 return;
