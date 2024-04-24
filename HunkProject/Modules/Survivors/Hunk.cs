@@ -1226,13 +1226,13 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     // simulacrum boss wave fix
                     if ((damageReport.victimBody.isBoss || damageReport.victimIsBoss) && !InfiniteTowerRun.instance) isBoss = true;
 
-                    if (isBoss || fuckMyAss) dropped = true;
-
                     // stop dropping ammo when void monsters kill each other plz this is an annoying bug
                     if (damageReport.attackerTeamIndex != TeamIndex.Player) dropped = false;
 
                     // only drop on sacrifice- otherwise he must rummage or kill with knife
                     if (Run.instance && !RoR2.RunArtifactManager.instance.IsArtifactEnabled(RoR2Content.Artifacts.Sacrifice) && !isKnifeKill) dropped = false;
+
+                    if (isBoss || fuckMyAss) dropped = true;
 
                     if (dropped)
                     {
