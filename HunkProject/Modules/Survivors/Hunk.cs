@@ -55,6 +55,8 @@ namespace HunkMod.Modules.Survivors
 
         internal static string bodyNameToken;
 
+        internal GameObject ammoPickupInteractable;
+
         internal void CreateCharacter()
         {
             instance = this;
@@ -66,6 +68,8 @@ namespace HunkMod.Modules.Survivors
                 forceUnlock = Modules.Config.ForceUnlockConfig("Hunk");
 
                 //if (!forceUnlock.Value) characterUnlockableDef = R2API.UnlockableAPI.AddUnlockable<Achievements.DriverUnlockAchievement>();
+
+                CreateAmmoInteractable();
 
                 characterPrefab = CreateBodyPrefab(true);
 
@@ -1023,6 +1027,13 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             return newRendererInfos;
         }
 
+        private void CreateAmmoInteractable()
+        {
+            ammoPickupInteractable = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/Railgunner/RailgunnerScopeLightOverlay.prefab").WaitForCompletion().InstantiateClone("HunkAmmoPickupInteractable", false);
+        
+        
+        }
+
         private static void Hook()
         {
             // headshots and ammo drops
@@ -1048,13 +1059,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             // spawn the custom interactable here. i don't know how to create this, just laying the groundwork for now.
             if (Modules.Helpers.isHunkInPlay)
             {
-                foreach (HunkController i in GameObject.FindObjectsOfType<HunkController>())
-                {
-                    if (i)
-                    {
-                        i.AddRandomAmmo();
-                    }
-                }
+                GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, self.transform.rotation);
             }
         }
 

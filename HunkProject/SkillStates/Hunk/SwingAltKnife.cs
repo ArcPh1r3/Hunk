@@ -52,6 +52,10 @@ namespace HunkMod.SkillStates.Hunk
 
             base.OnEnter();
 
+            EntityStateMachine.FindByCustomName(this.gameObject, "Aim").SetNextStateToMain();
+            this.skillLocator.secondary.stock = 0;
+            this.skillLocator.secondary.rechargeStopwatch = 0f;
+
             Util.PlaySound("sfx_hunk_foley_knife", this.gameObject);
 
             if (this.isCrit)

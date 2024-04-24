@@ -61,11 +61,15 @@ namespace HunkMod.SkillStates.Hunk
             {
                 this.swingEffectPrefab = Modules.Assets.knifeSwingEffectRed;
                 this.hitEffectPrefab = Modules.Assets.knifeImpactEffectRed;
+                this.attack.hitEffectPrefab = this.hitEffectPrefab;
+                this.attack.impactSound = this.impactSound;
             }
             else
             {
                 this.swingEffectPrefab = Modules.Assets.knifeSwingEffect;
                 this.hitEffectPrefab = Modules.Assets.knifeImpactEffect;
+                this.attack.hitEffectPrefab = this.hitEffectPrefab;
+                this.attack.impactSound = this.impactSound;
             }
         }
 

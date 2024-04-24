@@ -222,7 +222,7 @@ namespace HunkMod.Modules
             characterDirection.rootMotionAccumulator = null;
             characterDirection.modelAnimator = modelTransform.GetComponent<Animator>();
             characterDirection.driveFromRootRotation = false;
-            characterDirection.turnSpeed = 720f;
+            characterDirection.turnSpeed = 540f;
         }
 
         private static void SetupCameraTargetParams(GameObject prefab)

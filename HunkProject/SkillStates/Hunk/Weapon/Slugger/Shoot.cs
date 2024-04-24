@@ -117,7 +117,9 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Slugger
 
                     bulletAttack.Fire();
 
-                    this.characterMotor.ApplyForce(aimRay.direction * -this.selfForce);
+                    float _selfForce = this.selfForce;
+                    if (!this.isGrounded) _selfForce *= 1.5f;
+                    this.characterMotor.ApplyForce(aimRay.direction * -_selfForce);
                 }
             }
         }

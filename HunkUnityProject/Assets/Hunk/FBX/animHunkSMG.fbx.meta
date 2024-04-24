@@ -120,6 +120,24 @@ ModelImporter:
   - first:
       74: 1283589356175656668
     second: Armature|KnifeCounter
+  - first:
+      74: 5434418853472708053
+    second: Armature|DescendFast
+  - first:
+      74: 3189483110512977423
+    second: Armature|FreefallB
+  - first:
+      74: 5064462899078577662
+    second: Armature|FreefallF
+  - first:
+      74: -3831441978792079136
+    second: Armature|FreefallL
+  - first:
+      74: 6993930908934380776
+    second: Armature|FreefallR
+  - first:
+      74: 6810230314652945474
+    second: Armature|FreefallN
   externalObjects: {}
   materials:
     materialImportMode: 1
