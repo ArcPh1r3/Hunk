@@ -278,6 +278,14 @@ namespace HunkMod.Modules.Components
             new SyncStoredWeapon(identity.netId, newWeapon.index, ammo).Send(NetworkDestination.Clients);
         }
 
+        public void ServerGetAmmo()
+        {
+            NetworkIdentity identity = this.GetComponent<NetworkIdentity>();
+            if (!identity) return;
+
+            new SyncAmmoPickup(identity.netId).Send(NetworkDestination.Clients);
+        }
+
         public void ServerPickUpWeapon(HunkWeaponDef newWeapon, bool cutAmmo, HunkController hunkController, bool isAmmoBox = false)
         {
             NetworkIdentity identity = hunkController.gameObject.GetComponent<NetworkIdentity>();
@@ -545,14 +553,26 @@ namespace HunkMod.Modules.Components
             // TODO
             // change this to a weighted selection, so stronger weapons are less likely to get ammo
 
-            int index = UnityEngine.Random.Range(0, this.weaponTracker.weaponData.Length - 1);
+            int index = UnityEngine.Random.Range(0, this.weaponTracker.weaponData.Length);
             int amount = Mathf.CeilToInt(this.weaponTracker.weaponData[index].weaponDef.magSize * multiplier);
 
             this.weaponTracker.weaponData[index].totalAmmo += amount;
 
-            GameObject effect = GameObject.Instantiate(Modules.Assets.ammoPickupEffectPrefab, this.characterBody.aimOrigin + (Vector3.up * 0.85f) + (this.characterBody.inputBank.aimDirection * 1f), Quaternion.identity);
+            GameObject effect = GameObject.Instantiate(Modules.Assets.ammoPickupEffectPrefab, this.characterBody.aimOrigin + (Vector3.up * 0.85f) + (this.characterBody.inputBank.aimDirection * 2f), Quaternion.identity);
 
             effect.GetComponentInChildren<RoR2.UI.LanguageTextMeshController>().token = "+" + amount + " " + this.weaponTracker.weaponData[index].weaponDef.ammoName;
+        }
+
+        public void AddAmmoFromIndex(int index)
+        {
+            int amount = Mathf.CeilToInt(this.weaponTracker.weaponData[index].weaponDef.magSize);
+
+            this.weaponTracker.weaponData[index].totalAmmo += amount;
+
+            GameObject effect = GameObject.Instantiate(Modules.Assets.ammoPickupEffectPrefab, this.characterBody.aimOrigin + (Vector3.up * 0.85f) + (this.characterBody.inputBank.aimDirection * 2f), Quaternion.identity);
+
+            effect.GetComponentInChildren<RoR2.UI.LanguageTextMeshController>().token = "+" + amount + " " + this.weaponTracker.weaponData[index].weaponDef.ammoName;
+            Util.PlaySound("sfx_hunk_pickup", this.gameObject);
         }
     }
 }

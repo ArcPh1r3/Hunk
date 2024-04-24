@@ -55,9 +55,9 @@ namespace HunkMod.Modules
         public static GameObject shotgunShell;
         public static GameObject shotgunSlug;
 
-        public static GameObject weaponPickup;
+        public static GameObject ammoPickup;
 
-        public static GameObject weaponPickupEffect;
+        public static GameObject ammoPickupEffect;
 
         internal static GameObject knifeImpactEffect;
         internal static GameObject knifeSwingEffect;
@@ -264,9 +264,43 @@ namespace HunkMod.Modules
             shotgunSlug.GetComponentInChildren<MeshRenderer>().material = CreateMaterial("matShotgunSlug");
             shotgunSlug.AddComponent<Modules.Components.ShellController>();
 
-            weaponPickupEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandolier/AmmoPack.prefab").WaitForCompletion().GetComponentInChildren<AmmoPickup>().pickupEffect.InstantiateClone("RobHunkWeaponPickupEffect", true);
-            weaponPickupEffect.AddComponent<NetworkIdentity>();
-            AddNewEffectDef(weaponPickupEffect, "sfx_hunk_pickup");
+            #region Ammo Pickup
+            ammoPickup = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandolier/AmmoPack.prefab").WaitForCompletion().InstantiateClone("HunkAmmoPickup", true);
+
+            ammoPickup.GetComponent<BeginRapidlyActivatingAndDeactivating>().delayBeforeBeginningBlinking = 55f;
+            ammoPickup.GetComponent<DestroyOnTimer>().duration = 60f;
+
+            AmmoPickup oldAmmoPickupComponent = ammoPickup.GetComponentInChildren<AmmoPickup>();
+            HunkAmmoPickup ammoPickupComponent = oldAmmoPickupComponent.gameObject.AddComponent<HunkAmmoPickup>();
+
+            ammoPickupComponent.baseObject = oldAmmoPickupComponent.baseObject;
+            ammoPickupComponent.pickupEffect = oldAmmoPickupComponent.pickupEffect;
+            ammoPickupComponent.teamFilter = oldAmmoPickupComponent.teamFilter;
+
+            ammoPickup.GetComponentInChildren<MeshRenderer>().enabled = false;
+
+            GameObject pickupModel = GameObject.Instantiate(mainAssetBundle.LoadAsset<GameObject>("AmmoPickup"));
+            pickupModel.transform.parent = ammoPickup.transform.Find("Visuals");
+            pickupModel.transform.localPosition = new Vector3(0f, -0.35f, 0f);
+            pickupModel.transform.localRotation = Quaternion.identity;
+
+            MeshRenderer pickupMesh = pickupModel.GetComponentInChildren<MeshRenderer>();
+            pickupMesh.material = CreateMaterial("matAmmoPickup");
+
+            GravitatePickup oldGrav = ammoPickup.GetComponentInChildren<GravitatePickup>();
+            HunkGravitatePickup grav = oldGrav.gameObject.AddComponent<HunkGravitatePickup>();
+
+            grav.rigidbody = oldGrav.rigidbody;
+            grav.acceleration = oldGrav.acceleration;
+            grav.maxSpeed = oldGrav.maxSpeed;
+
+            MonoBehaviour.Destroy(oldAmmoPickupComponent);
+            MonoBehaviour.Destroy(oldGrav);
+            #endregion
+
+            ammoPickupEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandolier/AmmoPack.prefab").WaitForCompletion().GetComponentInChildren<AmmoPickup>().pickupEffect.InstantiateClone("RobHunkWeaponPickupEffect", true);
+            ammoPickupEffect.AddComponent<NetworkIdentity>();
+            AddNewEffectDef(ammoPickupEffect, "");
 
             weaponNotificationPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/NotificationPanel2.prefab").WaitForCompletion().InstantiateClone("HunkWeaponNotification", false);
             WeaponNotification _new = weaponNotificationPrefab.AddComponent<WeaponNotification>();
@@ -475,61 +509,6 @@ namespace HunkMod.Modules
             AddNewEffectDef(newTracer);
 
             return newTracer;
-        }
-
-        internal static GameObject CreatePickupObject(HunkWeaponDef weaponDef)
-        {
-            // nuclear solution...... i fucking hate modding
-            GameObject newPickup = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandolier/AmmoPack.prefab").WaitForCompletion().InstantiateClone("HunkWeaponPickup" + weaponDef.index, true);
-
-            AmmoPickup ammoPickupComponent = newPickup.GetComponentInChildren<AmmoPickup>();
-            Components.WeaponPickup weaponPickupComponent = ammoPickupComponent.gameObject.AddComponent<Components.WeaponPickup>();
-
-            weaponPickupComponent.baseObject = ammoPickupComponent.baseObject;
-            weaponPickupComponent.pickupEffect = weaponPickupEffect;
-            weaponPickupComponent.teamFilter = ammoPickupComponent.teamFilter;
-            weaponPickupComponent.weaponDef = weaponDef;
-
-            Material uncommonPickupMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/Bandolier/matPickups.mat").WaitForCompletion());
-            uncommonPickupMat.SetColor("_TintColor", new Color(0f, 80f / 255f, 0f, 1f));
-
-            newPickup.GetComponentInChildren<MeshRenderer>().enabled = false;
-
-            float duration = 360f;
-
-            GameObject pickupModel = GameObject.Instantiate(mainAssetBundle.LoadAsset<GameObject>("AmmoPickup"));
-
-            newPickup.GetComponent<BeginRapidlyActivatingAndDeactivating>().delayBeforeBeginningBlinking = duration - 5f;
-            newPickup.GetComponent<DestroyOnTimer>().duration = duration;
-
-            pickupModel.transform.parent = newPickup.transform.Find("Visuals");
-            pickupModel.transform.localPosition = new Vector3(0f, -0.35f, 0f);
-            pickupModel.transform.localRotation = Quaternion.identity;
-
-            MeshRenderer pickupMesh = pickupModel.GetComponentInChildren<MeshRenderer>();
-            //pickupMesh.material = null;
-
-            GameObject textShit = GameObject.Instantiate(RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/BearProc"));
-            MonoBehaviour.Destroy(textShit.GetComponent<EffectComponent>());
-            textShit.transform.parent = pickupModel.transform;
-            textShit.transform.localPosition = Vector3.zero;
-            textShit.transform.localRotation = Quaternion.identity;
-
-            textShit.GetComponent<DestroyOnTimer>().enabled = false;
-
-            ObjectScaleCurve whatTheFuckIsThis = textShit.GetComponentInChildren<ObjectScaleCurve>();
-            Transform helpMe = whatTheFuckIsThis.transform;
-            MonoBehaviour.DestroyImmediate(whatTheFuckIsThis);
-            helpMe.transform.localScale = Vector3.one * 1.25f;
-
-            MonoBehaviour.Destroy(ammoPickupComponent);
-            MonoBehaviour.Destroy(newPickup.GetComponentInChildren<RoR2.GravitatePickup>());
-
-            newPickup.transform.Find("Visuals").Find("Particle System").Find("Particle System").gameObject.SetActive(false);
-            newPickup.GetComponentInChildren<Light>().color = Modules.Survivors.Hunk.characterColor;
-
-            // i seriously hate this but it works
-            return newPickup;
         }
 
         private static GameObject CreateCrosshair()

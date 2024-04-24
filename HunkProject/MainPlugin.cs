@@ -61,7 +61,6 @@ namespace HunkMod
             Modules.Assets.PopulateAssets();
             Modules.CameraParams.InitializeParams();
             Modules.States.RegisterStates();
-            Modules.Buffs.RegisterBuffs();
             Modules.Projectiles.RegisterProjectiles();
             Modules.Tokens.AddTokens();
             Modules.ItemDisplays.PopulateDisplays();
@@ -69,11 +68,10 @@ namespace HunkMod
             new Modules.Survivors.Hunk().CreateCharacter();
 
             NetworkingAPI.RegisterMessageType<Modules.Components.SyncWeapon>();
-            //NetworkingAPI.RegisterMessageType<Modules.Components.SyncWeaponPickup>();
-            // kill me
             NetworkingAPI.RegisterMessageType<Modules.Components.SyncOverlay>();
             NetworkingAPI.RegisterMessageType<Modules.Components.SyncStoredWeapon>();
             NetworkingAPI.RegisterMessageType<Modules.Components.SyncDecapitation>();
+            NetworkingAPI.RegisterMessageType<Modules.Components.SyncAmmoPickup>();
 
             Hook();
 
@@ -110,6 +108,11 @@ namespace HunkMod
         private void CharacterBody_RecalculateStats(On.RoR2.CharacterBody.orig_RecalculateStats orig, CharacterBody self)
         {
             orig(self);
+
+            if (self && self.HasBuff(Modules.Survivors.Hunk.immobilizedBuff))
+            {
+                self.moveSpeed = 0f;
+            }
         }
 
         private void CrosshairController_Awake(On.RoR2.UI.CrosshairController.orig_Awake orig, RoR2.UI.CrosshairController self)

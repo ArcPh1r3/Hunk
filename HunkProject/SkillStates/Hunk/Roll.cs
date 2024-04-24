@@ -13,6 +13,8 @@ namespace HunkMod.SkillStates.Hunk
         private bool peepee;
         private float coeff = 24f;
         private bool skidibi;
+        private bool slowing;
+        private float currentTimeScale = 1f;
 
         public override void OnEnter()
         {
@@ -46,6 +48,8 @@ namespace HunkMod.SkillStates.Hunk
             this.skillLocator.primary.SetSkillOverride(this, Modules.Survivors.Hunk.counterSkillDef, GenericSkill.SkillOverridePriority.Contextual);
 
             this.hunk.desiredYOffset = 0.6f;
+
+            if (NetworkServer.active) this.characterBody.AddBuff(Modules.Survivors.Hunk.immobilizedBuff);
 
             this.ApplyBuff();
             this.CreateDashEffect();
@@ -88,12 +92,30 @@ namespace HunkMod.SkillStates.Hunk
             {
                 this.peepee = true;
                 this.coeff = 4f;
+
+                // ended up feeling bad
+                /*if (RoR2Application.isInSinglePlayer && this.inputBank.skill2.down)
+                {
+                    this.slowing = true;
+                    this.currentTimeScale = 0.1f;
+                }*/
             }
 
             if (!this.skidibi && base.fixedAge >= (0.85f * this.duration))
             {
                 this.skidibi = true;
                 this.hunk.desiredYOffset = this.hunk.defaultYOffset;
+            }
+
+            if (this.slowing)
+            {
+                this.currentTimeScale += Time.unscaledDeltaTime * 1.1f;
+                if (this.currentTimeScale >= 1f)
+                {
+                    this.slowing = false;
+                    this.currentTimeScale = 1f;
+                }
+                Time.timeScale = this.currentTimeScale;
             }
 
             if (base.isAuthority && base.fixedAge >= this.duration)
@@ -115,6 +137,13 @@ namespace HunkMod.SkillStates.Hunk
             this.skillLocator.primary.UnsetSkillOverride(this, Modules.Survivors.Hunk.counterSkillDef, GenericSkill.SkillOverridePriority.Contextual);
 
             base.OnExit();
+
+            if (NetworkServer.active) this.characterBody.RemoveBuff(Modules.Survivors.Hunk.immobilizedBuff);
+
+            /*if (RoR2Application.isInSinglePlayer)
+            {
+                Time.timeScale = 1f;
+            }*/
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

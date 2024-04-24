@@ -12,7 +12,7 @@ namespace HunkMod.Modules
             string desc = "HUNK is an elite infiltrator who carries a large arsenal of weapons claimed via OSP (on-site procurement).<color=#CCD3E0>" + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > Use your Combat Knife against weaker foes to conserve ammo." + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > Find UES Keycards to unlock Weapon Cases to add to your armaments on each stage." + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > Use Step carefully to Roll between enemy attacks while taking them down at the same time." + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > Use Quickstep carefully to Roll between enemy attacks while taking them down at the same time." + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > Scrounge around in opened chests for a chance to find ammo for your current weapons." + Environment.NewLine + Environment.NewLine;
 
             string outro = "..and so he left, fine.";
@@ -34,7 +34,7 @@ namespace HunkMod.Modules
 
             #region Passive
             LanguageAPI.Add(prefix + "PASSIVE_NAME", "Survivalist");
-            LanguageAPI.Add(prefix + "PASSIVE_DESCRIPTION", $"Hunk is able to <style=cIsDamage>rummage</style> through <style=cIsUtility>chests and barrels</style> for spare ammo, <style=cIsHealth>only once per</style>.");
+            LanguageAPI.Add(prefix + "PASSIVE_DESCRIPTION", $"HUNK is able to <style=cIsDamage>rummage</style> through <style=cIsUtility>chests and barrels</style> for spare ammo, <style=cIsHealth>only once per</style>.");
 
             LanguageAPI.Add(prefix + "PASSIVE2_NAME", "The Fourth Survivor");
             LanguageAPI.Add(prefix + "PASSIVE2_DESCRIPTION", $"Spawn with a <style=cIsDamage>full arsenal</style>,  <style=cIsHealth>BUT</style> you are now <style=cIsHealth>unable to gain any more ammo</style>.");
@@ -48,10 +48,10 @@ namespace HunkMod.Modules
 
             #region Primary
             LanguageAPI.Add(prefix + "PRIMARY_KNIFE_NAME", "Combat Knife");
-            LanguageAPI.Add(prefix + "PRIMARY_KNIFE_DESCRIPTION", $"<style=cIsDamage>Slash</style> close-range combatants for <style=cIsDamage>{100f * 3.5}% damage</style>.");
+            LanguageAPI.Add(prefix + "PRIMARY_KNIFE_DESCRIPTION", $"<style=cIsUtility>Looting.</style> <style=cIsDamage>Slash</style> close-range combatants for <style=cIsDamage>{100f * 3.5}% damage</style>.");
 
             LanguageAPI.Add(prefix + "PRIMARY_KNIFEALT_NAME", "Hidden Blade");
-            LanguageAPI.Add(prefix + "PRIMARY_KNIFEALT_DESCRIPTION", $"<style=cIsDamage>Slash</style> close-range combatants for <style=cIsDamage>{100f * 2.2}% damage</style>. <style=cIsDamage>Attacks from behind are Critical Strikes.</style>");
+            LanguageAPI.Add(prefix + "PRIMARY_KNIFEALT_DESCRIPTION", $"<style=cIsUtility>Looting.</style> <style=cIsDamage>Slash</style> close-range combatants for <style=cIsDamage>{100f * 2.2}% damage</style>. <style=cIsDamage>Attacks from behind are Critical Strikes.</style>");
             #endregion
 
             #region Secondary
@@ -60,8 +60,8 @@ namespace HunkMod.Modules
             #endregion
 
             #region Utility
-            LanguageAPI.Add(prefix + "UTILITY_DODGE_NAME", "Tactical Dodge");
-            LanguageAPI.Add(prefix + "UTILITY_DODGE_DESCRIPTION", "<style=cIsUtility>Dash</style> a short distance. If used to <style=cIsUtility>avoid an attack</style>, <style=cIsUtility>roll</style> instead, letting you temporarily <style=cIsDamage>lock onto weakpoints</style>.");
+            LanguageAPI.Add(prefix + "UTILITY_DODGE_NAME", "Quickstep");
+            LanguageAPI.Add(prefix + "UTILITY_DODGE_DESCRIPTION", "<style=cIsUtility>Dash</style> a short distance. If used to <style=cIsUtility>avoid an attack</style>, <style=cIsDamage>roll</style> instead, restoring all charges of this skill.");
             #endregion
 
             #region Special
@@ -70,8 +70,8 @@ namespace HunkMod.Modules
             #endregion
 
             #region Achievements
-            LanguageAPI.Add(prefix + "UNLOCKABLE_UNLOCKABLE_NAME", "A Real Hero");
-            LanguageAPI.Add(prefix + "UNLOCKABLE_ACHIEVEMENT_NAME", "A Real Hero");
+            LanguageAPI.Add(prefix + "UNLOCKABLE_UNLOCKABLE_NAME", "Looming Dread");
+            LanguageAPI.Add(prefix + "UNLOCKABLE_ACHIEVEMENT_NAME", "Looming Dread");
             LanguageAPI.Add(prefix + "UNLOCKABLE_ACHIEVEMENT_DESC", "Reach stage 3 in less than 15 minutes.");
 
             LanguageAPI.Add(prefix + "MONSOONUNLOCKABLE_UNLOCKABLE_NAME", "HUNK: Mastery");
@@ -81,6 +81,8 @@ namespace HunkMod.Modules
 
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_AMMO_NAME", "Ammo");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_AMMO_CONTEXT", "Rummage for ammo");
+
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYWORD_LOOTING", "<style=cKeywordName>Looting</style><style=cSub>Enemies slain with this skill have a small chance to drop ammo.");
         }
     }
 }

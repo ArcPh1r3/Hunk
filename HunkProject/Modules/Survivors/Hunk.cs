@@ -58,6 +58,8 @@ namespace HunkMod.Modules.Survivors
         internal GameObject ammoPickupInteractable;
         internal GameObject ammoPickupInteractableSmall;
 
+        internal static BuffDef immobilizedBuff;
+
         internal void CreateCharacter()
         {
             instance = this;
@@ -82,6 +84,8 @@ namespace HunkMod.Modules.Survivors
                 //else Modules.Prefabs.RegisterNewSurvivor(characterPrefab, displayPrefab, "DRIVER", characterUnlockableDef);
 
                 umbraMaster = CreateMaster(characterPrefab, "RobHunkMonsterMaster");
+
+                immobilizedBuff = Modules.Buffs.AddNewBuff("buffHunkImmobilized", null, Color.white, false, false, true);
             }
 
             Hook();
@@ -561,6 +565,10 @@ namespace HunkMod.Modules.Survivors
                 prefix + "_HUNK_BODY_PRIMARY_KNIFE_DESCRIPTION",
                 Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
             knife.interruptPriority = EntityStates.InterruptPriority.Skill;
+            knife.keywordTokens = new string[]
+            {
+                MainPlugin.developerPrefix + "_HUNK_KEYWORD_LOOTING"
+            };
 
             SkillDef knifeAlt = Modules.Skills.CreatePrimarySkillDef(new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.SwingAltKnife)),
     "Weapon",
@@ -568,6 +576,10 @@ namespace HunkMod.Modules.Survivors
     prefix + "_HUNK_BODY_PRIMARY_KNIFEALT_DESCRIPTION",
     Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
             knifeAlt.interruptPriority = EntityStates.InterruptPriority.Skill;
+            knifeAlt.keywordTokens = new string[]
+            {
+                MainPlugin.developerPrefix + "_HUNK_KEYWORD_LOOTING"
+            };
 
             counterSkillDef = Modules.Skills.CreatePrimarySkillDef(new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.KnifeCounter)),
     "Weapon",
@@ -1088,11 +1100,32 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             // bandolier
             On.RoR2.SkillLocator.ApplyAmmoPack += SkillLocator_ApplyAmmoPack;
 
+            // knife ammo drop mechanic
+            On.RoR2.HealthComponent.TakeDamage += HealthComponent_TakeDamage;
+
             // heresy anims
             //On.EntityStates.GlobalSkills.LunarNeedle.FireLunarNeedle.OnEnter += PlayVisionsAnimation;
             //On.EntityStates.GlobalSkills.LunarNeedle.ChargeLunarSecondary.PlayChargeAnimation += PlayChargeLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarNeedle.ThrowLunarSecondary.PlayThrowAnimation += PlayThrowLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += PlayRuinAnimation;
+        }
+
+        private static void HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
+        {
+            if (damageInfo.damageType == DamageType.ClayGoo)
+            {
+                if (damageInfo.attacker && damageInfo.attacker.name.Contains("RobHunkBody"))
+                {
+                    damageInfo.damageType = DamageType.Generic;
+
+                    if (self)
+                    {
+                        if (self.body) self.body.gameObject.AddComponent<HunkKnifeTracker>();
+                    }
+                }
+            }
+
+            orig(self, damageInfo);
         }
 
         private static void SkillLocator_ApplyAmmoPack(On.RoR2.SkillLocator.orig_ApplyAmmoPack orig, SkillLocator self)
@@ -1151,6 +1184,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                 // ammo drops
                 if (Modules.Helpers.isHunkInPlay)
                 {
+                    bool isKnifeKill = false;
                     // headshot first
                     if (damageReport.attackerBody.baseNameToken == Hunk.bodyNameToken)
                     {
@@ -1161,6 +1195,11 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                             {
                                 new SyncDecapitation(identity.netId, damageReport.victim.gameObject).Send(NetworkDestination.Clients);
                             }
+                        }
+
+                        if (damageReport.victim.GetComponent<HunkKnifeTracker>())
+                        {
+                            isKnifeKill = true;
                         }
                     }
 
@@ -1192,12 +1231,12 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     // stop dropping ammo when void monsters kill each other plz this is an annoying bug
                     if (damageReport.attackerTeamIndex != TeamIndex.Player) dropped = false;
 
-                    // only drop on sacrifice- otherwise he must rummage
-                    if (Run.instance && !RoR2.RunArtifactManager.instance.IsArtifactEnabled(RoR2Content.Artifacts.Sacrifice)) dropped = false;
+                    // only drop on sacrifice- otherwise he must rummage or kill with knife
+                    if (Run.instance && !RoR2.RunArtifactManager.instance.IsArtifactEnabled(RoR2Content.Artifacts.Sacrifice) && !isKnifeKill) dropped = false;
 
                     if (dropped)
                     {
-                        Hunk.instance.pityMultiplier = 0.8f;
+                        Hunk.instance.pityMultiplier = 0.7f;
 
                         Vector3 position = Vector3.zero;
                         Transform transform = damageReport.victim.transform;
@@ -1206,12 +1245,12 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                             position = damageReport.victim.transform.position;
                         }
 
-                        //GameObject ammoPickup = UnityEngine.Object.Instantiate<GameObject>(weaponDef.pickupPrefab, position, UnityEngine.Random.rotation);
+                        GameObject ammoPickup = UnityEngine.Object.Instantiate<GameObject>(Modules.Assets.ammoPickup, position, UnityEngine.Random.rotation);
 
                         //TeamFilter teamFilter = ammoPickup.GetComponent<TeamFilter>();
                         //if (teamFilter) teamFilter.teamIndex = damageReport.attackerTeamIndex;
 
-                        //NetworkServer.Spawn(ammoPickup);
+                        NetworkServer.Spawn(ammoPickup);
                     }
                     else
                     {

@@ -21,9 +21,6 @@ namespace HunkMod
             weaponDefs[index] = weaponDef;
             weaponDef.index = (ushort)index;
 
-            // heheheha
-            weaponDef.pickupPrefab = Modules.Assets.CreatePickupObject(weaponDef);
-
             // set default icon
             /*if (!weaponDef.icon)
             {
@@ -52,7 +49,7 @@ namespace HunkMod
 
             itemDefs.Add(weaponDef.itemDef);
 
-            Debug.Log("Added " + weaponDef.nameToken + " to catalog with index: " + weaponDef.index);
+            Debug.Log("Added " + weaponDef.nameToken + " to Hunk weapon catalog with index: " + weaponDef.index);
         }
 
         public static void AddWeaponDrop(string bodyName, HunkWeaponDef weaponDef, bool autoComplete = true)

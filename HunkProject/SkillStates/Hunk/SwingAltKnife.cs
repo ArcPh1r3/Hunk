@@ -35,7 +35,7 @@ namespace HunkMod.SkillStates.Hunk
             this.hitSoundString = "";
             this.impactSound = Modules.Assets.knifeImpactSoundDef.index;
 
-            this.damageType = DamageType.Generic;
+            this.damageType = DamageType.ClayGoo;
 
             switch (this.swingIndex)
             {

@@ -12,14 +12,9 @@ namespace HunkMod.Modules
     public static class Buffs
     {
         internal static List<BuffDef> buffDefs = new List<BuffDef>();
-        internal static List<BuffDef> bulletDefs = new List<BuffDef>();
-
-        internal static void RegisterBuffs()
-        {
-        }
 
         // simple helper method
-        internal static BuffDef AddNewBuff(string buffName, Sprite buffIcon, Color buffColor, bool canStack, bool isDebuff, bool bullet = false)
+        internal static BuffDef AddNewBuff(string buffName, Sprite buffIcon, Color buffColor, bool canStack, bool isDebuff, bool isHidden = false)
         {
             BuffDef buffDef = ScriptableObject.CreateInstance<BuffDef>();
             buffDef.name = buffName;
@@ -28,9 +23,9 @@ namespace HunkMod.Modules
             buffDef.isDebuff = isDebuff;
             buffDef.eliteDef = null;
             buffDef.iconSprite = buffIcon;
+            buffDef.isHidden = isHidden;
 
-            if (bullet) bulletDefs.Add(buffDef);
-            else buffDefs.Add(buffDef);
+            buffDefs.Add(buffDef);
 
             return buffDef;
         }
