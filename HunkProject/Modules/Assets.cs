@@ -483,6 +483,8 @@ namespace HunkMod.Modules
             bloodExplosionEffect.GetComponentInChildren<Light>().gameObject.SetActive(false);
 
             bloodExplosionEffect.GetComponentInChildren<PostProcessVolume>().sharedProfile = Addressables.LoadAssetAsync<PostProcessProfile>("RoR2/Base/title/ppLocalGold.asset").WaitForCompletion();
+            bloodExplosionEffect.GetComponentInChildren<ShakeEmitter>().wave.amplitude *= 0.15f;
+            bloodExplosionEffect.GetComponentInChildren<ShakeEmitter>().duration *= 0.25f;
 
             AddNewEffectDef(bloodExplosionEffect);
 

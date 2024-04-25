@@ -8,7 +8,10 @@ public class HunkWeaponDef : ScriptableObject
     public enum AnimationSet
     {
         Pistol,
-        SMG
+        SMG,
+        Rocket,
+        Unarmed,
+        Throwable
     }
 
     [Header("General")]

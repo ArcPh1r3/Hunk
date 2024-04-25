@@ -19,8 +19,8 @@ namespace HunkMod.Modules
 
         internal static void RegisterProjectiles()
         {
-            //rocketProjectilePrefab = CreateRocket(false, "DriverRocketProjectile", "DriverRocketGhost", "DriverBigRocketGhost");
-            //missileProjectilePrefab = CreateRocket(false, "DriverMissileProjectile", "DriverMissileGhost", "DriverMissileGhost");
+            rocketProjectilePrefab = CreateRocket(false, "HunkRocketProjectile", "HunkRocketGhost", "HunkRocketGhost");
+            missileProjectilePrefab = CreateRocket(false, "HunkMissileProjectile", "HunkMissileGhost", "HunkMissileGhost");
         }
 
         private static GameObject CreateRocket(bool gravity, string projectileName, string ghostName = "", string ghostToLoad = "")

@@ -397,12 +397,21 @@ namespace HunkMod.Modules.Components
             this.ToggleLayer("Gesture (Pistol)", false);
             this.ToggleLayer("FullBody (Pistol)", false);
 
+            this.ToggleLayer("Body (Rocket)", false);
+            this.ToggleLayer("Gesture (Rocket)", false);
+            this.ToggleLayer("FullBody (Rocket)", false);
+
             switch (this.weaponDef.animationSet)
             {
                 case HunkWeaponDef.AnimationSet.Pistol:
                     this.ToggleLayer("Body (Pistol)", true);
                     this.ToggleLayer("Gesture (Pistol)", true);
                     this.ToggleLayer("FullBody (Pistol)", true);
+                    break;
+                case HunkWeaponDef.AnimationSet.Rocket:
+                    this.ToggleLayer("Body (Rocket)", true);
+                    this.ToggleLayer("Gesture (Rocket)", true);
+                    this.ToggleLayer("FullBody (Rocket)", true);
                     break;
             }
 
