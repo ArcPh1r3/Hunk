@@ -1055,7 +1055,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             ammoPickupInteractable.AddComponent<AmmoPickupInteraction>().destroyOnOpen = modelTransform.gameObject;
             modelTransform.GetComponent<Animator>().enabled = false;
             modelTransform.Find("BarrelMesh").GetComponent<SkinnedMeshRenderer>().enabled = false;
-            ammoPickupInteractable.GetComponent<AmmoPickupInteraction>().multiplier = 1.5f;
+            ammoPickupInteractable.GetComponent<AmmoPickupInteraction>().multiplier = 2f;
 
             GameObject interactionEffect = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("AmmoInteraction"));
             interactionEffect.transform.SetParent(modelTransform, false);
