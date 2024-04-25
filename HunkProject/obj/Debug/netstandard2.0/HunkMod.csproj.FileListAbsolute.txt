@@ -61,3 +61,4 @@ C:\Users\rseid\OneDrive\Documents\GitHub\Hunk\HunkProject\bin\Debug\netstandard2
 C:\Users\rseid\OneDrive\Documents\GitHub\Hunk\HunkProject\obj\Debug\netstandard2.0\HunkMod.csproj.CopyComplete
 C:\Users\rseid\OneDrive\Documents\GitHub\Hunk\HunkProject\obj\Debug\netstandard2.0\HunkMod.dll
 C:\Users\rseid\OneDrive\Documents\GitHub\Hunk\HunkProject\obj\Debug\netstandard2.0\HunkMod.pdb
+C:\Users\rseid\OneDrive\Documents\GitHub\Hunk\HunkProject\obj\Debug\netstandard2.0\HunkMod.csproj.AssemblyReference.cache
