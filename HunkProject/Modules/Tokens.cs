@@ -65,7 +65,7 @@ namespace HunkMod.Modules
             #endregion
 
             #region Special
-            LanguageAPI.Add(prefix + "SPECIAL_SWAP_NAME", "idk");
+            LanguageAPI.Add(prefix + "SPECIAL_SWAP_NAME", "Legion");
             LanguageAPI.Add(prefix + "SPECIAL_SWAP_DESCRIPTION", $"<style=cIsUtility>Swap</style> to a different <style=cIsDamage>gun</style>. Tap to swap to your <style=cIsUtility>last held gun</style>.");
             #endregion
 
