@@ -15,12 +15,17 @@ namespace HunkMod.Modules
     internal static class Projectiles
     {
         public static GameObject rocketProjectilePrefab;
+        public static GameObject bazookaProjectilePrefab;
         public static GameObject missileProjectilePrefab;
 
         internal static void RegisterProjectiles()
         {
             rocketProjectilePrefab = CreateRocket(false, "HunkRocketProjectile", "HunkRocketGhost", "HunkRocketGhost");
+            bazookaProjectilePrefab = CreateRocket(true, "HunkBazookaProjectile", "HunkBazookaGhost", "HunkRocketGhost");
             missileProjectilePrefab = CreateRocket(false, "HunkMissileProjectile", "HunkMissileGhost", "HunkMissileGhost");
+
+            rocketProjectilePrefab.GetComponent<ProjectileDamage>().damageType = DamageType.IgniteOnHit;
+            bazookaProjectilePrefab.GetComponent<ProjectileImpactExplosion>().falloffModel = BlastAttack.FalloffModel.SweetSpot;
         }
 
         private static GameObject CreateRocket(bool gravity, string projectileName, string ghostName = "", string ghostToLoad = "")
@@ -35,7 +40,7 @@ namespace HunkMod.Modules
             GameObject fuckMyLife = Modules.Assets.explosionEffect;
             fuckMyLife.AddComponent<NetworkIdentity>();
 
-            impactExplosion.blastRadius = 10f;
+            impactExplosion.blastRadius = 20f;
             impactExplosion.destroyOnEnemy = true;
             impactExplosion.lifetime = 12f;
             impactExplosion.impactEffect = fuckMyLife;

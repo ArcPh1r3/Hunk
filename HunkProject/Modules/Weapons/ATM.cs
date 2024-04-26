@@ -30,5 +30,11 @@ new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Weapon.ATM.
 "ROB_DRIVER_BODY_PRIMARY_BFG_DESCRIPTION",
 Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texShootIcon"),
 false);
+
+        public override void Init()
+        {
+            base.Init();
+            this.weaponDef.exposeWeakPoints = false;
+        }
     }
 }

@@ -252,6 +252,8 @@ namespace HunkMod.Modules.Components
 
         private void TryReload()
         {
+            if (!this.weaponDef.allowAutoReload) return;
+
             if (this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo > 0)
             {
                 if (this.ammo == 0)

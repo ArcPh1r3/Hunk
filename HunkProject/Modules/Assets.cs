@@ -324,8 +324,8 @@ namespace HunkMod.Modules
             shake.shakeOnStart = true;
             shake.shakeOnEnable = false;
             shake.wave = shake2.wave;
-            shake.duration = 0.5f;
-            shake.radius = 200f;
+            shake.duration = 0.75f;
+            shake.radius = 250f;
             shake.scaleShakeRadiusWithLocalScale = false;
             shake.amplitudeTimeDecay = true;
 

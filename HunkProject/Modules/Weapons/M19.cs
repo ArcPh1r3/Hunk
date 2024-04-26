@@ -8,11 +8,11 @@ namespace HunkMod.Modules.Weapons
     {
         public override string weaponNameToken => "M19";
         public override string weaponName => "M19";
-        public override string weaponDesc => "7-shot, large caliber, single-action handgun that fires .45 ACP rounds. Its base design hasn't changed in over 70 years so variants abound.";
+        public override string weaponDesc => "16-shot, large caliber, single-action handgun that fires .45 ACP rounds. Its base design hasn't changed in over 70 years so variants abound.";
         public override string iconName => "texM19Icon";
         public override GameObject crosshairPrefab => Modules.Assets.pistolCrosshairPrefab;
-        public override int magSize => 7;
-        public override float reloadDuration => 1.8f;
+        public override int magSize => 16;
+        public override float reloadDuration => 1.2f;
         public override string ammoName => "Handgun Ammo";
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlM19");
         public override HunkWeaponDef.AnimationSet animationSet => HunkWeaponDef.AnimationSet.Pistol;
@@ -20,7 +20,7 @@ namespace HunkMod.Modules.Weapons
         public override float damageFillValue => 0.3f;
         public override float rangefillValue => 0.7f;
         public override float fireRateFillValue => 0.75f;
-        public override float reloadFillValue => 0.9f;
+        public override float reloadFillValue => 1f;
         public override float accuracyFillValue => 0.8f;
 
         public override SkillDef primarySkillDef => Modules.Skills.CreatePrimarySkillDef(

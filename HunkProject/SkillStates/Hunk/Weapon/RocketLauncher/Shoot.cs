@@ -10,8 +10,8 @@ namespace HunkMod.SkillStates.Hunk.Weapon.RocketLauncher
     {
         public static float damageCoefficient = 24f;
         public static float procCoefficient = 1f;
-        public float baseDuration = 1.3f; // the base skill duration. i.e. attack speed
-        public static float recoil = 24f;
+        public float baseDuration = 1.5f; // the base skill duration. i.e. attack speed
+        public static float recoil = 40f;
 
         private float earlyExitTime;
         protected float duration;
@@ -90,13 +90,13 @@ namespace HunkMod.SkillStates.Hunk.Weapon.RocketLauncher
                     Ray aimRay2 = new Ray(aimRay.origin, direction);
                     for (int i = 0; i < 3; i++)
                     {
-                        ProjectileManager.instance.FireProjectile(this.projectilePrefab, aimRay2.origin, Util.QuaternionSafeLookRotation(aimRay2.direction), this.gameObject, damageMult * this.damageStat * this._damageCoefficient, 1200f, this.isCrit, DamageColorIndex.Default, null, 120f);
+                        ProjectileManager.instance.FireProjectile(this.projectilePrefab, aimRay2.origin, Util.QuaternionSafeLookRotation(aimRay2.direction), this.gameObject, damageMult * this.damageStat * this._damageCoefficient, 1000f, this.isCrit, DamageColorIndex.Default, null, 120f);
                         aimRay2.direction = rotation * aimRay2.direction;
                     }
                 }
                 else
                 {
-                    ProjectileManager.instance.FireProjectile(this.projectilePrefab, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction), this.gameObject, this.damageStat * this._damageCoefficient, 1200f, this.isCrit, DamageColorIndex.Default, null, 120f);
+                    ProjectileManager.instance.FireProjectile(this.projectilePrefab, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction), this.gameObject, this.damageStat * this._damageCoefficient, 1000f, this.isCrit, DamageColorIndex.Default, null, 120f);
                 }
             }
         }

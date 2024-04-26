@@ -8,9 +8,9 @@ namespace HunkMod.SkillStates.Hunk.Weapon.ATM
 {
     public class Shoot : BaseHunkSkillState
     {
-        public static float damageCoefficient = 27f;
+        public static float damageCoefficient = 32f;
         public static float procCoefficient = 1f;
-        public float baseDuration = 1.3f; // the base skill duration. i.e. attack speed
+        public float baseDuration = 1f; // the base skill duration. i.e. attack speed
         public static float recoil = 20f;
 
         private float earlyExitTime;
@@ -31,7 +31,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.ATM
         {
             get
             {
-                return Modules.Projectiles.rocketProjectilePrefab;
+                return Modules.Projectiles.bazookaProjectilePrefab;
             }
         }
 
@@ -90,13 +90,13 @@ namespace HunkMod.SkillStates.Hunk.Weapon.ATM
                     Ray aimRay2 = new Ray(aimRay.origin, direction);
                     for (int i = 0; i < 3; i++)
                     {
-                        ProjectileManager.instance.FireProjectile(this.projectilePrefab, aimRay2.origin, Util.QuaternionSafeLookRotation(aimRay2.direction), this.gameObject, damageMult * this.damageStat * this._damageCoefficient, 1200f, this.isCrit, DamageColorIndex.Default, null, 120f);
+                        ProjectileManager.instance.FireProjectile(this.projectilePrefab, aimRay2.origin, Util.QuaternionSafeLookRotation(aimRay2.direction), this.gameObject, damageMult * this.damageStat * this._damageCoefficient, 1400f, this.isCrit, DamageColorIndex.Default, null, 120f);
                         aimRay2.direction = rotation * aimRay2.direction;
                     }
                 }
                 else
                 {
-                    ProjectileManager.instance.FireProjectile(this.projectilePrefab, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction), this.gameObject, this.damageStat * this._damageCoefficient, 1200f, this.isCrit, DamageColorIndex.Default, null, 120f);
+                    ProjectileManager.instance.FireProjectile(this.projectilePrefab, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction), this.gameObject, this.damageStat * this._damageCoefficient, 1400f, this.isCrit, DamageColorIndex.Default, null, 120f);
                 }
             }
         }

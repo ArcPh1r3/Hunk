@@ -22,6 +22,8 @@ public class HunkWeaponDef : ScriptableObject
     public int magSize = 8;
     public float reloadDuration = 2.4f;
     public string ammoName = "";
+    public bool allowAutoReload = true;
+    public bool exposeWeakPoints = true;
 
     [Header("Skills")]
     public SkillDef primarySkillDef;

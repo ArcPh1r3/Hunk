@@ -41,12 +41,15 @@ namespace HunkMod.SkillStates.Hunk
             base.PlayCrossfade("AimPitch", "AimPitchAiming", 0.1f);
 
             //this.FindModelChild("PistolSight").gameObject.SetActive(true);
-
-            this.overlayController = HudOverlayManager.AddOverlay(this.gameObject, new OverlayCreationParams
+            
+            if (this.hunk.weaponDef.exposeWeakPoints)
             {
-                prefab = Modules.Assets.headshotOverlay,
-                childLocatorEntry = "ScopeContainer"
-            });
+                this.overlayController = HudOverlayManager.AddOverlay(this.gameObject, new OverlayCreationParams
+                {
+                    prefab = Modules.Assets.headshotOverlay,
+                    childLocatorEntry = "ScopeContainer"
+                });
+            }
 
             //this.lightEffectInstance = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("GunLight"));
         }

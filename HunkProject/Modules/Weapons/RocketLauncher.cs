@@ -24,7 +24,7 @@ namespace HunkMod.Modules.Weapons
         public override float accuracyFillValue => 0.9f;
 
         public override SkillDef primarySkillDef => Modules.Skills.CreatePrimarySkillDef(
-new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Weapon.ATM.Shoot)),
+new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Weapon.RocketLauncher.Shoot)),
 "Weapon",
 "ROB_DRIVER_BODY_PRIMARY_BFG_NAME",
 "ROB_DRIVER_BODY_PRIMARY_BFG_DESCRIPTION",
@@ -35,6 +35,8 @@ false);
         {
             base.Init();
             this.modelPrefab.AddComponent<Modules.Components.RocketLauncherVisuals>();
+            this.weaponDef.allowAutoReload = false;
+            this.weaponDef.exposeWeakPoints = false;
         }
     }
 }

@@ -1144,23 +1144,23 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
         private static void BarrelInteraction_CoinDrop(On.RoR2.BarrelInteraction.orig_CoinDrop orig, BarrelInteraction self)
         {
-            orig(self);
-
             if (Modules.Helpers.isHunkInPlay)
             {
                 GameObject pickup = GameObject.Instantiate(Hunk.instance.ammoPickupInteractableSmall, self.transform.position, self.transform.rotation);
                 NetworkServer.Spawn(pickup); // barrel opening is server-sided
             }
+
+            orig(self);
         }
 
         private static void ChestBehavior_ItemDrop(On.RoR2.ChestBehavior.orig_ItemDrop orig, ChestBehavior self)
         {
-            orig(self);
-
             if (Modules.Helpers.isHunkInPlay)
             {
                 GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, self.transform.rotation);
             }
+
+            orig(self);
         }
 
         private static void LoadoutPanelController_Rebuild(On.RoR2.UI.LoadoutPanelController.orig_Rebuild orig, LoadoutPanelController self)
