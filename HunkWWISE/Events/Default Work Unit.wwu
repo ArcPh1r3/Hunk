@@ -465,6 +465,50 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="sfx_hunk_dodge_success" ID="{2FB780B9-839D-454B-B1C1-E59FD9D74BDE}">
+					<ChildrenList>
+						<Action Name="" ID="{9783B15F-969E-4C05-B132-1D8DB6C4D7C8}" ShortID="628375628">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_dodge_success" ID="{F1F293E8-A15A-4409-9321-DA444528F3C6}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_step_foley" ID="{B74C0EF4-93BD-4DC2-BE54-393ADFC9F8CF}">
+					<ChildrenList>
+						<Action Name="" ID="{067E5EFB-4861-4785-B18A-F9B840243A8D}" ShortID="48568433">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_step_foley" ID="{45AF85DD-58EE-41FE-9038-8042B7DE9BF4}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_step" ID="{73B1BF4A-F1A4-4B01-90E1-D3BB47BF9BDC}">
+					<ChildrenList>
+						<Action Name="" ID="{913D2B93-B91B-4258-B5A1-56BF7A04B816}" ShortID="549063832">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_step" ID="{AE0A3A2D-C719-448E-A532-B3EF062E296B}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_roll" ID="{A45FE6F1-442A-4240-ABB1-108D803C5DC9}">
+					<ChildrenList>
+						<Action Name="" ID="{6DD4C93E-86D7-4729-B5C1-2979267B3BB7}" ShortID="258124822">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="roll" ID="{C9C9120F-7821-42F6-9106-07FE6E6D3CC5}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

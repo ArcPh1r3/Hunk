@@ -1742,7 +1742,7 @@ AnimatorController:
       m_Motion: {fileID: 3964522870348361924}
     - serializedVersion: 2
       m_State: {fileID: 1102602606253709714}
-      m_Motion: {fileID: 7400000, guid: c4daa1a84e485cf43a72bc52f3891079, type: 2}
+      m_Motion: {fileID: 7400000, guid: 8972e33d8db93ab4e88a16c781964a41, type: 2}
     - serializedVersion: 2
       m_State: {fileID: -4580803058501754754}
       m_Motion: {fileID: 7400000, guid: dc50e984ca415344a939dc56350fa251, type: 2}
@@ -1848,7 +1848,26 @@ AnimatorController:
     m_Name: Gesture (Rocket)
     m_StateMachine: {fileID: 3115736795605290775}
     m_Mask: {fileID: 31900000, guid: 5063dc8007dafa3448326ade24a86620, type: 2}
-    m_Motions: []
+    m_Motions:
+    - serializedVersion: 2
+      m_State: {fileID: 1102080018050083298}
+      m_Motion: {fileID: 291577093472829707, guid: 87ee1832b8b91cc4081d16cab48ee2ad,
+        type: 3}
+    - serializedVersion: 2
+      m_State: {fileID: 1102621884673564384}
+      m_Motion: {fileID: 3425231628400598122, guid: 87ee1832b8b91cc4081d16cab48ee2ad,
+        type: 3}
+    - serializedVersion: 2
+      m_State: {fileID: 1102014217892584626}
+      m_Motion: {fileID: 7400000, guid: cbb462c323063114a8722d8e3fd32121, type: 2}
+    - serializedVersion: 2
+      m_State: {fileID: 1102389011273553718}
+      m_Motion: {fileID: -7453387558714718212, guid: 87ee1832b8b91cc4081d16cab48ee2ad,
+        type: 3}
+    - serializedVersion: 2
+      m_State: {fileID: -5438533801126636280}
+      m_Motion: {fileID: -7997862851191185331, guid: 87ee1832b8b91cc4081d16cab48ee2ad,
+        type: 3}
     m_Behaviours: []
     m_BlendingMode: 0
     m_SyncedLayerIndex: 6

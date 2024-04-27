@@ -10,7 +10,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.RocketLauncher
     {
         public static float damageCoefficient = 24f;
         public static float procCoefficient = 1f;
-        public float baseDuration = 1.5f; // the base skill duration. i.e. attack speed
+        public float baseDuration = 1.8f; // the base skill duration. i.e. attack speed
         public static float recoil = 40f;
 
         private float earlyExitTime;
@@ -42,7 +42,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.RocketLauncher
             this.muzzleString = "MuzzleRocket";
             this.duration = this.baseDuration / this.attackSpeedStat;
             this.isCrit = base.RollCrit();
-            this.earlyExitTime = 0.4f * this.duration;
+            this.earlyExitTime = 0.9f * this.duration;
 
             Util.PlaySound(this.soundString, base.gameObject);
             this.PlayAnimation("Gesture, Override", "Shoot", "Shoot.playbackRate", this.duration * 1.25f);

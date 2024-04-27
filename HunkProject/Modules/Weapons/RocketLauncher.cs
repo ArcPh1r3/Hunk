@@ -9,7 +9,7 @@ namespace HunkMod.Modules.Weapons
         public override string weaponNameToken => "ROCKETLAUNCHER";
         public override string weaponName => "Anti-tank Rocket";
         public override string weaponDesc => "A portable rocket launcher that can hold four 66mm incendiary rockets. The rockets unleash a powerful conflagration.";
-        public override string iconName => "texShotgunIcon";
+        public override string iconName => "texRocketLauncherIcon";
         public override GameObject crosshairPrefab => Modules.Assets.rocketLauncherCrosshairPrefab;
         public override int magSize => 4;
         public override float reloadDuration => 3f;

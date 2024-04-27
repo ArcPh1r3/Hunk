@@ -66,7 +66,7 @@ namespace HunkMod.SkillStates.Hunk
 
             //base.PlayAnimation("Gesture, Override", "BufferEmpty");
 
-            Util.PlaySound("sfx_driver_dash", this.gameObject);
+            Util.PlaySound("sfx_hunk_step_foley", this.gameObject);
 
             EntityStateMachine.FindByCustomName(this.gameObject, "Aim").SetNextStateToMain();
 
@@ -104,7 +104,7 @@ namespace HunkMod.SkillStates.Hunk
                 HealthComponent hp = h.healthComponent;
                 if (hp)
                 {
-                    if (hp.body.outOfCombatStopwatch <= 0.8f)
+                    if (hp.body.outOfCombatStopwatch <= 1.4f)
                     {
                         Roll nextState = new Roll();
                        
@@ -177,6 +177,7 @@ namespace HunkMod.SkillStates.Hunk
             if (!this.slowFlag2 && base.fixedAge >= (0.25f * this.duration))
             {
                 this.slowFlag2 = true;
+                Util.PlaySound("sfx_hunk_step", this.gameObject);
                 this.coeff = 14f;
             }
             if (!this.slowFlag3 && base.fixedAge >= (0.85f * this.duration))

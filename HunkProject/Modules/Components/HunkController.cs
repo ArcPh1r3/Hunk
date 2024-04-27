@@ -60,6 +60,8 @@ namespace HunkMod.Modules.Components
         private HunkWeaponDef backWeaponDef;
         private CameraRigController cameraController;
         public float ammoKillTimer = 0f;
+        private ParticleSystem speedLines;
+        private Animator dodgeFlash;
 
         private void Awake()
         {
@@ -200,6 +202,40 @@ namespace HunkMod.Modules.Components
                     }
                 }
             }
+            else
+            {
+                if (!this.dodgeFlash)
+                {
+                    this.dodgeFlash = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("DodgeFlash")).GetComponent<Animator>();
+                    this.dodgeFlash.transform.parent = this.cameraController.hud.mainContainer.transform;
+                    this.dodgeFlash.gameObject.SetActive(false);
+
+                    RectTransform rect = this.dodgeFlash.GetComponent<RectTransform>();
+                    rect.sizeDelta = Vector2.one;
+                    rect.localPosition = Vector3.zero;
+                }
+
+                if (!this.speedLines)
+                {
+                    this.speedLines = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("SpeedLines")).GetComponent<ParticleSystem>();
+                    this.speedLines.transform.parent = this.cameraController.sceneCam.transform;
+                    this.speedLines.transform.localPosition = new Vector3(0f, 0f, 5f);
+                    this.speedLines.transform.localRotation = Quaternion.identity;
+                    this.speedLines.transform.localScale = Vector3.one;
+                    this.speedLines.gameObject.layer = 21;
+                }
+                else
+                {
+                    if (this.lockOnTimer > 1.2f)
+                    {
+                        if (!this.speedLines.isPlaying) this.speedLines.Play();
+                    }
+                    else
+                    {
+                        if (this.speedLines.isPlaying) this.speedLines.Stop();
+                    }
+                }
+            }
 
             if (this.reloadTimer <= 0f && this.ammo < this.maxAmmo)
             {
@@ -225,6 +261,15 @@ namespace HunkMod.Modules.Components
 
             this.yOffset = Mathf.Lerp(this.yOffset, this.desiredYOffset, 5f * Time.fixedDeltaTime);
             this.cameraPivot.localPosition = new Vector3(0f, this.yOffset, 0f);
+        }
+
+        public void TriggerDodge()
+        {
+            if (this.dodgeFlash)
+            {
+                this.dodgeFlash.gameObject.SetActive(false);
+                this.dodgeFlash.gameObject.SetActive(true);
+            }
         }
 
         /*private void Update()
@@ -558,6 +603,9 @@ namespace HunkMod.Modules.Components
             {
                 this.characterBody.master.inventory.onInventoryChanged -= this.Inventory_onInventoryChanged;
             }
+
+            if (this.speedLines) Destroy(this.speedLines.gameObject);
+            if (this.dodgeFlash) Destroy(this.dodgeFlash.gameObject);
         }
 
         public void AddRandomAmmo(float multiplier = 1f)

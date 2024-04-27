@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3521898868
+CRC: 2354837998
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: f1228ddc4e012f23b56ae4dbf24ff2be
+    Hash: 1ce68df4fd396389e2d787d514f171b1
   TypeTreeHash:
     serializedVersion: 2
     Hash: 7229672de4cae9db5a5fd00c63ea84a7
@@ -87,6 +87,9 @@ Assets:
 - Assets/Hunk/Materials/matInfiniteKnife.mat
 - Assets/Hunk/VFX/matShockwave.mat
 - Assets/Hunk/FBX/Hunk.fbx
+- Assets/Hunk/VFX/matSpeedLineVertical.mat
+- Assets/Hunk/VFX/matSpeedLine.mat
+- Assets/Hunk/VFX/matSpike.mat
 - Assets/Hunk/FBX/Descend.anim
 - Assets/Hunk/VFX/ShotgunShell.prefab
 - Assets/Hunk/VFX/Badass/BigExplosion.prefab
@@ -105,11 +108,13 @@ Assets:
 - Assets/Hunk/Textures/Knife/Leon_Knife_S.png
 - Assets/Hunk/Textures/RocketLauncher/Leon_ATM-4_N.png
 - Assets/Hunk/VFX/texChargeRing.png
+- Assets/Hunk/FBX/AimIdle.anim
 - Assets/Hunk/VFX/matChargeRing.mat
 - Assets/Hunk/HunkDisplay.prefab
 - Assets/Hunk/Materials/matHunk02.mat
 - Assets/Hunk/Materials/matRocketLauncher.mat
 - Assets/Hunk/FBX/Animations/maskHunkImpact.mask
+- Assets/Hunk/VFX/SpeedLines.prefab
 - Assets/Hunk/FBX/ammoBox.fbx
 - Assets/Hunk/FBX/Animations/Default/DefaultPose.anim
 - Assets/Hunk/FBX/Animations/Default/AimPitch.anim
@@ -138,7 +143,9 @@ Assets:
 - Assets/Hunk/Icons/Skill/texKnifeIcon.png
 - Assets/Hunk/Materials/matMagnum2.mat
 - Assets/Hunk/VFX/texShockwave.png
+- Assets/Hunk/VFX/texDodgeFlash.png
 - Assets/Hunk/Icons/Skill/texConfirmIcon.png
+- Assets/Hunk/HUD/Animations/Flash.anim
 - Assets/Hunk/Textures/jacket_Spec.png
 - Assets/Hunk/FBX/Animations/Default/RunL.anim
 - Assets/Hunk/Icons/Weapon/texShotgunIcon.png
@@ -165,6 +172,7 @@ Assets:
 - Assets/Hunk/HUD/Textures/texWeakPointIndicator.png
 - Assets/Hunk/Icons/Weapon/texPlaceholderIcon.png
 - Assets/Hunk/FBX/Animations/Default/FreefallF.anim
+- Assets/Hunk/VFX/texSpeedLineVertical.png
 - Assets/Hunk/VFX/ShotgunSlug.prefab
 - Assets/Hunk/AmmoPickup.prefab
 - Assets/Hunk/FBX/Animations/Default/RunR.anim
@@ -173,7 +181,6 @@ Assets:
 - Assets/Hunk/FBX/Animations/Default/FreefallR.anim
 - Assets/Hunk/Textures/body_n.png
 - Assets/Hunk/FBX/meshHunkB01.mesh
-- Assets/Hunk/FBX/Sprint.anim
 - Assets/Hunk/FBX/Animations/Default/FreefallB.anim
 - Assets/Hunk/VFX/HunkMissileGhost.prefab
 - Assets/Hunk/HUD/WeaponChargeBar.prefab
@@ -184,8 +191,10 @@ Assets:
 - Assets/Hunk/HUD/Textures/texRadialOuter.png
 - Assets/Hunk/FBX/Animations/Default/Idle.anim
 - Assets/Hunk/Materials/matHunk05.mat
+- Assets/Hunk/HUD/Animations/DodgeOverlay.controller
 - Assets/Hunk/Textures/RocketLauncher/Leon_ATM-4_D.png
 - Assets/Hunk/FBX/Animations/Pistol/SprintFast.anim
+- Assets/Hunk/Icons/Weapon/texRocketLauncherIcon.png
 - Assets/Hunk/Textures/Magnum/Leon_LightningHawkBody_N.png
 - Assets/Hunk/FBX/Animations/Pistol/Ascend.anim
 - Assets/Hunk/FBX/Animations/Default/FreefallL.anim
@@ -225,11 +234,14 @@ Assets:
 - Assets/Hunk/Textures/Misc/texSlug.png
 - Assets/Hunk/Textures/body_albm.png
 - Assets/Hunk/Weapons/mdlMagnum.prefab
+- Assets/Hunk/VFX/texSpeedLine.png
+- Assets/Hunk/Icons/Weapon/texSluggerIcon.png
 - Assets/Hunk/FBX/Rockets.fbx
 - Assets/Hunk/VFX/HunkBigRocketGhost.prefab
 - Assets/Hunk/FBX/Animations/Default/SprintFast.anim
 - Assets/Hunk/FBX/Animations/Pistol/RunF.anim
 - Assets/Hunk/Textures/SMG/Leon_LI5_M.png
+- Assets/Hunk/FBX/Sprint.anim
 - Assets/Hunk/Materials/matSMG.mat
 - Assets/Hunk/FBX/Animations/maskHunkFreefall.mask
 - Assets/Hunk/Textures/Shotgun/Leon_RemingtonM1100P_N.png
@@ -247,13 +259,16 @@ Assets:
 - Assets/Hunk/Icons/Skill/texCancelIcon.png
 - Assets/Hunk/VFX/Badass/WoodHitEffect.prefab
 - Assets/Hunk/VFX/Badass/SmallExplosion.prefab
+- Assets/Hunk/VFX/texSpike.png
 - Assets/Hunk/FBX/Ascend.anim
+- Assets/Hunk/HUD/DodgeFlash.prefab
 - Assets/Hunk/Icons/Weapon/texM19Icon.png
 - Assets/Hunk/HUD/Textures/texSniperBulletIndicator.png
 - Assets/Hunk/FBX/Animations/Default/RunB.anim
 - Assets/Hunk/FBX/Animations/Default/Reload.anim
 - Assets/Hunk/FBX/Shell.dae
 - Assets/Hunk/Icons/Weapon/texMagnumIcon.png
+- Assets/Hunk/Icons/Weapon/texATMIcon.png
 - Assets/Hunk/Textures/Misc/texShell.png
 - Assets/Hunk/Textures/body_Spec.png
 - Assets/Hunk/HUD/Textures/texWhite.png

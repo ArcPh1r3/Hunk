@@ -20,6 +20,7 @@ namespace HunkMod.SkillStates.Hunk
         {
             base.OnEnter();
             this.hunk.lockOnTimer = 1.5f;
+            this.hunk.TriggerDodge();
             this.hunk.isRolling = true;
             this.slipVector = ((base.inputBank.moveVector == Vector3.zero) ? base.characterDirection.forward : base.inputBank.moveVector).normalized;
             //this.cachedForward = this.characterDirection.forward;
@@ -37,6 +38,8 @@ namespace HunkMod.SkillStates.Hunk
             //base.PlayAnimation("Gesture, Override", "BufferEmpty");
 
             //Util.PlaySound("sfx_driver_dash", this.gameObject);
+            Util.PlaySound("sfx_hunk_roll", this.gameObject);
+            if (base.isAuthority) Util.PlaySound("sfx_hunk_dodge_success", this.gameObject);
 
             EntityStateMachine.FindByCustomName(this.gameObject, "Aim").SetNextStateToMain();
             this.skillLocator.secondary.stock = 0;
@@ -144,6 +147,8 @@ namespace HunkMod.SkillStates.Hunk
             {
                 Time.timeScale = 1f;
             }*/
+
+            if (base.isAuthority && this.inputBank.moveVector != Vector3.zero) this.characterBody.isSprinting = true;
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

@@ -31,6 +31,8 @@ namespace HunkMod.Modules
 
         public static GameObject headshotEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Junk/Common/VFX/WeakPointProcEffect.prefab").WaitForCompletion();
 
+        public static Material dodgeOverlayMat;
+
         public static GameObject ammoPickupEffectPrefab;
         public static GameObject explosionEffect;
         public static GameObject smallExplosionEffect;
@@ -329,6 +331,34 @@ namespace HunkMod.Modules
             shake.scaleShakeRadiusWithLocalScale = false;
             shake.amplitudeTimeDecay = true;
 
+            GameObject pp = explosionEffect.transform.Find("PP").gameObject;
+            pp.layer = 20;
+
+            PostProcessVolume ppv = pp.AddComponent<PostProcessVolume>();
+            ppv.sharedProfile = Addressables.LoadAssetAsync<PostProcessProfile>("RoR2/Base/title/ppLocalClayBossDeath.asset").WaitForCompletion();
+            ppv.blendDistance = 40f;
+            ppv.priority = 6f;
+            ppv.weight = 1f;
+            ppv.isGlobal = false;
+
+            PostProcessDuration ppd = pp.AddComponent<PostProcessDuration>();
+            ppd.ppVolume = ppv;
+            ppd.ppWeightCurve = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/ImpBoss/ImpBossBlink.prefab").WaitForCompletion().GetComponentInChildren<PostProcessDuration>().ppWeightCurve;
+            ppd.maxDuration = 3.5f;
+            ppd.destroyOnEnd = true;
+
+            SphereCollider sc = pp.AddComponent<SphereCollider>();
+            sc.contactOffset = 0.01f;
+            sc.isTrigger = true;
+            sc.radius = 25f;
+
+            GameObject nadeEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/OmniExplosionVFXCommandoGrenade.prefab").WaitForCompletion();
+            GameObject radiusIndicator = GameObject.Instantiate(nadeEffect.transform.Find("Nova Sphere").gameObject);
+            radiusIndicator.transform.parent = pp.transform.parent;
+            radiusIndicator.transform.localPosition = Vector3.zero;
+            radiusIndicator.transform.localScale = Vector3.one * 15f;
+            radiusIndicator.transform.localRotation = Quaternion.identity;
+
             smallExplosionEffect = LoadEffect("SmallExplosion", "sfx_hunk_grenade_explosion", false);
             smallExplosionEffect.transform.Find("Shockwave").GetComponent<ParticleSystemRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/VFX/matDistortion.mat").WaitForCompletion();
             shake = smallExplosionEffect.AddComponent<ShakeEmitter>();
@@ -495,6 +525,8 @@ namespace HunkMod.Modules
 
             ammoPickupModel = mainAssetBundle.LoadAsset<GameObject>("AmmoPickup");
             ConvertAllRenderersToHopooShader(ammoPickupModel);
+
+            dodgeOverlayMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/moon2/matBloodSiphon.mat").WaitForCompletion());
         }
 
         private static GameObject CreateTracer(string originalTracerName, string newTracerName)
@@ -568,6 +600,9 @@ namespace HunkMod.Modules
             if (!i.GetComponent<NetworkIdentity>()) i.AddComponent<NetworkIdentity>();
 
             i.GetComponentInChildren<RoR2.UI.LanguageTextMeshController>().token = token;
+
+            i.GetComponentInChildren<ObjectScaleCurve>().timeMax *= 3f;
+            i.GetComponent<DestroyOnTimer>().duration *= 3f;
 
             Assets.AddNewEffectDef(i);
 

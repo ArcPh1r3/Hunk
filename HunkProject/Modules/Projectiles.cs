@@ -40,7 +40,7 @@ namespace HunkMod.Modules
             GameObject fuckMyLife = Modules.Assets.explosionEffect;
             fuckMyLife.AddComponent<NetworkIdentity>();
 
-            impactExplosion.blastRadius = 20f;
+            impactExplosion.blastRadius = 15f;
             impactExplosion.destroyOnEnemy = true;
             impactExplosion.lifetime = 12f;
             impactExplosion.impactEffect = fuckMyLife;

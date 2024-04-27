@@ -9,7 +9,7 @@ namespace HunkMod.Modules.Weapons
         public override string weaponNameToken => "ATM";
         public override string weaponName => "ATM-4";
         public override string weaponDesc => "A recoilless rocket launcher that fires 84mm projectiles. The piercing power of the rocket causes more damage than the explosion.";
-        public override string iconName => "texShotgunIcon";
+        public override string iconName => "texATMIcon";
         public override GameObject crosshairPrefab => Modules.Assets.rocketLauncherCrosshairPrefab;
         public override int magSize => 1;
         public override float reloadDuration => 3f;
