@@ -29,6 +29,7 @@ namespace HunkMod.Modules
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Roll));
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.SteadyAim));
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Step));
+            entityStates.Add(typeof(HunkMod.SkillStates.Hunk.AirDodge));
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Swap));
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.SwapWeapon));
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.SwingAltKnife));
@@ -39,6 +40,8 @@ namespace HunkMod.Modules
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Weapon.Shotgun.Shoot));
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Weapon.Slugger.Shoot));
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Weapon.SMG.Shoot));
+            entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Weapon.ATM.Shoot));
+            entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Weapon.RocketLauncher.Shoot));
         }
     }
 }

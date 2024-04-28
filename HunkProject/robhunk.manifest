@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2354837998
+CRC: 810834328
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1ce68df4fd396389e2d787d514f171b1
+    Hash: 8ff040ab14c7b6cca81addb7bfe9df4d
   TypeTreeHash:
     serializedVersion: 2
     Hash: 7229672de4cae9db5a5fd00c63ea84a7
@@ -81,6 +81,7 @@ Assets:
 - Assets/Hunk/Icons/Skill/texShootIcon.png
 - Assets/Hunk/VFX/BloodSpurtEffect.prefab
 - Assets/Hunk/FBX/meshHunkB03.mesh
+- Assets/Hunk/FBX/Animations/Default/AirDodgeLoop.anim
 - Assets/Hunk/HUD/ChargeBar.prefab
 - Assets/Hunk/FBX/meshSMG.mesh
 - Assets/Hunk/VFX/matSpark.mat
@@ -109,6 +110,7 @@ Assets:
 - Assets/Hunk/Textures/RocketLauncher/Leon_ATM-4_N.png
 - Assets/Hunk/VFX/texChargeRing.png
 - Assets/Hunk/FBX/AimIdle.anim
+- Assets/Hunk/Textures/MUP/USP_29_USP_29_Normal.png
 - Assets/Hunk/VFX/matChargeRing.mat
 - Assets/Hunk/HunkDisplay.prefab
 - Assets/Hunk/Materials/matHunk02.mat
@@ -133,6 +135,7 @@ Assets:
 - Assets/Hunk/Materials/matShotgunShell.mat
 - Assets/Hunk/FBX/RunL.anim
 - Assets/Hunk/FBX/Animations/Pistol/Reload.anim
+- Assets/Hunk/FBX/USP model.fbx
 - Assets/Hunk/Weapons/mdlATM.prefab
 - Assets/Hunk/Textures/Knife/Leon_Knife_D.png
 - Assets/Hunk/FBX/Animations/Default/ShootSlugger.anim
@@ -158,7 +161,7 @@ Assets:
 - Assets/Hunk/Icons/texHunkAchievement.png
 - Assets/Hunk/FBX/meshHunkB02.mesh
 - Assets/Hunk/FBX/animHunkPistol.fbx
-- Assets/Hunk/Weapons/mdlSlugger.prefab
+- Assets/Hunk/Weapons/mdlSluggerOld.prefab
 - Assets/Hunk/HUD/Textures/texRadialInner.png
 - Assets/Hunk/FBX/Animations/Default/Descend.anim
 - Assets/Hunk/FBX/Animations/Pistol/RunB.anim
@@ -172,6 +175,7 @@ Assets:
 - Assets/Hunk/HUD/Textures/texWeakPointIndicator.png
 - Assets/Hunk/Icons/Weapon/texPlaceholderIcon.png
 - Assets/Hunk/FBX/Animations/Default/FreefallF.anim
+- Assets/Hunk/Textures/MUP/USP_29_USP_29_BaseColor.png
 - Assets/Hunk/VFX/texSpeedLineVertical.png
 - Assets/Hunk/VFX/ShotgunSlug.prefab
 - Assets/Hunk/AmmoPickup.prefab
@@ -179,6 +183,7 @@ Assets:
 - Assets/Hunk/Textures/Shotgun/matSlugger.mat
 - Assets/Hunk/Textures/Magnum/Leon_LightningHawkBody_D.png
 - Assets/Hunk/FBX/Animations/Default/FreefallR.anim
+- Assets/Hunk/FBX/Animations/Default/AirDodgePerfectLoop.anim
 - Assets/Hunk/Textures/body_n.png
 - Assets/Hunk/FBX/meshHunkB01.mesh
 - Assets/Hunk/FBX/Animations/Default/FreefallB.anim
@@ -217,6 +222,8 @@ Assets:
 - Assets/Hunk/Materials/matHunk01.mat
 - Assets/Hunk/Icons/Skill/texAimIcon.png
 - Assets/Hunk/Textures/Shotgun/matShotgun.mat
+- Assets/Hunk/Textures/Shotgun/matShotgun2.mat
+- Assets/Hunk/Textures/MUP/USP_29_USP_29_Roughness.png
 - Assets/Hunk/FBX/HunkWeapons.fbx
 - Assets/Hunk/FBX/RunB.anim
 - Assets/Hunk/Textures/SMG/Leon_LI5_S.png
@@ -228,8 +235,10 @@ Assets:
 - Assets/Hunk/VFX/HunkRocketGhost.prefab
 - Assets/Hunk/Textures/InfiniteKnife/Leon_InfiniteKnife_N.png
 - Assets/Hunk/HUD/Textures/texChargeRing.png
+- Assets/Hunk/Textures/MUP/USP_29_USP_29_Metallic.png
 - Assets/Hunk/Textures/Knife/Leon_Knife_N.png
 - Assets/Hunk/FBX/HunkLightweight.fbx
+- Assets/Hunk/Weapons/mdlSlugger.prefab
 - Assets/Hunk/Textures/Magnum/Leon_LightningHawkNormBarrel_D.png
 - Assets/Hunk/Textures/Misc/texSlug.png
 - Assets/Hunk/Textures/body_albm.png
@@ -237,9 +246,11 @@ Assets:
 - Assets/Hunk/VFX/texSpeedLine.png
 - Assets/Hunk/Icons/Weapon/texSluggerIcon.png
 - Assets/Hunk/FBX/Rockets.fbx
+- Assets/Hunk/FBX/MenuIdle.anim
 - Assets/Hunk/VFX/HunkBigRocketGhost.prefab
 - Assets/Hunk/FBX/Animations/Default/SprintFast.anim
 - Assets/Hunk/FBX/Animations/Pistol/RunF.anim
+- Assets/Hunk/Materials/matMUP.mat
 - Assets/Hunk/Textures/SMG/Leon_LI5_M.png
 - Assets/Hunk/FBX/Sprint.anim
 - Assets/Hunk/Materials/matSMG.mat
@@ -254,6 +265,7 @@ Assets:
 - Assets/Hunk/FBX/Animations/Default/RunF.anim
 - Assets/Hunk/FBX/RunR.anim
 - Assets/Hunk/Icons/Weapon/texPistolIcon.png
+- Assets/Hunk/Weapons/mdlMUP.prefab
 - Assets/Hunk/Icons/Skill/texSlideIcon.png
 - Assets/Hunk/Materials/matAmmoPickup.mat
 - Assets/Hunk/Icons/Skill/texCancelIcon.png

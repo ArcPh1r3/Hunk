@@ -24,7 +24,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Slugger
         public override void OnEnter()
         {
             base.OnEnter();
-            this.muzzleString = "MuzzleSMG";
+            this.muzzleString = "MuzzleSlugger";
             this.hasFired = false;
             this.duration = this.baseDuration / this.attackSpeedStat;
             this.isCrit = base.RollCrit();
@@ -50,7 +50,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Slugger
 
                 base.AddRecoil2(-0.4f * recoilAmplitude, -0.8f * recoilAmplitude, -0.3f * recoilAmplitude, 0.3f * recoilAmplitude);
                 this.characterBody.AddSpreadBloom(4f);
-                EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FireBarrage.effectPrefab, gameObject, muzzleString, false);
+                EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FireBarrage.effectPrefab, this.gameObject, this.muzzleString, false);
 
                 GameObject tracer = Modules.Assets.shotgunTracer;
                 if (this.isCrit) tracer = Modules.Assets.shotgunTracerCrit;
@@ -59,7 +59,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Slugger
                 {
                     float damage = Shoot.damageCoefficient * this.damageStat;
 
-                    Ray aimRay = GetAimRay2();
+                    Ray aimRay = base.GetAimRay2();
 
                     float force = 1500;
 
@@ -75,8 +75,8 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Slugger
                         force = force,
                         hitMask = LayerIndex.CommonMasks.bullet,
                         isCrit = this.isCrit,
-                        owner = gameObject,
-                        muzzleName = muzzleString,
+                        owner = this.gameObject,
+                        muzzleName = this.muzzleString,
                         smartCollision = true,
                         procChainMask = default,
                         procCoefficient = procCoefficient,

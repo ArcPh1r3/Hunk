@@ -1,4 +1,5 @@
 ﻿using EntityStates;
+using HunkMod.Modules.Misc;
 using RoR2;
 using RoR2.Skills;
 using System;
@@ -119,8 +120,25 @@ namespace HunkMod.Modules
             return CreateSkillDef<SkillDef>(skillDefInfo);
         }
 
+        public static AwesomeSauceSkillDef CreateAwesomeSkillDef(SkillDefInfo skillDefInfo)
+        {
+
+            return CreateAwesomeSkillDef<AwesomeSauceSkillDef>(skillDefInfo);
+        }
+
         public static T CreateSkillDef<T>(SkillDefInfo skillDefInfo) where T : SkillDef {
 
+            T skillDef = ScriptableObject.CreateInstance<T>();
+
+            popuplateSKillDef(skillDefInfo, skillDef);
+
+            skillDefs.Add(skillDef);
+
+            return skillDef;
+        }
+
+        public static T CreateAwesomeSkillDef<T>(SkillDefInfo skillDefInfo) where T : AwesomeSauceSkillDef
+        {
             T skillDef = ScriptableObject.CreateInstance<T>();
 
             popuplateSKillDef(skillDefInfo, skillDef);

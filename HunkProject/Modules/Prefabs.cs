@@ -154,6 +154,12 @@ namespace HunkMod.Modules
             cameraPivot.transform.localRotation = Quaternion.identity;
             cameraPivot.transform.localScale = Vector3.one;
 
+            /*GameObject cameraPivot = new GameObject("CameraPivot");
+            cameraPivot.transform.parent = modelTransform.Find("Armature/ROOT/base");
+            cameraPivot.transform.localPosition = new Vector3(0f, 1.59f, 0f);
+            cameraPivot.transform.localRotation = Quaternion.identity;
+            cameraPivot.transform.localScale = Vector3.one;*/
+
             GameObject aimOrigin = new GameObject("AimOrigin");
             aimOrigin.transform.parent = modelBase.transform;
             aimOrigin.transform.localPosition = new Vector3(0f, 1.4f, 0f);

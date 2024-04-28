@@ -49,6 +49,7 @@ namespace HunkMod
         public static bool scepterInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.DestroyedClone.AncientScepter");
         public static bool rooInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
         public static bool riskUIInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("bubbet.riskui");
+        public static bool greenAlienHeadInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.Borbo.GreenAlienHead");
 
         private void Awake()
         {
@@ -91,6 +92,7 @@ namespace HunkMod
         {
             new Modules.Weapons.SMG().Init();
             new Modules.Weapons.M19().Init();
+            new Modules.Weapons.MUP().Init();
             new Modules.Weapons.Magnum().Init();
             new Modules.Weapons.Shotgun().Init();
             new Modules.Weapons.Slugger().Init();

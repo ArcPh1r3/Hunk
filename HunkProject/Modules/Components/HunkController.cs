@@ -87,6 +87,15 @@ namespace HunkMod.Modules.Components
             this.InitShells();
 
             this.EquipWeapon(this.weaponTracker.equippedIndex);
+
+            if (this.characterBody)
+            {
+                CameraTargetParams ctp = this.characterBody.GetComponent<CameraTargetParams>();
+                if (ctp)
+                {
+                    ctp.cameraPivotTransform = this.characterModel.transform.Find("Armature/ROOT/base");
+                }
+            }
         }
 
         private void SetInventoryHook()
@@ -165,6 +174,8 @@ namespace HunkMod.Modules.Components
         public void ConsumeAmmo()
         {
             this.reloadTimer = 2f;
+
+            if (this.characterBody.HasBuff(RoR2Content.Buffs.NoCooldowns)) return;
 
             // fake ammo sync
             if (this.ammo <= this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo) this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo--;
@@ -613,6 +624,26 @@ namespace HunkMod.Modules.Components
             // TODO
             // change this to a weighted selection, so stronger weapons are less likely to get ammo
 
+            // alien head
+            if (this.characterBody && this.characterBody.inventory)
+            {
+                int alienHeadCount = this.characterBody.inventory.GetItemCount(RoR2Content.Items.AlienHead);
+                if (alienHeadCount > 0)
+                {
+                    for (int i = 0; i < alienHeadCount; i++)
+                    {
+                        if (MainPlugin.greenAlienHeadInstalled)
+                        {
+                            multiplier *= 1.15f;
+                        }
+                        else
+                        {
+                            multiplier *= 1.25f;
+                        }
+                    }
+                }
+            }
+
             int index = UnityEngine.Random.Range(0, this.weaponTracker.weaponData.Length);
             int amount = Mathf.CeilToInt(this.weaponTracker.weaponData[index].weaponDef.magSize * multiplier);
 
@@ -625,7 +656,29 @@ namespace HunkMod.Modules.Components
 
         public void AddAmmoFromIndex(int index)
         {
-            int amount = Mathf.CeilToInt(this.weaponTracker.weaponData[index].weaponDef.magSize);
+            float multiplier = 1f;
+
+            // alien head
+            if (this.characterBody && this.characterBody.inventory)
+            {
+                int alienHeadCount = this.characterBody.inventory.GetItemCount(RoR2Content.Items.AlienHead);
+                if (alienHeadCount > 0)
+                {
+                    for (int i = 0; i < alienHeadCount; i++)
+                    {
+                        if (MainPlugin.greenAlienHeadInstalled)
+                        {
+                            multiplier *= 1.15f;
+                        }
+                        else
+                        {
+                            multiplier *= 1.25f;
+                        }
+                    }
+                }
+            }
+
+            int amount = Mathf.CeilToInt(this.weaponTracker.weaponData[index].weaponDef.magSize * multiplier);
 
             this.weaponTracker.weaponData[index].totalAmmo += amount;
 

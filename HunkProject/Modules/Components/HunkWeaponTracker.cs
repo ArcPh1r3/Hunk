@@ -48,13 +48,13 @@ namespace HunkMod.Modules.Components
                 new HunkWeaponData
                 {
                     weaponDef = Modules.Weapons.Shotgun.instance.weaponDef,
-                    totalAmmo = Modules.Weapons.Shotgun.instance.magSize * 3,
+                    totalAmmo = Modules.Weapons.Shotgun.instance.magSize,
                     currentAmmo = Modules.Weapons.Shotgun.instance.magSize
                 },
                 new HunkWeaponData
                 {
                     weaponDef = Modules.Weapons.Slugger.instance.weaponDef,
-                    totalAmmo = Modules.Weapons.Slugger.instance.magSize * 3,
+                    totalAmmo = Modules.Weapons.Slugger.instance.magSize,
                     currentAmmo = Modules.Weapons.Slugger.instance.magSize
                 },
                 new HunkWeaponData
@@ -66,20 +66,26 @@ namespace HunkMod.Modules.Components
                 new HunkWeaponData
                 {
                     weaponDef = Modules.Weapons.Magnum.instance.weaponDef,
-                    totalAmmo = Modules.Weapons.Magnum.instance.magSize * 3,
+                    totalAmmo = Modules.Weapons.Magnum.instance.magSize,
                     currentAmmo = Modules.Weapons.Magnum.instance.magSize
                 },
                 new HunkWeaponData
                 {
                     weaponDef = Modules.Weapons.ATM.instance.weaponDef,
-                    totalAmmo = Modules.Weapons.ATM.instance.magSize * 3,
+                    totalAmmo = Modules.Weapons.ATM.instance.magSize,
                     currentAmmo = Modules.Weapons.ATM.instance.magSize
                 },
                 new HunkWeaponData
                 {
                     weaponDef = Modules.Weapons.RocketLauncher.instance.weaponDef,
-                    totalAmmo = Modules.Weapons.RocketLauncher.instance.magSize * 3,
+                    totalAmmo = Modules.Weapons.RocketLauncher.instance.magSize,
                     currentAmmo = Modules.Weapons.RocketLauncher.instance.magSize
+                },
+                new HunkWeaponData
+                {
+                    weaponDef = Modules.Weapons.MUP.instance.weaponDef,
+                    totalAmmo = Modules.Weapons.MUP.instance.magSize * 3,
+                    currentAmmo = Modules.Weapons.MUP.instance.magSize
                 }
             };
         }

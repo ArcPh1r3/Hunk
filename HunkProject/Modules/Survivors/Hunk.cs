@@ -53,6 +53,8 @@ namespace HunkMod.Modules.Survivors
         internal static SkillDef confirmSkillDef;
         internal static SkillDef cancelSkillDef;
 
+        internal static EntityStates.SerializableEntityStateType airDodgeState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.AirDodge));
+
         internal static string bodyNameToken;
 
         internal GameObject ammoPickupInteractable;
@@ -78,6 +80,9 @@ namespace HunkMod.Modules.Survivors
                 characterPrefab = CreateBodyPrefab(true);
 
                 displayPrefab = Modules.Prefabs.CreateDisplayPrefab("HunkDisplay", characterPrefab);
+                ChildLocator childLocator = displayPrefab.GetComponentInChildren<ChildLocator>();
+                childLocator.FindChild("KnifeModel").gameObject.SetActive(false);
+                childLocator.FindChild("HiddenKnifeModel").gameObject.SetActive(false);
 
                 Modules.Prefabs.RegisterNewSurvivor(characterPrefab, displayPrefab, "HUNK");
                 //if (forceUnlock.Value) Modules.Prefabs.RegisterNewSurvivor(characterPrefab, displayPrefab, "DRIVER");
@@ -621,7 +626,7 @@ namespace HunkMod.Modules.Survivors
             #endregion
 
             #region Utility
-            SkillDef dodgeSkillDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
+            SkillDef dodgeSkillDef = Modules.Skills.CreateAwesomeSkillDef(new SkillDefInfo
             {
                 skillName = prefix + "_HUNK_BODY_UTILITY_DODGE_NAME",
                 skillNameToken = prefix + "_HUNK_BODY_UTILITY_DODGE_NAME",

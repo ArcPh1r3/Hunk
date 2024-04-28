@@ -138,6 +138,27 @@ ModelImporter:
   - first:
       74: 6810230314652945474
     second: Armature|FreefallN
+  - first:
+      74: 7639074329262591137
+    second: Armature|AirDodge
+  - first:
+      74: -320479054728707448
+    second: Armature|AirDodgeLoop
+  - first:
+      74: 8018914898515821501
+    second: Armature|AirDodgePerfect
+  - first:
+      74: -7026553622324366214
+    second: Armature|MenuIdle
+  - first:
+      74: 6084959839581626305
+    second: Armature|MenuIdleIn
+  - first:
+      74: 8315819496742247387
+    second: Armature|PerfectLanding
+  - first:
+      74: 8169785016169300346
+    second: Armature|AirDodgePerfectLoop
   externalObjects: {}
   materials:
     materialImportMode: 1

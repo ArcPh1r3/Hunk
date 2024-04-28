@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 77aec7281858c2646ab34560b5e10f6a, type: 2}
+  - {fileID: 2100000, guid: 76f4fcea297172546a35f671b5e0b709, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -138,7 +138,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 77aec7281858c2646ab34560b5e10f6a, type: 2}
+  - {fileID: 2100000, guid: 76f4fcea297172546a35f671b5e0b709, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -218,7 +218,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 77aec7281858c2646ab34560b5e10f6a, type: 2}
+  - {fileID: 2100000, guid: 76f4fcea297172546a35f671b5e0b709, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -249,7 +249,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8422703314502892422}
   m_Layer: 0
-  m_Name: mdlSlugger
+  m_Name: mdlShotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

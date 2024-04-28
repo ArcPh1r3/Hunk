@@ -11,9 +11,9 @@ namespace HunkMod.Modules.Weapons
         public override string weaponDesc => "16-shot, large caliber, single-action handgun that fires .45 ACP rounds. Its base design hasn't changed in over 70 years so variants abound.";
         public override string iconName => "texM19Icon";
         public override GameObject crosshairPrefab => Modules.Assets.pistolCrosshairPrefab;
-        public override int magSize => 16;
+        public override int magSize => 7;
         public override float reloadDuration => 1.2f;
-        public override string ammoName => "Handgun Ammo";
+        public override string ammoName => ".45 ACP Rounds";
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlM19");
         public override HunkWeaponDef.AnimationSet animationSet => HunkWeaponDef.AnimationSet.Pistol;
         public override bool storedOnBack => false;

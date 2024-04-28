@@ -28,7 +28,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Shotgun
         public override void OnEnter()
         {
             base.OnEnter();
-            this.muzzleString = "MuzzleSMG";
+            this.muzzleString = "MuzzleShotgun";
             this.hasFired = false;
             this.duration = this.baseDuration / this.attackSpeedStat;
             this.isCrit = base.RollCrit();
@@ -54,7 +54,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Shotgun
 
                 base.AddRecoil2(-0.4f * recoilAmplitude, -0.8f * recoilAmplitude, -0.3f * recoilAmplitude, 0.3f * recoilAmplitude);
                 this.characterBody.AddSpreadBloom(4f);
-                EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FireBarrage.effectPrefab, gameObject, muzzleString, false);
+                EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FireBarrage.effectPrefab, this.gameObject, this.muzzleString, false);
 
                 GameObject tracer = Modules.Assets.shotgunTracer;
                 if (this.isCrit) tracer = Modules.Assets.shotgunTracerCrit;
@@ -63,7 +63,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Shotgun
                 {
                     float damage = Shoot.damageCoefficient * this.damageStat;
 
-                    Ray aimRay = GetAimRay2();
+                    Ray aimRay = base.GetAimRay2();
 
                     float spread = Shoot.bulletSpread;
                     float thiccness = Shoot.bulletThiccness;
@@ -81,8 +81,8 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Shotgun
                         force = force,
                         hitMask = LayerIndex.CommonMasks.bullet,
                         isCrit = this.isCrit,
-                        owner = gameObject,
-                        muzzleName = muzzleString,
+                        owner = this.gameObject,
+                        muzzleName = this.muzzleString,
                         smartCollision = true,
                         procChainMask = default,
                         procCoefficient = procCoefficient,
