@@ -215,6 +215,9 @@ namespace HunkMod.Modules.Components
             }
             else
             {
+                this.cameraController.fadeEndDistance = 2f;
+                this.cameraController.fadeStartDistance = -5f;
+
                 if (!this.dodgeFlash)
                 {
                     this.dodgeFlash = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("DodgeFlash")).GetComponent<Animator>();

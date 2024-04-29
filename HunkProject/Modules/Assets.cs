@@ -747,7 +747,7 @@ namespace HunkMod.Modules
             if (normalStrength > 0f) mat.SetTexture("_NormalTex", tempMat.GetTexture("_BumpMap"));
             mat.SetFloat("_NormalStrength", normalStrength);
 
-            mat.DisableKeyword("DITHER");
+            //mat.DisableKeyword("DITHER");
 
             return mat;
         }

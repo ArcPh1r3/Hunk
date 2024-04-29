@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 810834328
+CRC: 2892500159
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 8ff040ab14c7b6cca81addb7bfe9df4d
+    Hash: d57326668d8b7581f54f9e353d562c54
   TypeTreeHash:
     serializedVersion: 2
     Hash: 7229672de4cae9db5a5fd00c63ea84a7
@@ -86,6 +86,7 @@ Assets:
 - Assets/Hunk/FBX/meshSMG.mesh
 - Assets/Hunk/VFX/matSpark.mat
 - Assets/Hunk/Materials/matInfiniteKnife.mat
+- Assets/Hunk/FBX/Animations/Default/LightImpact2.anim
 - Assets/Hunk/VFX/matShockwave.mat
 - Assets/Hunk/FBX/Hunk.fbx
 - Assets/Hunk/VFX/matSpeedLineVertical.mat
@@ -113,6 +114,7 @@ Assets:
 - Assets/Hunk/Textures/MUP/USP_29_USP_29_Normal.png
 - Assets/Hunk/VFX/matChargeRing.mat
 - Assets/Hunk/HunkDisplay.prefab
+- Assets/Hunk/FBX/AirDodgePerfectLoop.anim
 - Assets/Hunk/Materials/matHunk02.mat
 - Assets/Hunk/Materials/matRocketLauncher.mat
 - Assets/Hunk/FBX/Animations/maskHunkImpact.mask
@@ -183,7 +185,6 @@ Assets:
 - Assets/Hunk/Textures/Shotgun/matSlugger.mat
 - Assets/Hunk/Textures/Magnum/Leon_LightningHawkBody_D.png
 - Assets/Hunk/FBX/Animations/Default/FreefallR.anim
-- Assets/Hunk/FBX/Animations/Default/AirDodgePerfectLoop.anim
 - Assets/Hunk/Textures/body_n.png
 - Assets/Hunk/FBX/meshHunkB01.mesh
 - Assets/Hunk/FBX/Animations/Default/FreefallB.anim

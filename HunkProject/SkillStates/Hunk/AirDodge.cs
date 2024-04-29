@@ -9,6 +9,7 @@ namespace HunkMod.SkillStates.Hunk
 {
     public class AirDodge : BaseHunkSkillState
     {
+        protected Vector3 slipVector = Vector3.zero;
         private float stopwatch;
         private float previousAirControl;
 
@@ -21,13 +22,12 @@ namespace HunkMod.SkillStates.Hunk
         {
             base.OnEnter();
             base.characterMotor.jumpCount = base.characterBody.maxJumpCount;
+            this.slipVector = ((base.inputBank.moveVector == Vector3.zero) ? base.characterDirection.forward : base.inputBank.moveVector).normalized;
 
             this.previousAirControl = base.characterMotor.airControl;
             base.characterMotor.airControl = EntityStates.Croco.Leap.airControl;
 
             Vector3 direction = base.GetAimRay().direction;
-
-            base.characterDirection.moveVector = direction;
 
             base.characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
 
@@ -45,12 +45,15 @@ namespace HunkMod.SkillStates.Hunk
                     base.characterBody.isSprinting = true;
 
                     direction.y = Mathf.Max(direction.y, 0.25f * EntityStates.Croco.Leap.minimumY);
-                    Vector3 a = direction.normalized * (0.35f * EntityStates.Croco.Leap.aimVelocity) * this.moveSpeedStat;
+                    Vector3 a = this.slipVector * (0.35f * EntityStates.Croco.Leap.aimVelocity) * 12f;
                     Vector3 b = Vector3.up * 0.75f * EntityStates.Croco.Leap.upwardVelocity;
+                    Vector3 a2 = direction * (0.35f * EntityStates.Croco.Leap.aimVelocity) * 12f;
+                    a2.x = 0f;
+                    a2.z = 0f;
                     Vector3 b2 = new Vector3(direction.x, 0f, direction.z).normalized * (1.1f * EntityStates.Croco.Leap.forwardVelocity);
 
                     base.characterMotor.Motor.ForceUnground();
-                    base.characterMotor.velocity = a + b + b2;
+                    base.characterMotor.velocity = a + a2 + b + b2;
                 }
             }
             else
@@ -68,12 +71,15 @@ namespace HunkMod.SkillStates.Hunk
                     base.characterBody.isSprinting = true;
 
                     direction.y = Mathf.Max(direction.y, 1.05f * EntityStates.Croco.Leap.minimumY);
-                    Vector3 a = direction.normalized * (0.75f * EntityStates.Croco.Leap.aimVelocity) * this.moveSpeedStat;
+                    Vector3 a = this.slipVector * (0.75f * EntityStates.Croco.Leap.aimVelocity) * 12f;
                     Vector3 b = Vector3.up * 0.75f * EntityStates.Croco.Leap.upwardVelocity;
+                    Vector3 a2 = direction * (0.75f * EntityStates.Croco.Leap.aimVelocity) * 12f;
+                    a2.x = 0f;
+                    a2.z = 0f;
                     Vector3 b2 = new Vector3(direction.x, 0f, direction.z).normalized * (1.25f * EntityStates.Croco.Leap.forwardVelocity);
 
                     base.characterMotor.Motor.ForceUnground();
-                    base.characterMotor.velocity = a + b + b2;
+                    base.characterMotor.velocity = a + a2 + b + b2;
                 }
             }
         }
@@ -129,7 +135,8 @@ namespace HunkMod.SkillStates.Hunk
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            base.StartAimMode(0.5f, false);
+            this.characterBody.aimTimer = -1f;
+            this.hunk.reloadTimer = 1f;
             this.stopwatch += Time.fixedDeltaTime;
 
             if (this.stopwatch >= 0.1f && base.isAuthority && base.characterMotor.isGrounded)

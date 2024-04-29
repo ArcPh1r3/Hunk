@@ -30,12 +30,7 @@ RAGDOLL
 ITEM DISPLAYS
 MASTERY SKIN
 
-- chests now give two mags instead of 1.5
-- m19 damage: 300% > 320%- lots of earlygame shots are super close to a one tap but not quite, this should help save ammo in those cases
-- m19 mag capacity: 7 > 16- it really just sucked okay
-- m19 reload speed increased
-- smg damage: 190% > 220%- just wasn't doing enough for how much ammo it eats up, this also lets it one tap wisps early
-- slugger damage: 900% > 1200%- putting it in line with the other shotgun and magnum
-- updated slugger model (icon not yet)
-- added anti-tank rocket
-- added atm-4
+
+- updated perfect air dodge animations
+
+CameraRigController fadeStart and fadeEnd

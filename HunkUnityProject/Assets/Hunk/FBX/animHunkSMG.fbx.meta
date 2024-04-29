@@ -159,6 +159,12 @@ ModelImporter:
   - first:
       74: 8169785016169300346
     second: Armature|AirDodgePerfectLoop
+  - first:
+      74: -822719216285591561
+    second: Armature|PerfectLandingBad
+  - first:
+      74: 5234873979293149698
+    second: Armature|LightImpact2
   externalObjects: {}
   materials:
     materialImportMode: 1
