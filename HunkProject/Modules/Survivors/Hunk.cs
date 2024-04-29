@@ -25,6 +25,8 @@ namespace HunkMod.Modules.Survivors
 
         internal static GameObject characterPrefab;
         internal static GameObject displayPrefab;
+        internal static GameObject bodyPodPrefab;
+        internal static Material podMat;
 
         internal static GameObject umbraMaster;
 
@@ -76,6 +78,7 @@ namespace HunkMod.Modules.Survivors
 
                 CreateAmmoInteractable();
                 CreateBarrelAmmoInteractable();
+                CreatePod();
 
                 characterPrefab = CreateBodyPrefab(true);
 
@@ -116,13 +119,13 @@ namespace HunkMod.Modules.Survivors
                 jumpCount = 1,
                 maxHealth = Config.baseHealth.Value,
                 subtitleNameToken = MainPlugin.developerPrefix + "_HUNK_BODY_SUBTITLE",
-                podPrefab = RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod"),
+                podPrefab = bodyPodPrefab, //RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod"),
                 moveSpeed = Config.baseMovementSpeed.Value,
                 acceleration = 60f,
                 jumpPower = 15f,
                 attackSpeed = 1f,
                 crit = Config.baseCrit.Value
-            });
+            });;;
 
             ChildLocator childLocator = newPrefab.GetComponentInChildren<ChildLocator>();
 
@@ -1044,6 +1047,21 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             newRendererInfos[0].defaultMaterial = materials[0];
 
             return newRendererInfos;
+        }
+
+        private void CreatePod()
+        {
+            Debug.Log("Creating Pod");
+
+            bodyPodPrefab = GameObject.Instantiate(RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod"));
+            podMat = Assets.mainAssetBundle.LoadAsset<Material>("matHunkPod");
+            Transform modelTransform = bodyPodPrefab.GetComponent<ModelLocator>().modelTransform;
+            modelTransform.Find("EscapePodDoorMesh").GetComponent<MeshRenderer>().sharedMaterial = podMat;
+            modelTransform.Find("EscapePodMesh").GetComponent<MeshRenderer>().sharedMaterial = podMat;
+
+            WeaponChest.AddInteractable(bodyPodPrefab);
+
+            Debug.Log("Created Pod");
         }
 
         private void CreateAmmoInteractable()

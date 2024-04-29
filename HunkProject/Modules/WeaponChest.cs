@@ -11,7 +11,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace HunkMod
+namespace HunkMod.Modules
 {
     public static class WeaponChest
     {
@@ -24,9 +24,8 @@ namespace HunkMod
             Debug.Log("Added " + networkedObject.name + " to Hunk interactable catalog");
         }
 
-
         public static GameObject interactableBodyModelPrefab;
-        public static GameObject interactableModel => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("WeaponChest.prefab");
+        public static GameObject interactableModel => Assets.mainAssetBundle.LoadAsset<GameObject>("WeaponChest.prefab");
 
         public static CostTypeDef heartCostDef;
         public static int heartCostTypeIndex;
@@ -38,6 +37,7 @@ namespace HunkMod
         public static void Initialize()
         {
             CostTypeCatalog.modHelper.getAdditionalEntries += AddHeartCostType;
+            CreateChest();
         }
 
         public static void CreateChest()
@@ -95,6 +95,8 @@ namespace HunkMod
             };
 
             PrefabAPI.RegisterNetworkPrefab(interactableBodyModelPrefab);
+
+            AddInteractable(interactableBodyModelPrefab);
         }
 
         private static void AddHeartCostType(List<CostTypeDef> list)

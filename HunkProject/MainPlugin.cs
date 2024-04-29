@@ -65,6 +65,7 @@ namespace HunkMod
             Modules.Projectiles.RegisterProjectiles();
             Modules.Tokens.AddTokens();
             Modules.ItemDisplays.PopulateDisplays();
+            //Modules.WeaponChest.Initialize(); not yet.
 
             new Modules.Survivors.Hunk().CreateCharacter();
 
