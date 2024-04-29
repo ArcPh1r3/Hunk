@@ -735,7 +735,17 @@ namespace HunkMod.Modules.Survivors
 
             skins.Add(defaultSkin);
             #endregion
-            /*
+
+            #region SuperSkin
+            SkinDef superSkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_SUPER_SKIN_NAME",
+                Assets.mainAssetBundle.LoadAsset<Sprite>("texMainSkin"),
+                defaultRenderers,
+                mainRenderer,
+                model);
+
+            skins.Add(superSkin);
+            #endregion
+
             #region MasterySkin
             SkinDef masterySkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_MONSOON_SKIN_NAME",
                 Assets.mainAssetBundle.LoadAsset<Sprite>("texMainSkin"),
@@ -747,24 +757,72 @@ namespace HunkMod.Modules.Survivors
             {
                 new SkinDef.MeshReplacement
                 {
-                    renderer = mainRenderer,
+                    renderer = childLocator.FindChild("Model01").GetComponent<SkinnedMeshRenderer>(),
                     mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("meshHunkB01")
                 },
                 new SkinDef.MeshReplacement
                 {
-                    renderer = mainRenderer,
+                    renderer = childLocator.FindChild("Model02").GetComponent<SkinnedMeshRenderer>(),
                     mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("meshHunkB02")
                 },
                 new SkinDef.MeshReplacement
                 {
-                    renderer = mainRenderer,
+                    renderer = childLocator.FindChild("Model03").GetComponent<SkinnedMeshRenderer>(),
                     mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("meshHunkB03")
                 }
             };
 
             skins.Add(masterySkin);
             #endregion
-            */
+
+            #region CommandoSkin
+            SkinDef commandoSkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_MONSOON_SKIN_NAME",
+                Assets.mainAssetBundle.LoadAsset<Sprite>("texMainSkin"),
+                SkinRendererInfos(defaultRenderers,
+                new Material[]
+                {
+                    Modules.Assets.commandoMat
+                }),
+                mainRenderer,
+                model);
+
+            commandoSkin.meshReplacements = new SkinDef.MeshReplacement[]
+            {
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model01").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("meshCommando")
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model02").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = null
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model03").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = null
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model04").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = null
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model05").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = null
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model06").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = null
+                }
+            };
+
+            skins.Add(commandoSkin);
+            #endregion
+
             skinController.skins = skins.ToArray();
         }
 
