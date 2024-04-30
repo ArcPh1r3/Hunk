@@ -32,8 +32,15 @@ namespace HunkMod.Modules.Components
             HunkController hunk = bodyObject.GetComponent<HunkController>();
             if (hunk)
             {
+                bool valid = false;
                 int index = 0;
-                if (hunk.weaponTracker) index = Random.Range(0, hunk.weaponTracker.weaponData.Length);
+
+                while (!valid)
+                {
+                    index = UnityEngine.Random.Range(0, hunk.weaponTracker.weaponData.Length);
+                    if (hunk.weaponTracker.weaponData[index].weaponDef.canPickUpAmmo) valid = true;
+                }
+
                 hunk.AddAmmoFromIndex(index);
             }
         }

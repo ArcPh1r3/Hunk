@@ -68,8 +68,8 @@ namespace HunkMod.SkillStates.Hunk
                     {
                         this.hunk.ReloadRound();
                         this.subState = SubState.Loading;
-                        this.stopwatch = 0.3f;
-                        base.PlayAnimation("Gesture, Override", "RoundReloadLoop", "Reload.playbackRate", 0.3f);
+                        this.stopwatch = 0.4f / this.attackSpeedStat;
+                        base.PlayAnimation("Gesture, Override", "RoundReloadLoop", "Reload.playbackRate", 0.4f / this.attackSpeedStat);
                     }
                     break;
                 case SubState.Loading:
@@ -96,7 +96,7 @@ namespace HunkMod.SkillStates.Hunk
                         else
                         {
                             this.hunk.ReloadRound();
-                            this.stopwatch = 0.3f;
+                            this.stopwatch = 0.4f / this.attackSpeedStat;
                         }
                     }
                     break;

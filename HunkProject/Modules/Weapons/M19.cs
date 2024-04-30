@@ -8,7 +8,7 @@ namespace HunkMod.Modules.Weapons
     {
         public override string weaponNameToken => "M19";
         public override string weaponName => "M19";
-        public override string weaponDesc => "16-shot, large caliber, single-action handgun that fires .45 ACP rounds. Its base design hasn't changed in over 70 years so variants abound.";
+        public override string weaponDesc => "7-shot, large caliber, single-action handgun that fires .45 ACP rounds. Its base design hasn't changed in over 70 years so variants abound.";
         public override string iconName => "texM19Icon";
         public override GameObject crosshairPrefab => Modules.Assets.pistolCrosshairPrefab;
         public override int magSize => 7;

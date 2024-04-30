@@ -18,7 +18,7 @@ namespace HunkMod.Modules.Misc
                 return false;
 
             int cost = context.cost;
-            int itemCount = inv.GetItemCount(RoR2Content.Items.Hoof);
+            int itemCount = inv.GetItemCount(Modules.Survivors.Hunk.spadeKeycard);
 
             if (itemCount >= cost)
                 return true;

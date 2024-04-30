@@ -71,12 +71,12 @@ namespace HunkMod.SkillStates.Hunk
                     base.characterBody.isSprinting = true;
 
                     direction.y = Mathf.Max(direction.y, 1.05f * EntityStates.Croco.Leap.minimumY);
-                    Vector3 a = this.slipVector * (0.75f * EntityStates.Croco.Leap.aimVelocity) * 12f;
+                    Vector3 a = this.slipVector * (0.5f * EntityStates.Croco.Leap.aimVelocity) * 12f;
                     Vector3 b = Vector3.up * 0.75f * EntityStates.Croco.Leap.upwardVelocity;
                     Vector3 a2 = direction * (0.75f * EntityStates.Croco.Leap.aimVelocity) * 12f;
                     a2.x = 0f;
                     a2.z = 0f;
-                    Vector3 b2 = new Vector3(direction.x, 0f, direction.z).normalized * (1.25f * EntityStates.Croco.Leap.forwardVelocity);
+                    Vector3 b2 = new Vector3(direction.x, 0f, direction.z).normalized * (1.1f * EntityStates.Croco.Leap.forwardVelocity);
 
                     base.characterMotor.Motor.ForceUnground();
                     base.characterMotor.velocity = a + a2 + b + b2;
@@ -138,6 +138,14 @@ namespace HunkMod.SkillStates.Hunk
             this.characterBody.aimTimer = -1f;
             this.hunk.reloadTimer = 1f;
             this.stopwatch += Time.fixedDeltaTime;
+
+            EntityStateMachine.FindByCustomName(this.gameObject, "Aim").SetNextStateToMain();
+
+            this.skillLocator.primary.stock = 0;
+            this.skillLocator.primary.rechargeStopwatch = -0.3f;
+
+            this.skillLocator.secondary.stock = 0;
+            this.skillLocator.secondary.rechargeStopwatch = -0.3f;
 
             if (this.stopwatch >= 0.1f && base.isAuthority && base.characterMotor.isGrounded)
             {

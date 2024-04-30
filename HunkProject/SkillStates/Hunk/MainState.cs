@@ -27,6 +27,8 @@ namespace HunkMod.SkillStates.Hunk
 		private void CheckForSuperSkin()
 		{
 			if (this.hunk && this.hunk.weaponTracker && Modules.Helpers.HunkHasWeapon(Modules.Weapons.ATM.instance.weaponDef, this.hunk.weaponTracker)) return;
+			if (this.hunk.spawnedATM) return;
+			if (!this.characterBody.isPlayerControlled) return;
 
 			CharacterModel model = this.GetModelTransform().GetComponent<CharacterModel>();
 			if (model && model.GetComponent<ModelSkinController>())
@@ -38,6 +40,8 @@ namespace HunkMod.SkillStates.Hunk
 					{
 						Chat.AddMessage("Thanks for supporting the mod :)");
 					}
+					
+					this.hunk.spawnedATM = true;
 
 					PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Weapons.ATM.instance.itemDef.itemIndex), this.characterBody.corePosition, this.characterBody.inputBank.aimDirection * 30f);
 				}

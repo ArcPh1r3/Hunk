@@ -88,6 +88,11 @@ namespace HunkMod.Modules.Survivors
         internal GameObject ammoPickupInteractable;
         internal GameObject ammoPickupInteractableSmall;
 
+        internal static ItemDef spadeKeycard;
+        internal static ItemDef clubKeycard;
+        internal static ItemDef heartKeycard;
+        internal static ItemDef diamondKeycard;
+
         internal static BuffDef immobilizedBuff;
 
         internal void CreateCharacter()
@@ -104,6 +109,7 @@ namespace HunkMod.Modules.Survivors
                 lightweightUnlockableDef = R2API.UnlockableAPI.AddUnlockable<Achievements.HunkLightweightAchievement>();
                 earlySupporterUnlockableDef = R2API.UnlockableAPI.AddUnlockable<Achievements.HunkSupporterAchievement>();
 
+                CreateKeycards();
                 CreateAmmoInteractable();
                 CreateBarrelAmmoInteractable();
                 CreateChest();
@@ -1189,6 +1195,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             diamondCostTypeIndex = CostTypeCatalog.costTypeDefs.Length + list.Count;
             list.Add(diamondCostDef);
         }
+
         public void CreateWeaponPools()
         {
             defaultWeaponPool.Add(Weapons.ATM.instance.weaponDef);
@@ -1205,9 +1212,35 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
         {
             miliMat = Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/TrimSheets/matTrimSheetMetalMilitaryEmission.mat").WaitForCompletion();
 
+            GameObject displayCaseModel = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlDisplayCase"));
+
             weaponChestPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Chest2/Chest2.prefab").WaitForCompletion().InstantiateClone("HunkChest", true);
-            weaponChestPrefab.GetComponent<Highlight>().targetRenderer.material = miliMat;
+            //weaponChestPrefab.GetComponent<Highlight>().targetRenderer.material = miliMat;
+            weaponChestPrefab.GetComponent<Highlight>().targetRenderer.enabled = false;
             weaponChestPrefab.AddComponent<Components.WeaponChest>();
+
+            displayCaseModel.transform.parent = weaponChestPrefab.GetComponent<Highlight>().targetRenderer.transform;
+            displayCaseModel.transform.localPosition = new Vector3(0f, 0f, -2.1f);
+            displayCaseModel.transform.localRotation = Quaternion.Euler(new Vector3(90f, 0f, 0f));
+            displayCaseModel.transform.localScale = Vector3.one * 1.3f;
+            Modules.Assets.ConvertAllRenderersToHopooShader(displayCaseModel.transform.Find("Pivot/Model/SM_Weapon_Case_low.001").gameObject);
+            Modules.Assets.ConvertAllRenderersToHopooShader(displayCaseModel.transform.Find("Pivot/Model/Hinge/SM_Weapon_Case_low.002").gameObject);
+            Modules.Assets.ConvertAllRenderersToHopooShader(displayCaseModel.transform.Find("Pivot/Model/Hinge/Lock").gameObject);
+            displayCaseModel.transform.Find("Pivot/Model/Hinge/SM_Weapon_Case_low").gameObject.GetComponent<MeshRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/VendingMachine/matVendingMachineGlass.mat").WaitForCompletion();
+
+            weaponChestPrefab.GetComponent<Highlight>().targetRenderer = displayCaseModel.transform.Find("Pivot/Model/SM_Weapon_Case_low.001").gameObject.GetComponent<MeshRenderer>();
+
+            // nasty!
+            GameObject pickupPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/QuestVolatileBattery/QuestVolatileBatteryWorldPickup.prefab").WaitForCompletion().InstantiateClone("HunkGunPickup", false);
+            MainPlugin.Destroy(pickupPrefab.GetComponent<AwakeEvent>());
+            pickupPrefab.AddComponent<HunkGunPickup>();
+
+            Transform pickupDisplayTransform = pickupPrefab.transform.Find("PickupDisplay");
+            displayCaseModel.transform.Find("Pivot/WeaponHolder").gameObject.AddComponent<NetworkIdentity>();
+            pickupPrefab.transform.parent = displayCaseModel.transform.Find("Pivot/WeaponHolder");
+            pickupDisplayTransform.localPosition = Vector3.zero;
+            pickupDisplayTransform.localRotation = Quaternion.identity;
+            pickupDisplayTransform.localScale = Vector3.one * 1f;
 
             chestInteractableCard = ScriptableObject.CreateInstance<InteractableSpawnCard>();
             chestInteractableCard.name = "iscHunkChest";
@@ -1221,9 +1254,9 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             chestInteractableCard.directorCreditCost = 0;
 
             chestInteractableCard.occupyPosition = true;
-            chestInteractableCard.orientToFloor = false;
+            chestInteractableCard.orientToFloor = true;
             chestInteractableCard.skipSpawnWhenSacrificeArtifactEnabled = false;
-            chestInteractableCard.maxSpawnsPerStage = 12;
+            //chestInteractableCard.maxSpawnsPerStage = 2;
         }
 
         private void CreatePod()
@@ -1233,8 +1266,16 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             podPanelPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/SurvivorPod/SurvivorPodBatteryPanel.prefab").WaitForCompletion().InstantiateClone("HunkPanel", true);
             podPanelPrefab.GetComponent<Highlight>().targetRenderer.material = miliMat;
 
-            //podContentPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/QuestVolatileBattery/QuestVolatileBatteryWorldPickup.prefab").WaitForCompletion().InstantiateClone("HunkContents", true);
-            //UnityEvent[] unityEvents = podContentPrefab.GetComponent<AwakeEvent>().GetComponents<UnityEvent>();
+            podContentPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/QuestVolatileBattery/QuestVolatileBatteryWorldPickup.prefab").WaitForCompletion().InstantiateClone("HunkContents", true);
+            MainPlugin.Destroy(podContentPrefab.GetComponent<AwakeEvent>());
+            podContentPrefab.AddComponent<HunkGunPickup>();//.weaponDef = Modules.Weapons.M19._weaponDef;
+
+            Transform pickupDisplayTransform = podContentPrefab.transform.Find("PickupDisplay");
+            pickupDisplayTransform.localPosition = new Vector3(-0.2f, 0.32f, -0.1f);
+            pickupDisplayTransform.localRotation = Quaternion.Euler(new Vector3(0f, 120f, 90f));
+            pickupDisplayTransform.localScale = Vector3.one * 0.35f;
+
+            GameObject pissPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/QuestVolatileBattery/QuestVolatileBatteryWorldPickup.prefab").WaitForCompletion();
 
             spawnPodPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/SurvivorPod/SurvivorPod.prefab").WaitForCompletion().InstantiateClone("HunkPod", true);
             Transform modelTransform = spawnPodPrefab.GetComponent<ModelLocator>().modelTransform;
@@ -1245,13 +1286,117 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                 if (prefab.prefab == Addressables.LoadAssetAsync<GameObject>("RoR2/Base/SurvivorPod/SurvivorPodBatteryPanel.prefab").WaitForCompletion())
                     prefab.prefab = podPanelPrefab;
 
-                //if (prefab.prefab == Addressables.LoadAssetAsync<GameObject>("RoR2/Base/QuestVolatileBattery/QuestVolatileBatteryWorldPickup.prefab").WaitForCompletion())
-                    //prefab.prefab = podContentPrefab;
+                if (prefab.prefab == pissPrefab)
+                    prefab.prefab = podContentPrefab;
             }
             modelTransform.Find("EscapePodArmature/Base/Door/EscapePodDoorMesh").GetComponent<MeshRenderer>().material = miliMat;
             modelTransform.Find("EscapePodArmature/Base/ReleaseExhaustFX/Door,Physics").GetComponent<MeshRenderer>().material = miliMat;
             modelTransform.Find("EscapePodArmature/Base/EscapePodMesh").GetComponent<MeshRenderer>().material = miliMat;
             modelTransform.Find("EscapePodArmature/Base/RotatingPanel/EscapePodMesh.002").GetComponent<MeshRenderer>().material = miliMat;
+        }
+
+        private void CreateKeycards()
+        {
+            spadeKeycard = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/Base/ArtifactKey/ArtifactKey.asset").WaitForCompletion());
+            spadeKeycard.name = "SpadeKeycard";
+            spadeKeycard.nameToken = "ROB_HUNK_SPADE_KEYCARD_NAME";
+            spadeKeycard.descriptionToken = "ROB_HUNK_KEYCARD_DESC";
+            spadeKeycard.pickupToken = "ROB_HUNK_KEYCARD_DESC";
+            spadeKeycard.loreToken = "ROB_HUNK_KEYCARD_DESC";
+            spadeKeycard.canRemove = false;
+            spadeKeycard.hidden = false;
+            spadeKeycard.pickupIconSprite = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKeycardSpadeIcon");
+            spadeKeycard.requiredExpansion = null;
+            spadeKeycard.tags = new ItemTag[]
+            {
+                ItemTag.AIBlacklist,
+                ItemTag.BrotherBlacklist,
+                ItemTag.CannotCopy,
+                ItemTag.CannotDuplicate,
+                ItemTag.CannotSteal,
+                ItemTag.WorldUnique
+            };
+            spadeKeycard.unlockableDef = null;
+
+            spadeKeycard.pickupModelPrefab = Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlKeycardSpade");
+            Modules.Assets.ConvertAllRenderersToHopooShader(spadeKeycard.pickupModelPrefab);
+
+            clubKeycard = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/Base/ArtifactKey/ArtifactKey.asset").WaitForCompletion());
+            clubKeycard.name = "ClubKeycard";
+            clubKeycard.nameToken = "ROB_HUNK_CLUB_KEYCARD_NAME";
+            clubKeycard.descriptionToken = "ROB_HUNK_KEYCARD_DESC";
+            clubKeycard.pickupToken = "ROB_HUNK_KEYCARD_DESC";
+            clubKeycard.loreToken = "ROB_HUNK_KEYCARD_DESC";
+            clubKeycard.canRemove = false;
+            clubKeycard.hidden = false;
+            clubKeycard.pickupIconSprite = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKeycardClubIcon");
+            clubKeycard.requiredExpansion = null;
+            clubKeycard.tags = new ItemTag[]
+            {
+                ItemTag.AIBlacklist,
+                ItemTag.BrotherBlacklist,
+                ItemTag.CannotCopy,
+                ItemTag.CannotDuplicate,
+                ItemTag.CannotSteal,
+                ItemTag.WorldUnique
+            };
+            clubKeycard.unlockableDef = null;
+
+            clubKeycard.pickupModelPrefab = Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlKeycardClub");
+            Modules.Assets.ConvertAllRenderersToHopooShader(clubKeycard.pickupModelPrefab);
+
+            heartKeycard = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/Base/ArtifactKey/ArtifactKey.asset").WaitForCompletion());
+            heartKeycard.name = "HeartKeycard";
+            heartKeycard.nameToken = "ROB_HUNK_HEART_KEYCARD_NAME";
+            heartKeycard.descriptionToken = "ROB_HUNK_KEYCARD_DESC";
+            heartKeycard.pickupToken = "ROB_HUNK_KEYCARD_DESC";
+            heartKeycard.loreToken = "ROB_HUNK_KEYCARD_DESC";
+            heartKeycard.canRemove = false;
+            heartKeycard.hidden = false;
+            heartKeycard.pickupIconSprite = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKeycardHeartIcon");
+            heartKeycard.requiredExpansion = null;
+            heartKeycard.tags = new ItemTag[]
+            {
+                ItemTag.AIBlacklist,
+                ItemTag.BrotherBlacklist,
+                ItemTag.CannotCopy,
+                ItemTag.CannotDuplicate,
+                ItemTag.CannotSteal,
+                ItemTag.WorldUnique
+            };
+            heartKeycard.unlockableDef = null;
+
+            heartKeycard.pickupModelPrefab = Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlKeycardHeart");
+            Modules.Assets.ConvertAllRenderersToHopooShader(heartKeycard.pickupModelPrefab);
+
+            diamondKeycard = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/Base/ArtifactKey/ArtifactKey.asset").WaitForCompletion());
+            diamondKeycard.name = "DiamondKeycard";
+            diamondKeycard.nameToken = "ROB_HUNK_DIAMOND_KEYCARD_NAME";
+            diamondKeycard.descriptionToken = "ROB_HUNK_KEYCARD_DESC";
+            diamondKeycard.pickupToken = "ROB_HUNK_KEYCARD_DESC";
+            diamondKeycard.loreToken = "ROB_HUNK_KEYCARD_DESC";
+            diamondKeycard.canRemove = false;
+            diamondKeycard.hidden = false;
+            diamondKeycard.pickupIconSprite = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKeycardDiamondIcon");
+            diamondKeycard.requiredExpansion = null;
+            diamondKeycard.tags = new ItemTag[]
+            {
+                ItemTag.AIBlacklist,
+                ItemTag.BrotherBlacklist,
+                ItemTag.CannotCopy,
+                ItemTag.CannotDuplicate,
+                ItemTag.CannotSteal,
+                ItemTag.WorldUnique
+            };
+            diamondKeycard.unlockableDef = null;
+
+            diamondKeycard.pickupModelPrefab = Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlKeycardDiamond");
+            Modules.Assets.ConvertAllRenderersToHopooShader(diamondKeycard.pickupModelPrefab);
+
+            HunkWeaponCatalog.itemDefs.Add(spadeKeycard);
+            HunkWeaponCatalog.itemDefs.Add(clubKeycard);
+            HunkWeaponCatalog.itemDefs.Add(heartKeycard);
+            HunkWeaponCatalog.itemDefs.Add(diamondKeycard);
         }
 
         private void CreateAmmoInteractable()
@@ -1321,6 +1466,9 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             // knife ammo drop mechanic
             On.RoR2.HealthComponent.TakeDamage += HealthComponent_TakeDamage;
 
+            // help me
+            On.RoR2.Inventory.ShrineRestackInventory += Inventory_ShrineRestackInventory;
+
             // chest cost types
             CostTypeCatalog.modHelper.getAdditionalEntries += AddHeartCostType;
             CostTypeCatalog.modHelper.getAdditionalEntries += AddSpadeCostType;
@@ -1335,6 +1483,28 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             //On.EntityStates.GlobalSkills.LunarNeedle.ChargeLunarSecondary.PlayChargeAnimation += PlayChargeLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarNeedle.ThrowLunarSecondary.PlayThrowAnimation += PlayThrowLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += PlayRuinAnimation;
+        }
+
+        private static void Inventory_ShrineRestackInventory(On.RoR2.Inventory.orig_ShrineRestackInventory orig, Inventory self, Xoroshiro128Plus rng)
+        {
+            HunkWeaponTracker hunk = self.GetComponent<HunkWeaponTracker>();
+            if (hunk)
+            {
+                foreach (HunkWeaponData i in hunk.weaponData)
+                {
+                    self.RemoveItem(i.weaponDef.itemDef);
+                }
+            }
+
+            orig(self, rng);
+
+            if (hunk)
+            {
+                foreach (HunkWeaponData i in hunk.weaponData)
+                {
+                    self.GiveItem(i.weaponDef.itemDef);
+                }
+            }
         }
 
         private static void RouletteChestController_EjectPickupServer(On.RoR2.RouletteChestController.orig_EjectPickupServer orig, RouletteChestController self, PickupIndex pickupIndex)
@@ -1416,6 +1586,18 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
         {
             if (Modules.Helpers.isHunkInPlay)
             {
+                if (self.gameObject.name.Contains("Hunk"))
+                {
+                    // this is the worst place to put this btw
+
+                    self.GetComponent<WeaponChest>().gunPickup.enabled = true;
+                    self.GetComponent<WeaponChest>().gunPickup.GetComponent<GenericPickupController>().enabled = true;
+
+                    self.GetComponent<Highlight>().targetRenderer.transform.parent.parent.parent.GetComponent<Animator>().Play("Open");
+
+                    return;
+                }
+
                 GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, self.transform.rotation);
 
                 if (self.tier3Chance >= 0.2f)

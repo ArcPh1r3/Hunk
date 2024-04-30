@@ -119,24 +119,31 @@ namespace HunkMod.Modules
             #endregion
 
 
-            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_HEARTCHEST_NAME", "Heart-Key Weapon Chest");
-            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_HEARTCHEST_CONTEXT", "Open Heart-Key Weapon Chest");
-            LanguageAPI.Add(MainPlugin.developerPrefix + "_HEARTCOST", "♥");
 
-            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_SPADECHEST_NAME", "Spade-Key Weapon Chest");
-            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_SPADECHEST_CONTEXT", "Open Spade-Key Weapon Chest");
-            LanguageAPI.Add(MainPlugin.developerPrefix + "_HEARTCOST", "♠");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_SPADE_KEYCARD_NAME", "U.C. Keycard (Spade)");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_CLUB_KEYCARD_NAME", "U.C. Keycard (Club)");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_HEART_KEYCARD_NAME", "U.C. Keycard (Heart)");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_DIAMOND_KEYCARD_NAME", "U.C. Keycard (Diamond)");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYCARD_DESC", "Used to open Umbrella Corp <style=cIsUtility>weapon cases</style>.");
 
-            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_CLUBCHEST_NAME", "Club-Key Weapon Chest");
-            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_CLUBCHEST_CONTEXT", "Open Club-Key Weapon Chest");
-            LanguageAPI.Add(MainPlugin.developerPrefix + "_HEARTCOST", "♣");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_HEARTCHEST_NAME", "Heart-Key Weapon Case");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_HEARTCHEST_CONTEXT", "Open Heart-Key Weapon Case");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HEARTCOST", "");
 
-            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_DIAMONDCHEST_NAME", "Diamond-Key Weapon Chest");
-            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_DIAMONDCHEST_CONTEXT", "Open Diamond-Key Weapon Chest");
-            LanguageAPI.Add(MainPlugin.developerPrefix + "_HEARTCOST", "♦");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_SPADECHEST_NAME", "Spade-Key Weapon Case");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_SPADECHEST_CONTEXT", "Open Spade-Key Weapon Case");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_SPADECOST", "");
 
-            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_CHEST_NAME", "Weapon Chest");
-            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_CHEST_CONTEXT", "Open Weapon Chest");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_CLUBCHEST_NAME", "Club-Key Weapon Case");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_CLUBCHEST_CONTEXT", "Open Club-Key Weapon Case");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_CLUBCOST", "");
+
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_DIAMONDCHEST_NAME", "Diamond-Key Weapon Case");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_DIAMONDCHEST_CONTEXT", "Open Diamond-Key Weapon Case");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_DIAMONDCOST", "");
+
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_CHEST_NAME", "Weapon Case");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_CHEST_CONTEXT", "Open Weapon Case");
 
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_AMMO_NAME", "Ammo");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_AMMO_CONTEXT", "Rummage for ammo");

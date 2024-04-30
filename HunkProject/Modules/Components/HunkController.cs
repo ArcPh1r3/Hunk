@@ -16,6 +16,8 @@ namespace HunkMod.Modules.Components
         public ushort syncedWeapon;
         public NetworkInstanceId netId;
 
+        public bool spawnedATM = false;
+
         public bool isAiming;
         public HunkWeaponDef weaponDef;
         private HunkWeaponDef lastWeaponDef;
@@ -783,8 +785,7 @@ namespace HunkMod.Modules.Components
         {
             Xoroshiro128Plus rng = new Xoroshiro128Plus(Run.instance.seed);
             DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(Survivors.Hunk.chestInteractableCard, new DirectorPlacementRule { placementMode = DirectorPlacementRule.PlacementMode.Random }, rng));
-            DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(Survivors.Hunk.chestInteractableCard, new DirectorPlacementRule { placementMode = DirectorPlacementRule.PlacementMode.Random }, rng));
-            DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(Survivors.Hunk.chestInteractableCard, new DirectorPlacementRule { placementMode = DirectorPlacementRule.PlacementMode.Random }, rng));
+            //DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(Survivors.Hunk.chestInteractableCard, new DirectorPlacementRule { placementMode = DirectorPlacementRule.PlacementMode.Random }, rng));
         }
     }
 }
