@@ -36,7 +36,7 @@ namespace HunkMod.Modules
 
         public static void Initialize()
         {
-            CostTypeCatalog.modHelper.getAdditionalEntries += AddHeartCostType;
+            //CostTypeCatalog.modHelper.getAdditionalEntries += AddHeartCostType;
             CreateChest();
         }
 
@@ -103,8 +103,8 @@ namespace HunkMod.Modules
         {
             heartCostDef = new CostTypeDef();
             heartCostDef.costStringFormatToken = "";
-            heartCostDef.isAffordable = new CostTypeDef.IsAffordableDelegate(ItemCostTypeHelperHeart.IsAffordable);
-            heartCostDef.payCost = new CostTypeDef.PayCostDelegate(ItemCostTypeHelperHeart.PayCost);
+            heartCostDef.isAffordable = new CostTypeDef.IsAffordableDelegate(Misc.ItemCostTypeHelperHeart.IsAffordable);
+            heartCostDef.payCost = new CostTypeDef.PayCostDelegate(Misc.ItemCostTypeHelperHeart.PayCost);
             heartCostDef.colorIndex = ColorCatalog.ColorIndex.Blood;
             heartCostDef.saturateWorldStyledCostString = true;
             heartCostDef.darkenWorldStyledCostString = false;
@@ -146,32 +146,6 @@ namespace HunkMod.Modules
                         purchaseInteraction.SetAvailable(false);
                     }
                 }
-            }
-        }
-
-        private static class ItemCostTypeHelperHeart
-        {
-            public static bool IsAffordable(CostTypeDef costTypeDef, CostTypeDef.IsAffordableContext context)
-            {
-                CharacterBody cb = context.activator.GetComponent<CharacterBody>();
-                if (!cb)
-                    return false;
-
-                Inventory inv = cb.inventory;
-                if (!inv)
-                    return false;
-
-                int cost = context.cost;
-                int itemCount = inv.GetItemCount(RoR2Content.Items.Syringe);
-
-                if (itemCount >= cost)
-                    return true;
-                else
-                    return false;
-            }
-
-            public static void PayCost(CostTypeDef costTypeDef, CostTypeDef.PayCostContext context)
-            {
             }
         }
 

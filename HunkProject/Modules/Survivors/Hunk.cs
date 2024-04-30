@@ -16,6 +16,10 @@ using HunkMod.Modules.Components;
 using R2API.Networking;
 using R2API.Networking.Interfaces;
 using UnityEngine.UI;
+using HunkMod.Modules.Weapons;
+using UnityEngine.Events;
+using R2API.Utils;
+using EntityStates.QuestVolatileBattery;
 
 namespace HunkMod.Modules.Survivors
 {
@@ -25,8 +29,6 @@ namespace HunkMod.Modules.Survivors
 
         internal static GameObject characterPrefab;
         internal static GameObject displayPrefab;
-        internal static GameObject bodyPodPrefab;
-        internal static Material podMat;
 
         internal static GameObject umbraMaster;
 
@@ -59,6 +61,28 @@ namespace HunkMod.Modules.Survivors
 
         internal static string bodyNameToken;
 
+        internal static GameObject spawnPodPrefab;
+        internal static GameObject podPanelPrefab;
+        internal static GameObject podContentPrefab;
+        internal static Material miliMat;
+
+        public static List<HunkWeaponDef> defaultWeaponPool = new List<HunkWeaponDef>();
+
+        public static InteractableSpawnCard chestInteractableCard;
+        internal static GameObject weaponChestPrefab;
+
+        public static CostTypeDef heartCostDef;
+        public static int heartCostTypeIndex;
+
+        public static CostTypeDef spadeCostDef;
+        public static int spadeCostTypeIndex;
+
+        public static CostTypeDef clubCostDef;
+        public static int clubCostTypeIndex;
+
+        public static CostTypeDef diamondCostDef;
+        public static int diamondCostTypeIndex;
+
         internal GameObject ammoPickupInteractable;
         internal GameObject ammoPickupInteractableSmall;
 
@@ -78,6 +102,7 @@ namespace HunkMod.Modules.Survivors
 
                 CreateAmmoInteractable();
                 CreateBarrelAmmoInteractable();
+                CreateChest();
                 CreatePod();
 
                 characterPrefab = CreateBodyPrefab(true);
@@ -119,7 +144,7 @@ namespace HunkMod.Modules.Survivors
                 jumpCount = 1,
                 maxHealth = Config.baseHealth.Value,
                 subtitleNameToken = MainPlugin.developerPrefix + "_HUNK_BODY_SUBTITLE",
-                podPrefab = bodyPodPrefab, //RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod"),
+                podPrefab = spawnPodPrefab, //RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod"),
                 moveSpeed = Config.baseMovementSpeed.Value,
                 acceleration = 60f,
                 jumpPower = 15f,
@@ -1107,19 +1132,120 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             return newRendererInfos;
         }
 
+        private static void AddHeartCostType(List<CostTypeDef> list)
+        {
+            heartCostDef = new CostTypeDef();
+            heartCostDef.costStringFormatToken = MainPlugin.developerPrefix + "_HEARTCOST";
+            heartCostDef.isAffordable = new CostTypeDef.IsAffordableDelegate(Misc.ItemCostTypeHelperHeart.IsAffordable);
+            heartCostDef.payCost = new CostTypeDef.PayCostDelegate(Misc.ItemCostTypeHelperHeart.PayCost);
+            heartCostDef.colorIndex = ColorCatalog.ColorIndex.Blood;
+            heartCostDef.saturateWorldStyledCostString = true;
+            heartCostDef.darkenWorldStyledCostString = false;
+            heartCostTypeIndex = CostTypeCatalog.costTypeDefs.Length + list.Count;
+            list.Add(heartCostDef);
+        }
+
+        private static void AddClubCostType(List<CostTypeDef> list)
+        {
+            clubCostDef = new CostTypeDef();
+            clubCostDef.costStringFormatToken = MainPlugin.developerPrefix + "_CLUBCOST";
+            clubCostDef.isAffordable = new CostTypeDef.IsAffordableDelegate(Misc.ItemCostTypeHelperClub.IsAffordable);
+            clubCostDef.payCost = new CostTypeDef.PayCostDelegate(Misc.ItemCostTypeHelperClub.PayCost);
+            clubCostDef.colorIndex = ColorCatalog.ColorIndex.Blood;
+            clubCostDef.saturateWorldStyledCostString = true;
+            clubCostDef.darkenWorldStyledCostString = false;
+            clubCostTypeIndex = CostTypeCatalog.costTypeDefs.Length + list.Count;
+            list.Add(clubCostDef);
+        }
+
+        private static void AddSpadeCostType(List<CostTypeDef> list)
+        {
+            spadeCostDef = new CostTypeDef();
+            spadeCostDef.costStringFormatToken = MainPlugin.developerPrefix + "_SPADECOST";
+            spadeCostDef.isAffordable = new CostTypeDef.IsAffordableDelegate(Misc.ItemCostTypeHelperClub.IsAffordable);
+            spadeCostDef.payCost = new CostTypeDef.PayCostDelegate(Misc.ItemCostTypeHelperClub.PayCost);
+            spadeCostDef.colorIndex = ColorCatalog.ColorIndex.Blood;
+            spadeCostDef.saturateWorldStyledCostString = true;
+            spadeCostDef.darkenWorldStyledCostString = false;
+            spadeCostTypeIndex = CostTypeCatalog.costTypeDefs.Length + list.Count;
+            list.Add(spadeCostDef);
+        }
+
+        private static void AddDiamondCostType(List<CostTypeDef> list)
+        {
+            diamondCostDef = new CostTypeDef();
+            diamondCostDef.costStringFormatToken = MainPlugin.developerPrefix + "_DIAMONDCOST";
+            diamondCostDef.isAffordable = new CostTypeDef.IsAffordableDelegate(Misc.ItemCostTypeHelperClub.IsAffordable);
+            diamondCostDef.payCost = new CostTypeDef.PayCostDelegate(Misc.ItemCostTypeHelperClub.PayCost);
+            diamondCostDef.colorIndex = ColorCatalog.ColorIndex.Blood;
+            diamondCostDef.saturateWorldStyledCostString = true;
+            diamondCostDef.darkenWorldStyledCostString = false;
+            diamondCostTypeIndex = CostTypeCatalog.costTypeDefs.Length + list.Count;
+            list.Add(diamondCostDef);
+        }
+        public void CreateWeaponPools()
+        {
+            defaultWeaponPool.Add(Weapons.ATM.instance.weaponDef);
+            defaultWeaponPool.Add(Weapons.M19.instance.weaponDef);
+            defaultWeaponPool.Add(Weapons.Magnum.instance.weaponDef);
+            defaultWeaponPool.Add(Weapons.MUP.instance.weaponDef);
+            defaultWeaponPool.Add(Weapons.RocketLauncher.instance.weaponDef);
+            defaultWeaponPool.Add(Weapons.Shotgun.instance.weaponDef);
+            defaultWeaponPool.Add(Weapons.Slugger.instance.weaponDef);
+            defaultWeaponPool.Add(Weapons.SMG.instance.weaponDef);
+        }
+
+        private void CreateChest()
+        {
+            miliMat = Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/TrimSheets/matTrimSheetMetalMilitaryEmission.mat").WaitForCompletion();
+
+            weaponChestPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Chest2/Chest2.prefab").WaitForCompletion().InstantiateClone("HunkChest", true);
+            weaponChestPrefab.GetComponent<Highlight>().targetRenderer.material = miliMat;
+            weaponChestPrefab.AddComponent<Components.WeaponChest>();
+
+            chestInteractableCard = ScriptableObject.CreateInstance<InteractableSpawnCard>();
+            chestInteractableCard.name = "iscHunkChest";
+            chestInteractableCard.prefab = weaponChestPrefab;
+            chestInteractableCard.sendOverNetwork = true;
+            chestInteractableCard.hullSize = HullClassification.Human;
+            chestInteractableCard.nodeGraphType = RoR2.Navigation.MapNodeGroup.GraphType.Ground;
+            chestInteractableCard.requiredFlags = RoR2.Navigation.NodeFlags.None;
+            chestInteractableCard.forbiddenFlags = RoR2.Navigation.NodeFlags.None;
+
+            chestInteractableCard.directorCreditCost = 0;
+
+            chestInteractableCard.occupyPosition = true;
+            chestInteractableCard.orientToFloor = false;
+            chestInteractableCard.skipSpawnWhenSacrificeArtifactEnabled = false;
+            chestInteractableCard.maxSpawnsPerStage = 12;
+        }
+
         private void CreatePod()
         {
-            Debug.Log("Creating Pod");
+            miliMat = Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/TrimSheets/matTrimSheetMetalMilitaryEmission.mat").WaitForCompletion();
 
-            bodyPodPrefab = GameObject.Instantiate(RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod"));
-            podMat = Assets.mainAssetBundle.LoadAsset<Material>("matHunkPod");
-            Transform modelTransform = bodyPodPrefab.GetComponent<ModelLocator>().modelTransform;
-            modelTransform.Find("EscapePodDoorMesh").GetComponent<MeshRenderer>().sharedMaterial = podMat;
-            modelTransform.Find("EscapePodMesh").GetComponent<MeshRenderer>().sharedMaterial = podMat;
+            podPanelPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/SurvivorPod/SurvivorPodBatteryPanel.prefab").WaitForCompletion().InstantiateClone("HunkPanel", true);
+            podPanelPrefab.GetComponent<Highlight>().targetRenderer.material = miliMat;
 
-            WeaponChest.AddInteractable(bodyPodPrefab);
+            //podContentPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/QuestVolatileBattery/QuestVolatileBatteryWorldPickup.prefab").WaitForCompletion().InstantiateClone("HunkContents", true);
+            //UnityEvent[] unityEvents = podContentPrefab.GetComponent<AwakeEvent>().GetComponents<UnityEvent>();
 
-            Debug.Log("Created Pod");
+            spawnPodPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/SurvivorPod/SurvivorPod.prefab").WaitForCompletion().InstantiateClone("HunkPod", true);
+            Transform modelTransform = spawnPodPrefab.GetComponent<ModelLocator>().modelTransform;
+            InstantiatePrefabBehavior[] ipb;
+            ipb = spawnPodPrefab.GetComponents<InstantiatePrefabBehavior>();
+            foreach (InstantiatePrefabBehavior prefab in ipb)
+            {
+                if (prefab.prefab == Addressables.LoadAssetAsync<GameObject>("RoR2/Base/SurvivorPod/SurvivorPodBatteryPanel.prefab").WaitForCompletion())
+                    prefab.prefab = podPanelPrefab;
+
+                //if (prefab.prefab == Addressables.LoadAssetAsync<GameObject>("RoR2/Base/QuestVolatileBattery/QuestVolatileBatteryWorldPickup.prefab").WaitForCompletion())
+                    //prefab.prefab = podContentPrefab;
+            }
+            modelTransform.Find("EscapePodArmature/Base/Door/EscapePodDoorMesh").GetComponent<MeshRenderer>().material = miliMat;
+            modelTransform.Find("EscapePodArmature/Base/ReleaseExhaustFX/Door,Physics").GetComponent<MeshRenderer>().material = miliMat;
+            modelTransform.Find("EscapePodArmature/Base/EscapePodMesh").GetComponent<MeshRenderer>().material = miliMat;
+            modelTransform.Find("EscapePodArmature/Base/RotatingPanel/EscapePodMesh.002").GetComponent<MeshRenderer>().material = miliMat;
         }
 
         private void CreateAmmoInteractable()
@@ -1183,6 +1309,12 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
             // knife ammo drop mechanic
             On.RoR2.HealthComponent.TakeDamage += HealthComponent_TakeDamage;
+
+            // chest cost types
+            CostTypeCatalog.modHelper.getAdditionalEntries += AddHeartCostType;
+            CostTypeCatalog.modHelper.getAdditionalEntries += AddSpadeCostType;
+            CostTypeCatalog.modHelper.getAdditionalEntries += AddDiamondCostType;
+            CostTypeCatalog.modHelper.getAdditionalEntries += AddClubCostType;
 
             // heresy anims
             //On.EntityStates.GlobalSkills.LunarNeedle.FireLunarNeedle.OnEnter += PlayVisionsAnimation;

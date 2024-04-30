@@ -4,6 +4,7 @@ using RoR2;
 using RoR2.Skills;
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -63,6 +64,7 @@ namespace HunkMod.Modules.Components
         private ParticleSystem speedLines;
         private Animator dodgeFlash;
 
+
         private void Awake()
         {
             this.characterBody = this.GetComponent<CharacterBody>();
@@ -96,6 +98,8 @@ namespace HunkMod.Modules.Components
                     ctp.cameraPivotTransform = this.characterModel.transform.Find("Armature/ROOT/base");
                 }
             }
+
+            SpawnChests();
         }
 
         private void SetInventoryHook()
@@ -689,6 +693,14 @@ namespace HunkMod.Modules.Components
 
             effect.GetComponentInChildren<RoR2.UI.LanguageTextMeshController>().token = "+" + amount + " " + this.weaponTracker.weaponData[index].weaponDef.ammoName;
             Util.PlaySound("sfx_hunk_pickup", this.gameObject);
+        }
+
+        public void SpawnChests()
+        {
+            Xoroshiro128Plus rng = new Xoroshiro128Plus(Run.instance.seed);
+            DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(Survivors.Hunk.chestInteractableCard, new DirectorPlacementRule { placementMode = DirectorPlacementRule.PlacementMode.Random }, rng));
+            DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(Survivors.Hunk.chestInteractableCard, new DirectorPlacementRule { placementMode = DirectorPlacementRule.PlacementMode.Random }, rng));
+            DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(Survivors.Hunk.chestInteractableCard, new DirectorPlacementRule { placementMode = DirectorPlacementRule.PlacementMode.Random }, rng));
         }
     }
 }
