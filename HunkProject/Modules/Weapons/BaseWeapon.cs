@@ -79,7 +79,7 @@ namespace HunkMod.Modules.Weapons
 
             // this really should have worked man i fucking hate the solution
             //itemDef = (ItemDef)ScriptableObject.CreateInstance(typeof(ItemDef));
-            itemDef = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/DLC1/MushroomVoid/MushroomVoid.asset").WaitForCompletion());
+            itemDef = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/DLC1/CloverVoid/CloverVoid.asset").WaitForCompletion());
             itemDef.name = "ROB_HUNK_WEAPON_" + weaponNameToken + "_NAME";
             itemDef.nameToken = "ROB_HUNK_WEAPON_" + weaponNameToken + "_NAME";
             itemDef.descriptionToken = "ROB_HUNK_WEAPON_" + weaponNameToken + "_DESC";
@@ -99,6 +99,9 @@ namespace HunkMod.Modules.Weapons
                 ItemTag.WorldUnique
             };
             itemDef.unlockableDef = null;
+
+            itemDef.pickupModelPrefab = Modules.Assets.mainAssetBundle.LoadAsset<GameObject>(weaponDef.modelPrefab.name + "Pickup");
+            Modules.Assets.ConvertAllRenderersToHopooShader(itemDef.pickupModelPrefab);
 
             // tell me why i can't set this tell me why this breaks the entire weapon when i do it this way
             //itemDef.tier = ItemTier.NoTier;

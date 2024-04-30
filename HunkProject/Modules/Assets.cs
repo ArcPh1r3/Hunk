@@ -285,9 +285,10 @@ namespace HunkMod.Modules
             pickupModel.transform.parent = ammoPickup.transform.Find("Visuals");
             pickupModel.transform.localPosition = new Vector3(0f, -0.35f, 0f);
             pickupModel.transform.localRotation = Quaternion.identity;
+            ConvertAllRenderersToHopooShader(pickupModel);
 
-            MeshRenderer pickupMesh = pickupModel.GetComponentInChildren<MeshRenderer>();
-            pickupMesh.material = CreateMaterial("matAmmoPickup");
+            //MeshRenderer pickupMesh = pickupModel.GetComponentInChildren<MeshRenderer>();
+            //pickupMesh.material = CreateMaterial("matAmmoPickup");
 
             GravitatePickup oldGrav = ammoPickup.GetComponentInChildren<GravitatePickup>();
             HunkGravitatePickup grav = oldGrav.gameObject.AddComponent<HunkGravitatePickup>();

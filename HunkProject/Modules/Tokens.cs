@@ -30,6 +30,9 @@ namespace HunkMod.Modules
 
             #region Skins
             LanguageAPI.Add(prefix + "DEFAULT_SKIN_NAME", "Default");
+            LanguageAPI.Add(prefix + "SUPER_SKIN_NAME", "<color=#" + Helpers.redItemHex + ">Early Supporter" + Helpers.colorSuffix);
+            LanguageAPI.Add(prefix + "LIGHTWEIGHT_SKIN_NAME", "Lightweight");
+            LanguageAPI.Add(prefix + "COMMANDO_SKIN_NAME", "Commando");
             #endregion
 
             #region Passive
@@ -70,6 +73,7 @@ namespace HunkMod.Modules
             #endregion
 
             #region Achievements
+            prefix = MainPlugin.developerPrefix + "_HUNK_";
             LanguageAPI.Add(prefix + "UNLOCKABLE_UNLOCKABLE_NAME", "Looming Dread");
             LanguageAPI.Add(prefix + "UNLOCKABLE_ACHIEVEMENT_NAME", "Looming Dread");
             LanguageAPI.Add(prefix + "UNLOCKABLE_ACHIEVEMENT_DESC", "Reach stage 3 in less than 15 minutes.");
@@ -77,6 +81,14 @@ namespace HunkMod.Modules
             LanguageAPI.Add(prefix + "MONSOONUNLOCKABLE_UNLOCKABLE_NAME", "HUNK: Mastery");
             LanguageAPI.Add(prefix + "MONSOONUNLOCKABLE_ACHIEVEMENT_NAME", "HUNK: Mastery");
             LanguageAPI.Add(prefix + "MONSOONUNLOCKABLE_ACHIEVEMENT_DESC", "As HUNK, beat the game or obliterate on Monsoon.");
+
+            LanguageAPI.Add(prefix + "SUPPORTER_UNLOCKABLE_NAME", "HUNK: Early Supporter");
+            LanguageAPI.Add(prefix + "SUPPORTER_ACHIEVEMENT_NAME", "HUNK: Early Supporter");
+            LanguageAPI.Add(prefix + "SUPPORTER_ACHIEVEMENT_DESC", "Play HUNK before his official release.");
+                
+            LanguageAPI.Add(prefix + "LIGHTWEIGHT_UNLOCKABLE_NAME", "HUNK: Mayhem");
+            LanguageAPI.Add(prefix + "LIGHTWEIGHT_ACHIEVEMENT_NAME", "HUNK: Mayhem");
+            LanguageAPI.Add(prefix + "LIGHTWEIGHT_ACHIEVEMENT_DESC", "As HUNK, clear stage 1 with no items.");
             #endregion
 
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_AMMO_NAME", "Ammo");

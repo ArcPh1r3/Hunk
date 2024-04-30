@@ -9,7 +9,7 @@ namespace HunkMod.Modules.Weapons
         public override string weaponNameToken => "MUP";
         public override string weaponName => "MUP";
         public override string weaponDesc => "16-shot capacity 9mm handgun. Used by professionals in many state organizations. Reliable with high accuracy.";
-        public override string iconName => "texM19Icon";
+        public override string iconName => "texMUPIcon";
         public override GameObject crosshairPrefab => Modules.Assets.pistolCrosshairPrefab;
         public override int magSize => 16;
         public override float reloadDuration => 1.2f;

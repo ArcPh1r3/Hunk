@@ -45,6 +45,8 @@ namespace HunkMod.Modules.Survivors
         internal static List<ItemDisplayRuleSet.KeyAssetRuleGroup> itemDisplayRules;
 
         internal static UnlockableDef characterUnlockableDef;
+        internal static UnlockableDef lightweightUnlockableDef;
+        internal static UnlockableDef earlySupporterUnlockableDef;
 
         // skill overrides
         internal static SkillDef reloadSkillDef;
@@ -73,6 +75,8 @@ namespace HunkMod.Modules.Survivors
                 forceUnlock = Modules.Config.ForceUnlockConfig("Hunk");
 
                 //if (!forceUnlock.Value) characterUnlockableDef = R2API.UnlockableAPI.AddUnlockable<Achievements.DriverUnlockAchievement>();
+                lightweightUnlockableDef = R2API.UnlockableAPI.AddUnlockable<Achievements.HunkLightweightAchievement>();
+                earlySupporterUnlockableDef = R2API.UnlockableAPI.AddUnlockable<Achievements.HunkSupporterAchievement>();
 
                 CreateAmmoInteractable();
                 CreateBarrelAmmoInteractable();
@@ -736,22 +740,13 @@ namespace HunkMod.Modules.Survivors
             skins.Add(defaultSkin);
             #endregion
 
-            #region SuperSkin
-            SkinDef superSkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_SUPER_SKIN_NAME",
-                Assets.mainAssetBundle.LoadAsset<Sprite>("texMainSkin"),
-                defaultRenderers,
-                mainRenderer,
-                model);
-
-            skins.Add(superSkin);
-            #endregion
-
             #region MasterySkin
-            SkinDef masterySkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_MONSOON_SKIN_NAME",
-                Assets.mainAssetBundle.LoadAsset<Sprite>("texMainSkin"),
+            SkinDef masterySkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_LIGHTWEIGHT_SKIN_NAME",
+                Assets.mainAssetBundle.LoadAsset<Sprite>("texLightweightSkin"),
                 defaultRenderers,
                 mainRenderer,
-                model);
+                model,
+                lightweightUnlockableDef);
 
             masterySkin.meshReplacements = new SkinDef.MeshReplacement[]
             {
@@ -776,8 +771,8 @@ namespace HunkMod.Modules.Survivors
             #endregion
 
             #region CommandoSkin
-            SkinDef commandoSkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_MONSOON_SKIN_NAME",
-                Assets.mainAssetBundle.LoadAsset<Sprite>("texMainSkin"),
+            SkinDef commandoSkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_COMMANDO_SKIN_NAME",
+                Addressables.LoadAssetAsync<SkinDef>("RoR2/Base/Commando/skinCommandoDefault.asset").WaitForCompletion().icon,
                 SkinRendererInfos(defaultRenderers,
                 new Material[]
                 {
@@ -821,6 +816,17 @@ namespace HunkMod.Modules.Survivors
             };
 
             skins.Add(commandoSkin);
+            #endregion
+
+            #region SuperSkin
+            SkinDef superSkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_SUPER_SKIN_NAME",
+                Assets.mainAssetBundle.LoadAsset<Sprite>("texSuperSkin"),
+                defaultRenderers,
+                mainRenderer,
+                model,
+                earlySupporterUnlockableDef);
+
+            skins.Add(superSkin);
             #endregion
 
             skinController.skins = skins.ToArray();
@@ -1156,6 +1162,10 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             // custom hud
             RoR2.UI.HUD.onHudTargetChangedGlobal += HUDSetup;
 
+            // hide the bazooka skin
+            On.RoR2.UI.HGButton.Start += HGButton_Start;
+            On.RoR2.UI.LoadoutPanelController.Row.AddButton += Row_AddButton;
+
             // rummage passive
             On.RoR2.ChestBehavior.ItemDrop += ChestBehavior_ItemDrop;
             On.RoR2.BarrelInteraction.CoinDrop += BarrelInteraction_CoinDrop;
@@ -1171,6 +1181,21 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             //On.EntityStates.GlobalSkills.LunarNeedle.ChargeLunarSecondary.PlayChargeAnimation += PlayChargeLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarNeedle.ThrowLunarSecondary.PlayThrowAnimation += PlayThrowLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += PlayRuinAnimation;
+        }
+
+        private static void Row_AddButton(On.RoR2.UI.LoadoutPanelController.Row.orig_AddButton orig, object self, LoadoutPanelController owner, Sprite icon, string titleToken, string bodyToken, Color tooltipColor, UnityEngine.Events.UnityAction callback, string unlockableName, ViewablesCatalog.Node viewableNode, bool isWIP)
+        {
+            if (unlockableName == earlySupporterUnlockableDef.nameToken)
+            {
+                bool unlocked = LocalUserManager.readOnlyLocalUsersList.Any((LocalUser localUser) => localUser.userProfile.HasUnlockable(earlySupporterUnlockableDef));
+                if (!unlocked) return;
+            }
+            orig(self, owner, icon, titleToken, bodyToken, tooltipColor, callback, unlockableName, viewableNode, isWIP);
+        }
+
+        private static void HGButton_Start(On.RoR2.UI.HGButton.orig_Start orig, HGButton self)
+        {
+            orig(self);
         }
 
         private static void HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)

@@ -286,10 +286,43 @@ namespace HunkMod.Modules.Components
             }
         }
 
-        /*private void Update()
+        private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.V)) this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo += this.maxAmmo;
-        }*/
+            if (Input.GetKeyDown(KeyCode.V))
+            {
+                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Weapons.Shotgun.instance.itemDef.itemIndex), this.characterBody.corePosition, this.characterBody.inputBank.aimDirection * 10f);
+            }
+
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Weapons.Slugger.instance.itemDef.itemIndex), this.characterBody.corePosition, this.characterBody.inputBank.aimDirection * 10f);
+            }
+
+            if (Input.GetKeyDown(KeyCode.N))
+            {
+                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Weapons.SMG.instance.itemDef.itemIndex), this.characterBody.corePosition, this.characterBody.inputBank.aimDirection * 10f);
+            }
+
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Weapons.RocketLauncher.instance.itemDef.itemIndex), this.characterBody.corePosition, this.characterBody.inputBank.aimDirection * 10f);
+            }
+
+            if (Input.GetKeyDown(KeyCode.U))
+            {
+                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Weapons.Revolver.instance.itemDef.itemIndex), this.characterBody.corePosition, this.characterBody.inputBank.aimDirection * 10f);
+            }
+
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Weapons.M19.instance.itemDef.itemIndex), this.characterBody.corePosition, this.characterBody.inputBank.aimDirection * 10f);
+            }
+
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Weapons.MUP.instance.itemDef.itemIndex), this.characterBody.corePosition, this.characterBody.inputBank.aimDirection * 10f);
+            }
+        }
 
         private void TryLockOn()
         {
@@ -385,10 +418,6 @@ namespace HunkMod.Modules.Components
 
         public void PickUpWeapon(HunkWeaponDef newWeapon)
         {
-            this.weaponDef = newWeapon;
-
-            this.weaponTracker.AddWeapon(newWeapon);
-
             this.TryPickupNotification();
 
             if (this.onWeaponUpdate == null) return;
