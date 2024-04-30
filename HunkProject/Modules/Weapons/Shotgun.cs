@@ -12,7 +12,7 @@ namespace HunkMod.Modules.Weapons
         public override string iconName => "texShotgunIcon";
         public override GameObject crosshairPrefab => Modules.Assets.shotgunCrosshairPrefab;
         public override int magSize => 8;
-        public override float reloadDuration => 3f;
+        public override float reloadDuration => 0.6f;
         public override string ammoName => "Shotgun Shells";
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlShotgun");
         public override HunkWeaponDef.AnimationSet animationSet => HunkWeaponDef.AnimationSet.SMG;
@@ -30,5 +30,11 @@ new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Weapon.Shot
 "ROB_DRIVER_BODY_PRIMARY_BFG_DESCRIPTION",
 Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texShootIcon"),
 false);
+
+        public override void Init()
+        {
+            base.Init();
+            this.weaponDef.roundReload = true;
+        }
     }
 }

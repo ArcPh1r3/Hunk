@@ -1163,12 +1163,13 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             RoR2.UI.HUD.onHudTargetChangedGlobal += HUDSetup;
 
             // hide the bazooka skin
-            On.RoR2.UI.HGButton.Start += HGButton_Start;
             On.RoR2.UI.LoadoutPanelController.Row.AddButton += Row_AddButton;
 
             // rummage passive
             On.RoR2.ChestBehavior.ItemDrop += ChestBehavior_ItemDrop;
             On.RoR2.BarrelInteraction.CoinDrop += BarrelInteraction_CoinDrop;
+            On.RoR2.ShopTerminalBehavior.DropPickup += ShopTerminalBehavior_DropPickup;
+            On.RoR2.RouletteChestController.EjectPickupServer += RouletteChestController_EjectPickupServer;
 
             // bandolier
             On.RoR2.SkillLocator.ApplyAmmoPack += SkillLocator_ApplyAmmoPack;
@@ -1176,11 +1177,36 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             // knife ammo drop mechanic
             On.RoR2.HealthComponent.TakeDamage += HealthComponent_TakeDamage;
 
+            // if i speak i am in trouble
+            On.RoR2.UI.MainMenu.BaseMainMenuScreen.Update += BaseMainMenuScreen_Update;
+
             // heresy anims
             //On.EntityStates.GlobalSkills.LunarNeedle.FireLunarNeedle.OnEnter += PlayVisionsAnimation;
             //On.EntityStates.GlobalSkills.LunarNeedle.ChargeLunarSecondary.PlayChargeAnimation += PlayChargeLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarNeedle.ThrowLunarSecondary.PlayThrowAnimation += PlayThrowLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += PlayRuinAnimation;
+        }
+
+        private static void RouletteChestController_EjectPickupServer(On.RoR2.RouletteChestController.orig_EjectPickupServer orig, RouletteChestController self, PickupIndex pickupIndex)
+        {
+            orig(self, pickupIndex);
+        }
+
+        private static void ShopTerminalBehavior_DropPickup(On.RoR2.ShopTerminalBehavior.orig_DropPickup orig, ShopTerminalBehavior self)
+        {
+            if (Modules.Helpers.isHunkInPlay)
+            {
+                GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, self.transform.rotation);
+            }
+
+            orig(self);
+        }
+
+        private static void BaseMainMenuScreen_Update(On.RoR2.UI.MainMenu.BaseMainMenuScreen.orig_Update orig, RoR2.UI.MainMenu.BaseMainMenuScreen self)
+        {
+            orig(self);
+            Transform buttonPanel = self.transform.Find("SafeZone/GenericMenuButtonPanel/ModPanel(Clone)");
+            if (buttonPanel) buttonPanel.GetComponent<RectTransform>().localRotation = Quaternion.Euler(new Vector3(0f, 90f, 0f));
         }
 
         private static void Row_AddButton(On.RoR2.UI.LoadoutPanelController.Row.orig_AddButton orig, object self, LoadoutPanelController owner, Sprite icon, string titleToken, string bodyToken, Color tooltipColor, UnityEngine.Events.UnityAction callback, string unlockableName, ViewablesCatalog.Node viewableNode, bool isWIP)
@@ -1191,11 +1217,6 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                 if (!unlocked) return;
             }
             orig(self, owner, icon, titleToken, bodyToken, tooltipColor, callback, unlockableName, viewableNode, isWIP);
-        }
-
-        private static void HGButton_Start(On.RoR2.UI.HGButton.orig_Start orig, HGButton self)
-        {
-            orig(self);
         }
 
         private static void HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
@@ -1246,6 +1267,19 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             if (Modules.Helpers.isHunkInPlay)
             {
                 GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, self.transform.rotation);
+
+                if (self.tier3Chance >= 0.2f)
+                {
+                    GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, self.transform.rotation);
+                }
+
+                if (self.tier3Chance >= 1f)
+                {
+                    GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, self.transform.rotation);
+                }
+                // todo more ammo from large chest
+                // even more from legendary
+                //if (self)
             }
 
             orig(self);

@@ -6,7 +6,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.M19
 {
     public class Shoot : BaseHunkSkillState
     {
-        public static float damageCoefficient = 3.2f;
+        public static float damageCoefficient = 3.8f;
         public static float procCoefficient = 1f;
         public static float baseDuration = 0.55f;
         public static float force = 500f;
@@ -103,7 +103,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.M19
 
                         effectData.SetHurtBoxReference(hitInfo.hitHurtBox);
                         //EffectManager.SpawnEffect(Modules.Assets.headshotEffect, effectData, true);
-                        Util.PlaySound("sfx_driver_headshot", base.gameObject);
+                        Util.PlaySound("sfx_hunk_headshot", base.gameObject);
                         if (this.isCrit) hitInfo.hitHurtBox.healthComponent.gameObject.AddComponent<Modules.Components.HunkHeadshotTracker>();
                     }
                 };

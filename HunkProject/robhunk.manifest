@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3596532120
+CRC: 3730377477
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 8128060b1a309c092498a6221d7adf79
+    Hash: 20421021a4651aaeec9d6108a76257db
   TypeTreeHash:
     serializedVersion: 2
     Hash: 7229672de4cae9db5a5fd00c63ea84a7
@@ -90,6 +90,7 @@ Assets:
 - Assets/Hunk/Materials/matInfiniteKnife.mat
 - Assets/Hunk/FBX/Animations/Default/LightImpact2.anim
 - Assets/Hunk/Items/mdlKeycardSpade.prefab
+- Assets/Hunk/FBX/RoundReloadEnd.anim
 - Assets/Hunk/VFX/matShockwave.mat
 - Assets/Hunk/FBX/Hunk.fbx
 - Assets/Hunk/VFX/matSpeedLineVertical.mat
@@ -282,6 +283,7 @@ Assets:
 - Assets/Hunk/Textures/Unsorted/keycard1.jpg
 - Assets/Hunk/VFX/texSpeedLine.png
 - Assets/Hunk/Icons/Weapon/texSluggerIcon.png
+- Assets/Hunk/FBX/Animations/Default/RoundReloadLoop.anim
 - Assets/Hunk/FBX/Rockets.fbx
 - Assets/Hunk/FBX/MenuIdle.anim
 - Assets/Hunk/VFX/HunkBigRocketGhost.prefab
@@ -323,6 +325,7 @@ Assets:
 - Assets/Hunk/FBX/Animations/Default/RunB.anim
 - Assets/Hunk/Weapons/mdlATMPickup.prefab
 - Assets/Hunk/Weapons/mdlSluggerPickup.prefab
+- Assets/Hunk/FBX/RoundReloadLoop.anim
 - Assets/Hunk/Textures/AmmoBox/9mm_ammo_box_REMAKE_Normal.jpg
 - Assets/Hunk/Weapons/mdlMagnumPickup.prefab
 - Assets/Hunk/FBX/Claire Pistol.fbx

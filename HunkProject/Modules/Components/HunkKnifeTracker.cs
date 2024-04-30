@@ -6,7 +6,7 @@ namespace HunkMod.Modules.Components
     {
         private void Awake()
         {
-            Destroy(this, 0.5f);
+            Destroy(this, 1f);
         }
     }
 }

@@ -28,6 +28,19 @@ namespace HunkMod.SkillStates.Hunk
             }
             else
             {
+                if (this.cachedWeaponDef.roundReload)
+                {
+                    if (base.isAuthority)
+                    {
+                        this.outer.SetNextState(new RoundReload
+                        {
+                            baseDuration = this.baseDuration,
+                            interruptPriority = this.interruptPriority
+                        });
+                    }
+                    return;
+                }
+
                 if (this.hunk.weaponDef.animationSet == HunkWeaponDef.AnimationSet.Pistol)
                 {
                     this.animString = "ReloadPistol";

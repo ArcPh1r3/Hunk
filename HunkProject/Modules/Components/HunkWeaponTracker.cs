@@ -50,6 +50,10 @@ namespace HunkMod.Modules.Components
         {
             this.AddWeaponItem(Modules.Weapons.SMG.instance.weaponDef);
             this.AddWeaponItem(Modules.Weapons.MUP.instance.weaponDef);
+            this.AddWeaponItem(Modules.Weapons.Shotgun.instance.weaponDef);
+            this.AddWeaponItem(Modules.Weapons.Slugger.instance.weaponDef);
+            this.AddWeaponItem(Modules.Weapons.Magnum.instance.weaponDef);
+            this.AddWeaponItem(Modules.Weapons.Revolver.instance.weaponDef);
 
             this.inventory.onItemAddedClient += this.Inventory_onItemAddedClient;
         }
@@ -73,7 +77,7 @@ namespace HunkMod.Modules.Components
 
         private void Init()
         {
-            this.weaponData = new HunkWeaponData[]
+            /*this.weaponData = new HunkWeaponData[]
             {
                 new HunkWeaponData
                 {
@@ -87,14 +91,21 @@ namespace HunkMod.Modules.Components
                     totalAmmo = Modules.Weapons.MUP.instance.magSize * 2,
                     currentAmmo = Modules.Weapons.MUP.instance.magSize
                 }
-            };
-            /*this.weaponData = new HunkWeaponData[]
+            };*/
+
+            this.weaponData = new HunkWeaponData[]
             {
                 new HunkWeaponData
                 {
                     weaponDef = Modules.Weapons.SMG.instance.weaponDef,
-                    totalAmmo = Modules.Weapons.SMG.instance.magSize * 6,
+                    totalAmmo = Modules.Weapons.SMG.instance.magSize * 2,
                     currentAmmo = Modules.Weapons.SMG.instance.magSize
+                },
+                new HunkWeaponData
+                {
+                    weaponDef = Modules.Weapons.MUP.instance.weaponDef,
+                    totalAmmo = Modules.Weapons.MUP.instance.magSize * 2,
+                    currentAmmo = Modules.Weapons.MUP.instance.magSize
                 },
                 new HunkWeaponData
                 {
@@ -110,12 +121,6 @@ namespace HunkMod.Modules.Components
                 },
                 new HunkWeaponData
                 {
-                    weaponDef = Modules.Weapons.M19.instance.weaponDef,
-                    totalAmmo = Modules.Weapons.M19.instance.magSize * 3,
-                    currentAmmo = Modules.Weapons.M19.instance.magSize
-                },
-                new HunkWeaponData
-                {
                     weaponDef = Modules.Weapons.Magnum.instance.weaponDef,
                     totalAmmo = Modules.Weapons.Magnum.instance.magSize,
                     currentAmmo = Modules.Weapons.Magnum.instance.magSize
@@ -125,20 +130,8 @@ namespace HunkMod.Modules.Components
                     weaponDef = Modules.Weapons.Revolver.instance.weaponDef,
                     totalAmmo = Modules.Weapons.Revolver.instance.magSize,
                     currentAmmo = Modules.Weapons.Revolver.instance.magSize
-                },
-                new HunkWeaponData
-                {
-                    weaponDef = Modules.Weapons.RocketLauncher.instance.weaponDef,
-                    totalAmmo = Modules.Weapons.RocketLauncher.instance.magSize,
-                    currentAmmo = Modules.Weapons.RocketLauncher.instance.magSize
-                },
-                new HunkWeaponData
-                {
-                    weaponDef = Modules.Weapons.MUP.instance.weaponDef,
-                    totalAmmo = Modules.Weapons.MUP.instance.magSize * 3,
-                    currentAmmo = Modules.Weapons.MUP.instance.magSize
                 }
-            };*/
+            };
         }
 
         public void SwapToLastWeapon()

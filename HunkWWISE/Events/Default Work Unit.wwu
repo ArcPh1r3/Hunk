@@ -19,7 +19,7 @@
 						<Action Name="" ID="{59465EF6-CC73-4B83-8F2E-A82B589F6FEB}" ShortID="708954592">
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="sfx_driver_shotgun_load" ID="{95E26CB9-B70A-4919-8A4D-97FC75C2B54F}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+									<ObjectRef Name="shotgun_load" ID="{C8B8589D-0901-4723-8328-8A32DF8A2AD0}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
@@ -470,7 +470,7 @@
 						<Action Name="" ID="{9783B15F-969E-4C05-B132-1D8DB6C4D7C8}" ShortID="628375628">
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="sfx_hunk_dodge_success" ID="{F1F293E8-A15A-4409-9321-DA444528F3C6}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+									<ObjectRef Name="sfx_hunk_woosh" ID="{12F6294A-8D4C-4209-97B3-D4DF4A1DFADD}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
@@ -504,6 +504,105 @@
 							<ReferenceList>
 								<Reference Name="Target">
 									<ObjectRef Name="roll" ID="{C9C9120F-7821-42F6-9106-07FE6E6D3CC5}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_bullet_drop" ID="{FB0790CA-8C20-454C-8846-FE586F129AC8}">
+					<ChildrenList>
+						<Action Name="" ID="{D5B85356-3252-4B9C-8A69-760951FB559F}" ShortID="941711322">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="bullet_drop" ID="{4D4CB5FB-E174-4288-B521-619B228D5BE6}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_mup_shoot" ID="{8E2DA2B6-8CD4-4F26-928D-1E76AB13FEC5}">
+					<ChildrenList>
+						<Action Name="" ID="{2E9F772D-888D-42AF-A132-9D3A3B001BD3}" ShortID="339222277">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="mup_shoot" ID="{E3AC1F1B-3305-49A0-9318-295C3E0A4757}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_revolver_shoot" ID="{E2CD3A22-05F6-4028-B9AE-3A7F2C43B1A0}">
+					<ChildrenList>
+						<Action Name="" ID="{5A7FCA17-0C45-4489-8301-92B680838C40}" ShortID="1005235967">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="revolver_shoot" ID="{6CDCDC95-8428-4A57-A0B6-DDBADEFF54CE}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_revolver_load" ID="{8247110F-618B-4C12-9F90-EA45507BE96B}">
+					<ChildrenList>
+						<Action Name="" ID="{C61ACE3E-4F6B-4ED3-B42F-557E4EFED169}" ShortID="647356516">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_revolver_load" ID="{006683FB-6A57-4138-86E5-1E85D23FF41A}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_shotgun_load_01" ID="{E6C21A82-44E6-4C4C-A89F-71633D52ED72}">
+					<ChildrenList>
+						<Action Name="" ID="{4FE5EB23-DCFC-425B-8EE5-D514CB5BD942}" ShortID="786637208">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_driver_shotgun_load" ID="{95E26CB9-B70A-4919-8A4D-97FC75C2B54F}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_shotgun_reload" ID="{C9CCBE4D-EF73-4EDD-8B74-7C285867495D}">
+					<ChildrenList>
+						<Action Name="" ID="{EEDBA487-4394-40C7-BA3D-ECF47EC5095A}" ShortID="347593310">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_shotgun_reload" ID="{A6AA5758-4514-4CC5-BC64-C349E2C98383}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_shotgun_reload_end" ID="{53A7A39D-8BE6-4FB9-A082-1181EE99E4D5}">
+					<ChildrenList>
+						<Action Name="" ID="{7FC4B20B-3F7E-471E-BC5A-C0A4125573BA}" ShortID="926926692">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_shotgun_reload_end" ID="{F505A0A0-1AB5-4AC8-8B27-F2D7A3AFBF62}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_revolver_reload" ID="{E645C902-310C-4BC4-9956-9D482EC03598}">
+					<ChildrenList>
+						<Action Name="" ID="{B73A3DD3-6ED6-474D-8D4B-E55DDE132121}" ShortID="719679892">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_revolver_reload" ID="{D6C9A8F1-CE7B-496C-BC8B-F48E21A91E79}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_revolver_reload_end" ID="{AE11B750-7366-4114-8AA5-AC4FA4E1CE2B}">
+					<ChildrenList>
+						<Action Name="" ID="{294DB1D2-F45F-4856-8596-93C081DDBCB7}" ShortID="722375688">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_revolver_reload_end" ID="{4D62CBD4-BB3B-4967-9FEF-2B47665017F9}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>

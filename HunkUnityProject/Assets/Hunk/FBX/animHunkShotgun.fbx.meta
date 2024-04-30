@@ -75,6 +75,15 @@ ModelImporter:
   - first:
       74: -6094900968212461035
     second: Armature|SwingKnife
+  - first:
+      74: 3771133120938653700
+    second: Armature|RoundReload
+  - first:
+      74: 9193236455982901387
+    second: Armature|RoundReloadEnd
+  - first:
+      74: 7311563502656984555
+    second: Armature|RoundReloadLoop
   externalObjects: {}
   materials:
     materialImportMode: 1

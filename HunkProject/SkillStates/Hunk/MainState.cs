@@ -26,6 +26,8 @@ namespace HunkMod.SkillStates.Hunk
 
 		private void CheckForSuperSkin()
 		{
+			if (this.hunk && this.hunk.weaponTracker && Modules.Helpers.HunkHasWeapon(Modules.Weapons.ATM.instance.weaponDef, this.hunk.weaponTracker)) return;
+
 			CharacterModel model = this.GetModelTransform().GetComponent<CharacterModel>();
 			if (model && model.GetComponent<ModelSkinController>())
 			{

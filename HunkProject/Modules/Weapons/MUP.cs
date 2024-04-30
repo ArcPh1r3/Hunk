@@ -21,10 +21,10 @@ namespace HunkMod.Modules.Weapons
         public override float rangefillValue => 0.7f;
         public override float fireRateFillValue => 0.75f;
         public override float reloadFillValue => 1f;
-        public override float accuracyFillValue => 0.8f;
+        public override float accuracyFillValue => 1f;
 
         public override SkillDef primarySkillDef => Modules.Skills.CreatePrimarySkillDef(
-new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Weapon.M19.Shoot)),
+new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Weapon.MUP.Shoot)),
 "Weapon",
 "ROB_DRIVER_BODY_PRIMARY_BFG_NAME",
 "ROB_DRIVER_BODY_PRIMARY_BFG_DESCRIPTION",

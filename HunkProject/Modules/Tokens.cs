@@ -30,7 +30,7 @@ namespace HunkMod.Modules
 
             #region Skins
             LanguageAPI.Add(prefix + "DEFAULT_SKIN_NAME", "Default");
-            LanguageAPI.Add(prefix + "SUPER_SKIN_NAME", "<color=#" + Helpers.redItemHex + ">Early Supporter" + Helpers.colorSuffix);
+            LanguageAPI.Add(prefix + "SUPER_SKIN_NAME", "<color=#" + Helpers.yellowItemHex + ">Early Supporter" + Helpers.colorSuffix);
             LanguageAPI.Add(prefix + "LIGHTWEIGHT_SKIN_NAME", "Lightweight");
             LanguageAPI.Add(prefix + "COMMANDO_SKIN_NAME", "Commando");
             #endregion
