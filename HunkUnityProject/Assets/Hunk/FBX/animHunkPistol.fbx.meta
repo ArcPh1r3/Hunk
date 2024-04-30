@@ -117,6 +117,15 @@ ModelImporter:
   - first:
       74: -3878095288240498687
     second: Armature|ShootMagnum
+  - first:
+      74: 3771133120938653700
+    second: Armature|RoundReload
+  - first:
+      74: 7311563502656984555
+    second: Armature|RoundReloadLoop
+  - first:
+      74: -7671347037766291764
+    second: Armature|RoundReloadOut
   externalObjects: {}
   materials:
     materialImportMode: 1

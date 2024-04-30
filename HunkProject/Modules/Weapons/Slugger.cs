@@ -12,7 +12,7 @@ namespace HunkMod.Modules.Weapons
         public override string iconName => "texSluggerIcon";
         public override GameObject crosshairPrefab => Modules.Assets.shotgunCrosshairPrefab;
         public override int magSize => 4;
-        public override float reloadDuration => 3f;
+        public override float reloadDuration => 0.6f;
         public override string ammoName => "Shotgun Slugs";
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlSlugger");
         public override HunkWeaponDef.AnimationSet animationSet => HunkWeaponDef.AnimationSet.SMG;
@@ -26,9 +26,15 @@ namespace HunkMod.Modules.Weapons
         public override SkillDef primarySkillDef => Modules.Skills.CreatePrimarySkillDef(
 new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Weapon.Slugger.Shoot)),
 "Weapon",
-"ROB_DRIVER_BODY_PRIMARY_BFG_NAME",
-"ROB_DRIVER_BODY_PRIMARY_BFG_DESCRIPTION",
+"ROB_HUNK_BODY_SHOOT_SLUGGER_NAME",
+"ROB_HUNK_BODY_SHOOT_SLUGGER_DESCRIPTION",
 Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texShootIcon"),
 false);
+
+        public override void Init()
+        {
+            base.Init();
+            this.weaponDef.roundReload = true;
+        }
     }
 }

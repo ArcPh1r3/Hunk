@@ -234,7 +234,15 @@ namespace HunkMod.Modules.Components
             {
                 HunkWeaponDef weaponDef = this.hunk.weaponData[this.index].weaponDef;
                 this.label.text = Language.GetString(weaponDef.nameToken);
-                this.ammoCount.text = this.hunk.weaponData[this.index].currentAmmo + " / " + this.hunk.weaponData[this.index].totalAmmo;
+
+                if (weaponDef.magSize >= 999)
+                {
+                    this.ammoCount.text = "<color=#" + Helpers.yellowItemHex + ">Infinite" + Helpers.colorSuffix;
+                }
+                else
+                {
+                    this.ammoCount.text = this.hunk.weaponData[this.index].currentAmmo + " / " + this.hunk.weaponData[this.index].totalAmmo;
+                }
 
                 this.statFill[0].fillAmount = weaponDef.damageFillValue;
                 this.statFill[1].fillAmount = weaponDef.rangefillValue;

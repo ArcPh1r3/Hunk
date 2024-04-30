@@ -49,7 +49,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.ATM
 
             this.Fire();
 
-            if (this.hunk) this.hunk.ConsumeAmmo();
+            //if (this.hunk) this.hunk.ConsumeAmmo();
         }
 
         protected virtual float _damageCoefficient

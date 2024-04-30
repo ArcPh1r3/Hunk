@@ -24,6 +24,8 @@ public class HunkWeaponDef : ScriptableObject
     public string ammoName = "";
     public bool allowAutoReload = true;
     public bool exposeWeakPoints = true;
+    public bool roundReload = false;
+    public bool canPickUpAmmo = true;
 
     [Header("Skills")]
     public SkillDef primarySkillDef;

@@ -49,6 +49,8 @@ namespace HunkMod.Modules.Survivors
         internal static List<ItemDisplayRuleSet.KeyAssetRuleGroup> itemDisplayRules;
 
         internal static UnlockableDef characterUnlockableDef;
+        internal static UnlockableDef lightweightUnlockableDef;
+        internal static UnlockableDef earlySupporterUnlockableDef;
 
         // skill overrides
         internal static SkillDef reloadSkillDef;
@@ -99,6 +101,8 @@ namespace HunkMod.Modules.Survivors
                 forceUnlock = Modules.Config.ForceUnlockConfig("Hunk");
 
                 //if (!forceUnlock.Value) characterUnlockableDef = R2API.UnlockableAPI.AddUnlockable<Achievements.DriverUnlockAchievement>();
+                lightweightUnlockableDef = R2API.UnlockableAPI.AddUnlockable<Achievements.HunkLightweightAchievement>();
+                earlySupporterUnlockableDef = R2API.UnlockableAPI.AddUnlockable<Achievements.HunkSupporterAchievement>();
 
                 CreateAmmoInteractable();
                 CreateBarrelAmmoInteractable();
@@ -764,22 +768,13 @@ namespace HunkMod.Modules.Survivors
             skins.Add(defaultSkin);
             #endregion
 
-            #region SuperSkin
-            SkinDef superSkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_SUPER_SKIN_NAME",
-                Assets.mainAssetBundle.LoadAsset<Sprite>("texMainSkin"),
-                defaultRenderers,
-                mainRenderer,
-                model);
-
-            skins.Add(superSkin);
-            #endregion
-
             #region MasterySkin
-            SkinDef masterySkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_MONSOON_SKIN_NAME",
-                Assets.mainAssetBundle.LoadAsset<Sprite>("texMainSkin"),
+            SkinDef masterySkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_LIGHTWEIGHT_SKIN_NAME",
+                Assets.mainAssetBundle.LoadAsset<Sprite>("texLightweightSkin"),
                 defaultRenderers,
                 mainRenderer,
-                model);
+                model,
+                lightweightUnlockableDef);
 
             masterySkin.meshReplacements = new SkinDef.MeshReplacement[]
             {
@@ -804,8 +799,8 @@ namespace HunkMod.Modules.Survivors
             #endregion
 
             #region CommandoSkin
-            SkinDef commandoSkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_MONSOON_SKIN_NAME",
-                Assets.mainAssetBundle.LoadAsset<Sprite>("texMainSkin"),
+            SkinDef commandoSkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_COMMANDO_SKIN_NAME",
+                Addressables.LoadAssetAsync<SkinDef>("RoR2/Base/Commando/skinCommandoDefault.asset").WaitForCompletion().icon,
                 SkinRendererInfos(defaultRenderers,
                 new Material[]
                 {
@@ -849,6 +844,17 @@ namespace HunkMod.Modules.Survivors
             };
 
             skins.Add(commandoSkin);
+            #endregion
+
+            #region SuperSkin
+            SkinDef superSkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_SUPER_SKIN_NAME",
+                Assets.mainAssetBundle.LoadAsset<Sprite>("texSuperSkin"),
+                defaultRenderers,
+                mainRenderer,
+                model,
+                earlySupporterUnlockableDef);
+
+            skins.Add(superSkin);
             #endregion
 
             skinController.skins = skins.ToArray();
@@ -1300,9 +1306,14 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             // custom hud
             RoR2.UI.HUD.onHudTargetChangedGlobal += HUDSetup;
 
+            // hide the bazooka skin
+            On.RoR2.UI.LoadoutPanelController.Row.AddButton += Row_AddButton;
+
             // rummage passive
             On.RoR2.ChestBehavior.ItemDrop += ChestBehavior_ItemDrop;
             On.RoR2.BarrelInteraction.CoinDrop += BarrelInteraction_CoinDrop;
+            On.RoR2.ShopTerminalBehavior.DropPickup += ShopTerminalBehavior_DropPickup;
+            On.RoR2.RouletteChestController.EjectPickupServer += RouletteChestController_EjectPickupServer;
 
             // bandolier
             On.RoR2.SkillLocator.ApplyAmmoPack += SkillLocator_ApplyAmmoPack;
@@ -1315,12 +1326,47 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             CostTypeCatalog.modHelper.getAdditionalEntries += AddSpadeCostType;
             CostTypeCatalog.modHelper.getAdditionalEntries += AddDiamondCostType;
             CostTypeCatalog.modHelper.getAdditionalEntries += AddClubCostType;
+            
+            // if i speak i am in trouble
+            On.RoR2.UI.MainMenu.BaseMainMenuScreen.Update += BaseMainMenuScreen_Update;
 
             // heresy anims
             //On.EntityStates.GlobalSkills.LunarNeedle.FireLunarNeedle.OnEnter += PlayVisionsAnimation;
             //On.EntityStates.GlobalSkills.LunarNeedle.ChargeLunarSecondary.PlayChargeAnimation += PlayChargeLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarNeedle.ThrowLunarSecondary.PlayThrowAnimation += PlayThrowLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += PlayRuinAnimation;
+        }
+
+        private static void RouletteChestController_EjectPickupServer(On.RoR2.RouletteChestController.orig_EjectPickupServer orig, RouletteChestController self, PickupIndex pickupIndex)
+        {
+            orig(self, pickupIndex);
+        }
+
+        private static void ShopTerminalBehavior_DropPickup(On.RoR2.ShopTerminalBehavior.orig_DropPickup orig, ShopTerminalBehavior self)
+        {
+            if (Modules.Helpers.isHunkInPlay)
+            {
+                GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, self.transform.rotation);
+            }
+
+            orig(self);
+        }
+
+        private static void BaseMainMenuScreen_Update(On.RoR2.UI.MainMenu.BaseMainMenuScreen.orig_Update orig, RoR2.UI.MainMenu.BaseMainMenuScreen self)
+        {
+            orig(self);
+            Transform buttonPanel = self.transform.Find("SafeZone/GenericMenuButtonPanel/ModPanel(Clone)");
+            if (buttonPanel) buttonPanel.GetComponent<RectTransform>().localRotation = Quaternion.Euler(new Vector3(0f, 90f, 0f));
+        }
+
+        private static void Row_AddButton(On.RoR2.UI.LoadoutPanelController.Row.orig_AddButton orig, object self, LoadoutPanelController owner, Sprite icon, string titleToken, string bodyToken, Color tooltipColor, UnityEngine.Events.UnityAction callback, string unlockableName, ViewablesCatalog.Node viewableNode, bool isWIP)
+        {
+            if (unlockableName == earlySupporterUnlockableDef.nameToken)
+            {
+                bool unlocked = LocalUserManager.readOnlyLocalUsersList.Any((LocalUser localUser) => localUser.userProfile.HasUnlockable(earlySupporterUnlockableDef));
+                if (!unlocked) return;
+            }
+            orig(self, owner, icon, titleToken, bodyToken, tooltipColor, callback, unlockableName, viewableNode, isWIP);
         }
 
         private static void HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
@@ -1371,6 +1417,19 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             if (Modules.Helpers.isHunkInPlay)
             {
                 GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, self.transform.rotation);
+
+                if (self.tier3Chance >= 0.2f)
+                {
+                    GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, self.transform.rotation);
+                }
+
+                if (self.tier3Chance >= 1f)
+                {
+                    GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, self.transform.rotation);
+                }
+                // todo more ammo from large chest
+                // even more from legendary
+                //if (self)
             }
 
             orig(self);

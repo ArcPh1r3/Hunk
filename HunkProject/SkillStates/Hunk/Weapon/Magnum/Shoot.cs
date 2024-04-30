@@ -103,7 +103,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Magnum
 
                         effectData.SetHurtBoxReference(hitInfo.hitHurtBox);
                         EffectManager.SpawnEffect(Modules.Assets.headshotEffect, effectData, true);
-                        Util.PlaySound("sfx_driver_headshot", base.gameObject);
+                        Util.PlaySound("sfx_hunk_headshot", base.gameObject);
                         hitInfo.hitHurtBox.healthComponent.gameObject.AddComponent<Modules.Components.HunkHeadshotTracker>();
                     }
                 };

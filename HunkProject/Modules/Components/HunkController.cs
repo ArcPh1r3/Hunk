@@ -2,6 +2,7 @@
 using R2API.Networking.Interfaces;
 using RoR2;
 using RoR2.Skills;
+using RoR2.UI;
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -63,6 +64,9 @@ namespace HunkMod.Modules.Components
         public float ammoKillTimer = 0f;
         private ParticleSystem speedLines;
         private Animator dodgeFlash;
+        private GameObject emptyCrosshair = Modules.Assets.LoadCrosshair("Bad");
+        private bool isOut;
+        private CrosshairUtils.OverrideRequest crosshairOverrideRequest;
 
 
         private void Awake()
@@ -95,7 +99,7 @@ namespace HunkMod.Modules.Components
                 CameraTargetParams ctp = this.characterBody.GetComponent<CameraTargetParams>();
                 if (ctp)
                 {
-                    ctp.cameraPivotTransform = this.characterModel.transform.Find("Armature/ROOT/base");
+                    if (Modules.Config.overTheShoulderCamera.Value && !Modules.Config.overTheShoulderCamera2.Value) ctp.cameraPivotTransform = this.characterModel.transform.Find("Armature/ROOT/base");
                 }
             }
 
@@ -188,6 +192,8 @@ namespace HunkMod.Modules.Components
 
             if (this.ammo <= 0) this.ammo = 0;
             if (this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo <= 0) this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo = 0;
+
+            if (this.weaponDef.animationSet == HunkWeaponDef.AnimationSet.Pistol) this.Invoke("BulletDrop", UnityEngine.Random.Range(0.5f, 0.6f));
         }
 
         public void ApplyBandolier()
@@ -203,6 +209,17 @@ namespace HunkMod.Modules.Components
             this.reloadTimer -= Time.fixedDeltaTime;
             this.lockOnTimer -= Time.fixedDeltaTime;
             this.ammoKillTimer -= Time.fixedDeltaTime;
+
+            if (this.ammo <= 0)
+            {
+                if (!this.isOut) this.crosshairOverrideRequest = CrosshairUtils.RequestOverrideForBody(this.characterBody, this.emptyCrosshair, CrosshairUtils.OverridePriority.Skill);
+                this.isOut = true;
+            }
+            else
+            {
+                if (this.isOut) this.crosshairOverrideRequest.Dispose();
+                this.isOut = false;
+            }
 
             if (!this.cameraController)
             {
@@ -290,10 +307,43 @@ namespace HunkMod.Modules.Components
             }
         }
 
-        /*private void Update()
+        private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.V)) this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo += this.maxAmmo;
-        }*/
+            /*if (Input.GetKeyDown(KeyCode.V))
+            {
+                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Weapons.Shotgun.instance.itemDef.itemIndex), this.characterBody.corePosition, this.characterBody.inputBank.aimDirection * 10f);
+            }
+
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Weapons.Slugger.instance.itemDef.itemIndex), this.characterBody.corePosition, this.characterBody.inputBank.aimDirection * 10f);
+            }
+
+            if (Input.GetKeyDown(KeyCode.N))
+            {
+                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Weapons.SMG.instance.itemDef.itemIndex), this.characterBody.corePosition, this.characterBody.inputBank.aimDirection * 10f);
+            }
+
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Weapons.RocketLauncher.instance.itemDef.itemIndex), this.characterBody.corePosition, this.characterBody.inputBank.aimDirection * 10f);
+            }
+
+            if (Input.GetKeyDown(KeyCode.U))
+            {
+                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Weapons.Revolver.instance.itemDef.itemIndex), this.characterBody.corePosition, this.characterBody.inputBank.aimDirection * 10f);
+            }
+
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Weapons.M19.instance.itemDef.itemIndex), this.characterBody.corePosition, this.characterBody.inputBank.aimDirection * 10f);
+            }
+
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Weapons.MUP.instance.itemDef.itemIndex), this.characterBody.corePosition, this.characterBody.inputBank.aimDirection * 10f);
+            }*/
+        }
 
         private void TryLockOn()
         {
@@ -387,12 +437,37 @@ namespace HunkMod.Modules.Components
             if (this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo <= 0) this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo = 0;
         }
 
+        public void FinishRoundReload()
+        {
+            if (this.characterBody.master)
+            {
+                if (this.characterBody.master.inventory)
+                {
+                    this.ammo += this.characterBody.master.inventory.GetItemCount(RoR2Content.Items.SecondarySkillMagazine);
+                }
+            }
+        }
+
+        private void BulletDrop()
+        {
+            Util.PlaySound("sfx_hunk_bullet_drop", this.gameObject);
+        }
+
+        public void ReloadRound()
+        {
+            // ugh
+            if (this.weaponDef.animationSet == HunkWeaponDef.AnimationSet.Pistol) Util.PlaySound("sfx_hunk_revolver_load", this.gameObject);
+            else Util.PlaySound("sfx_hunk_shotgun_load", this.gameObject);
+
+            this.ammo++;
+            this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo++;
+            this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo--;
+
+            if (this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo <= 0) this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo = 0;
+        }
+
         public void PickUpWeapon(HunkWeaponDef newWeapon)
         {
-            this.weaponDef = newWeapon;
-
-            this.weaponTracker.AddWeapon(newWeapon);
-
             this.TryPickupNotification();
 
             if (this.onWeaponUpdate == null) return;
@@ -651,7 +726,16 @@ namespace HunkMod.Modules.Components
                 }
             }
 
-            int index = UnityEngine.Random.Range(0, this.weaponTracker.weaponData.Length);
+
+            bool valid = false;
+            int index = 0;
+
+            while (!valid)
+            {
+                index = UnityEngine.Random.Range(0, this.weaponTracker.weaponData.Length);
+                if (this.weaponTracker.weaponData[index].weaponDef.canPickUpAmmo) valid = true;
+            }
+
             int amount = Mathf.CeilToInt(this.weaponTracker.weaponData[index].weaponDef.magSize * multiplier);
 
             this.weaponTracker.weaponData[index].totalAmmo += amount;

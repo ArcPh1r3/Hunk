@@ -20,9 +20,31 @@ namespace HunkMod.SkillStates.Hunk
 			this.animator = this.modelAnimator;
 			this.hunk = this.GetComponent<HunkController>();
 			this.FindLocalUser();
+
+			this.CheckForSuperSkin();
         }
 
-        public override void FixedUpdate()
+		private void CheckForSuperSkin()
+		{
+			if (this.hunk && this.hunk.weaponTracker && Modules.Helpers.HunkHasWeapon(Modules.Weapons.ATM.instance.weaponDef, this.hunk.weaponTracker)) return;
+
+			CharacterModel model = this.GetModelTransform().GetComponent<CharacterModel>();
+			if (model && model.GetComponent<ModelSkinController>())
+			{
+				ModelSkinController msc = model.GetComponent<ModelSkinController>();
+				if (msc.skins[msc.currentSkinIndex].nameToken.Contains("SUPER"))
+				{
+					if (Util.HasEffectiveAuthority(this.gameObject))
+					{
+						Chat.AddMessage("Thanks for supporting the mod :)");
+					}
+
+					PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Weapons.ATM.instance.itemDef.itemIndex), this.characterBody.corePosition, this.characterBody.inputBank.aimDirection * 30f);
+				}
+			}
+		}
+
+		public override void FixedUpdate()
         {
             base.FixedUpdate();
 

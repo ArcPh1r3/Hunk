@@ -41,6 +41,12 @@ namespace HunkMod.Modules.Components
                         return;
                     }
 
+                    if (this.hunk.maxAmmo >= 999f)
+                    {
+                        this.targetText.token = "";
+                        return;
+                    }
+
                     if (this.hunk.ammo <= 0f)
                     {
                         if (this.totalAmmo > 0)

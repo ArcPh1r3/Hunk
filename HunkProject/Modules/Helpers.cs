@@ -1,4 +1,5 @@
-﻿using RoR2;
+﻿using HunkMod.Modules.Components;
+using RoR2;
 using UnityEngine;
 
 namespace HunkMod.Modules
@@ -43,6 +44,34 @@ namespace HunkMod.Modules
                 }
                 return isHunkOnPlayerTeam;
             }
+        }
+
+        public static bool HunkHasWeapon(HunkWeaponDef weaponDef)
+        {
+            foreach (HunkWeaponTracker hunk in GameObject.FindObjectsOfType<HunkWeaponTracker>())
+            {
+                foreach (HunkWeaponData i in hunk.weaponData)
+                {
+                    if (i.weaponDef == weaponDef) return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool HunkHasWeapon(HunkWeaponDef weaponDef, HunkController hunk)
+        {
+            return HunkHasWeapon(weaponDef, hunk.weaponTracker);
+        }
+
+        public static bool HunkHasWeapon(HunkWeaponDef weaponDef, HunkWeaponTracker hunk)
+        {
+            foreach (HunkWeaponData i in hunk.weaponData)
+            {
+                if (i.weaponDef == weaponDef) return true;
+            }
+
+            return false;
         }
     }
 }
