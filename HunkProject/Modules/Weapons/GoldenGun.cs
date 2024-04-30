@@ -4,16 +4,16 @@ using UnityEngine.AddressableAssets;
 
 namespace HunkMod.Modules.Weapons
 {
-    public class Magnum : BaseWeapon<Magnum>
+    public class GoldenGun : BaseWeapon<GoldenGun>
     {
-        public override string weaponNameToken => "MAGNUM";
-        public override string weaponName => "Lightning Hawk";
+        public override string weaponNameToken => "GOLDGUN";
+        public override string weaponName => "Golden Gun";
         public override string weaponDesc => "7-round capacity .50 AE MAG. Gas-operated action, which is unusual for a semi-auto handgun, gives it both power and accuracy.";
         public override string iconName => "texMagnumIcon";
         public override GameObject crosshairPrefab => Modules.Assets.magnumCrosshairPrefab;
-        public override int magSize => 7;
+        public override int magSize => 1;
         public override float reloadDuration => 1.8f;
-        public override string ammoName => "MAG Ammo";
+        public override string ammoName => "Golden Ammo";
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlMagnum");
         public override HunkWeaponDef.AnimationSet animationSet => HunkWeaponDef.AnimationSet.Pistol;
         public override bool storedOnBack => false;
@@ -26,8 +26,8 @@ namespace HunkMod.Modules.Weapons
         public override SkillDef primarySkillDef => Modules.Skills.CreatePrimarySkillDef(
 new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Weapon.Magnum.Shoot)),
 "Weapon",
-"ROB_HUNK_BODY_SHOOT_MAGNUM_NAME",
-"ROB_HUNK_BODY_SHOOT_MAGNUM_DESCRIPTION",
+"ROB_DRIVER_BODY_PRIMARY_BFG_NAME",
+"ROB_DRIVER_BODY_PRIMARY_BFG_DESCRIPTION",
 Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texShootIcon"),
 false);
     }

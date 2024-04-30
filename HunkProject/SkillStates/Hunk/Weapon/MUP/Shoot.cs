@@ -93,7 +93,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.MUP
                 {
                     if (BulletAttack.IsSniperTargetHit(hitInfo))
                     {
-                        damageInfo.damage *= 1.5f;
+                        damageInfo.damage *= 1.25f;
                         damageInfo.damageColorIndex = DamageColorIndex.Sniper;
                         EffectData effectData = new EffectData
                         {

@@ -87,9 +87,7 @@ namespace HunkMod.Modules.Weapons
             itemDef.loreToken = "ROB_HUNK_WEAPON_" + weaponNameToken + "_DESC";
             itemDef.canRemove = false;
             itemDef.hidden = false;
-            itemDef.loreToken = "";
             itemDef.pickupIconSprite = weaponDef.icon;
-            itemDef.pickupToken = "";
             itemDef.requiredExpansion = null;
             itemDef.tags = new ItemTag[]
             {

@@ -55,6 +55,33 @@ namespace HunkMod.Modules
 
             LanguageAPI.Add(prefix + "PRIMARY_KNIFEALT_NAME", "Hidden Blade");
             LanguageAPI.Add(prefix + "PRIMARY_KNIFEALT_DESCRIPTION", $"<style=cIsUtility>Looting.</style> <style=cIsDamage>Slash</style> close-range combatants for <style=cIsDamage>{100f * 2.2}% damage</style>. <style=cIsDamage>Attacks from behind are Critical Strikes.</style>");
+
+            LanguageAPI.Add(prefix + "SHOOT_ATM_NAME", "Fire");
+            LanguageAPI.Add(prefix + "SHOOT_ATM_DESCRIPTION", "Shoot for <style=cIsDamage>3200% damage</style>. <style=cIsUtility>Deals most damage on direct hits.</style>");
+
+            LanguageAPI.Add(prefix + "SHOOT_ROCKETLAUNCHER_NAME", "Fire");
+            LanguageAPI.Add(prefix + "SHOOT_ROCKETLAUNCHER_DESCRIPTION", "Shoot for <style=cIsDamage>2400% damage</style>. <style=cIsDamage>Igniting.</style>");
+
+            LanguageAPI.Add(prefix + "SHOOT_M19_NAME", "Fire");
+            LanguageAPI.Add(prefix + "SHOOT_M19_DESCRIPTION", "Shoot for <style=cIsDamage>380% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
+
+            LanguageAPI.Add(prefix + "SHOOT_MAGNUM_NAME", "Fire");
+            LanguageAPI.Add(prefix + "SHOOT_MAGNUM_DESCRIPTION", "Shoot for <style=cIsDamage>1200% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
+
+            LanguageAPI.Add(prefix + "SHOOT_MUP_NAME", "Fire");
+            LanguageAPI.Add(prefix + "SHOOT_MUP_DESCRIPTION", "Shoot for <style=cIsDamage>320% damage</style>. <style=cIsUtility>25% headshot bonus.</style>");
+
+            LanguageAPI.Add(prefix + "SHOOT_REVOLVER_NAME", "Fire");
+            LanguageAPI.Add(prefix + "SHOOT_REVOLVER_DESCRIPTION", "Shoot for <style=cIsDamage>1200% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
+
+            LanguageAPI.Add(prefix + "SHOOT_SHOTGUN_NAME", "Fire");
+            LanguageAPI.Add(prefix + "SHOOT_SHOTGUN_DESCRIPTION", "Shoot for <style=cIsDamage>140x8% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
+
+            LanguageAPI.Add(prefix + "SHOOT_SLUGGER_NAME", "Fire");
+            LanguageAPI.Add(prefix + "SHOOT_SLUGGER_DESCRIPTION", "Shoot for <style=cIsDamage>1200% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
+
+            LanguageAPI.Add(prefix + "SHOOT_SMG_NAME", "Fire");
+            LanguageAPI.Add(prefix + "SHOOT_SMG_DESCRIPTION", "Shoot for <style=cIsDamage>220% damage</style>. <style=cIsUtility>25% headshot bonus.</style>");
             #endregion
 
             #region Secondary
