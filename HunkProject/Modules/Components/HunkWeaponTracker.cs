@@ -1,6 +1,8 @@
 ﻿using RoR2;
 using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace HunkMod.Modules.Components
 {
@@ -203,6 +205,11 @@ namespace HunkMod.Modules.Components
             this.AddWeaponItem(weaponDef);
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.V)) this.TrySpawnKeycard();
+        }
+
         private void AddWeaponItem(HunkWeaponDef weaponDef)
         {
             if (this.inventory.GetItemCount(weaponDef.itemDef) <= 0) this.inventory.GiveItem(weaponDef.itemDef);
@@ -235,8 +242,7 @@ namespace HunkMod.Modules.Components
             {
                 if (rng <= chance)
                 {
-                    this.hasSpawnedSpadeKeycard = true;
-                    this.SpawnKeycardHolder(Modules.Survivors.Hunk.spadeKeycard);
+                    if (this.SpawnKeycardHolder(Modules.Enemies.Parasite.spadeSpawnCard)) this.hasSpawnedSpadeKeycard = true;
                 }
                 return;
             }
@@ -245,8 +251,7 @@ namespace HunkMod.Modules.Components
             {
                 if (rng <= chance)
                 {
-                    this.hasSpawnedClubKeycard = true;
-                    this.SpawnKeycardHolder(Modules.Survivors.Hunk.clubKeycard);
+                    if (this.SpawnKeycardHolder(Modules.Enemies.Parasite.clubSpawnCard)) this.hasSpawnedClubKeycard = true;
                 }
                 return;
             }
@@ -255,8 +260,7 @@ namespace HunkMod.Modules.Components
             {
                 if (rng <= chance)
                 {
-                    this.hasSpawnedHeartKeycard = true;
-                    this.SpawnKeycardHolder(Modules.Survivors.Hunk.heartKeycard);
+                    if (this.SpawnKeycardHolder(Modules.Enemies.Parasite.heartSpawnCard)) this.hasSpawnedHeartKeycard = true;
                 }
                 return;
             }
@@ -265,21 +269,48 @@ namespace HunkMod.Modules.Components
             {
                 if (rng <= chance)
                 {
-                    this.hasSpawnedDiamondKeycard = true;
-                    this.SpawnKeycardHolder(Modules.Survivors.Hunk.diamondKeycard);
+                    if (this.SpawnKeycardHolder(Modules.Enemies.Parasite.diamondSpawnCard)) this.hasSpawnedDiamondKeycard = true;
                 }
                 return;
             }
         }
 
-        private void SpawnKeycardHolder(ItemDef itemDef)
+        private bool SpawnKeycardHolder(SpawnCard spawnCard)
         {
             this.spawnedKeycardThisStage = true;
-            // ummm
-            PickupDropletController.CreatePickupDroplet(
-                PickupCatalog.FindPickupIndex(itemDef.itemIndex),
-                this.hunk.characterBody.corePosition,
-                this.hunk.characterBody.inputBank.aimDirection * 10f);
+
+            // just spawn it on a random enemy idc
+            Transform target = null;
+            foreach (CharacterBody i in CharacterBody.readOnlyInstancesList)
+            {
+                if (i && i.teamComponent && i.teamComponent.teamIndex != TeamIndex.Player)
+                {
+                    target = i.transform;
+                    break;
+                }
+            }
+
+            if (!target) return false;
+
+            if (NetworkServer.active)
+            {
+                DirectorSpawnRequest directorSpawnRequest = new DirectorSpawnRequest(spawnCard, new DirectorPlacementRule
+                {
+                    placementMode = DirectorPlacementRule.PlacementMode.Direct,
+                    minDistance = 0f,
+                    maxDistance = 0f,
+                    position = target.position + (Vector3.up * 8f)
+                }, Run.instance.runRNG);
+
+                GameObject spawnedBody = DirectorCore.instance.TrySpawnObject(directorSpawnRequest);
+            }
+
+            return true;
         }
+        // ummm
+        /*PickupDropletController.CreatePickupDroplet(
+            PickupCatalog.FindPickupIndex(itemDef.itemIndex),
+            this.hunk.characterBody.corePosition,
+            this.hunk.characterBody.inputBank.aimDirection * 10f);*/
     }
 }

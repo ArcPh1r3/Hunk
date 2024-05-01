@@ -9,6 +9,8 @@ namespace HunkMod.Modules
         {
             string prefix = MainPlugin.developerPrefix + "_HUNK_BODY_";
 
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_PARASITE_BODY_NAME", "G-Young");
+
             string desc = "HUNK is an elite infiltrator who carries a large arsenal of weapons claimed via OSP (on-site procurement).<color=#CCD3E0>" + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > Use your Combat Knife against weaker foes to conserve ammo." + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > Find UES Keycards to unlock Weapon Cases to add to your armaments on each stage." + Environment.NewLine + Environment.NewLine;
@@ -63,7 +65,7 @@ namespace HunkMod.Modules
             LanguageAPI.Add(prefix + "SHOOT_ROCKETLAUNCHER_DESCRIPTION", "Shoot for <style=cIsDamage>2400% damage</style>. <style=cIsDamage>Igniting.</style>");
 
             LanguageAPI.Add(prefix + "SHOOT_M19_NAME", "Fire");
-            LanguageAPI.Add(prefix + "SHOOT_M19_DESCRIPTION", "Shoot for <style=cIsDamage>380% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
+            LanguageAPI.Add(prefix + "SHOOT_M19_DESCRIPTION", "Shoot for <style=cIsDamage>550% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
 
             LanguageAPI.Add(prefix + "SHOOT_MAGNUM_NAME", "Fire");
             LanguageAPI.Add(prefix + "SHOOT_MAGNUM_DESCRIPTION", "Shoot for <style=cIsDamage>1200% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
@@ -81,7 +83,7 @@ namespace HunkMod.Modules
             LanguageAPI.Add(prefix + "SHOOT_SLUGGER_DESCRIPTION", "Shoot for <style=cIsDamage>1200% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
 
             LanguageAPI.Add(prefix + "SHOOT_SMG_NAME", "Fire");
-            LanguageAPI.Add(prefix + "SHOOT_SMG_DESCRIPTION", "Shoot for <style=cIsDamage>220% damage</style>. <style=cIsUtility>25% headshot bonus.</style>");
+            LanguageAPI.Add(prefix + "SHOOT_SMG_DESCRIPTION", "Shoot for <style=cIsDamage>250% damage</style>. <style=cIsUtility>25% headshot bonus.</style>");
             #endregion
 
             #region Secondary

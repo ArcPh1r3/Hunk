@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1304003500
+CRC: 751387489
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: fa526b11d6d1f7ea0a380903e7e73de6
+    Hash: 88d9826282f7e8a0763e4081c3a5028b
   TypeTreeHash:
     serializedVersion: 2
     Hash: 659e220902f47d64c1f3c17677639f17
@@ -100,6 +100,7 @@ Assets:
 - Assets/Hunk/FBX/RoundReloadEnd.anim
 - Assets/Hunk/Items/mdlKeycardHeart.prefab
 - Assets/Hunk/VFX/matShockwave.mat
+- Assets/Hunk/HUD/Textures/texHudBar.png
 - Assets/Hunk/FBX/Hunk.fbx
 - Assets/Hunk/VFX/matSpeedLineVertical.mat
 - Assets/Hunk/Icons/texSuperSkin.png
@@ -212,6 +213,7 @@ Assets:
 - Assets/Hunk/HUD/Textures/texWeakPointIndicator.png
 - Assets/Hunk/Icons/Weapon/texPlaceholderIcon.png
 - Assets/Hunk/FBX/Material.001.mat
+- Assets/Hunk/HUD/AmmoPanel.prefab
 - Assets/Hunk/FBX/Animations/Default/FreefallF.anim
 - Assets/Hunk/Textures/MUP/USP_29_USP_29_BaseColor.png
 - Assets/Hunk/VFX/texSpeedLineVertical.png

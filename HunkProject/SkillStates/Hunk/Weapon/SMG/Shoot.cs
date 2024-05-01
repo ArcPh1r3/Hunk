@@ -6,7 +6,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.SMG
 {
     public class Shoot : BaseHunkSkillState
     {
-        public static float damageCoefficient = 2.2f;
+        public static float damageCoefficient = 2.5f;
         public static float procCoefficient = 1f;
         public static float baseDuration = 0.21f;
         public static float force = 20f;
@@ -69,7 +69,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.SMG
                     force = Shoot.force,
                     hitMask = LayerIndex.CommonMasks.bullet,
                     minSpread = 0f,
-                    maxSpread = this.characterBody.spreadBloomAngle * 2f,
+                    maxSpread = this.characterBody.spreadBloomAngle * 3f,
                     isCrit = this.isCrit,
                     owner = this.gameObject,
                     muzzleName = muzzleString,

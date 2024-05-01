@@ -70,6 +70,7 @@ namespace HunkMod
             //Modules.WeaponChest.Initialize(); not yet.
 
             new Modules.Survivors.Hunk().CreateCharacter();
+            new Modules.Enemies.Parasite().CreateCharacter();
 
             NetworkingAPI.RegisterMessageType<Modules.Components.SyncWeapon>();
             NetworkingAPI.RegisterMessageType<Modules.Components.SyncOverlay>();

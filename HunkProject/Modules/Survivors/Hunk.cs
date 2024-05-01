@@ -4,10 +4,7 @@ using RoR2;
 using RoR2.Skills;
 using System.Collections.Generic;
 using UnityEngine;
-using KinematicCharacterController;
 using RoR2.CharacterAI;
-using RoR2.Navigation;
-using RoR2.Orbs;
 using UnityEngine.Networking;
 using UnityEngine.AddressableAssets;
 using RoR2.UI;
@@ -15,11 +12,6 @@ using System.Linq;
 using HunkMod.Modules.Components;
 using R2API.Networking;
 using R2API.Networking.Interfaces;
-using UnityEngine.UI;
-using HunkMod.Modules.Weapons;
-using UnityEngine.Events;
-using R2API.Utils;
-using EntityStates.QuestVolatileBattery;
 
 namespace HunkMod.Modules.Survivors
 {
@@ -37,7 +29,7 @@ namespace HunkMod.Modules.Survivors
 
         internal float pityMultiplier = 1f;
 
-        public static Color characterColor = new Color(145f / 255f, 0f, 1f);
+        public static Color characterColor = new Color(127f / 255f, 0f, 0f);
 
         public const string bodyName = "RobHunkBody";
 
@@ -1798,7 +1790,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
 
 
-                    // ammo display for alt passive
+                    // ammo display
 
                     Transform healthbarContainer = hud.transform.Find("MainContainer").Find("MainUIArea").Find("SpringCanvas").Find("BottomLeftCluster").Find("BarRoots").Find("LevelDisplayCluster");
 
@@ -1910,6 +1902,31 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                 _new.notificationQueue = hud.targetMaster.gameObject.AddComponent<WeaponNotificationQueue>();
 
                 _old.enabled = false;
+
+
+                // ammo display
+
+                Transform mainContainer = hud.transform.Find("MainContainer").Find("MainUIArea").Find("CrosshairCanvas").Find("CrosshairExtras");
+
+                if (!mainContainer.Find("AmmoDisplay"))
+                {
+                    GameObject ammoTracker = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("AmmoPanel"), mainContainer);
+                    ammoTracker.name = "AmmoDisplay";
+                    ammoTracker.transform.SetParent(mainContainer);
+
+                    AmmoDisplay2 ammoTrackerComponent = ammoTracker.AddComponent<AmmoDisplay2>();
+                    ammoTrackerComponent.targetHUD = hud;
+                    ammoTrackerComponent.currentText = ammoTracker.transform.Find("Current").gameObject.GetComponent<TMPro.TextMeshProUGUI>();
+                    ammoTrackerComponent.totalText = ammoTracker.transform.Find("Total").gameObject.GetComponent<TMPro.TextMeshProUGUI>();
+
+                    rect = ammoTracker.GetComponent<RectTransform>();
+                    rect.localScale = new Vector3(1f, 1f, 1f);
+                    rect.anchorMin = new Vector2(0f, 0f);
+                    rect.anchorMax = new Vector2(0f, 0f);
+                    rect.pivot = new Vector2(0.5f, 0f);
+                    rect.anchoredPosition = new Vector2(50f, 0f);
+                    rect.localPosition = new Vector3(100f, -150f, 0f);
+                }
             }
         }
 

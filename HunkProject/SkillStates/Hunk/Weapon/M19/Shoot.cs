@@ -6,9 +6,9 @@ namespace HunkMod.SkillStates.Hunk.Weapon.M19
 {
     public class Shoot : BaseHunkSkillState
     {
-        public static float damageCoefficient = 3.8f;
+        public static float damageCoefficient = 5.5f;
         public static float procCoefficient = 1f;
-        public static float baseDuration = 0.55f;
+        public static float baseDuration = 0.65f;
         public static float force = 500f;
         public static float recoil = 1f;
         public static float range = 2000f;
