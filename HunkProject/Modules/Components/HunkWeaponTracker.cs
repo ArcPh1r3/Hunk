@@ -41,6 +41,8 @@ namespace HunkMod.Modules.Components
         public bool hasSpawnedClubKeycard = false;
         public bool hasSpawnedHeartKeycard = false;
         public bool hasSpawnedDiamondKeycard = false;
+        private bool spawnedKeycardThisStage = false;
+        private int attempts = 0;
 
         private Inventory inventory;
         private HunkController _hunk;
@@ -49,6 +51,23 @@ namespace HunkMod.Modules.Components
         {
             this.inventory = this.GetComponent<Inventory>();
             this.Init();
+
+            UnityEngine.SceneManagement.SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+        }
+
+        private void OnDestroy()
+        {
+            if (this.inventory) this.inventory.onItemAddedClient -= this.Inventory_onItemAddedClient;
+            UnityEngine.SceneManagement.SceneManager.sceneLoaded -= SceneManager_sceneLoaded;
+        }
+
+        private void SceneManager_sceneLoaded(UnityEngine.SceneManagement.Scene arg0, UnityEngine.SceneManagement.LoadSceneMode arg1)
+        {
+            this.spawnedKeycardThisStage = false;
+            this.attempts = 0;
+
+            this.CancelInvoke();
+            this.InvokeRepeating("TrySpawnKeycard", 10f, 10f);
         }
 
         private void Start()
@@ -66,13 +85,6 @@ namespace HunkMod.Modules.Components
             //this.inventory.GiveItem(Modules.Survivors.Hunk.spadeKeycard);
 
             this.inventory.onItemAddedClient += this.Inventory_onItemAddedClient;
-
-            this.InvokeRepeating("TrySpawnKeycard", 10f, 10f);
-        }
-
-        private void OnDestroy()
-        {
-            if (this.inventory) this.inventory.onItemAddedClient -= this.Inventory_onItemAddedClient;
         }
 
         private void Inventory_onItemAddedClient(ItemIndex itemIndex)
@@ -198,6 +210,12 @@ namespace HunkMod.Modules.Components
 
         private void TrySpawnKeycard()
         {
+            if (this.spawnedKeycardThisStage)
+            {
+                this.CancelInvoke();
+                return;
+            }
+
             if (this.hasSpawnedSpadeKeycard
                 && this.hasSpawnedClubKeycard
                 && this.hasSpawnedHeartKeycard
@@ -209,6 +227,9 @@ namespace HunkMod.Modules.Components
 
             float rng = UnityEngine.Random.value;
             float chance = 0.02f;
+
+            this.attempts++; // guaranteed after 2 minutes
+            if (this.attempts >= 12) chance = 1f;
 
             if (!this.hasSpawnedSpadeKeycard)
             {
@@ -253,7 +274,12 @@ namespace HunkMod.Modules.Components
 
         private void SpawnKeycardHolder(ItemDef itemDef)
         {
-
+            this.spawnedKeycardThisStage = true;
+            // ummm
+            PickupDropletController.CreatePickupDroplet(
+                PickupCatalog.FindPickupIndex(itemDef.itemIndex),
+                this.hunk.characterBody.corePosition,
+                this.hunk.characterBody.inputBank.aimDirection * 10f);
         }
     }
 }

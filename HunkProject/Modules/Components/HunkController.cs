@@ -26,7 +26,7 @@ namespace HunkMod.Modules.Components
         public float lockOnTimer;
         public HurtBox targetHurtbox;
 
-        private CharacterBody characterBody;
+        public CharacterBody characterBody { get; private set; }
         private ChildLocator childLocator;
         private CharacterModel characterModel;
         private Animator animator;
@@ -69,7 +69,6 @@ namespace HunkMod.Modules.Components
         private GameObject emptyCrosshair = Modules.Assets.LoadCrosshair("Bad");
         private bool isOut;
         private CrosshairUtils.OverrideRequest crosshairOverrideRequest;
-
 
         private void Awake()
         {

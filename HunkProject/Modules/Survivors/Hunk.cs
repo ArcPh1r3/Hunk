@@ -1174,7 +1174,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
         {
             spadeCostDef = new CostTypeDef();
             spadeCostDef.costStringFormatToken = MainPlugin.developerPrefix + "_SPADECOST";
-            spadeCostDef.isAffordable = new CostTypeDef.IsAffordableDelegate(Misc.ItemCostTypeHelperClub.IsAffordable);
+            spadeCostDef.isAffordable = new CostTypeDef.IsAffordableDelegate(Misc.ItemCostTypeHelperSpade.IsAffordable);
             spadeCostDef.payCost = new CostTypeDef.PayCostDelegate(Misc.ItemCostTypeHelperClub.PayCost);
             spadeCostDef.colorIndex = ColorCatalog.ColorIndex.Blood;
             spadeCostDef.saturateWorldStyledCostString = true;
@@ -1187,7 +1187,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
         {
             diamondCostDef = new CostTypeDef();
             diamondCostDef.costStringFormatToken = MainPlugin.developerPrefix + "_DIAMONDCOST";
-            diamondCostDef.isAffordable = new CostTypeDef.IsAffordableDelegate(Misc.ItemCostTypeHelperClub.IsAffordable);
+            diamondCostDef.isAffordable = new CostTypeDef.IsAffordableDelegate(Misc.ItemCostTypeHelperDiamond.IsAffordable);
             diamondCostDef.payCost = new CostTypeDef.PayCostDelegate(Misc.ItemCostTypeHelperClub.PayCost);
             diamondCostDef.colorIndex = ColorCatalog.ColorIndex.Blood;
             diamondCostDef.saturateWorldStyledCostString = true;
