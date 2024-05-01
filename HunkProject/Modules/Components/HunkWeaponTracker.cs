@@ -37,6 +37,11 @@ namespace HunkMod.Modules.Components
             }
         }
 
+        public bool hasSpawnedSpadeKeycard = false;
+        public bool hasSpawnedClubKeycard = false;
+        public bool hasSpawnedHeartKeycard = false;
+        public bool hasSpawnedDiamondKeycard = false;
+
         private Inventory inventory;
         private HunkController _hunk;
 
@@ -55,12 +60,14 @@ namespace HunkMod.Modules.Components
             //this.AddWeaponItem(Modules.Weapons.Magnum.instance.weaponDef);
             //this.AddWeaponItem(Modules.Weapons.Revolver.instance.weaponDef);
 
-            this.inventory.GiveItem(Modules.Survivors.Hunk.clubKeycard);
-            this.inventory.GiveItem(Modules.Survivors.Hunk.diamondKeycard);
-            this.inventory.GiveItem(Modules.Survivors.Hunk.heartKeycard);
-            this.inventory.GiveItem(Modules.Survivors.Hunk.spadeKeycard);
+            //this.inventory.GiveItem(Modules.Survivors.Hunk.clubKeycard);
+            //this.inventory.GiveItem(Modules.Survivors.Hunk.diamondKeycard);
+            //this.inventory.GiveItem(Modules.Survivors.Hunk.heartKeycard);
+            //this.inventory.GiveItem(Modules.Survivors.Hunk.spadeKeycard);
 
             this.inventory.onItemAddedClient += this.Inventory_onItemAddedClient;
+
+            this.InvokeRepeating("TrySpawnKeycard", 10f, 10f);
         }
 
         private void OnDestroy()
@@ -187,6 +194,66 @@ namespace HunkMod.Modules.Components
         private void AddWeaponItem(HunkWeaponDef weaponDef)
         {
             if (this.inventory.GetItemCount(weaponDef.itemDef) <= 0) this.inventory.GiveItem(weaponDef.itemDef);
+        }
+
+        private void TrySpawnKeycard()
+        {
+            if (this.hasSpawnedSpadeKeycard
+                && this.hasSpawnedClubKeycard
+                && this.hasSpawnedHeartKeycard
+                && this.hasSpawnedDiamondKeycard)
+            {
+                this.CancelInvoke();
+                return;
+            }
+
+            float rng = UnityEngine.Random.value;
+            float chance = 0.02f;
+
+            if (!this.hasSpawnedSpadeKeycard)
+            {
+                if (rng <= chance)
+                {
+                    this.hasSpawnedSpadeKeycard = true;
+                    this.SpawnKeycardHolder(Modules.Survivors.Hunk.spadeKeycard);
+                }
+                return;
+            }
+
+            if (!this.hasSpawnedClubKeycard)
+            {
+                if (rng <= chance)
+                {
+                    this.hasSpawnedClubKeycard = true;
+                    this.SpawnKeycardHolder(Modules.Survivors.Hunk.clubKeycard);
+                }
+                return;
+            }
+
+            if (!this.hasSpawnedHeartKeycard)
+            {
+                if (rng <= chance)
+                {
+                    this.hasSpawnedHeartKeycard = true;
+                    this.SpawnKeycardHolder(Modules.Survivors.Hunk.heartKeycard);
+                }
+                return;
+            }
+
+            if (!this.hasSpawnedDiamondKeycard)
+            {
+                if (rng <= chance)
+                {
+                    this.hasSpawnedDiamondKeycard = true;
+                    this.SpawnKeycardHolder(Modules.Survivors.Hunk.diamondKeycard);
+                }
+                return;
+            }
+        }
+
+        private void SpawnKeycardHolder(ItemDef itemDef)
+        {
+
         }
     }
 }

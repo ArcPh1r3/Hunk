@@ -21,20 +21,5 @@ PISTOL DODGES
 
 CODE/MISC
 --
-RAGDOLL
 ITEM DISPLAYS
 MASTERY SKIN
-
-
-- hunk now starts with only the smg and mup
-- added weapon cases that spawn throughout runs
-- added keycards which are used to open these cases- for now you start with all of them
-- added missing text for gun primary skills
-- multishops and adaptive chests now give ammo
-- large chests give two ammo pickups
-- legendary chests give three
-- round reloads are a little slower by default but now scale with attack speed
-- fix atm-4 dropping on every stage
-- fix goobo dropping atm-4
-- fix revolver reload animation
-- fix shrine of order eating up your guns

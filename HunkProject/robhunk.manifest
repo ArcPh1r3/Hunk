@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 4079074006
+CRC: 1932855032
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: a2b5405016c845c8b1bcdc1de8369a15
+    Hash: d9950c3b2702984006a2fe11a10b6f0f
   TypeTreeHash:
     serializedVersion: 2
-    Hash: d755d59c9b43de337882ff95894ea686
+    Hash: 659e220902f47d64c1f3c17677639f17
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -46,6 +46,8 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 2334069450a65d042a95a873e5229b20, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: db294d07add6b364f99a346939dd2a8a, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
@@ -56,6 +58,8 @@ ClassTypes:
 - Class: 136
   Script: {instanceID: 0}
 - Class: 137
+  Script: {instanceID: 0}
+- Class: 144
   Script: {instanceID: 0}
 - Class: 198
   Script: {instanceID: 0}
@@ -112,7 +116,6 @@ Assets:
 - Assets/Hunk/Items/mdlKeycardClubOld.prefab
 - Assets/Hunk/VFX/Badass/MetalHitEffect.prefab
 - Assets/Hunk/Textures/Shotgun/Leon_RemingtonM1100P_S.png
-- Assets/Hunk/Textures/texAmmoPickup.png
 - Assets/Hunk/Textures/SMG/Leon_LI5_D.png
 - Assets/Hunk/HUD/Textures/texBulletIndicator.png
 - Assets/Hunk/VFX/matShockwave2.mat
