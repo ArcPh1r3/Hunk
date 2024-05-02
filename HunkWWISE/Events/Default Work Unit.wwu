@@ -679,7 +679,7 @@
 						<Action Name="" ID="{C93F3F41-5171-4C36-AF92-F54FC2384158}" ShortID="243721226">
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="sfx_hunk_snap" ID="{34EA7E3A-0451-42A4-A5DE-AEC5D814039E}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+									<ObjectRef Name="sfx_hunk_snap2" ID="{D5A881AC-3E3D-4EB1-B6B6-19B5CD626A2E}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
