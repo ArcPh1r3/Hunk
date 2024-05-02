@@ -1,4 +1,5 @@
 ﻿using EntityStates;
+using HunkMod.Modules.Components;
 using RoR2;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
     {
         protected Vector3 slipVector = Vector3.zero;
         public float duration = 0.8f;
-		public float checkRadius = 4f;
+		public float checkRadius = 3f;
 
         private bool peepee;
         private float coeff = 24f;
@@ -90,9 +91,9 @@ namespace HunkMod.SkillStates.Hunk.Counter
 
                 if (base.fixedAge >= (0.5f * this.duration))
                 {
-                    if (this.checkRadius < 8f)
+                    if (this.checkRadius < 5f)
                     {
-                        this.checkRadius = 8f;
+                        this.checkRadius = 5f;
                         if (this.CheckForCounterattack()) return;
                     }
 
@@ -108,15 +109,16 @@ namespace HunkMod.SkillStates.Hunk.Counter
         {
 			Ray aimRay = base.GetAimRay();
 
-			BullseyeSearch bullseyeSearch = new BullseyeSearch
+			BullseyeSearch2 bullseyeSearch = new BullseyeSearch2
 			{
 				teamMaskFilter = TeamMask.GetEnemyTeams(base.GetTeam()),
 				filterByLoS = false,
 				searchOrigin = aimRay.origin,
 				searchDirection = UnityEngine.Random.onUnitSphere,
-				sortMode = BullseyeSearch.SortMode.Distance,
+				sortMode = BullseyeSearch2.SortMode.Distance,
 				maxDistanceFilter = this.checkRadius,
-				maxAngleFilter = 360f
+				maxAngleFilter = 360f,
+                onlyBullseyes = false
 			};
 			bullseyeSearch.RefreshCandidates();
 			bullseyeSearch.FilterOutGameObject(base.gameObject);

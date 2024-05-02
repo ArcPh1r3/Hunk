@@ -86,6 +86,8 @@ namespace HunkMod.Modules.Survivors
         internal static ItemDef clubKeycard;
         internal static ItemDef heartKeycard;
         internal static ItemDef diamondKeycard;
+        internal static ItemDef gVirusSample;
+        internal static ItemDef gVirus;
 
         internal static BuffDef immobilizedBuff;
 
@@ -1387,10 +1389,56 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             diamondKeycard.pickupModelPrefab = Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlKeycardDiamond");
             Modules.Assets.ConvertAllRenderersToHopooShader(diamondKeycard.pickupModelPrefab);
 
+            gVirusSample = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/Base/ArtifactKey/ArtifactKey.asset").WaitForCompletion());
+            gVirusSample.name = "GVirusSample";
+            gVirusSample.nameToken = "ROB_HUNK_G_VIRUS_SAMPLE_NAME";
+            gVirusSample.descriptionToken = "ROB_HUNK_G_VIRUS_SAMPLE_DESC";
+            gVirusSample.pickupToken = "ROB_HUNK_G_VIRUS_SAMPLE_DESC";
+            gVirusSample.loreToken = "ROB_HUNK_G_VIRUS_SAMPLE_DESC";
+            gVirusSample.canRemove = false;
+            gVirusSample.hidden = false;
+            gVirusSample.pickupIconSprite = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKeycardDiamondIcon");
+            gVirusSample.requiredExpansion = null;
+            gVirusSample.tags = new ItemTag[]
+            {
+                ItemTag.AIBlacklist,
+                ItemTag.BrotherBlacklist,
+                ItemTag.CannotCopy,
+                ItemTag.CannotDuplicate,
+                ItemTag.CannotSteal,
+                ItemTag.WorldUnique
+            };
+            gVirusSample.unlockableDef = null;
+
+            gVirusSample.pickupModelPrefab = Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlKeycardDiamond");
+            Modules.Assets.ConvertAllRenderersToHopooShader(gVirusSample.pickupModelPrefab);
+
+            gVirus = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/Base/ArtifactKey/ArtifactKey.asset").WaitForCompletion());
+            gVirus.name = "GVirus";
+            gVirus.nameToken = "ROB_HUNK_G_VIRUS_NAME";
+            gVirus.descriptionToken = "ROB_HUNK_G_VIRUS_DESC";
+            gVirus.pickupToken = "ROB_HUNK_G_VIRUS_DESC";
+            gVirus.loreToken = "ROB_HUNK_G_VIRUS_DESC";
+            gVirus.canRemove = false;
+            gVirus.hidden = true;
+            gVirus.pickupIconSprite = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKeycardDiamondIcon");
+            gVirus.requiredExpansion = null;
+            gVirus.tags = new ItemTag[]
+            {
+                ItemTag.AIBlacklist,
+                ItemTag.BrotherBlacklist,
+                ItemTag.CannotCopy,
+                ItemTag.CannotDuplicate,
+                ItemTag.CannotSteal,
+                ItemTag.WorldUnique
+            };
+            gVirus.unlockableDef = null;
+
             HunkWeaponCatalog.itemDefs.Add(spadeKeycard);
             HunkWeaponCatalog.itemDefs.Add(clubKeycard);
             HunkWeaponCatalog.itemDefs.Add(heartKeycard);
             HunkWeaponCatalog.itemDefs.Add(diamondKeycard);
+            HunkWeaponCatalog.itemDefs.Add(gVirusSample);
         }
 
         private void CreateAmmoInteractable()

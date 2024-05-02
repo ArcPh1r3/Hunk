@@ -8,6 +8,7 @@ using UnityEngine;
 using R2API.Networking;
 using HunkMod.Modules.Components;
 using HunkMod.Modules.Survivors;
+using System.Collections.Generic;
 
 [module: UnverifiableCode]
 [assembly: SecurityPermission(SecurityAction.RequestMinimum, SkipVerification = true)]
@@ -52,6 +53,8 @@ namespace HunkMod
         public static bool rooInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
         public static bool riskUIInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("bubbet.riskui");
         public static bool greenAlienHeadInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.Borbo.GreenAlienHead");
+
+        public static List<HurtBox> hurtboxesList = new List<HurtBox>();
 
         private void Awake()
         {
@@ -112,6 +115,21 @@ namespace HunkMod
 
             // uncomment this if network testing
             //On.RoR2.Networking.NetworkManagerSystemSteam.OnClientConnect += (s, u, t) => { };
+
+            On.RoR2.HurtBox.OnEnable += HurtBox_OnEnable;
+            On.RoR2.HurtBox.OnDisable += HurtBox_OnDisable;
+        }
+
+        private void HurtBox_OnEnable(On.RoR2.HurtBox.orig_OnEnable orig, HurtBox self)
+        {
+            orig(self);
+            hurtboxesList.Add(self);
+        }
+
+        private void HurtBox_OnDisable(On.RoR2.HurtBox.orig_OnDisable orig, HurtBox self)
+        {
+            orig(self);
+            hurtboxesList.Remove(self);
         }
 
         private void CharacterBody_RecalculateStats(On.RoR2.CharacterBody.orig_RecalculateStats orig, CharacterBody self)
