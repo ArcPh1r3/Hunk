@@ -11,7 +11,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
     {
         protected Vector3 slipVector = Vector3.zero;
         public float duration = 0.8f;
-		public float checkRadius = 5f;
+		public float checkRadius = 4f;
 
         private bool peepee;
         private float coeff = 24f;
@@ -84,6 +84,9 @@ namespace HunkMod.SkillStates.Hunk.Counter
             {
                 if (base.fixedAge >= this.duration)
                 {
+                    this.checkRadius = 8f;
+                    if (this.CheckForCounterattack()) return;
+
                     this.outer.SetNextStateToMain();
                     return;
                 }
@@ -98,7 +101,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
             }
         }
 
-        private void CheckForCounterattack()
+        private bool CheckForCounterattack()
         {
 			Ray aimRay = base.GetAimRay();
 
@@ -123,10 +126,12 @@ namespace HunkMod.SkillStates.Hunk.Counter
 					if (hurtBox.healthComponent && hurtBox.healthComponent.body)
 					{
                         this.outer.SetNextState(new Kick());
-                        return;
+                        return true;
 					}
 				}
 			}
+
+            return false;
 		}
 
         public override void OnExit()

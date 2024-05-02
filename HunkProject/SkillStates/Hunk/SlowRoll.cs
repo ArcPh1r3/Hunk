@@ -105,6 +105,7 @@ namespace HunkMod.SkillStates.Hunk
         {
             this.DampenVelocity();
             this.hunk.isRolling = false;
+            this.characterMotor.jumpCount = 0;
             this.hunk.desiredYOffset = this.hunk.defaultYOffset;
             this.skillLocator.primary.UnsetSkillOverride(this, Modules.Survivors.Hunk.counterSkillDef, GenericSkill.SkillOverridePriority.Contextual);
 
