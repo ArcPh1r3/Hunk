@@ -16,10 +16,10 @@ namespace HunkMod.SkillStates.Hunk.Counter
         {
             this.hitboxName = "Knife";
 
-            this.damageCoefficient = 8f;
+            this.damageCoefficient = 10f;
             this.pushForce = 0f;
-            this.bonusForce = this.GetAimRay().direction * 5000f + (Vector3.up * 1000f);
-            this.baseDuration = 1.5f;
+            this.bonusForce = this.GetAimRay().direction * 4000f + (Vector3.up * 1000f);
+            this.baseDuration = 1.55f;
             this.baseEarlyExitTime = 0.65f;
             this.attackRecoil = 15f / this.attackSpeedStat;
 
@@ -50,7 +50,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
 
         public override void FixedUpdate()
         {
-            if (this.attack != null) this.attack.forceVector = this.GetAimRay().direction * 5000f + (Vector3.up * 1000f);
+            if (this.attack != null) this.attack.forceVector = this.GetAimRay().direction * 4000f + (Vector3.up * 1000f);
             base.FixedUpdate();
             this.characterBody.isSprinting = false;
 
