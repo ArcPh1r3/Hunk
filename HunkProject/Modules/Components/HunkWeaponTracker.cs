@@ -293,6 +293,8 @@ namespace HunkMod.Modules.Components
                 }
             }
 
+            target = this.hunk.characterBody.transform;
+
             if (!target) return false;
 
             if (NetworkServer.active)

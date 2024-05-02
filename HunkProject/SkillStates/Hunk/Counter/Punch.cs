@@ -16,15 +16,15 @@ namespace HunkMod.SkillStates.Hunk.Counter
         {
             this.hitboxName = "Knife";
 
-            this.damageCoefficient = 12f;
+            this.damageCoefficient = 10f;
             this.pushForce = 0f;
             this.bonusForce = this.GetAimRay().direction * 1000f + (Vector3.up * 500f);
-            this.baseDuration = 1.55f;
+            this.baseDuration = 1f;
             this.baseEarlyExitTime = 0.65f;
             this.attackRecoil = 15f / this.attackSpeedStat;
 
-            this.attackStartTime = 0.24f;
-            this.attackEndTime = 0.31f;
+            this.attackStartTime = 0.13f;
+            this.attackEndTime = 0.15f;
 
             this.hitStopDuration = 0.4f;
             this.smoothHitstop = false;
@@ -36,7 +36,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
             this.impactSound = Modules.Assets.kickImpactSoundDef.index;
 
             this.damageType = DamageType.Stun1s | DamageType.ClayGoo;
-            this.muzzleString = "KickSwingMuzzle";
+            this.muzzleString = "PunchSwingMuzzle";
 
             base.OnEnter();
 
@@ -128,7 +128,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
         protected override void PlayAttackAnimation()
         {
             base.PlayAnimation("Gesture, Override", "BufferEmpty");
-            base.PlayCrossfade("FullBody, Override", "CounterKick", "Knife.playbackRate", this.duration, 0.1f);
+            base.PlayCrossfade("FullBody, Override", "CounterPunch", "Knife.playbackRate", this.duration, 0.1f);
         }
 
         protected override void SetNextState()

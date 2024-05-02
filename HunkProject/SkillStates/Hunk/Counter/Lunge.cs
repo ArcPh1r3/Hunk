@@ -144,6 +144,12 @@ namespace HunkMod.SkillStates.Hunk.Counter
                             return true;
                         }
 
+                        if (hurtBox.healthComponent.body.hullClassification == HullClassification.BeetleQueen || hurtBox.healthComponent.body.hullClassification == HullClassification.Golem)
+                        {
+                            this.outer.SetNextState(new Punch());
+                            return true;
+                        }
+
                         this.outer.SetNextState(new Kick());
                         return true;
 					}
