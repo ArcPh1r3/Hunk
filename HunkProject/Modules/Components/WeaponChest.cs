@@ -95,6 +95,8 @@ namespace HunkMod.Modules.Components
             var h = GetComponent<Highlight>();
             h.targetRenderer.transform.parent.Find("Hinge/Lock/OnLight").gameObject.SetActive(false);
 
+            if (Run.instance.stageClearCount <= 0) chestType = 2;
+
             if (purchaseInteraction != null)
             {
                 switch (chestType)

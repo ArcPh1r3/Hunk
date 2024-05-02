@@ -616,7 +616,7 @@ namespace HunkMod.Modules.Survivors
                 MainPlugin.developerPrefix + "_HUNK_KEYWORD_LOOTING"
             };
 
-            counterSkillDef = Modules.Skills.CreatePrimarySkillDef(new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.KnifeCounter)),
+            counterSkillDef = Modules.Skills.CreatePrimarySkillDef(new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Counter.Lunge)),
     "Weapon",
     prefix + "_HUNK_BODY_PRIMARY_KNIFE_NAME",
     prefix + "_HUNK_BODY_PRIMARY_KNIFE_DESCRIPTION",
@@ -1533,7 +1533,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
         private static void HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
         {
-            if (damageInfo.damageType == DamageType.ClayGoo)
+            if ((damageInfo.damageType & DamageType.ClayGoo) > DamageType.Generic)
             {
                 if (damageInfo.attacker && damageInfo.attacker.name.Contains("RobHunkBody"))
                 {

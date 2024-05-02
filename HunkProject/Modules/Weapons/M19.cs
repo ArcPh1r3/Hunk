@@ -19,7 +19,7 @@ namespace HunkMod.Modules.Weapons
         public override bool storedOnBack => false;
         public override float damageFillValue => 0.5f;
         public override float rangefillValue => 0.7f;
-        public override float fireRateFillValue => 0.75f;
+        public override float fireRateFillValue => 0.7f;
         public override float reloadFillValue => 1f;
         public override float accuracyFillValue => 0.9f;
 

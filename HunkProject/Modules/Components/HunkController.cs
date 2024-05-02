@@ -211,6 +211,11 @@ namespace HunkMod.Modules.Components
             this.lockOnTimer -= Time.fixedDeltaTime;
             this.ammoKillTimer -= Time.fixedDeltaTime;
 
+            if (this.animator)
+            {
+                this.animator.SetBool("isRolling", this.isRolling);
+            }
+
             if (this.ammo <= 0)
             {
                 if (!this.isOut) this.crosshairOverrideRequest = CrosshairUtils.RequestOverrideForBody(this.characterBody, this.emptyCrosshair, CrosshairUtils.OverridePriority.Skill);
