@@ -158,7 +158,11 @@ namespace HunkMod.SkillStates.Hunk
 
             base.OnExit();
 
-            if (NetworkServer.active) this.characterBody.RemoveBuff(Modules.Survivors.Hunk.immobilizedBuff);
+            if (NetworkServer.active)
+            {
+                this.characterBody.RemoveBuff(Modules.Survivors.Hunk.immobilizedBuff);
+                this.characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility);
+            }
 
             /*if (RoR2Application.isInSinglePlayer)
             {
