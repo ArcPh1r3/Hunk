@@ -75,6 +75,22 @@ namespace HunkMod.SkillStates.Hunk
 
         public override void FixedUpdate()
         {
+            if (this.peepee && base.isAuthority)
+            {
+                this.characterMotor.jumpCount = 0;
+                if (this.inputBank.jump.justPressed)
+                {
+                    base.PlayCrossfade("FullBody, Override", "BufferEmpty", 0.05f);
+                    this.characterMotor.Motor.ForceUnground();
+                    this.outer.SetNextStateToMain();
+                    return;
+                }
+            }
+            else
+            {
+                this.characterMotor.jumpCount = this.characterBody.maxJumpCount;
+            }
+
             base.FixedUpdate();
             this.characterBody.aimTimer = -1f;
             this.hunk.reloadTimer = 1f;
@@ -136,6 +152,7 @@ namespace HunkMod.SkillStates.Hunk
         {
             this.DampenVelocity();
             this.hunk.isRolling = false;
+            this.characterMotor.jumpCount = 0;
             this.hunk.desiredYOffset = this.hunk.defaultYOffset;
             this.skillLocator.primary.UnsetSkillOverride(this, Modules.Survivors.Hunk.counterSkillDef, GenericSkill.SkillOverridePriority.Contextual);
 

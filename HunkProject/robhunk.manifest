@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 751387489
+CRC: 2159106083
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 88d9826282f7e8a0763e4081c3a5028b
+    Hash: c4702e809b5bdc47776f7549d1cbea5a
   TypeTreeHash:
     serializedVersion: 2
     Hash: 659e220902f47d64c1f3c17677639f17
@@ -232,6 +232,7 @@ Assets:
 - Assets/Hunk/mdlDisplayCase.prefab
 - Assets/Hunk/Icons/Item/texKeycardHeartIcon.png
 - Assets/Hunk/Textures/body_n.png
+- Assets/Hunk/Materials/matWeaponCase.mat
 - Assets/Hunk/FBX/Animations/Default/FreefallB.anim
 - Assets/Hunk/VFX/HunkMissileGhost.prefab
 - Assets/Hunk/Textures/Revolver/Pistol_Detail.jpg

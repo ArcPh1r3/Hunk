@@ -165,6 +165,12 @@ ModelImporter:
   - first:
       74: 5234873979293149698
     second: Armature|LightImpact2
+  - first:
+      74: -3613247727720531680
+    second: Armature|CounterKick
+  - first:
+      74: -7292714871937286628
+    second: Armature|CounterLunge
   externalObjects: {}
   materials:
     materialImportMode: 1

@@ -608,6 +608,61 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="sfx_hunk_kick_foley" ID="{165F57A7-FEB9-476E-934F-1D98D6355AE5}">
+					<ChildrenList>
+						<Action Name="" ID="{3370DC38-F90F-4B7C-86B3-0C1DDC9FD620}" ShortID="922252641">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_kick_foley" ID="{6D6AF63E-56C0-4094-8413-85F87890AA7D}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_kick_swing" ID="{B4F4D374-C94A-4F84-9E1F-DCC9F3543E3B}">
+					<ChildrenList>
+						<Action Name="" ID="{3D1131F2-4E39-4E20-B15E-2BAA05DFB75B}" ShortID="1043744188">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_kick_swing" ID="{E5C295EF-6ABB-484E-B9FA-58EC68ED8177}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_kick_impact" ID="{510060AE-5F94-4C43-8072-0F501867664F}">
+					<ChildrenList>
+						<Action Name="" ID="{A5BB5708-A605-4CF6-828F-676FDB04B68C}" ShortID="661156090">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_kick_impact" ID="{2545802B-3342-44BA-9421-129D2414090E}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_keycard_accepted" ID="{5AE57935-A6B6-4B67-8320-645AAC30F562}">
+					<ChildrenList>
+						<Action Name="" ID="{43470497-5FE0-4E90-82D7-E04D72220FAF}" ShortID="870479893">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_keycard_accepted" ID="{C3AEA611-591A-409B-9CF3-B2E82660B1F8}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_weapon_case_open" ID="{A97B1707-663B-4CE6-89F9-9719326C7638}">
+					<ChildrenList>
+						<Action Name="" ID="{689BBD21-6A22-404C-AF1E-CC3C7BF6FC05}" ShortID="847454011">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_weapon_case_open" ID="{CBE93A95-6576-4CFE-8EB4-7BC6A7176FD6}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

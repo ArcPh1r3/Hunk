@@ -618,7 +618,7 @@ namespace HunkMod.Modules.Survivors
                 MainPlugin.developerPrefix + "_HUNK_KEYWORD_LOOTING"
             };
 
-            counterSkillDef = Modules.Skills.CreatePrimarySkillDef(new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.KnifeCounter)),
+            counterSkillDef = Modules.Skills.CreatePrimarySkillDef(new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Counter.Lunge)),
     "Weapon",
     prefix + "_HUNK_BODY_PRIMARY_KNIFE_NAME",
     prefix + "_HUNK_BODY_PRIMARY_KNIFE_DESCRIPTION",
@@ -1449,6 +1449,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             On.RoR2.UI.LoadoutPanelController.Row.AddButton += Row_AddButton;
 
             // rummage passive
+            On.RoR2.ChestBehavior.Open += ChestBehavior_Open;
             On.RoR2.ChestBehavior.ItemDrop += ChestBehavior_ItemDrop;
             On.RoR2.BarrelInteraction.CoinDrop += BarrelInteraction_CoinDrop;
             On.RoR2.ShopTerminalBehavior.DropPickup += ShopTerminalBehavior_DropPickup;
@@ -1483,6 +1484,19 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             //On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += PlayRuinAnimation;
         }
 
+        private static void ChestBehavior_Open(On.RoR2.ChestBehavior.orig_Open orig, ChestBehavior self)
+        {
+            if (Modules.Helpers.isHunkInPlay)
+            {
+                if (self.gameObject.name.Contains("Hunk"))
+                {
+                    Util.PlaySound("sfx_hunk_keycard_accepted", self.gameObject);
+                }
+
+            }
+
+            orig(self);
+        }
 
         private static void Inventory_ShrineRestackInventory(On.RoR2.Inventory.orig_ShrineRestackInventory orig, Inventory self, Xoroshiro128Plus rng)
         {
@@ -1540,7 +1554,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
         private static void HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
         {
-            if (damageInfo.damageType == DamageType.ClayGoo)
+            if ((damageInfo.damageType & DamageType.ClayGoo) > DamageType.Generic)
             {
                 if (damageInfo.attacker && damageInfo.attacker.name.Contains("RobHunkBody"))
                 {
@@ -1593,6 +1607,8 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     self.GetComponent<WeaponChest>().gunPickup.GetComponent<GenericPickupController>().enabled = true;
 
                     self.GetComponent<Highlight>().targetRenderer.transform.parent.parent.parent.GetComponent<Animator>().Play("Open");
+
+                    Util.PlaySound("sfx_hunk_weapon_case_open", self.gameObject);
 
                     return;
                 }

@@ -35,7 +35,7 @@ namespace HunkMod.SkillStates.Hunk
             this.hitEffectPrefab = Modules.Assets.knifeImpactEffect;
             this.impactSound = Modules.Assets.knifeImpactSoundDef.index;
 
-            this.damageType = DamageType.Stun1s;
+            this.damageType = DamageType.Stun1s | DamageType.ClayGoo;
             this.muzzleString = "KnifeSwingMuzzle";
 
             base.OnEnter();
@@ -73,7 +73,7 @@ namespace HunkMod.SkillStates.Hunk
 
         protected override void PlaySwingEffect()
         {
-            this.characterMotor.velocity = this.characterDirection.forward * -15f;
+            this.characterMotor.velocity = this.characterDirection.forward * -25f;
 
             Util.PlaySound(this.swingSoundString, this.gameObject);
             if (this.swingEffectPrefab)

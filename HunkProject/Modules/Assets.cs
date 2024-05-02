@@ -28,6 +28,7 @@ namespace HunkMod.Modules
         internal static List<NetworkSoundEventDef> networkSoundEventDefs = new List<NetworkSoundEventDef>();
 
         internal static NetworkSoundEventDef knifeImpactSoundDef;
+        internal static NetworkSoundEventDef kickImpactSoundDef;
 
         public static GameObject headshotEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Junk/Common/VFX/WeakPointProcEffect.prefab").WaitForCompletion();
 
@@ -66,6 +67,9 @@ namespace HunkMod.Modules
 
         internal static GameObject knifeImpactEffectRed;
         internal static GameObject knifeSwingEffectRed;
+
+        internal static GameObject kickImpactEffect;
+        internal static GameObject kickSwingEffect;
 
         public static GameObject shotgunTracer;
         public static GameObject shotgunTracerCrit;
@@ -113,6 +117,7 @@ namespace HunkMod.Modules
             woundOverlayMat.SetColor("_TintColor", Color.red);
 
             knifeImpactSoundDef = CreateNetworkSoundEventDef("sfx_hunk_knife_hit");
+            kickImpactSoundDef = CreateNetworkSoundEventDef("sfx_hunk_kick_impact");
 
             headshotOverlay = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/Railgunner/RailgunnerScopeLightOverlay.prefab").WaitForCompletion().InstantiateClone("HunkHeadshotOverlay", false);
             SniperTargetViewer viewer = headshotOverlay.GetComponentInChildren<SniperTargetViewer>();
@@ -423,6 +428,15 @@ namespace HunkMod.Modules
             knifeSwingEffectRed.transform.GetChild(0).GetComponent<ParticleSystemRenderer>().material = swingMat;
             //
 
+            kickSwingEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Merc/MercSwordSlash.prefab").WaitForCompletion().InstantiateClone("HunkKickSwing", false);
+
+            Material swipeMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/Merc/matMercSwipe3.mat").WaitForCompletion());
+            swipeMat.SetTexture("_RemapTex", Addressables.LoadAssetAsync<Texture>("RoR2/DLC1/VoidSurvivor/texRampVoidSurvivorCorrupted2.png").WaitForCompletion());
+            swipeMat.SetFloat("_AlphaBias", 0f);
+            //swipeMat.SetColor("_TintColor", Color.red);
+
+            kickSwingEffect.transform.GetChild(0).GetComponent<ParticleSystemRenderer>().material = swipeMat;
+
             #region KnifeImpact
             knifeImpactEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Merc/OmniImpactVFXSlashMerc.prefab").WaitForCompletion().InstantiateClone("HunkKnifeImpact", false);
             knifeImpactEffect.GetComponent<OmniEffect>().enabled = false;
@@ -500,6 +514,38 @@ namespace HunkMod.Modules
 
             AddNewEffectDef(knifeImpactEffectRed);
             #endregion
+
+            #region KickImpact
+            kickImpactEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Loader/OmniImpactVFXLoader.prefab").WaitForCompletion().InstantiateClone("HunkKickImpact", false);
+            kickImpactEffect.GetComponent<OmniEffect>().enabled = false;
+
+            hitsparkMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/Huntress/matOmniHitspark1Huntress.mat").WaitForCompletion());
+            hitsparkMat.SetColor("_TintColor", Color.red);
+
+            kickImpactEffect.transform.GetChild(0).gameObject.GetComponent<ParticleSystemRenderer>().material = hitsparkMat;
+
+            hitsparkMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/Huntress/matOmniHitspark3Huntress.mat").WaitForCompletion());
+            hitsparkMat.SetColor("_TintColor", Color.red);
+            kickImpactEffect.transform.GetChild(1).gameObject.GetComponent<ParticleSystemRenderer>().material = hitsparkMat;
+
+            kickImpactEffect.transform.GetChild(3).gameObject.GetComponent<ParticleSystemRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/Railgunner/matRailgunTracerHead.mat").WaitForCompletion();
+
+            hitsparkMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/VFX/matOmniRing2Generic.mat").WaitForCompletion());
+            hitsparkMat.SetColor("_TintColor", Color.red);
+            kickImpactEffect.transform.GetChild(5).gameObject.GetComponent<ParticleSystemRenderer>().material = hitsparkMat;
+
+            kickImpactEffect.transform.GetChild(4).gameObject.GetComponent<ParticleSystemRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Base/moon2/matBloodSiphon.mat").WaitForCompletion();
+
+            kickImpactEffect.transform.GetChild(0).gameObject.SetActive(true);
+            kickImpactEffect.transform.GetChild(1).gameObject.SetActive(true);
+            kickImpactEffect.transform.GetChild(2).gameObject.SetActive(true);
+            kickImpactEffect.transform.GetChild(3).gameObject.SetActive(true);
+            kickImpactEffect.transform.GetChild(4).gameObject.SetActive(true);
+            kickImpactEffect.transform.GetChild(5).gameObject.SetActive(true);
+
+            AddNewEffectDef(kickImpactEffect);
+            #endregion
+
 
             bloodExplosionEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/ImpBoss/ImpBossBlink.prefab").WaitForCompletion().InstantiateClone("HunkBloodExplosion", false);
 

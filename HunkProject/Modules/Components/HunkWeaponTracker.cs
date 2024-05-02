@@ -235,8 +235,8 @@ namespace HunkMod.Modules.Components
             float rng = UnityEngine.Random.value;
             float chance = 0.02f;
 
-            this.attempts++; // guaranteed after 2 minutes
-            if (this.attempts >= 12) chance = 1f;
+            this.attempts++; // near guaranteed after 2 minutes
+            if (this.attempts >= 12) chance = 0.9f;
 
             if (!this.hasSpawnedSpadeKeycard)
             {
@@ -246,6 +246,9 @@ namespace HunkMod.Modules.Components
                 }
                 return;
             }
+
+            // only spades on stage 1
+            if (Run.instance.stageClearCount <= 0) return;
 
             if (!this.hasSpawnedClubKeycard)
             {
@@ -294,7 +297,7 @@ namespace HunkMod.Modules.Components
 
             if (NetworkServer.active)
             {
-                DirectorSpawnRequest directorSpawnRequest = new DirectorSpawnRequest(spawnCard, new DirectorPlacementRule
+                /*DirectorSpawnRequest directorSpawnRequest = new DirectorSpawnRequest(spawnCard, new DirectorPlacementRule
                 {
                     placementMode = DirectorPlacementRule.PlacementMode.Direct,
                     minDistance = 0f,
@@ -302,7 +305,13 @@ namespace HunkMod.Modules.Components
                     position = target.position + (Vector3.up * 8f)
                 }, Run.instance.runRNG);
 
-                GameObject spawnedBody = DirectorCore.instance.TrySpawnObject(directorSpawnRequest);
+                GameObject spawnedBody = DirectorCore.instance.TrySpawnObject(directorSpawnRequest);*/
+
+                var summon = new MasterSummon();
+                summon.position = target.position + (Vector3.up * 8);
+                summon.masterPrefab = spawnCard.prefab;
+                summon.summonerBodyObject = target.gameObject;
+                var master = summon.Perform();
             }
 
             return true;

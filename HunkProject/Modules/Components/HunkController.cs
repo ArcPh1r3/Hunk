@@ -211,6 +211,11 @@ namespace HunkMod.Modules.Components
             this.lockOnTimer -= Time.fixedDeltaTime;
             this.ammoKillTimer -= Time.fixedDeltaTime;
 
+            if (this.animator)
+            {
+                this.animator.SetBool("isRolling", this.isRolling);
+            }
+
             if (this.ammo <= 0)
             {
                 if (!this.isOut) this.crosshairOverrideRequest = CrosshairUtils.RequestOverrideForBody(this.characterBody, this.emptyCrosshair, CrosshairUtils.OverridePriority.Skill);
@@ -572,14 +577,34 @@ namespace HunkMod.Modules.Components
                 }
                 Destroy(this.backWeaponInstance);
             }
+
             if (this.weaponTracker.weaponData[this.weaponTracker.lastEquippedIndex].weaponDef.storedOnBack)
             {
                 this.backWeaponDef = this.weaponTracker.weaponData[this.weaponTracker.lastEquippedIndex].weaponDef;
                 this.backWeaponInstance = GameObject.Instantiate(this.backWeaponDef.modelPrefab);
                 this.backWeaponInstance.transform.parent = this.childLocator.FindChild("BackWeapon");
-                this.backWeaponInstance.transform.localPosition = Vector3.zero;
-                this.backWeaponInstance.transform.localRotation = Quaternion.identity;
+                this.backWeaponInstance.transform.localPosition = new Vector3(5f, 0f, 0f);
+                this.backWeaponInstance.transform.localRotation = Quaternion.Euler(new Vector3(345f, 90f, 15f));
                 this.backWeaponInstance.transform.localScale = Vector3.one;
+
+                DynamicBone fuckYou = this.childLocator.FindChild("BackWeapon").GetComponent<DynamicBone>();
+                if (fuckYou) DestroyImmediate(fuckYou);
+
+                Transform why = this.childLocator.FindChild("BackWeapon").parent;
+                why.transform.localRotation = Quaternion.Euler(new Vector3(25f, 0f, 180f));
+
+                DynamicBone hehe = this.childLocator.FindChild("BackWeapon").gameObject.AddComponent<DynamicBone>();
+                hehe.m_Root = hehe.transform;
+                hehe.m_Damping = 0.005f;
+                hehe.m_Elasticity = 0.01f;
+                hehe.m_Stiffness = 0.5f;
+                hehe.m_Inert = 0.824f;
+                hehe.m_Gravity = Vector3.zero;
+                hehe.m_DistantDisable = true;
+                hehe.m_DistanceToObject = 200f;
+                hehe.m_FreezeAxis = DynamicBone.FreezeAxis.Y;// | DynamicBone.FreezeAxis.Z;
+                hehe.m_Exclusions = new List<Transform>();
+                hehe.m_Exclusions.Add(this.backWeaponInstance.transform);
             }
         }
 

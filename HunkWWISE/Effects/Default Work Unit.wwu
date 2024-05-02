@@ -8,6 +8,12 @@
 						<Property Name="TimeStretch" Type="Real32" Value="60"/>
 					</PropertyList>
 				</Effect>
+				<Effect Name="New_Wwise_Delay" ID="{7444FEAD-E88C-4853-9B6D-9064B6284E15}" PluginName="Wwise Delay" CompanyID="0" PluginID="106" PluginType="3">
+					<PropertyList>
+						<Property Name="DelayTime" Type="Real32" Value="0.15"/>
+						<Property Name="Feedback" Type="Real32" Value="16"/>
+					</PropertyList>
+				</Effect>
 			</ChildrenList>
 		</WorkUnit>
 	</Effects>
