@@ -125,6 +125,22 @@ namespace HunkMod.SkillStates.Hunk.Counter
 				{
 					if (hurtBox.healthComponent && hurtBox.healthComponent.body)
 					{
+                        if (hurtBox.healthComponent.gameObject.name == "LemurianBody(Clone)")
+                        {
+                            this.outer.SetNextState(new NeckSnap
+                            {
+                                target = hurtBox.healthComponent
+                            });
+
+                            foreach (EntityStateMachine i in hurtBox.healthComponent.GetComponents<EntityStateMachine>())
+                            {
+                                if (i.customName == "Body") i.SetNextState(new NeckSnapped());
+                                else i.SetNextStateToMain();
+                            }
+
+                            return true;
+                        }
+
                         this.outer.SetNextState(new Kick());
                         return true;
 					}

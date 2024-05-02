@@ -52,7 +52,7 @@ namespace HunkMod.SkillStates.Hunk
             this._animator = this.GetModelAnimator();
             base.OnEnter();
 
-            if (this.hideGun) this.GetModelChildLocator().FindChild("WeaponModel").gameObject.SetActive(false);
+            if (this.hideGun) this.GetModelChildLocator().FindChild("Weapon").gameObject.SetActive(false);
             if (this.prop != "") this.GetModelChildLocator().FindChild(this.prop).gameObject.SetActive(true);
         }
 
@@ -71,7 +71,7 @@ namespace HunkMod.SkillStates.Hunk
         {
             base.OnExit();
 
-            if (this.hideGun) this.GetModelChildLocator().FindChild("WeaponModel").gameObject.SetActive(true);
+            if (this.hideGun) this.GetModelChildLocator().FindChild("Weapon").gameObject.SetActive(true);
             if (this.prop != "") this.GetModelChildLocator().FindChild(this.prop).gameObject.SetActive(false);
         }
     }

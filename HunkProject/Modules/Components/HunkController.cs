@@ -26,6 +26,8 @@ namespace HunkMod.Modules.Components
         public float lockOnTimer;
         public HurtBox targetHurtbox;
 
+        public float snapOffset = 0.25f;
+
         public CharacterBody characterBody { get; private set; }
         private ChildLocator childLocator;
         private CharacterModel characterModel;

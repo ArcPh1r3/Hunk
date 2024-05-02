@@ -4307,6 +4307,66 @@
 										<ActiveSource Name="sfx_hunk_weapon_case_open" ID="{5631C76D-36D4-4C8A-82EB-98B54CBF77F4}" Platform="Linked"/>
 									</ActiveSourceList>
 								</Sound>
+								<Sound Name="sfx_hunk_snap" ID="{34EA7E3A-0451-42A4-A5DE-AEC5D814039E}" ShortID="949869402">
+									<PropertyList>
+										<Property Name="OverrideEffect" Type="bool" Value="True"/>
+										<Property Name="Pitch" Type="int32">
+											<ValueList>
+												<Value>-480</Value>
+											</ValueList>
+										</Property>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>8</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
+										</Reference>
+										<Reference Name="Effect0" PluginName="Wwise Delay" CompanyID="0" PluginID="106" PluginType="3">
+											<ObjectRef Name="New_Wwise_Delay" ID="{7444FEAD-E88C-4853-9B6D-9064B6284E15}" WorkUnitID="{F306BD6D-0479-4276-A5A6-C3180B894D2B}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{92A1A0F3-7047-4165-95AE-D5CFCC30AE61}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="sfx_hunk_snap" ID="{1275D84A-FC08-482C-B560-0A5EDE3592C9}">
+											<Language>SFX</Language>
+											<AudioFile>sfx_hunk_snap.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="351549826"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="sfx_hunk_snap" ID="{1275D84A-FC08-482C-B560-0A5EDE3592C9}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="sfx_hunk_snap_foley" ID="{62959981-0A0F-4DB0-BB1B-6428E3BB457A}" ShortID="457134327">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{92A1A0F3-7047-4165-95AE-D5CFCC30AE61}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="sfx_hunk_snap_foley" ID="{C09145F2-B620-4D7D-ACB2-63B73CF26C1B}">
+											<Language>SFX</Language>
+											<AudioFile>sfx_hunk_snap_foley.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="964146332"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="sfx_hunk_snap_foley" ID="{C09145F2-B620-4D7D-ACB2-63B73CF26C1B}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
 							</ChildrenList>
 						</ActorMixer>
 						<Sound Name="sfx_driver_explosion" ID="{FD8D7F5F-8FF7-41A0-BC29-86BDA8782570}" ShortID="639982188">

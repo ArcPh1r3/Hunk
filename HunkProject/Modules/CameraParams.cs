@@ -6,6 +6,7 @@ internal enum HunkCameraParams
     DEFAULT,
     AIM,
     AIM_SNIPER,
+    MELEE,
     EMOTE
 }
 
@@ -16,6 +17,7 @@ namespace HunkMod.Modules
         internal static CharacterCameraParamsData defaultCameraParams;
         internal static CharacterCameraParamsData aimCameraParams;
         internal static CharacterCameraParamsData sniperAimCameraParams;
+        internal static CharacterCameraParamsData meleeCameraParams;
         internal static CharacterCameraParamsData emoteCameraParams;
 
         internal static void InitializeParams()
@@ -39,6 +41,7 @@ namespace HunkMod.Modules
                 aimCameraParams = NewCameraParams("ccpRobHunkAim", 70f, 0.1f, new Vector3(2.2f, 0.1f, -2f));
             }
 
+            meleeCameraParams = NewCameraParams("ccpRobHunkMelee", 70f, 0.15f, new Vector3(1f, 0.7f, -4.6f));
             sniperAimCameraParams = NewCameraParams("ccpRobHunkSniperAim", 70f, 0.8f, new Vector3(0f, 0f, 0.75f));
             emoteCameraParams = NewCameraParams("ccpRobHunkEmote", 70f, 0.4f, new Vector3(0f, 0f, -6f));
         }
@@ -102,6 +105,9 @@ namespace HunkMod.Modules
                     break;
                 case HunkCameraParams.AIM_SNIPER:
                     paramsData = sniperAimCameraParams;
+                    break;
+                case HunkCameraParams.MELEE:
+                    paramsData = meleeCameraParams;
                     break;
                 case HunkCameraParams.EMOTE:
                     paramsData = emoteCameraParams;

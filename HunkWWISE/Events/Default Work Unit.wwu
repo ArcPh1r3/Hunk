@@ -663,6 +663,28 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="sfx_hunk_snap_foley" ID="{5791603B-B453-4033-B829-25FA33A4AD3A}">
+					<ChildrenList>
+						<Action Name="" ID="{FCD64B19-DE3A-4546-9F3B-C9EA50E4A10E}" ShortID="178022940">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_snap_foley" ID="{62959981-0A0F-4DB0-BB1B-6428E3BB457A}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_snap" ID="{70735E42-ACE0-4CA7-9871-DBF016079241}">
+					<ChildrenList>
+						<Action Name="" ID="{C93F3F41-5171-4C36-AF92-F54FC2384158}" ShortID="243721226">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_snap" ID="{34EA7E3A-0451-42A4-A5DE-AEC5D814039E}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

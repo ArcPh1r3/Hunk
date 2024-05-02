@@ -171,6 +171,9 @@ ModelImporter:
   - first:
       74: -7292714871937286628
     second: Armature|CounterLunge
+  - first:
+      74: 8146256348772675097
+    second: Armature|NeckSnap
   externalObjects: {}
   materials:
     materialImportMode: 1
