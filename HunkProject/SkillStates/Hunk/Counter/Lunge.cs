@@ -14,7 +14,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
 		public float checkRadius = 5f;
 
         private bool peepee;
-        private float coeff = 20f;
+        private float coeff = 24f;
 
         public override void OnEnter()
         {

@@ -10,25 +10,26 @@ namespace HunkMod.SkillStates.Hunk.Counter
     public class Kick : BaseMeleeAttack
     {
         private GameObject swingEffectInstance;
+        private bool sprintBuffer;
 
         public override void OnEnter()
         {
             this.hitboxName = "Knife";
 
-            this.damageCoefficient = 7f;
+            this.damageCoefficient = 8f;
             this.pushForce = 0f;
             this.bonusForce = this.GetAimRay().direction * 5000f + (Vector3.up * 1000f);
-            this.baseDuration = 1.4f;
+            this.baseDuration = 1.5f;
             this.baseEarlyExitTime = 0.65f;
             this.attackRecoil = 15f / this.attackSpeedStat;
 
             this.attackStartTime = 0.24f;
-            this.attackEndTime = 0.37f;
+            this.attackEndTime = 0.31f;
 
             this.hitStopDuration = 0.4f;
             this.smoothHitstop = false;
 
-            this.swingSoundString = "sfx_hunk_swing_knife";
+            this.swingSoundString = "sfx_hunk_kick_swing";
             this.swingEffectPrefab = Modules.Assets.kickSwingEffect;
             this.hitSoundString = "";
             this.hitEffectPrefab = Modules.Assets.kickImpactEffect;
@@ -44,14 +45,19 @@ namespace HunkMod.SkillStates.Hunk.Counter
             this.skillLocator.secondary.rechargeStopwatch = 0f;
             this.hunk.lockOnTimer = -1f;
 
-            Util.PlaySound("sfx_hunk_foley_knife", this.gameObject);
+            Util.PlaySound("sfx_hunk_kick_foley", this.gameObject);
         }
 
         public override void FixedUpdate()
         {
+            if (this.attack != null) this.attack.forceVector = this.GetAimRay().direction * 5000f + (Vector3.up * 1000f);
             base.FixedUpdate();
+            this.characterBody.isSprinting = false;
 
-            this.characterMotor.moveDirection *= 0.2f;
+            if (this.stopwatch >= (this.attackStartTime * this.duration)) this.characterMotor.moveDirection *= 0.05f;
+            else this.characterMotor.moveDirection *= 0f;
+
+            if (base.isAuthority && this.inputBank.sprint.justPressed) this.sprintBuffer = true;
 
             if (this.hunk.isAiming && base.isAuthority)
             {
@@ -70,6 +76,12 @@ namespace HunkMod.SkillStates.Hunk.Counter
             }
 
             base.FireAttack();
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+            if (this.sprintBuffer || this.inputBank.moveVector != Vector3.zero) this.characterBody.isSprinting = true;
         }
 
         protected override void PlaySwingEffect()

@@ -117,7 +117,7 @@ namespace HunkMod.Modules
             woundOverlayMat.SetColor("_TintColor", Color.red);
 
             knifeImpactSoundDef = CreateNetworkSoundEventDef("sfx_hunk_knife_hit");
-            kickImpactSoundDef = CreateNetworkSoundEventDef("sfx_ravager_kick");
+            kickImpactSoundDef = CreateNetworkSoundEventDef("sfx_hunk_kick_impact");
 
             headshotOverlay = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/Railgunner/RailgunnerScopeLightOverlay.prefab").WaitForCompletion().InstantiateClone("HunkHeadshotOverlay", false);
             SniperTargetViewer viewer = headshotOverlay.GetComponentInChildren<SniperTargetViewer>();

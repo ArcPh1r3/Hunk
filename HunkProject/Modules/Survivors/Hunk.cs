@@ -1447,6 +1447,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             On.RoR2.UI.LoadoutPanelController.Row.AddButton += Row_AddButton;
 
             // rummage passive
+            On.RoR2.ChestBehavior.Open += ChestBehavior_Open;
             On.RoR2.ChestBehavior.ItemDrop += ChestBehavior_ItemDrop;
             On.RoR2.BarrelInteraction.CoinDrop += BarrelInteraction_CoinDrop;
             On.RoR2.ShopTerminalBehavior.DropPickup += ShopTerminalBehavior_DropPickup;
@@ -1475,6 +1476,20 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             //On.EntityStates.GlobalSkills.LunarNeedle.ChargeLunarSecondary.PlayChargeAnimation += PlayChargeLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarNeedle.ThrowLunarSecondary.PlayThrowAnimation += PlayThrowLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += PlayRuinAnimation;
+        }
+
+        private static void ChestBehavior_Open(On.RoR2.ChestBehavior.orig_Open orig, ChestBehavior self)
+        {
+            if (Modules.Helpers.isHunkInPlay)
+            {
+                if (self.gameObject.name.Contains("Hunk"))
+                {
+                    Util.PlaySound("sfx_hunk_keycard_accepted", self.gameObject);
+                }
+
+            }
+
+            orig(self);
         }
 
         private static void Inventory_ShrineRestackInventory(On.RoR2.Inventory.orig_ShrineRestackInventory orig, Inventory self, Xoroshiro128Plus rng)
@@ -1586,6 +1601,8 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     self.GetComponent<WeaponChest>().gunPickup.GetComponent<GenericPickupController>().enabled = true;
 
                     self.GetComponent<Highlight>().targetRenderer.transform.parent.parent.parent.GetComponent<Animator>().Play("Open");
+
+                    Util.PlaySound("sfx_hunk_weapon_case_open", self.gameObject);
 
                     return;
                 }
