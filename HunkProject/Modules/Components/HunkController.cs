@@ -104,7 +104,7 @@ namespace HunkMod.Modules.Components
                 }
             }
 
-            SpawnChests();
+            //SpawnChests();
         }
 
         private void SetInventoryHook()

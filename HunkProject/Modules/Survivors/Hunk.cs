@@ -12,6 +12,8 @@ using System.Linq;
 using HunkMod.Modules.Components;
 using R2API.Networking;
 using R2API.Networking.Interfaces;
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 namespace HunkMod.Modules.Survivors
 {
@@ -1461,14 +1463,18 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             // help me
             On.RoR2.Inventory.ShrineRestackInventory += Inventory_ShrineRestackInventory;
 
-            // chest cost types
+            // add chest cost types
             CostTypeCatalog.modHelper.getAdditionalEntries += AddHeartCostType;
             CostTypeCatalog.modHelper.getAdditionalEntries += AddSpadeCostType;
             CostTypeCatalog.modHelper.getAdditionalEntries += AddDiamondCostType;
             CostTypeCatalog.modHelper.getAdditionalEntries += AddClubCostType;
-            
+
+            // place chests
+            On.RoR2.SceneDirector.Start += SceneDirector_Start;
+
             // if i speak i am in trouble
             On.RoR2.UI.MainMenu.BaseMainMenuScreen.Update += BaseMainMenuScreen_Update;
+            // 🙈 🙉 🙊
 
             // heresy anims
             //On.EntityStates.GlobalSkills.LunarNeedle.FireLunarNeedle.OnEnter += PlayVisionsAnimation;
@@ -1476,6 +1482,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             //On.EntityStates.GlobalSkills.LunarNeedle.ThrowLunarSecondary.PlayThrowAnimation += PlayThrowLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += PlayRuinAnimation;
         }
+
 
         private static void Inventory_ShrineRestackInventory(On.RoR2.Inventory.orig_ShrineRestackInventory orig, Inventory self, Xoroshiro128Plus rng)
         {
@@ -1926,6 +1933,173 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     rect.pivot = new Vector2(0.5f, 0f);
                     rect.anchoredPosition = new Vector2(50f, 0f);
                     rect.localPosition = new Vector3(100f, -150f, 0f);
+                }
+            }
+        }
+
+        public static void SpawnChests()
+        {
+            Xoroshiro128Plus rng = new Xoroshiro128Plus(Run.instance.seed);
+            DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(chestInteractableCard, new DirectorPlacementRule { placementMode = DirectorPlacementRule.PlacementMode.Random }, rng));
+        }
+
+        private static void SceneDirector_Start(On.RoR2.SceneDirector.orig_Start orig, SceneDirector self)
+        {
+            orig(self);
+
+            int hunkCount = 0;
+
+            foreach (var player in PlayerCharacterMasterController.instances)
+            {
+                if (player.networkUser.bodyIndexPreference == BodyCatalog.FindBodyIndex(bodyName))
+                {
+                    hunkCount++;
+                }
+            }
+
+            if (hunkCount > 0)
+            {
+                var currStage = SceneManager.GetActiveScene();
+                var currStageName = currStage.name;
+
+                var pos = Vector3.zero;
+                var rot = Quaternion.Euler(0, 0, 0);
+                var pos2 = Vector3.zero;
+                var rot2 = Quaternion.Euler(0, 0, 0);
+
+                bool doSpawns = true;
+
+                switch (currStageName)
+                {
+                    case "blackbeach":
+                        pos = new Vector3(-38.10372f, -213.6f, -203.5f);
+                        rot = Quaternion.Euler(5.000008f, 250f, 350f);
+                        pos2 = new Vector3(72f, -179f, -320f);
+                        rot2 = Quaternion.Euler(0, 200f, 0);
+                        break;
+                    case "blackbeach2":
+                        pos = new Vector3(-136.572f, 48f, -98.21206f);
+                        rot = Quaternion.Euler(5.000002f, 79.99998f, 9.999999f);
+                        pos2 = new Vector3(-37.19264f, -9.630909f, 100.4858f);
+                        rot2 = Quaternion.Euler(0, 0, 0);
+                        break;
+                    case "golemplains":
+                        pos = new Vector3(88.59721f, -133.2395f, 96.43916f);
+                        rot = Quaternion.Euler(0, 321, 0);
+                        pos2 = new Vector3(-7.914185f, -145.3777f, -260.5133f);
+                        rot2 = Quaternion.Euler(0, 0, 0);
+                        break;
+                    case "golemplains2":
+                        pos = new Vector3(157f, 7.7f, -230.336f);
+                        rot = Quaternion.Euler(0, 90, 0);
+                        pos2 = new Vector3(-60.65578f, 0f, 33.8f);
+                        rot2 = Quaternion.Euler(0, 20, 0);
+                        break;
+                    case "goolake":
+                        pos = new Vector3(300.031f, -134.0496f, 172.794f);
+                        rot = Quaternion.Euler(0, 190, 0);
+                        pos2 = new Vector3(-8.976514f, -129.703f, 9.452635f);
+                        rot2 = Quaternion.Euler(0, 0, 0);
+                        break;
+                    case "foggyswamp":
+                        pos = new Vector3(73.71142f, -149.1607f, -242.2973f);
+                        rot = Quaternion.Euler(0, 104.27f, 0);
+                        pos2 = new Vector3(-18.07931f, -122.829f, 31.3618f);
+                        rot2 = Quaternion.Euler(0, 0, 0);
+                        break;
+                    case "frozenwall":
+                        pos = new Vector3(72.94351f, 120.4808f, 117.6099f);
+                        rot = Quaternion.Euler(0, 167, 0);
+                        pos2 = new Vector3(-141.753f, 50.98663f, 13.00832f);
+                        rot2 = Quaternion.Euler(0, 0, 0);
+                        break;
+                    case "wispgraveyard":
+                        pos = new Vector3(-209.7901f, 29.51929f, -101.8201f);
+                        rot = Quaternion.Euler(0, 145, 0);
+                        pos2 = new Vector3(-209.7901f, 29.51929f, -101.8201f);
+                        rot2 = Quaternion.Euler(0, 0, 0);
+                        break;
+                    case "dampcavesimple":
+                        pos = new Vector3(66.61202f, -87.36278f, -202.6679f);
+                        rot = Quaternion.Euler(0, 318.4f, 0);
+                        pos2 = new Vector3(-145.8008f, -151.1335f, -270.3545f);
+                        rot2 = Quaternion.Euler(0, 0, 0);
+                        break;
+                    case "shipgraveyard":
+                        pos = new Vector3(-86.49648f, -30.00152f, -51.19278f);
+                        rot = Quaternion.Euler(0, 173.6f, 0);
+                        pos2 = new Vector3(84.38012f, 73.99058f, -187.276f);
+                        rot2 = Quaternion.Euler(0, 0, 0);
+                        break;
+                    case "rootjungle":
+                        pos = new Vector3(-117.2441f, -54.73182f, -116.5612f);
+                        rot = Quaternion.Euler(0, 80, 0);
+                        pos2 = new Vector3(-203.3925f, 93.53692f, -166.1386f);
+                        rot2 = Quaternion.Euler(0, 0, 0);
+                        break;
+                    case "skymeadow":
+                        pos = new Vector3(185.8355f, 24.88427f, 5.928031f);
+                        rot = Quaternion.Euler(0, 194.8f, 0);
+                        pos2 = new Vector3(-198.5007f, 1.072668f, 127.9627f);
+                        rot2 = Quaternion.Euler(0, 0, 0);
+                        break;
+                    case "snowyforest":
+                        pos = new Vector3(-1.71916f, 112.7f, 153.1f);
+                        rot = Quaternion.Euler(0, 54.1f, 0);
+                        pos2 = new Vector3(136.0166f, 65.88467f, 53.11964f);
+                        rot2 = Quaternion.Euler(0, 0, 0);
+                        break;
+                    case "ancientloft":
+                        pos = new Vector3(-65.15076f, 62.44833f, -292.9549f);
+                        rot = Quaternion.Euler(0, 354.5f, 0);
+                        pos2 = new Vector3(129.1765f, 11.00331f, 45.75731f);
+                        rot2 = Quaternion.Euler(0, 0, 0);
+                        break;
+                    case "sulfurpools":
+                        pos = new Vector3(22.0251f, -34.37945f, 93.92287f);
+                        rot = Quaternion.Euler(0, 187f, 0);
+                        pos2 = new Vector3(113.6481f, 2.873259f, -148.3676f);
+                        rot2 = Quaternion.Euler(0, 0, 0);
+                        break;
+                    /*case "FBLScene":
+                        pos = new Vector3(58.3f, 372f, -88.8f);
+                        rot = Quaternion.Euler(0, 0, 0);
+                        pos2 = new Vector3(-60, -51.2f, -231);
+                        rot2 = Quaternion.Euler(0, 0, 0);
+                        break;
+                    case "drybasin":
+                        pos = new Vector3(149.4f, 65.7f, -212.7f);
+                        rot = Quaternion.Euler(0, 0, 0);
+                        pos2 = new Vector3(-60, -51.2f, -231);
+                        rot2 = Quaternion.Euler(0, 0, 0);
+                        break;*/
+                    default:
+                        if (!currStage.isSubScene)
+                        {
+                            SpawnChests();
+                            SpawnChests();
+                            break;
+                        }
+                        else
+                            break;
+                }
+
+                if (NetworkServer.active && doSpawns)
+                {
+                    GameObject chest1 = Object.Instantiate(weaponChestPrefab, pos, rot);
+                    NetworkServer.Spawn(chest1);
+
+                    GameObject chest2 = Object.Instantiate(weaponChestPrefab, pos2, rot2);
+                    NetworkServer.Spawn(chest2);
+
+                    if (hunkCount > 1)
+                    {
+                        for (int i = 1; i < hunkCount; i++)
+                        {
+                            SpawnChests();
+                            SpawnChests();
+                        }
+                    }
                 }
             }
         }
