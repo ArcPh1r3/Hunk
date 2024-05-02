@@ -150,6 +150,12 @@ namespace HunkMod.SkillStates.Hunk
 
         public override void OnExit()
         {
+            if (NetworkServer.active)
+            {
+                this.characterBody.RemoveBuff(Modules.Survivors.Hunk.immobilizedBuff);
+                this.characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility);
+            }
+
             this.DampenVelocity();
             this.hunk.isRolling = false;
             this.characterMotor.jumpCount = 0;
@@ -157,12 +163,6 @@ namespace HunkMod.SkillStates.Hunk
             this.skillLocator.primary.UnsetSkillOverride(this, Modules.Survivors.Hunk.counterSkillDef, GenericSkill.SkillOverridePriority.Contextual);
 
             base.OnExit();
-
-            if (NetworkServer.active)
-            {
-                this.characterBody.RemoveBuff(Modules.Survivors.Hunk.immobilizedBuff);
-                this.characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility);
-            }
 
             /*if (RoR2Application.isInSinglePlayer)
             {

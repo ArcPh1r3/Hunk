@@ -82,6 +82,16 @@ namespace HunkMod.SkillStates.Hunk.Counter
             this.hunk.reloadTimer = 1f;
             this.characterMotor.jumpCount = this.characterBody.maxJumpCount;
 
+            // failsafe
+            if (!this.characterBody.HasBuff(RoR2Content.Buffs.HiddenInvincibility))
+            {
+                if (NetworkServer.active)
+                {
+                    this.characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
+                    this.characterBody.AddBuff(Modules.Survivors.Hunk.immobilizedBuff);
+                }
+            }
+
             if (base.isAuthority)
             {
                 if (base.fixedAge >= this.duration)
