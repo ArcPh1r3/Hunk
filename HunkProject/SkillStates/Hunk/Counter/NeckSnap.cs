@@ -70,6 +70,8 @@ namespace HunkMod.SkillStates.Hunk.Counter
 
             this.animator.SetLayerWeight(this.animator.GetLayerIndex("AimYaw"), 1f);
             this.animator.SetLayerWeight(this.animator.GetLayerIndex("AimPitch"), 1f);
+
+            if (this.inputBank.moveVector != Vector3.zero) this.characterBody.isSprinting = true;
         }
 
         public override void FixedUpdate()
@@ -81,6 +83,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
             this.characterBody.aimTimer = -1f;
             this.hunk.reloadTimer = 1f;
             this.characterMotor.jumpCount = this.characterBody.maxJumpCount;
+            this.characterBody.isSprinting = false;
 
             // failsafe
             if (!this.characterBody.HasBuff(RoR2Content.Buffs.HiddenInvincibility))
@@ -133,6 +136,12 @@ namespace HunkMod.SkillStates.Hunk.Counter
 
                 if (this.target)
                 {
+                    if (base.isAuthority)
+                    {
+                        float recoil = 16f;
+                        base.AddRecoil2(-1f * recoil, -2f * recoil, -0.5f * recoil, 0.5f * recoil);
+                    }
+
                     if (NetworkServer.active)
                     {
                         this.target.gameObject.AddComponent<Modules.Components.HunkKnifeTracker>();
@@ -167,6 +176,9 @@ namespace HunkMod.SkillStates.Hunk.Counter
                 this.skillLocator.secondary.stock = 0;
                 this.skillLocator.secondary.rechargeStopwatch = -0.3f;
             }
+
+            this.skillLocator.special.stock = 0;
+            this.skillLocator.special.rechargeStopwatch = -0.3f;
 
             this.animator.SetLayerWeight(this.animator.GetLayerIndex("AimYaw"), this.aimWeight);
             this.animator.SetLayerWeight(this.animator.GetLayerIndex("AimPitch"), this.aimWeight);

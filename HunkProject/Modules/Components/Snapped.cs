@@ -5,7 +5,7 @@ namespace HunkMod.Modules.Components
 {
     public class Snapped : MonoBehaviour
     {
-        public Vector3 neckRotation = new Vector3(180f, 0f, 0f);
+        public Vector3 neckRotation = new Vector3(0f, 0f, 0f);
 
         private Transform headTransform;
 
