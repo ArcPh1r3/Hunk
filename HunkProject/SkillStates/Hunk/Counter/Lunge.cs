@@ -84,15 +84,18 @@ namespace HunkMod.SkillStates.Hunk.Counter
             {
                 if (base.fixedAge >= this.duration)
                 {
-                    this.checkRadius = 8f;
-                    if (this.CheckForCounterattack()) return;
-
                     this.outer.SetNextStateToMain();
                     return;
                 }
 
                 if (base.fixedAge >= (0.5f * this.duration))
                 {
+                    if (this.checkRadius < 8f)
+                    {
+                        this.checkRadius = 8f;
+                        if (this.CheckForCounterattack()) return;
+                    }
+
                     if (this.inputBank.skill1.down)
                     {
                         this.outer.SetNextState(new KnifeCounter());

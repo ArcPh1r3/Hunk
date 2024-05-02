@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using System.Linq;
 using RoR2.Navigation;
+using RoR2.ExpansionManagement;
 
 namespace HunkMod.Modules.Enemies
 {
@@ -64,6 +65,10 @@ namespace HunkMod.Modules.Enemies
             #region Body
             GameObject newPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/EliteVoid/VoidInfestorBody.prefab").WaitForCompletion().InstantiateClone(bodyName, true);
             newPrefab.GetComponent<CharacterBody>().baseNameToken = bodyNameToken;
+
+            MainPlugin.DestroyImmediate(newPrefab.GetComponent<ExpansionRequirementComponent>());
+            MainPlugin.DestroyImmediate(newPrefab.GetComponent<DeathRewards>());
+
             Modules.Prefabs.bodyPrefabs.Add(newPrefab);
 
             newPrefab.GetComponent<CharacterDeathBehavior>().deathState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Parasite.Death));

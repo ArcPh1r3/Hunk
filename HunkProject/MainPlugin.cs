@@ -108,7 +108,7 @@ namespace HunkMod
         private void Hook()
         {
             //R2API.RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
-            //On.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
+            On.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
 
             // uncomment this if network testing
             //On.RoR2.Networking.NetworkManagerSystemSteam.OnClientConnect += (s, u, t) => { };

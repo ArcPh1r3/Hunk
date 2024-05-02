@@ -82,9 +82,6 @@ namespace HunkMod.SkillStates.Hunk.Counter
             this.hunk.reloadTimer = 1f;
             this.characterMotor.jumpCount = this.characterBody.maxJumpCount;
 
-            this.skillLocator.secondary.stock = 0;
-            this.skillLocator.secondary.rechargeStopwatch = -0.3f;
-
             if (base.isAuthority)
             {
                 if (base.fixedAge >= this.duration)
@@ -111,11 +108,11 @@ namespace HunkMod.SkillStates.Hunk.Counter
 
             if (base.fixedAge >= 0.65f * this.duration)
             {
-                this.aimWeight = Mathf.Lerp(this.aimWeight, 1f, Time.fixedDeltaTime * 2f);
+                this.aimWeight = Mathf.Lerp(this.aimWeight, 1f, Time.fixedDeltaTime * 0.5f);
             }
             else
             {
-                this.aimWeight = Mathf.Lerp(this.aimWeight, 0f, Time.fixedDeltaTime * 10f);
+                this.aimWeight = Mathf.Lerp(this.aimWeight, 0f, Time.fixedDeltaTime * 5f);
             }
 
             if (!this.hasSnapped && base.fixedAge >= 0.455f * this.duration)
@@ -144,6 +141,19 @@ namespace HunkMod.SkillStates.Hunk.Counter
                         });
                     }
                 }
+            }
+
+            if (base.fixedAge >= 0.75f * this.duration)
+            {
+                if (this.characterBody.HasBuff(Modules.Survivors.Hunk.immobilizedBuff))
+                {
+                    if (NetworkServer.active) this.characterBody.RemoveBuff(Modules.Survivors.Hunk.immobilizedBuff);
+                }
+            }
+            else
+            {
+                this.skillLocator.secondary.stock = 0;
+                this.skillLocator.secondary.rechargeStopwatch = -0.3f;
             }
 
             this.animator.SetLayerWeight(this.animator.GetLayerIndex("AimYaw"), this.aimWeight);
