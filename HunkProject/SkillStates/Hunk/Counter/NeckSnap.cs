@@ -125,6 +125,8 @@ namespace HunkMod.SkillStates.Hunk.Counter
                 {
                     if (NetworkServer.active)
                     {
+                        this.target.gameObject.AddComponent<Modules.Components.HunkKnifeTracker>();
+
                         this.target.TakeDamage(new DamageInfo
                         {
                             attacker = this.gameObject,
