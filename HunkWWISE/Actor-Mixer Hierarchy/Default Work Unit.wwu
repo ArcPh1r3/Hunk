@@ -2328,11 +2328,6 @@
 								<Sound Name="sfx_driver_syringe_buff" ID="{C7C0B78D-1F12-486F-8772-D524F327D2FC}" ShortID="490137523">
 									<PropertyList>
 										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
-										<Property Name="Volume" Type="Real64">
-											<ValueList>
-												<Value>-5</Value>
-											</ValueList>
-										</Property>
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Conversion">
@@ -2361,7 +2356,7 @@
 										<Property Name="OverridePositioning" Type="bool" Value="True"/>
 										<Property Name="Volume" Type="Real64">
 											<ValueList>
-												<Value>5</Value>
+												<Value>12</Value>
 											</ValueList>
 										</Property>
 									</PropertyList>

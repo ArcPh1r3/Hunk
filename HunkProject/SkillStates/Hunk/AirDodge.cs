@@ -59,7 +59,7 @@ namespace HunkMod.SkillStates.Hunk
             else
             {
                 base.PlayCrossfade("FullBody, Override", "AirDodgePerfect", 0.05f);
-                if (NetworkServer.active) this.characterBody.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 0.5f);
+                this.hunk.iFrames = 0.5f;
 
                 this.success = true;
                 this.hunk.lockOnTimer = 1.5f;

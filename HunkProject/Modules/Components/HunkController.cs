@@ -72,6 +72,8 @@ namespace HunkMod.Modules.Components
         private bool isOut;
         private CrosshairUtils.OverrideRequest crosshairOverrideRequest;
 
+        public float iFrames;
+
         private void Awake()
         {
             this.characterBody = this.GetComponent<CharacterBody>();
@@ -213,6 +215,25 @@ namespace HunkMod.Modules.Components
             this.reloadTimer -= Time.fixedDeltaTime;
             this.lockOnTimer -= Time.fixedDeltaTime;
             this.ammoKillTimer -= Time.fixedDeltaTime;
+            this.iFrames -= Time.fixedDeltaTime;
+
+            if (NetworkServer.active)
+            {
+                if (this.characterBody.HasBuff(RoR2Content.Buffs.HiddenInvincibility))
+                {
+                    if (this.iFrames <= 0f)
+                    {
+                        this.characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility);
+                    }
+                }
+                else
+                {
+                    if (this.iFrames > 0f)
+                    {
+                        this.characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
+                    }
+                }
+            }
 
             if (this.animator)
             {

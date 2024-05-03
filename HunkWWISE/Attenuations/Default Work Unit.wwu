@@ -97,7 +97,7 @@
 				</Attenuation>
 				<Attenuation Name="SuperLoud" ID="{7AFB9170-820C-4466-97A6-01891FB8A30A}" ShortID="75276482">
 					<PropertyList>
-						<Property Name="RadiusMax" Type="Real64" Value="800"/>
+						<Property Name="RadiusMax" Type="Real64" Value="1500"/>
 					</PropertyList>
 					<CurveUsageInfoList>
 						<VolumeDryUsage>
@@ -114,13 +114,7 @@
 											<SegmentShape>Log1</SegmentShape>
 										</Point>
 										<Point>
-											<XPos>333.54232</XPos>
-											<YPos>-12.02472</YPos>
-											<Flags>0</Flags>
-											<SegmentShape>Log1</SegmentShape>
-										</Point>
-										<Point>
-											<XPos>800</XPos>
+											<XPos>1500</XPos>
 											<YPos>-200</YPos>
 											<Flags>37</Flags>
 										</Point>

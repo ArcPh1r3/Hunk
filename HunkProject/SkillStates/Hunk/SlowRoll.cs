@@ -38,7 +38,6 @@ namespace HunkMod.SkillStates.Hunk
 
         public virtual void ApplyBuff()
         {
-            if (NetworkServer.active) this.characterBody.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 0.5f);
         }
 
         public virtual void CreateDashEffect()
