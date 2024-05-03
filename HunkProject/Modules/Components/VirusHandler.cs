@@ -30,6 +30,12 @@ namespace HunkMod.Modules.Components
             this.Mutate();
             this.Mutate();
             this.Mutate();// heha
+
+            if (this.inventory)
+            {
+                this.inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
+                this.inventory.GiveItem(RoR2Content.Items.TeleportWhenOob);
+            }
         }
 
         private void FixedUpdate()
@@ -77,7 +83,8 @@ namespace HunkMod.Modules.Components
             if (this.inventory)
             {
                 this.inventory.GiveItem(Modules.Survivors.Hunk.gVirus);
-                this.inventory.GiveItem(RoR2Content.Items.BoostHp);
+                this.inventory.GiveItem(RoR2Content.Items.BoostHp, 10);
+                this.inventory.GiveItem(RoR2Content.Items.Medkit);
             }
 
             this.characterBody.RecalculateStats();
