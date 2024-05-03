@@ -286,7 +286,7 @@ namespace HunkMod.Modules.Components
             Transform target = null;
             foreach (CharacterBody i in CharacterBody.readOnlyInstancesList)
             {
-                if (i && i.teamComponent && i.teamComponent.teamIndex != TeamIndex.Player)
+                if (i && i.teamComponent && i.teamComponent.teamIndex != TeamIndex.Player && i.healthComponent.alive)
                 {
                     target = i.transform;
                     break;
