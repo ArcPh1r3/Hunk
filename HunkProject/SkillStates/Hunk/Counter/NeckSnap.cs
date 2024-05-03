@@ -66,6 +66,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
             {
                 this.characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility);
                 this.characterBody.RemoveBuff(Modules.Survivors.Hunk.immobilizedBuff);
+                this.characterBody.RemoveBuff(RoR2Content.Buffs.ArmorBoost);
             }
 
             this.animator.SetLayerWeight(this.animator.GetLayerIndex("AimYaw"), 1f);
@@ -160,6 +161,9 @@ namespace HunkMod.SkillStates.Hunk.Counter
                             procChainMask = default(ProcChainMask),
                             procCoefficient = 1f
                         });
+
+                        this.characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility);
+                        this.characterBody.AddBuff(RoR2Content.Buffs.ArmorBoost);
                     }
                 }
             }

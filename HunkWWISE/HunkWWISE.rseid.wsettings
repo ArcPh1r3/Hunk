@@ -57,6 +57,7 @@
 				<Property Name="Event Action List\{5791603B-B453-4033-B829-25FA33A4AD3A}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{58FBC244-7F45-4B1E-8036-82AC87A87149}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{5AE57935-A6B6-4B67-8320-645AAC30F562}\x64_Expand States" Type="string" Value=""/>
+				<Property Name="Event Action List\{60FC9947-19B2-4250-8A8F-F3F3B45AC8FE}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{673CC07C-6B7C-4195-9E01-74DCE0900CC4}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{6826AFDF-C5F3-4D6B-A165-B89E306D7A18}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{699211B4-9C67-485F-A6E4-ECD3DA946411}\x64_Expand States" Type="string" Value=""/>
@@ -164,8 +165,8 @@
 				<Property Name="PluginUserAcknowledge\SoundSeedImpact" Type="bool" Value="True"/>
 				<Property Name="ProjectExplorer\FirstVisible_10_1" Type="string" Value="{4C96B38B-3DB4-40C7-91C9-665510E38993}"/>
 				<Property Name="ProjectExplorer\FirstVisible_11_1" Type="string" Value="{23EC2DE3-3ED8-4B82-AC99-92E25F2E4C6B}"/>
-				<Property Name="ProjectExplorer\FirstVisible_1_1" Type="string" Value="{A6AA5758-4514-4CC5-BC64-C349E2C98383}"/>
-				<Property Name="ProjectExplorer\FirstVisible_3_1" Type="string" Value="{A247D9E0-9857-494F-B791-F53FACEFFFD0}"/>
+				<Property Name="ProjectExplorer\FirstVisible_1_1" Type="string" Value="{F505A0A0-1AB5-4AC8-8B27-F2D7A3AFBF62}"/>
+				<Property Name="ProjectExplorer\FirstVisible_3_1" Type="string" Value="{C9CCBE4D-EF73-4EDD-8B74-7C285867495D}"/>
 				<Property Name="ProjectExplorer\FirstVisible_4_1" Type="string" Value="{CB6175F1-6080-4A23-92EF-0807E304D0C1}"/>
 				<Property Name="ProjectExplorer\FirstVisible_6_1" Type="string" Value="{C98E673F-A24C-48A8-960F-10565FFE70A0}"/>
 				<Property Name="ProjectExplorer\FirstVisible_8_1" Type="string" Value="{41093F77-829F-4D88-8601-E8B25F3D4781}"/>
