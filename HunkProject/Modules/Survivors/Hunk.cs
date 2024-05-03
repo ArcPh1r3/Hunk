@@ -1397,7 +1397,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             gVirusSample.loreToken = "ROB_HUNK_G_VIRUS_SAMPLE_DESC";
             gVirusSample.canRemove = false;
             gVirusSample.hidden = false;
-            gVirusSample.pickupIconSprite = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKeycardDiamondIcon");
+            gVirusSample.pickupIconSprite = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texVirusSampleIcon");
             gVirusSample.requiredExpansion = null;
             gVirusSample.tags = new ItemTag[]
             {
@@ -1410,8 +1410,10 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             };
             gVirusSample.unlockableDef = null;
 
-            gVirusSample.pickupModelPrefab = Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlKeycardDiamond");
+            gVirusSample.pickupModelPrefab = Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlGVirusSample");
             Modules.Assets.ConvertAllRenderersToHopooShader(gVirusSample.pickupModelPrefab);
+            gVirusSample.pickupModelPrefab.transform.Find("Model/Glass").GetComponent<MeshRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/HealingPotion/matHealingPotionGlass.mat").WaitForCompletion();
+            gVirusSample.pickupModelPrefab.transform.Find("Model/Liquid").GetComponent<MeshRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/EliteVoid/matVoidInfestorEyes.mat").WaitForCompletion();
 
             gVirus = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/Base/ArtifactKey/ArtifactKey.asset").WaitForCompletion());
             gVirus.name = "GVirus";
@@ -1439,6 +1441,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             HunkWeaponCatalog.itemDefs.Add(heartKeycard);
             HunkWeaponCatalog.itemDefs.Add(diamondKeycard);
             HunkWeaponCatalog.itemDefs.Add(gVirusSample);
+            HunkWeaponCatalog.itemDefs.Add(gVirus);
         }
 
         private void CreateAmmoInteractable()

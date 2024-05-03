@@ -4877,6 +4877,36 @@
 								</Sound>
 							</ChildrenList>
 						</Folder>
+						<Sound Name="sfx_hunk_virus_spawn" ID="{14FC40AA-4307-4A12-B3D2-20FD3AA2372E}" ShortID="243069551">
+							<PropertyList>
+								<Property Name="OverridePositioning" Type="bool" Value="True"/>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-2</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{92A1A0F3-7047-4165-95AE-D5CFCC30AE61}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="sfx_hunk_virus_spawn" ID="{C42F1D44-0B2F-495D-AF50-FEBF7392B453}">
+									<Language>SFX</Language>
+									<AudioFile>sfx_hunk_virus_spawn.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="931734554"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="sfx_hunk_virus_spawn" ID="{C42F1D44-0B2F-495D-AF50-FEBF7392B453}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
 					</ChildrenList>
 				</ActorMixer>
 			</ChildrenList>

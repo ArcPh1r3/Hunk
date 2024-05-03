@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 582696813
+CRC: 3798061732
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: c445a14a39f2dbecf2a173e4df09f919
+    Hash: 10488e7351e98b8285fe7bb4a7b906d8
   TypeTreeHash:
     serializedVersion: 2
     Hash: 659e220902f47d64c1f3c17677639f17
@@ -86,6 +86,7 @@ Assets:
 - Assets/Hunk/Weapons/mdlSMGPickup.prefab
 - Assets/Hunk/Materials/matHunk06.mat
 - Assets/Hunk/Textures/Shotgun/Leon_RemingtonM1100P_D.png
+- Assets/Hunk/FBX/GVirusSample.fbx
 - Assets/Hunk/FBX/Animations/maskHunkGesture.mask
 - Assets/Hunk/Icons/Skill/texShootIcon.png
 - Assets/Hunk/VFX/BloodSpurtEffect.prefab
@@ -164,6 +165,7 @@ Assets:
 - Assets/Hunk/Materials/matShotgunShell.mat
 - Assets/Hunk/FBX/RunL.anim
 - Assets/Hunk/FBX/Animations/Pistol/Reload.anim
+- Assets/Hunk/Items/mdlGVirusSample.prefab
 - Assets/Hunk/FBX/USP model.fbx
 - Assets/Hunk/Weapons/mdlATM.prefab
 - Assets/Hunk/Textures/Knife/Leon_Knife_D.png
@@ -205,6 +207,7 @@ Assets:
 - Assets/Hunk/Weapons/mdlRevolver.prefab
 - Assets/Hunk/Icons/texMainSkin.png
 - Assets/Hunk/Materials/matM19.mat
+- Assets/Hunk/Materials/matGVirusSample.mat
 - Assets/Hunk/Textures/Magnum/Leon_LightningHawkNormBarrel_N.png
 - Assets/Hunk/Textures/DisplayCase/M_Weapon_Case_normal.png
 - Assets/Hunk/FBX/RunF.anim
@@ -228,6 +231,7 @@ Assets:
 - Assets/Hunk/Materials/matDisplayCase01.mat
 - Assets/Hunk/FBX/displaycase2.dae
 - Assets/Hunk/FBX/meshCommando.mesh
+- Assets/Hunk/Textures/GVirus/texGVirusSample.png
 - Assets/Hunk/FBX/Animations/Default/FreefallR.anim
 - Assets/Hunk/mdlDisplayCase.prefab
 - Assets/Hunk/Icons/Item/texKeycardHeartIcon.png
@@ -295,6 +299,7 @@ Assets:
 - Assets/Hunk/FBX/meshHunkB02.mesh
 - Assets/Hunk/FBX/Animations/Pistol/Idle.anim
 - Assets/Hunk/Textures/Misc/texTrimSheetMilitaryMetal.png
+- Assets/Hunk/Icons/Item/texVirusSampleIcon.png
 - Assets/Hunk/Icons/Item/texKeycardDiamondIcon.png
 - Assets/Hunk/Weapons/mdlShotgun.prefab
 - Assets/Hunk/Textures/Shotgun/Leon_RemingtonM1100_D.png

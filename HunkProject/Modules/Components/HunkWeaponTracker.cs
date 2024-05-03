@@ -236,7 +236,7 @@ namespace HunkMod.Modules.Components
             float chance = 0.02f;
 
             this.attempts++; // near guaranteed after 2 minutes
-            if (this.attempts >= 12) chance = 0.9f;
+            if (this.attempts >= 12) chance = 0.95f;
 
             if (!this.hasSpawnedSpadeKeycard)
             {
@@ -293,9 +293,11 @@ namespace HunkMod.Modules.Components
                 }
             }
 
-            target = this.hunk.characterBody.transform;
+            //target = this.hunk.characterBody.transform;
 
             if (!target) return false;
+
+            Util.PlaySound("sfx_hunk_virus_spawn", this.gameObject);
 
             if (NetworkServer.active)
             {
@@ -313,6 +315,7 @@ namespace HunkMod.Modules.Components
                 summon.position = target.position + (Vector3.up * 8);
                 summon.masterPrefab = spawnCard.prefab;
                 summon.summonerBodyObject = target.gameObject;
+                summon.teamIndexOverride = TeamIndex.Void;
                 var master = summon.Perform();
             }
 

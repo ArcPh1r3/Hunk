@@ -65,9 +65,11 @@ namespace HunkMod.Modules.Enemies
             #region Body
             GameObject newPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/EliteVoid/VoidInfestorBody.prefab").WaitForCompletion().InstantiateClone(bodyName, true);
             newPrefab.GetComponent<CharacterBody>().baseNameToken = bodyNameToken;
-
+ 
             MainPlugin.DestroyImmediate(newPrefab.GetComponent<ExpansionRequirementComponent>());
             MainPlugin.DestroyImmediate(newPrefab.GetComponent<DeathRewards>());
+
+            newPrefab.AddComponent<Modules.Components.ParasiteController>();
 
             Modules.Prefabs.bodyPrefabs.Add(newPrefab);
 
@@ -121,6 +123,7 @@ namespace HunkMod.Modules.Enemies
         {
             GameObject newMaster = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/EliteVoid/VoidInfestorMaster.prefab").WaitForCompletion().InstantiateClone(masterName, true);
             newMaster.GetComponent<CharacterMaster>().bodyPrefab = bodyPrefab;
+            MonoBehaviour.Destroy(newMaster.GetComponent<GivePickupsOnStart>());
             /*
             #region AI
             foreach (AISkillDriver ai in newMaster.GetComponentsInChildren<AISkillDriver>())

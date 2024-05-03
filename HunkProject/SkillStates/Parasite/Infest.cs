@@ -6,6 +6,7 @@ using EntityStates;
 using UnityEngine.Networking;
 using RoR2.CharacterAI;
 using System.Linq;
+using HunkMod.Modules.Components;
 
 namespace HunkMod.SkillStates.Parasite
 {
@@ -95,11 +96,10 @@ namespace HunkMod.SkillStates.Parasite
 						CharacterMaster master = body.master;
 						if (healthComponent.alive && master != null && !body.isPlayerControlled && !body.bodyFlags.HasFlag(CharacterBody.BodyFlags.Mechanical))
 						{
-							/*master.teamIndex = TeamIndex.Void;
+							master.teamIndex = TeamIndex.Void;
 							body.teamComponent.teamIndex = TeamIndex.Void;
-							body.inventory.SetEquipmentIndex(DLC1Content.Elites.Void.eliteEquipmentDef.equipmentIndex);
-							// ^
-							// todo: make our own elite type and replace this
+							//body.inventory.SetEquipmentIndex(DLC1Content.Elites.Void.eliteEquipmentDef.equipmentIndex);
+							body.gameObject.AddComponent<VirusHandler>();
 
 							BaseAI component = master.GetComponent<BaseAI>();
 							if (component)
@@ -108,14 +108,15 @@ namespace HunkMod.SkillStates.Parasite
 								component.ForceAcquireNearestEnemyIfNoCurrentEnemy();
 							}
 
+							MonoBehaviour.DestroyImmediate(this.characterBody.master.GetComponent<KeycardHolder>());
+
 							base.healthComponent.Suicide(null, null, DamageType.Generic);
 							if (EntityStates.VoidInfestor.Infest.successfulInfestEffectPrefab)
 							{
 								EffectManager.SimpleImpactEffect(EntityStates.VoidInfestor.Infest.successfulInfestEffectPrefab, base.transform.position, Vector3.up, false);
 								break;
 							}
-							break;*/
-							// actually i'm pretty sure the void equipment just spawns a new infestor on death so i gotta take this off until we have a custom elite type
+							break;
 						}
 						else
 						{

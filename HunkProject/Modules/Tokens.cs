@@ -128,6 +128,9 @@ namespace HunkMod.Modules
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_DIAMOND_KEYCARD_NAME", "U.C. Keycard (Diamond)");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYCARD_DESC", "Used to open Umbrella Corp <style=cIsUtility>weapon cases</style>.");
 
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_G_VIRUS_SAMPLE_NAME", "G-Virus Sample");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_G_VIRUS_SAMPLE_DESC", "Volatile sample of the <style=cIsUtility>Golgotha Virus</style>. Handle with care.");
+
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_HEARTCHEST_NAME", "Heart-Key Weapon Case");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_HEARTCHEST_CONTEXT", "Open Heart-Key Weapon Case");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HEARTCOST", "");

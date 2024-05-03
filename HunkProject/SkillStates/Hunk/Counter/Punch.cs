@@ -137,7 +137,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            if (this.stopwatch >= (0.75f * this.duration)) return InterruptPriority.Any;
+            if (this.stopwatch >= (0.45f * this.duration)) return InterruptPriority.Any;
             else return InterruptPriority.Frozen;
         }
     }
