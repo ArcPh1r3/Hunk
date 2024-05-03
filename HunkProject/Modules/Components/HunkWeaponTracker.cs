@@ -67,6 +67,8 @@ namespace HunkMod.Modules.Components
             this.Init();
 
             UnityEngine.SceneManagement.SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+            this.CancelInvoke();
+            if (NetworkServer.active) this.Invoke("SpawnKeycard", UnityEngine.Random.Range(90f, 180f));
         }
 
         private void OnDestroy()

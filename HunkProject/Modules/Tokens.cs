@@ -38,11 +38,14 @@ namespace HunkMod.Modules
             #endregion
 
             #region Passive
-            LanguageAPI.Add(prefix + "PASSIVE_NAME", "Survivalist");
-            LanguageAPI.Add(prefix + "PASSIVE_DESCRIPTION", $"HUNK is able to <style=cIsDamage>rummage</style> through <style=cIsUtility>chests and barrels</style> for spare ammo, <style=cIsHealth>only once per</style>.");
+            LanguageAPI.Add(prefix + "PPASSIVE_NAME", "OSP (On-Site Procurement)");
+            LanguageAPI.Add(prefix + "PPASSIVE_DESCRIPTION", $"HUNK can collect <color=#" + Helpers.yellowItemHex + ">U.C. Keycards" + Helpers.colorSuffix + " to open <style=cIsDamage>weapon cases</style> and expand his arsenal.");
 
-            LanguageAPI.Add(prefix + "PASSIVE2_NAME", "The Fourth Survivor");
-            LanguageAPI.Add(prefix + "PASSIVE2_DESCRIPTION", $"Spawn with a <style=cIsDamage>full arsenal</style>,  <style=cIsHealth>BUT</style> you are now <style=cIsHealth>unable to gain any more guns or ammo</style>.");
+            LanguageAPI.Add(prefix + "PASSIVE_NAME", "Grim Struggle");
+            LanguageAPI.Add(prefix + "PASSIVE_DESCRIPTION", $"Start with a <style=cIsDamage>LE 5</style> and <style=cIsDamage>MUP</style>. You can <style=cIsDamage>rummage</style> through <style=cIsUtility>chests</style> for spare ammo.");
+
+            LanguageAPI.Add(prefix + "PASSIVE2_NAME", "Looming Dread");
+            LanguageAPI.Add(prefix + "PASSIVE2_DESCRIPTION", $"Start with a <style=cIsDamage>full arsenal</style>,  <style=cIsHealth>BUT</style> you are now <style=cIsHealth>unable to gain any more ammo</style>.");
 
             LanguageAPI.Add(prefix + "CONFIRM_NAME", "Confirm");
             LanguageAPI.Add(prefix + "CONFIRM_DESCRIPTION", "Proceed with the current skill.");
@@ -59,31 +62,31 @@ namespace HunkMod.Modules
             LanguageAPI.Add(prefix + "PRIMARY_KNIFEALT_DESCRIPTION", $"<style=cIsUtility>Looting.</style> <style=cIsDamage>Slash</style> close-range combatants for <style=cIsDamage>{100f * 2.2}% damage</style>. <style=cIsDamage>Attacks from behind are Critical Strikes.</style>");
 
             LanguageAPI.Add(prefix + "SHOOT_ATM_NAME", "Fire");
-            LanguageAPI.Add(prefix + "SHOOT_ATM_DESCRIPTION", "Shoot for <style=cIsDamage>3200% damage</style>. <style=cIsUtility>Deals most damage on direct hits.</style>");
+            LanguageAPI.Add(prefix + "SHOOT_ATM_DESCRIPTION", "Shoot for <style=cIsDamage>6400% damage</style>. <style=cIsUtility>Deals most damage on direct hits.</style>");
 
             LanguageAPI.Add(prefix + "SHOOT_ROCKETLAUNCHER_NAME", "Fire");
-            LanguageAPI.Add(prefix + "SHOOT_ROCKETLAUNCHER_DESCRIPTION", "Shoot for <style=cIsDamage>2400% damage</style>. <style=cIsDamage>Igniting.</style>");
+            LanguageAPI.Add(prefix + "SHOOT_ROCKETLAUNCHER_DESCRIPTION", "Shoot for <style=cIsDamage>4800% damage</style>. <style=cIsDamage>Igniting.</style>");
 
             LanguageAPI.Add(prefix + "SHOOT_M19_NAME", "Fire");
-            LanguageAPI.Add(prefix + "SHOOT_M19_DESCRIPTION", "Shoot for <style=cIsDamage>550% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
+            LanguageAPI.Add(prefix + "SHOOT_M19_DESCRIPTION", "Shoot for <style=cIsDamage>700% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
 
             LanguageAPI.Add(prefix + "SHOOT_MAGNUM_NAME", "Fire");
-            LanguageAPI.Add(prefix + "SHOOT_MAGNUM_DESCRIPTION", "Shoot for <style=cIsDamage>1200% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
+            LanguageAPI.Add(prefix + "SHOOT_MAGNUM_DESCRIPTION", "Shoot for <style=cIsDamage>1800% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
 
             LanguageAPI.Add(prefix + "SHOOT_MUP_NAME", "Fire");
             LanguageAPI.Add(prefix + "SHOOT_MUP_DESCRIPTION", "Shoot for <style=cIsDamage>320% damage</style>. <style=cIsUtility>25% headshot bonus.</style>");
 
             LanguageAPI.Add(prefix + "SHOOT_REVOLVER_NAME", "Fire");
-            LanguageAPI.Add(prefix + "SHOOT_REVOLVER_DESCRIPTION", "Shoot for <style=cIsDamage>1200% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
+            LanguageAPI.Add(prefix + "SHOOT_REVOLVER_DESCRIPTION", "Shoot for <style=cIsDamage>1800% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
 
             LanguageAPI.Add(prefix + "SHOOT_SHOTGUN_NAME", "Fire");
-            LanguageAPI.Add(prefix + "SHOOT_SHOTGUN_DESCRIPTION", "Shoot for <style=cIsDamage>140x8% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
+            LanguageAPI.Add(prefix + "SHOOT_SHOTGUN_DESCRIPTION", "Shoot for <style=cIsDamage>140x14% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
 
             LanguageAPI.Add(prefix + "SHOOT_SLUGGER_NAME", "Fire");
-            LanguageAPI.Add(prefix + "SHOOT_SLUGGER_DESCRIPTION", "Shoot for <style=cIsDamage>1200% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
+            LanguageAPI.Add(prefix + "SHOOT_SLUGGER_DESCRIPTION", "Shoot for <style=cIsDamage>1800% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
 
             LanguageAPI.Add(prefix + "SHOOT_SMG_NAME", "Fire");
-            LanguageAPI.Add(prefix + "SHOOT_SMG_DESCRIPTION", "Shoot for <style=cIsDamage>250% damage</style>. <style=cIsUtility>25% headshot bonus.</style>");
+            LanguageAPI.Add(prefix + "SHOOT_SMG_DESCRIPTION", "Shoot for <style=cIsDamage>280% damage</style>. <style=cIsUtility>25% headshot bonus.</style>");
             #endregion
 
             #region Secondary

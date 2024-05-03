@@ -11,7 +11,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Shotgun
         public static float damageCoefficient = 1.4f;
         public static float procCoefficient = 0.75f;
         public float baseDuration = 1.2f;
-        public static int bulletCount = 8;
+        public static int bulletCount = 14;
         public static float bulletSpread = 2f;
         public static float bulletRecoil = 8f;
         public static float bulletRange = 64;

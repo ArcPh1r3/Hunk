@@ -449,15 +449,17 @@ namespace HunkMod.Modules.Survivors
 
         private static void CreateSkills(GameObject prefab)
         {
+            HunkPassive passive = prefab.AddComponent<HunkPassive>();
+
             string prefix = MainPlugin.developerPrefix;
             SkillLocator skillLocator = prefab.GetComponent<SkillLocator>();
 
             Modules.Skills.CreateSkillFamilies(prefab);
 
-            skillLocator.passiveSkill.enabled = false;
-            //skillLocator.passiveSkill.skillNameToken = prefix + "_DRIVER_BODY_PASSIVE_NAME";
-            //skillLocator.passiveSkill.skillDescriptionToken = prefix + "_DRIVER_BODY_PASSIVE_DESCRIPTION";
-            //skillLocator.passiveSkill.icon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texPassiveIcon");
+            skillLocator.passiveSkill.enabled = true;
+            skillLocator.passiveSkill.skillNameToken = prefix + "_HUNK_BODY_PPASSIVE_NAME";
+            skillLocator.passiveSkill.skillDescriptionToken = prefix + "_HUNK_BODY_PPASSIVE_NAME";
+            skillLocator.passiveSkill.icon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texPPassiveIcon");
 
             Hunk.reloadSkillDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
             {
@@ -533,11 +535,11 @@ namespace HunkMod.Modules.Survivors
 
 
             #region Passive
-            /*passive.defaultPassive = Modules.Skills.CreateSkillDef(new SkillDefInfo
+            passive.rummagePassive = Modules.Skills.CreateSkillDef(new SkillDefInfo
             {
-                skillName = prefix + "_DRIVER_BODY_PASSIVE_NAME",
-                skillNameToken = prefix + "_DRIVER_BODY_PASSIVE_NAME",
-                skillDescriptionToken = prefix + "_DRIVER_BODY_PASSIVE_DESCRIPTION",
+                skillName = prefix + "_HUNK_BODY_PASSIVE_NAME",
+                skillNameToken = prefix + "_HUNK_BODY_PASSIVE_NAME",
+                skillDescriptionToken = prefix + "_HUNK_BODY_PASSIVE_DESCRIPTION",
                 skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texPassiveIcon"),
                 activationState = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Idle)),
                 activationStateMachineName = "",
@@ -557,11 +559,11 @@ namespace HunkMod.Modules.Survivors
                 stockToConsume = 1
             });
 
-            passive.fourthSurvivorPassive = Modules.Skills.CreateSkillDef(new SkillDefInfo
+            passive.fullArsenalPassive = Modules.Skills.CreateSkillDef(new SkillDefInfo
             {
-                skillName = prefix + "_DRIVER_BODY_PASSIVE3_NAME",
-                skillNameToken = prefix + "_DRIVER_BODY_PASSIVE3_NAME",
-                skillDescriptionToken = prefix + "_DRIVER_BODY_PASSIVE3_DESCRIPTION",
+                skillName = prefix + "_HUNK_BODY_PASSIVE2_NAME",
+                skillNameToken = prefix + "_HUNK_BODY_PASSIVE2_NAME",
+                skillDescriptionToken = prefix + "_HUNK_BODY_PASSIVE2_DESCRIPTION",
                 skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texLeadfootIcon"),
                 activationState = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Idle)),
                 activationStateMachineName = "",
@@ -581,29 +583,13 @@ namespace HunkMod.Modules.Survivors
                 stockToConsume = 1
             });
 
-            if (Modules.Config.cursed.Value)
-            {
-                Modules.Skills.AddPassiveSkills(passive.passiveSkillSlot.skillFamily, new SkillDef[]{
-                    passive.defaultPassive,
-                    passive.bulletsPassive,
-                    passive.godslingPassive,
-                    passive.pistolOnlyPassive,
+            Modules.Skills.AddPassiveSkills(passive.passiveSkillSlot.skillFamily, new SkillDef[]{
+                    passive.rummagePassive,
+                    passive.fullArsenalPassive
                 });
 
-                Modules.Skills.AddUnlockablesToFamily(passive.passiveSkillSlot.skillFamily,
-                null, pistolPassiveUnlockableDef, godslingPassiveUnlockableDef, pistolPassiveUnlockableDef);
-            }
-            else
-            {
-                Modules.Skills.AddPassiveSkills(passive.passiveSkillSlot.skillFamily, new SkillDef[]{
-                    passive.defaultPassive,
-                    passive.bulletsPassive,
-                    passive.godslingPassive
-                });
-
-                Modules.Skills.AddUnlockablesToFamily(passive.passiveSkillSlot.skillFamily,
-                null, pistolPassiveUnlockableDef, godslingPassiveUnlockableDef);
-            }*/
+            //Modules.Skills.AddUnlockablesToFamily(passive.passiveSkillSlot.skillFamily,
+            //null, altPassiveUnlockableDef);
             #endregion
 
             #region Primary

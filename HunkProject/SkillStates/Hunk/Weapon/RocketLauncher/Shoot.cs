@@ -8,7 +8,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.RocketLauncher
 {
     public class Shoot : BaseHunkSkillState
     {
-        public static float damageCoefficient = 24f;
+        public static float damageCoefficient = 48f;
         public static float procCoefficient = 1f;
         public float baseDuration = 1.8f; // the base skill duration. i.e. attack speed
         public static float recoil = 40f;

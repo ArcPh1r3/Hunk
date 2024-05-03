@@ -6,7 +6,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Slugger
 {
     public class Shoot : BaseHunkSkillState
     {
-        public static float damageCoefficient = 12f;
+        public static float damageCoefficient = 18f;
         public static float procCoefficient = 1f;
         public float baseDuration = 1.2f;
         public static float bulletRecoil = 8f;
