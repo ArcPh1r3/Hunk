@@ -69,7 +69,7 @@ namespace HunkMod.Modules.Components
             this.attempts = 0;
 
             this.CancelInvoke();
-            this.InvokeRepeating("TrySpawnKeycard", 10f, 10f);
+            this.InvokeRepeating("TrySpawnKeycard", 5f, 5f);
         }
 
         private void Start()
