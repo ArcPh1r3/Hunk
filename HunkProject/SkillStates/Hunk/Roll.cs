@@ -52,7 +52,11 @@ namespace HunkMod.SkillStates.Hunk
 
             this.hunk.desiredYOffset = 0.6f;
 
-            if (NetworkServer.active) this.characterBody.AddBuff(Modules.Survivors.Hunk.immobilizedBuff);
+            if (NetworkServer.active)
+            {
+                this.characterBody.AddBuff(Modules.Survivors.Hunk.immobilizedBuff);
+                this.characterBody.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 0.25f);
+            }
 
             this.ApplyBuff();
             this.CreateDashEffect();

@@ -87,7 +87,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
             this.characterBody.isSprinting = false;
 
             // failsafe
-            if (!this.characterBody.HasBuff(RoR2Content.Buffs.HiddenInvincibility))
+            if (!this.characterBody.HasBuff(RoR2Content.Buffs.HiddenInvincibility) && base.fixedAge <= 0.2f)
             {
                 if (NetworkServer.active)
                 {
