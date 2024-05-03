@@ -558,6 +558,7 @@ GameObject:
   - component: {fileID: 2379514605352711247}
   - component: {fileID: 2141281130598737021}
   - component: {fileID: 4002572753062903890}
+  - component: {fileID: 4573464367657809123}
   m_Layer: 0
   m_Name: SM_Weapon_Case_low.001
   m_TagString: Untagged
@@ -626,6 +627,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &4573464367657809123
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3677735082807066694}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 151.48154, y: 95.98258, z: 67.36642}
+  m_Center: {x: -72.4984, y: 47.99129, z: 28.771078}
 --- !u!1 &4257361632125231554
 GameObject:
   m_ObjectHideFlags: 0

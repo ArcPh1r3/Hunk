@@ -79,6 +79,12 @@ namespace HunkMod.Modules.Survivors
         public static CostTypeDef diamondCostDef;
         public static int diamondCostTypeIndex;
 
+        public static InteractableSpawnCard terminalInteractableCard;
+        internal static GameObject terminalPrefab;
+
+        public static CostTypeDef sampleCostDef;
+        public static int sampleCostTypeIndex;
+
         internal GameObject ammoPickupInteractable;
         internal GameObject ammoPickupInteractableSmall;
 
@@ -109,6 +115,7 @@ namespace HunkMod.Modules.Survivors
                 CreateAmmoInteractable();
                 CreateBarrelAmmoInteractable();
                 CreateChest();
+                CreateTerminal();
                 CreatePod();
 
                 characterPrefab = CreateBodyPrefab(true);
@@ -1171,7 +1178,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             spadeCostDef = new CostTypeDef();
             spadeCostDef.costStringFormatToken = MainPlugin.developerPrefix + "_SPADECOST";
             spadeCostDef.isAffordable = new CostTypeDef.IsAffordableDelegate(Misc.ItemCostTypeHelperSpade.IsAffordable);
-            spadeCostDef.payCost = new CostTypeDef.PayCostDelegate(Misc.ItemCostTypeHelperClub.PayCost);
+            spadeCostDef.payCost = new CostTypeDef.PayCostDelegate(Misc.ItemCostTypeHelperSpade.PayCost);
             spadeCostDef.colorIndex = ColorCatalog.ColorIndex.Blood;
             spadeCostDef.saturateWorldStyledCostString = true;
             spadeCostDef.darkenWorldStyledCostString = false;
@@ -1184,12 +1191,25 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             diamondCostDef = new CostTypeDef();
             diamondCostDef.costStringFormatToken = MainPlugin.developerPrefix + "_DIAMONDCOST";
             diamondCostDef.isAffordable = new CostTypeDef.IsAffordableDelegate(Misc.ItemCostTypeHelperDiamond.IsAffordable);
-            diamondCostDef.payCost = new CostTypeDef.PayCostDelegate(Misc.ItemCostTypeHelperClub.PayCost);
+            diamondCostDef.payCost = new CostTypeDef.PayCostDelegate(Misc.ItemCostTypeHelperDiamond.PayCost);
             diamondCostDef.colorIndex = ColorCatalog.ColorIndex.Blood;
             diamondCostDef.saturateWorldStyledCostString = true;
             diamondCostDef.darkenWorldStyledCostString = false;
             diamondCostTypeIndex = CostTypeCatalog.costTypeDefs.Length + list.Count;
             list.Add(diamondCostDef);
+        }
+
+        private static void AddSampleCostType(List<CostTypeDef> list)
+        {
+            sampleCostDef = new CostTypeDef();
+            sampleCostDef.costStringFormatToken = MainPlugin.developerPrefix + "_SAMPLECOST";
+            sampleCostDef.isAffordable = new CostTypeDef.IsAffordableDelegate(Misc.ItemCostTypeHelperSample.IsAffordable);
+            sampleCostDef.payCost = new CostTypeDef.PayCostDelegate(Misc.ItemCostTypeHelperSample.PayCost);
+            sampleCostDef.colorIndex = ColorCatalog.ColorIndex.BossItem;
+            sampleCostDef.saturateWorldStyledCostString = true;
+            sampleCostDef.darkenWorldStyledCostString = false;
+            sampleCostTypeIndex = CostTypeCatalog.costTypeDefs.Length + list.Count;
+            list.Add(sampleCostDef);
         }
 
         public void CreateWeaponPools()
@@ -1213,18 +1233,24 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             weaponChestPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Chest2/Chest2.prefab").WaitForCompletion().InstantiateClone("HunkChest", true);
             //weaponChestPrefab.GetComponent<Highlight>().targetRenderer.material = miliMat;
             weaponChestPrefab.GetComponent<Highlight>().targetRenderer.enabled = false;
+            weaponChestPrefab.GetComponent<Highlight>().targetRenderer.GetComponent<SkinnedMeshRenderer>().sharedMesh = null;
             weaponChestPrefab.AddComponent<Components.WeaponChest>();
 
             displayCaseModel.transform.parent = weaponChestPrefab.GetComponent<Highlight>().targetRenderer.transform;
             displayCaseModel.transform.localPosition = new Vector3(0f, 0f, -2.1f);
             displayCaseModel.transform.localRotation = Quaternion.Euler(new Vector3(90f, 0f, 0f));
             displayCaseModel.transform.localScale = Vector3.one * 1.3f;
+            displayCaseModel.transform.Find("Pivot/Model/SM_Weapon_Case_low.001").gameObject.AddComponent<EntityLocator>().entity = weaponChestPrefab;
+            //weaponChestPrefab.GetComponent<ModelLocator>().modelTransform = displayCaseModel.transform;
+
             Modules.Assets.ConvertAllRenderersToHopooShader(displayCaseModel.transform.Find("Pivot/Model/SM_Weapon_Case_low.001").gameObject);
             Modules.Assets.ConvertAllRenderersToHopooShader(displayCaseModel.transform.Find("Pivot/Model/Hinge/SM_Weapon_Case_low.002").gameObject);
             Modules.Assets.ConvertAllRenderersToHopooShader(displayCaseModel.transform.Find("Pivot/Model/Hinge/Lock").gameObject);
             displayCaseModel.transform.Find("Pivot/Model/Hinge/SM_Weapon_Case_low").gameObject.GetComponent<MeshRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/VendingMachine/matVendingMachineGlass.mat").WaitForCompletion();
 
             weaponChestPrefab.GetComponent<Highlight>().targetRenderer = displayCaseModel.transform.Find("Pivot/Model/SM_Weapon_Case_low.001").gameObject.GetComponent<MeshRenderer>();
+
+            weaponChestPrefab.transform.Find("HologramPivot").gameObject.SetActive(false);
 
             // nasty!
             GameObject pickupPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/QuestVolatileBattery/QuestVolatileBatteryWorldPickup.prefab").WaitForCompletion().InstantiateClone("HunkGunPickup", false);
@@ -1252,6 +1278,47 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             chestInteractableCard.occupyPosition = true;
             chestInteractableCard.orientToFloor = true;
             chestInteractableCard.skipSpawnWhenSacrificeArtifactEnabled = false;
+            //chestInteractableCard.maxSpawnsPerStage = 2;
+        }
+
+        private void CreateTerminal()
+        {
+            GameObject terminalModel = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlTerminal"));
+
+            terminalPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Chest2/Chest2.prefab").WaitForCompletion().InstantiateClone("HunkTerminal", true);
+            //terminalPrefab.GetComponent<Highlight>().targetRenderer.material = miliMat;
+            terminalPrefab.GetComponent<Highlight>().targetRenderer.enabled = false;
+            terminalPrefab.GetComponent<Highlight>().targetRenderer.GetComponent<SkinnedMeshRenderer>().sharedMesh = null;
+            terminalPrefab.AddComponent<Components.Terminal>();
+
+            terminalModel.transform.parent = terminalPrefab.GetComponent<Highlight>().targetRenderer.transform;
+            terminalModel.transform.localPosition = new Vector3(0f, 0f, -2.1f);
+            terminalModel.transform.localRotation = Quaternion.Euler(new Vector3(90f, 0f, 0f));
+            terminalModel.transform.localScale = Vector3.one * 1.3f;
+            Modules.Assets.ConvertAllRenderersToHopooShader(terminalModel.gameObject);
+            //terminalPrefab.GetComponent<ModelLocator>().modelTransform = terminalModel.transform;
+            //^ this fixes the highlight bug but breaks the entire chest! fun!
+
+            terminalPrefab.GetComponent<Highlight>().targetRenderer = terminalModel.transform.Find("Model").gameObject.GetComponent<MeshRenderer>();
+            terminalModel.transform.Find("Model").gameObject.AddComponent<EntityLocator>().entity = terminalPrefab;
+
+            terminalPrefab.transform.Find("HologramPivot").transform.localPosition = new Vector3(0f, 2f, -1f);
+            terminalPrefab.transform.Find("HologramPivot").transform.localScale = Vector3.one * 0.5f;
+
+            terminalInteractableCard = ScriptableObject.CreateInstance<InteractableSpawnCard>();
+            terminalInteractableCard.name = "iscHunkTerminal";
+            terminalInteractableCard.prefab = terminalPrefab;
+            terminalInteractableCard.sendOverNetwork = true;
+            terminalInteractableCard.hullSize = HullClassification.Human;
+            terminalInteractableCard.nodeGraphType = RoR2.Navigation.MapNodeGroup.GraphType.Ground;
+            terminalInteractableCard.requiredFlags = RoR2.Navigation.NodeFlags.None;
+            terminalInteractableCard.forbiddenFlags = RoR2.Navigation.NodeFlags.None;
+
+            terminalInteractableCard.directorCreditCost = 0;
+
+            terminalInteractableCard.occupyPosition = true;
+            terminalInteractableCard.orientToFloor = true;
+            terminalInteractableCard.skipSpawnWhenSacrificeArtifactEnabled = false;
             //chestInteractableCard.maxSpawnsPerStage = 2;
         }
 
@@ -1502,9 +1569,12 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             // rummage passive
             On.RoR2.ChestBehavior.Open += ChestBehavior_Open;
             On.RoR2.ChestBehavior.ItemDrop += ChestBehavior_ItemDrop;
+            On.RoR2.ChestBehavior.Roll += ChestBehavior_Roll;
+            On.RoR2.ChestBehavior.RollItem += ChestBehavior_RollItem;
             On.RoR2.BarrelInteraction.CoinDrop += BarrelInteraction_CoinDrop;
             On.RoR2.ShopTerminalBehavior.DropPickup += ShopTerminalBehavior_DropPickup;
             On.RoR2.RouletteChestController.EjectPickupServer += RouletteChestController_EjectPickupServer;
+            On.RoR2.PurchaseInteraction.OnInteractionBegin += PurchaseInteraction_OnInteractionBegin;
 
             // bandolier
             On.RoR2.SkillLocator.ApplyAmmoPack += SkillLocator_ApplyAmmoPack;
@@ -1520,6 +1590,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             CostTypeCatalog.modHelper.getAdditionalEntries += AddSpadeCostType;
             CostTypeCatalog.modHelper.getAdditionalEntries += AddDiamondCostType;
             CostTypeCatalog.modHelper.getAdditionalEntries += AddClubCostType;
+            CostTypeCatalog.modHelper.getAdditionalEntries += AddSampleCostType;
 
             // place chests
             On.RoR2.SceneDirector.Start += SceneDirector_Start;
@@ -1535,15 +1606,90 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             //On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += PlayRuinAnimation;
         }
 
+        private static void PurchaseInteraction_OnInteractionBegin(On.RoR2.PurchaseInteraction.orig_OnInteractionBegin orig, PurchaseInteraction self, Interactor activator)
+        {
+            orig(self, activator);
+
+            if (self && self.gameObject.name.Contains("HunkTerminal"))
+            {
+                if (activator)
+                {
+                    CharacterBody characterBody = activator.GetComponent<CharacterBody>();
+                    if (characterBody)
+                    {
+                        if (characterBody.inventory)
+                        {
+                            bool valid = false;
+                            int tries = 0;
+                            while (!valid)
+                            {
+                                tries++;
+                                if (characterBody.inventory.GetItemCount(Hunk.spadeKeycard) <= 0)
+                                {
+                                    self.GetComponent<Terminal>().itemDef = Hunk.spadeKeycard;
+                                    valid = true;
+                                }
+                                else
+                                {
+                                    float rng = Random.Range(0, 3);
+                                    switch (rng)
+                                    {
+                                        case 0:
+                                            if (characterBody.inventory.GetItemCount(Hunk.clubKeycard) <= 0)
+                                            {
+                                                self.GetComponent<Terminal>().itemDef = Hunk.clubKeycard;
+                                                valid = true;
+                                            }
+                                            break;
+                                        case 1:
+                                            if (characterBody.inventory.GetItemCount(Hunk.heartKeycard) <= 0)
+                                            {
+                                                self.GetComponent<Terminal>().itemDef = Hunk.heartKeycard;
+                                                valid = true;
+                                            }
+                                            break;
+                                        case 2:
+                                            if (characterBody.inventory.GetItemCount(Hunk.diamondKeycard) <= 0)
+                                            {
+                                                self.GetComponent<Terminal>().itemDef = Hunk.diamondKeycard;
+                                                valid = true;
+                                            }
+                                            break;
+                                    }
+                                }
+
+                                if (tries >= 50)
+                                {
+                                    valid = true;
+                                    self.GetComponent<Terminal>().itemDef = RoR2Content.Items.Pearl;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private static void ChestBehavior_RollItem(On.RoR2.ChestBehavior.orig_RollItem orig, ChestBehavior self)
+        {
+            if (self && self.gameObject.name.Contains("HunkTerminal")) return;
+            orig(self);
+        }
+
+        private static void ChestBehavior_Roll(On.RoR2.ChestBehavior.orig_Roll orig, ChestBehavior self)
+        {
+            if (self && self.gameObject.name.Contains("HunkTerminal")) return;
+            orig(self);
+        }
+
         private static void ChestBehavior_Open(On.RoR2.ChestBehavior.orig_Open orig, ChestBehavior self)
         {
             if (Modules.Helpers.isHunkInPlay)
             {
-                if (self.gameObject.name.Contains("Hunk"))
+                if (self.gameObject.name.Contains("HunkChest"))
                 {
                     Util.PlaySound("sfx_hunk_keycard_accepted", self.gameObject);
                 }
-
             }
 
             orig(self);
@@ -1650,7 +1796,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
         {
             if (Modules.Helpers.isHunkInPlay)
             {
-                if (self.gameObject.name.Contains("Hunk"))
+                if (self.gameObject.name.Contains("HunkChest"))
                 {
                     // this is the worst place to put this btw
 
@@ -1664,23 +1810,33 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     return;
                 }
 
-                GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, self.transform.rotation);
-
-                if (self.tier3Chance >= 0.2f)
+                if (!self.gameObject.name.Contains("Hunk"))
                 {
                     GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, self.transform.rotation);
+
+                    if (self.tier3Chance >= 0.2f)
+                    {
+                        GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, self.transform.rotation);
+                    }
+
+                    if (self.tier3Chance >= 1f)
+                    {
+                        GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, self.transform.rotation);
+                    }
                 }
 
-                if (self.tier3Chance >= 1f)
+                if (self.gameObject.name.Contains("HunkTerminal"))
                 {
-                    GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, self.transform.rotation);
+                    self.GetComponent<PurchaseInteraction>().SetAvailable(true);
+
+                    PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(self.GetComponent<Terminal>().itemDef.itemIndex), self.transform.position, Vector3.up * 20f);
+
+                    return;
                 }
-                // todo more ammo from large chest
-                // even more from legendary
-                //if (self)
             }
 
             orig(self);
+
         }
 
         private static void LoadoutPanelController_Rebuild(On.RoR2.UI.LoadoutPanelController.orig_Rebuild orig, LoadoutPanelController self)

@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3798061732
+CRC: 2103035071
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 10488e7351e98b8285fe7bb4a7b906d8
+    Hash: d93635f932c0bfabff3e577c3f57fc56
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 659e220902f47d64c1f3c17677639f17
+    Hash: 2a966d243f1377704da8802e250c5dc9
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -28,6 +28,8 @@ ClassTypes:
 - Class: 48
   Script: {instanceID: 0}
 - Class: 54
+  Script: {instanceID: 0}
+- Class: 65
   Script: {instanceID: 0}
 - Class: 74
   Script: {instanceID: 0}
@@ -151,7 +153,9 @@ Assets:
 - Assets/Hunk/FBX/Idle.anim
 - Assets/Hunk/FBX/Animations/Default/Ascend.anim
 - Assets/Hunk/FBX/Animations/Pistol/Sprint.anim
+- Assets/Hunk/Textures/Terminal/Terminal_normal.png
 - Assets/Hunk/FBX/Animations/Default/ShootShotgun.anim
+- Assets/Hunk/Materials/matTerminal.mat
 - Assets/Hunk/FBX/Animations/Default/Sprint.anim
 - Assets/Hunk/Textures/jacket_n.png
 - Assets/Hunk/FBX/animHunkSMG.fbx
@@ -192,6 +196,7 @@ Assets:
 - Assets/Hunk/VFX/texChargeSpark.png
 - Assets/Hunk/FBX/Animations/Pistol/RunR.anim
 - Assets/Hunk/VFX/texMoonsThin.png
+- Assets/Hunk/Textures/Terminal/Terminal_albedo.jpg
 - Assets/Hunk/Icons/texHunkAchievement.png
 - Assets/Hunk/FBX/animHunkPistol.fbx
 - Assets/Hunk/Weapons/mdlSluggerOld.prefab
@@ -271,6 +276,7 @@ Assets:
 - Assets/Hunk/Weapons/mdlM19.prefab
 - Assets/Hunk/FBX/Animations/Default/AimPitchMoving.anim
 - Assets/Hunk/Textures/M19/Leon_M1911_D.png
+- Assets/Hunk/mdlTerminal.prefab
 - Assets/Hunk/Textures/Keycard/texKeycardDefault.png
 - Assets/Hunk/Textures/Keycard/texKeycardSpade.png
 - Assets/Hunk/Textures/Misc/texTrimSheetMetalNormal.png
@@ -366,6 +372,7 @@ Assets:
 - Assets/Hunk/Weapons/mdlATMPickup.prefab
 - Assets/Hunk/Weapons/mdlSluggerPickup.prefab
 - Assets/Hunk/FBX/RoundReloadLoop.anim
+- Assets/Hunk/FBX/terminal.dae
 - Assets/Hunk/Textures/AmmoBox/9mm_ammo_box_REMAKE_Normal.jpg
 - Assets/Hunk/Weapons/mdlMagnumPickup.prefab
 - Assets/Hunk/Materials/matDiamond.mat

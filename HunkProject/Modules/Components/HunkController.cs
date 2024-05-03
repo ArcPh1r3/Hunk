@@ -107,6 +107,7 @@ namespace HunkMod.Modules.Components
             }
 
             //SpawnChests();
+            this.SpawnTerminal();
         }
 
         private void SetInventoryHook()
@@ -807,10 +808,16 @@ namespace HunkMod.Modules.Components
             Util.PlaySound("sfx_hunk_pickup", this.gameObject);
         }
 
-        public void SpawnChests()
+        private void SpawnChests()
         {
             Xoroshiro128Plus rng = new Xoroshiro128Plus(Run.instance.seed);
             DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(Survivors.Hunk.chestInteractableCard, new DirectorPlacementRule { placementMode = DirectorPlacementRule.PlacementMode.Random }, rng));
+        }
+
+        private void SpawnTerminal()
+        {
+            Xoroshiro128Plus rng = new Xoroshiro128Plus(Run.instance.seed);
+            DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(Survivors.Hunk.terminalInteractableCard, new DirectorPlacementRule { placementMode = DirectorPlacementRule.PlacementMode.Random }, rng));
         }
     }
 }

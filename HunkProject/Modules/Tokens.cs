@@ -147,6 +147,10 @@ namespace HunkMod.Modules
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_DIAMONDCHEST_CONTEXT", "Open Diamond-Key Weapon Case");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_DIAMONDCOST", "");
 
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_TERMINAL_NAME", "Terminal");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_TERMINAL_CONTEXT", "Insert Sample");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_SAMPLECOST", "G-Virus Sample");
+
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_CHEST_NAME", "Weapon Case");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_CHEST_CONTEXT", "Open Weapon Case");
 
