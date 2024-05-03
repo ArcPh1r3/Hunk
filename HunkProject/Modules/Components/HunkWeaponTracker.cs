@@ -18,6 +18,8 @@ namespace HunkMod.Modules.Components
         public HunkWeaponData[] weaponData = new HunkWeaponData[0];
         public int equippedIndex = 0;
 
+        public int missionStep;
+
         public int lastEquippedIndex = 1;
 
         private HunkController hunk
@@ -39,15 +41,25 @@ namespace HunkMod.Modules.Components
             }
         }
 
-        public bool hasSpawnedSpadeKeycard = false;
-        public bool hasSpawnedClubKeycard = false;
-        public bool hasSpawnedHeartKeycard = false;
-        public bool hasSpawnedDiamondKeycard = false;
-        private bool spawnedKeycardThisStage = false;
-        private int attempts = 0;
+        public bool spawnedKeycardThisStage = false;
 
         private Inventory inventory;
         private HunkController _hunk;
+
+        private bool hasAllKeycards
+        {
+            get
+            {
+                if (!this.inventory) return false;
+
+                if (this.inventory.GetItemCount(Modules.Survivors.Hunk.spadeKeycard) <= 0) return false;
+                if (this.inventory.GetItemCount(Modules.Survivors.Hunk.clubKeycard) <= 0) return false;
+                if (this.inventory.GetItemCount(Modules.Survivors.Hunk.heartKeycard) <= 0) return false;
+                if (this.inventory.GetItemCount(Modules.Survivors.Hunk.diamondKeycard) <= 0) return false;
+
+                return true;
+            }
+        }
 
         private void Awake()
         {
@@ -66,10 +78,9 @@ namespace HunkMod.Modules.Components
         private void SceneManager_sceneLoaded(UnityEngine.SceneManagement.Scene arg0, UnityEngine.SceneManagement.LoadSceneMode arg1)
         {
             this.spawnedKeycardThisStage = false;
-            this.attempts = 0;
 
             this.CancelInvoke();
-            this.InvokeRepeating("TrySpawnKeycard", 5f, 5f);
+            if (NetworkServer.active) this.Invoke("SpawnKeycard", UnityEngine.Random.Range(90f, 180f));
         }
 
         private void Start()
@@ -91,6 +102,7 @@ namespace HunkMod.Modules.Components
 
         private void Inventory_onItemAddedClient(ItemIndex itemIndex)
         {
+            if (itemIndex == Modules.Survivors.Hunk.gVirusSample.itemIndex) this.missionStep = 0;
             // hmm.. not the best
             foreach (HunkWeaponDef i in HunkWeaponCatalog.weaponDefs)
             {
@@ -207,7 +219,7 @@ namespace HunkMod.Modules.Components
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.V)) this.TrySpawnKeycard();
+            if (Input.GetKeyDown(KeyCode.V)) this.SpawnKeycard();
         }
 
         private void AddWeaponItem(HunkWeaponDef weaponDef)
@@ -215,7 +227,7 @@ namespace HunkMod.Modules.Components
             if (this.inventory.GetItemCount(weaponDef.itemDef) <= 0) this.inventory.GiveItem(weaponDef.itemDef);
         }
 
-        private void TrySpawnKeycard()
+        private void SpawnKeycard()
         {
             if (this.spawnedKeycardThisStage)
             {
@@ -223,58 +235,20 @@ namespace HunkMod.Modules.Components
                 return;
             }
 
-            if (this.hasSpawnedSpadeKeycard
-                && this.hasSpawnedClubKeycard
-                && this.hasSpawnedHeartKeycard
-                && this.hasSpawnedDiamondKeycard)
+            if (this.hasAllKeycards)
             {
                 this.CancelInvoke();
                 return;
             }
 
-            float rng = UnityEngine.Random.value;
-            float chance = 0.02f;
-
-            this.attempts++; // near guaranteed after 2 minutes
-            if (this.attempts >= 12) chance = 0.95f;
-
-            if (!this.hasSpawnedSpadeKeycard)
+            if (this.SpawnKeycardHolder(Modules.Enemies.Parasite.characterSpawnCard))
             {
-                if (rng <= chance)
-                {
-                    if (this.SpawnKeycardHolder(Modules.Enemies.Parasite.spadeSpawnCard)) this.hasSpawnedSpadeKeycard = true;
-                }
+                this.spawnedKeycardThisStage = true;
                 return;
             }
-
-            // only spades on stage 1
-            if (Run.instance.stageClearCount <= 0) return;
-
-            if (!this.hasSpawnedClubKeycard)
+            else
             {
-                if (rng <= chance)
-                {
-                    if (this.SpawnKeycardHolder(Modules.Enemies.Parasite.clubSpawnCard)) this.hasSpawnedClubKeycard = true;
-                }
-                return;
-            }
-
-            if (!this.hasSpawnedHeartKeycard)
-            {
-                if (rng <= chance)
-                {
-                    if (this.SpawnKeycardHolder(Modules.Enemies.Parasite.heartSpawnCard)) this.hasSpawnedHeartKeycard = true;
-                }
-                return;
-            }
-
-            if (!this.hasSpawnedDiamondKeycard)
-            {
-                if (rng <= chance)
-                {
-                    if (this.SpawnKeycardHolder(Modules.Enemies.Parasite.diamondSpawnCard)) this.hasSpawnedDiamondKeycard = true;
-                }
-                return;
+                this.Invoke("SpawnKeycard", 0.5f);
             }
         }
 
@@ -286,7 +260,7 @@ namespace HunkMod.Modules.Components
             Transform target = null;
             foreach (CharacterBody i in CharacterBody.readOnlyInstancesList)
             {
-                if (i && i.teamComponent && i.teamComponent.teamIndex != TeamIndex.Player && i.healthComponent.alive)
+                if (i && i.teamComponent && i.teamComponent.teamIndex == TeamIndex.Monster && i.healthComponent.alive)
                 {
                     target = i.transform;
                     break;
@@ -319,6 +293,15 @@ namespace HunkMod.Modules.Components
                 var master = summon.Perform();*/
 
                 target.gameObject.AddComponent<VirusHandler>();
+
+                GameObject positionIndicator = GameObject.Instantiate(Modules.Assets.virusPositionIndicator);
+                positionIndicator.transform.parent = target.transform;
+                positionIndicator.transform.localPosition = Vector3.zero;
+
+                positionIndicator.GetComponent<PositionIndicator>().targetTransform = target.GetComponent<CharacterBody>().mainHurtBox.transform;
+
+                this.missionStep = 1;
+                //this.gameObject.AddComponent<HunkMissionController>();
             }
 
             return true;

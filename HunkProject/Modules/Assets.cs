@@ -31,6 +31,7 @@ namespace HunkMod.Modules
         internal static NetworkSoundEventDef kickImpactSoundDef;
 
         public static GameObject headshotEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Junk/Common/VFX/WeakPointProcEffect.prefab").WaitForCompletion();
+        public static GameObject virusPositionIndicator;
 
         public static Material dodgeOverlayMat;
 
@@ -118,6 +119,12 @@ namespace HunkMod.Modules
 
             knifeImpactSoundDef = CreateNetworkSoundEventDef("sfx_hunk_knife_hit");
             kickImpactSoundDef = CreateNetworkSoundEventDef("sfx_hunk_kick_impact");
+
+            virusPositionIndicator = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/BossPositionIndicator.prefab").WaitForCompletion().InstantiateClone("HunkVirusPositionIndicator", false);
+            foreach (SpriteRenderer i in virusPositionIndicator.GetComponentsInChildren<SpriteRenderer>())
+            {
+                if (i) i.color = new Color(215f / 255f, 118f / 255f, 156f / 255f);
+            }
 
             headshotOverlay = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/Railgunner/RailgunnerScopeLightOverlay.prefab").WaitForCompletion().InstantiateClone("HunkHeadshotOverlay", false);
             SniperTargetViewer viewer = headshotOverlay.GetComponentInChildren<SniperTargetViewer>();

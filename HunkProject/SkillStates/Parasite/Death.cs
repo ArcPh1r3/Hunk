@@ -16,7 +16,11 @@ namespace HunkMod.SkillStates.Parasite
 
 				//if (this.characterBody.master.GetComponent<Modules.Components.KeycardHolder>().itemDef)
 				//	PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(this.characterBody.master.GetComponent<Modules.Components.KeycardHolder>().itemDef.itemIndex), this.characterBody.corePosition, Vector3.up * 20f);
-				if (this.characterBody.master.GetComponent<Modules.Components.KeycardHolder>()) PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Survivors.Hunk.gVirusSample.itemIndex), this.characterBody.corePosition, Vector3.up * 20f);
+				if (this.characterBody.master.GetComponent<Modules.Components.KeycardHolder>())
+				{
+					PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Survivors.Hunk.gVirusSample.itemIndex), this.characterBody.corePosition, Vector3.up * 20f);
+					//if (Modules.Components.HunkMissionController.instance) Modules.Components.HunkMissionController.instance.NextStep();
+				}
 
 				EffectManager.SimpleImpactEffect(EntityStates.VoidInfestor.Death.deathEffectPrefab, base.characterBody.corePosition, Vector3.up, true);
 				base.DestroyBodyAsapServer();

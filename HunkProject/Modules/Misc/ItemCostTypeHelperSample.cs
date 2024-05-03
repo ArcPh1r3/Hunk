@@ -26,6 +26,8 @@ namespace HunkMod.Modules.Misc
         public static void PayCost(CostTypeDef costTypeDef, CostTypeDef.PayCostContext context)
         {
             context.activatorMaster.inventory.RemoveItem(Modules.Survivors.Hunk.gVirusSample);
+
+            Modules.Helpers.CreateItemTakenOrb(context.activatorBody.corePosition, context.purchasedObject, Modules.Survivors.Hunk.gVirusSample.itemIndex);
         }
     }
 }

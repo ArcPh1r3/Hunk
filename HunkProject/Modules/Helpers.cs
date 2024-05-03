@@ -1,6 +1,8 @@
 ﻿using HunkMod.Modules.Components;
 using RoR2;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.Networking;
 
 namespace HunkMod.Modules
 {
@@ -27,6 +29,22 @@ namespace HunkMod.Modules
         internal static string ScepterDescription(string desc)
         {
             return "\n<color=#d299ff>SCEPTER: " + desc + "</color>";
+        }
+
+        [Server]
+        public static void CreateItemTakenOrb(Vector3 effectOrigin, GameObject targetObject, ItemIndex itemIndex)
+        {
+            if (!NetworkServer.active) return;
+
+            GameObject effectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/ItemTakenOrbEffect.prefab").WaitForCompletion();
+            EffectData effectData = new EffectData
+            {
+                origin = effectOrigin,
+                genericFloat = 0.75f,
+                genericUInt = (uint)(itemIndex + 1)
+            };
+            effectData.SetNetworkedObjectReference(targetObject);
+            EffectManager.SpawnEffect(effectPrefab, effectData, true);
         }
 
         public static bool isHunkInPlay

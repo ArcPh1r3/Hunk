@@ -29,7 +29,7 @@ namespace HunkMod.Modules.Components
             }
 
             // in between tier 1 and tier 2 elite
-            this.characterBody.baseMaxHealth *= 10f;
+            this.characterBody.baseMaxHealth *= 2f;
             this.characterBody.baseDamage *= 4f;
 
             if (this.inventory)
@@ -61,7 +61,7 @@ namespace HunkMod.Modules.Components
                 {
                     var summon = new MasterSummon();
                     summon.position = this.transform.position + (Vector3.up * 2);
-                    summon.masterPrefab = Modules.Enemies.Parasite.spadeMaster;
+                    summon.masterPrefab = Modules.Enemies.Parasite.characterMaster;
                     summon.summonerBodyObject = this.gameObject;
                     var master = summon.Perform();
 

@@ -1294,9 +1294,9 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             terminalPrefab.AddComponent<Components.Terminal>();
 
             terminalModel.transform.parent = terminalPrefab.GetComponent<Highlight>().targetRenderer.transform;
-            terminalModel.transform.localPosition = new Vector3(0f, 0f, -2.1f);
+            terminalModel.transform.localPosition = new Vector3(0f, 0.25f, -3f);
             terminalModel.transform.localRotation = Quaternion.Euler(new Vector3(90f, 0f, 0f));
-            terminalModel.transform.localScale = Vector3.one * 1.3f;
+            terminalModel.transform.localScale = new Vector3(2.8f, 1.8f, 2.8f);
             Modules.Assets.ConvertAllRenderersToHopooShader(terminalModel.gameObject);
             //terminalPrefab.GetComponent<ModelLocator>().modelTransform = terminalModel.transform;
             //^ this fixes the highlight bug but breaks the entire chest! fun!
@@ -1585,7 +1585,6 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             On.RoR2.ChestBehavior.Open += ChestBehavior_Open;
             On.RoR2.ChestBehavior.ItemDrop += ChestBehavior_ItemDrop;
             On.RoR2.ChestBehavior.Roll += ChestBehavior_Roll;
-            On.RoR2.ChestBehavior.RollItem += ChestBehavior_RollItem;
             On.RoR2.BarrelInteraction.CoinDrop += BarrelInteraction_CoinDrop;
             On.RoR2.ShopTerminalBehavior.DropPickup += ShopTerminalBehavior_DropPickup;
             On.RoR2.RouletteChestController.EjectPickupServer += RouletteChestController_EjectPickupServer;
@@ -1610,6 +1609,9 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             // place chests
             On.RoR2.SceneDirector.Start += SceneDirector_Start;
 
+            // set objective bullshit..
+            On.RoR2.UI.ObjectivePanelController.GetObjectiveSources += ObjectivePanelController_GetObjectiveSources;
+
             // if i speak i am in trouble
             On.RoR2.UI.MainMenu.BaseMainMenuScreen.Update += BaseMainMenuScreen_Update;
             // 🙈 🙉 🙊
@@ -1619,6 +1621,40 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             //On.EntityStates.GlobalSkills.LunarNeedle.ChargeLunarSecondary.PlayChargeAnimation += PlayChargeLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarNeedle.ThrowLunarSecondary.PlayThrowAnimation += PlayThrowLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += PlayRuinAnimation;
+        }
+
+        private static void ObjectivePanelController_GetObjectiveSources(On.RoR2.UI.ObjectivePanelController.orig_GetObjectiveSources orig, ObjectivePanelController self, CharacterMaster master, List<ObjectivePanelController.ObjectiveSourceDescriptor> output)
+        {
+            orig(self, master, output);
+
+            if (master.bodyPrefab == characterPrefab)
+            {
+                HunkWeaponTracker hunk = master.GetComponent<HunkWeaponTracker>();
+                if (hunk)
+                {
+                    switch (hunk.missionStep)
+                    {
+                        case 1:
+                            output.Add(new ObjectivePanelController.ObjectiveSourceDescriptor
+                            {
+                                source = master,
+                                master = master,
+                                objectiveType = typeof(Modules.Objectives.KillVirus)
+                            });
+                            break;
+                    }
+
+                    if (master.inventory.GetItemCount(Hunk.gVirusSample) > 0)
+                    {
+                        output.Add(new ObjectivePanelController.ObjectiveSourceDescriptor
+                        {
+                            source = master,
+                            master = master,
+                            objectiveType = typeof(Modules.Objectives.TurnInSample)
+                        });
+                    }
+                }
+            }
         }
 
         private static void PurchaseInteraction_OnInteractionBegin(On.RoR2.PurchaseInteraction.orig_OnInteractionBegin orig, PurchaseInteraction self, Interactor activator)
@@ -1683,12 +1719,6 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     }
                 }
             }
-        }
-
-        private static void ChestBehavior_RollItem(On.RoR2.ChestBehavior.orig_RollItem orig, ChestBehavior self)
-        {
-            if (self && self.gameObject.name.Contains("HunkTerminal")) return;
-            orig(self);
         }
 
         private static void ChestBehavior_Roll(On.RoR2.ChestBehavior.orig_Roll orig, ChestBehavior self)
@@ -1825,7 +1855,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     return;
                 }
 
-                if (!self.gameObject.name.Contains("Hunk"))
+                if (!self.gameObject.name.Contains("Hunk") && !self.gameObject.name.Contains("Duplicator"))
                 {
                     GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, self.transform.rotation);
 
@@ -1844,7 +1874,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                 {
                     self.GetComponent<PurchaseInteraction>().SetAvailable(true);
 
-                    PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(self.GetComponent<Terminal>().itemDef.itemIndex), self.transform.position, Vector3.up * 20f);
+                    PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(self.GetComponent<Terminal>().itemDef.itemIndex), self.transform.position, (self.transform.forward * 5f) + Vector3.up * 25f);
 
                     return;
                 }
