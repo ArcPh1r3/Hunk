@@ -1,5 +1,5 @@
 ﻿using RoR2;
-using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Networking;
 
 namespace HunkMod.Modules.Components
@@ -12,8 +12,11 @@ namespace HunkMod.Modules.Components
         public PurchaseInteraction purchaseInteraction;
         public GenericDisplayNameProvider genericDisplayNameProvider;
 
+        private ParticleSystem beam;
+
         private void Awake()
         {
+            this.beam = this.GetComponentInChildren<ParticleSystem>();
             purchaseInteraction = this.GetComponent<PurchaseInteraction>();
             genericDisplayNameProvider = this.GetComponent<GenericDisplayNameProvider>();
 
@@ -27,6 +30,43 @@ namespace HunkMod.Modules.Components
                 {
                     genericDisplayNameProvider.displayToken = MainPlugin.developerPrefix + "_HUNK_TERMINAL_NAME";
                 }
+            }
+
+            this.InvokeRepeating("Check", 0.5f, 0.5f);
+        }
+
+        private void Check()
+        {
+            if (this.hunkHasSample)
+            {
+                if (!this.beam.isPlaying) this.beam.Play();
+            }
+            else
+            {
+                if (this.beam.isPlaying) this.beam.Stop();
+            }
+        }
+
+        private bool hunkHasSample
+        {
+            get
+            {
+                bool anyRealers = false;
+                foreach (CharacterMaster master in CharacterMaster.instancesList)
+                {
+                    if (master.hasAuthority)
+                    {
+                        if (master.inventory)
+                        {
+                            if (master.inventory.GetItemCount(Modules.Survivors.Hunk.gVirusSample) > 0)
+                            {
+                                anyRealers = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                return anyRealers;
             }
         }
     }

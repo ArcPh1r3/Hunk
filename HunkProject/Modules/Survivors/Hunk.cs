@@ -96,6 +96,7 @@ namespace HunkMod.Modules.Survivors
         internal static ItemDef gVirus;
 
         internal static BuffDef immobilizedBuff;
+        internal static BuffDef infectedBuff;
 
         internal void CreateCharacter()
         {
@@ -132,6 +133,7 @@ namespace HunkMod.Modules.Survivors
                 umbraMaster = CreateMaster(characterPrefab, "RobHunkMonsterMaster");
 
                 immobilizedBuff = Modules.Buffs.AddNewBuff("buffHunkImmobilized", null, Color.white, false, false, true);
+                infectedBuff = Modules.Buffs.AddNewBuff("buffHunkInfected", null, Color.yellow, false, false, false);
             }
 
             Hook();
@@ -1298,6 +1300,19 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             Modules.Assets.ConvertAllRenderersToHopooShader(terminalModel.gameObject);
             //terminalPrefab.GetComponent<ModelLocator>().modelTransform = terminalModel.transform;
             //^ this fixes the highlight bug but breaks the entire chest! fun!
+
+            GameObject beam = GameObject.Instantiate(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/arena/ArenaMissionController.prefab").WaitForCompletion().transform.Find("NullSafeZone (1)/BuiltInEffects/WardOn").gameObject);
+            beam.SetActive(true);
+            beam.transform.parent = terminalModel.transform;
+            beam.transform.localPosition = new Vector3(0f, 0f, 0f);
+            beam.transform.localRotation = Quaternion.identity;
+
+            Material beamMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/Grandparent/matGrandParentSunGlow.mat").WaitForCompletion());
+            beamMat.SetColor("_TintColor", Color.red);
+            beamMat.SetTexture("_RemapTex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Common/ColorRamps/texRampGolem.png").WaitForCompletion());
+
+            beam.transform.Find("Beam").gameObject.GetComponent<ParticleSystemRenderer>().material = beamMat;
+
 
             terminalPrefab.GetComponent<Highlight>().targetRenderer = terminalModel.transform.Find("Model").gameObject.GetComponent<MeshRenderer>();
             terminalModel.transform.Find("Model").gameObject.AddComponent<EntityLocator>().entity = terminalPrefab;

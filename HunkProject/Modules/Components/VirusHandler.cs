@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using RoR2;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Networking;
 
 namespace HunkMod.Modules.Components
 {
@@ -8,11 +9,13 @@ namespace HunkMod.Modules.Components
     {
         public float mutationStopwatch;
         public Material overrideMat = Addressables.LoadAssetAsync<Material>("RoR2/Base/ParentEgg/matParentEggOuter.mat").WaitForCompletion();
+        public Material overrideParticleMat = Addressables.LoadAssetAsync<Material>("RoR2/Base/ParentEgg/matParentEggOuter.mat").WaitForCompletion();
 
         private CharacterModel characterModel;
         private CharacterBody characterBody;
         private CharacterMaster characterMaster;
         private Inventory inventory;
+        private uint soundPlayID;
 
         private void Awake()
         {
@@ -25,17 +28,27 @@ namespace HunkMod.Modules.Components
                 this.characterModel = modelLocator.modelTransform.GetComponent<CharacterModel>();
             }
 
-            this.Mutate();
-            this.Mutate();
-            this.Mutate();
-            this.Mutate();
-            this.Mutate();// heha
+            // in between tier 1 and tier 2 elite
+            this.characterBody.baseMaxHealth *= 10f;
+            this.characterBody.baseDamage *= 4f;
 
             if (this.inventory)
             {
                 this.inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
                 this.inventory.GiveItem(RoR2Content.Items.TeleportWhenOob);
             }
+
+            this.Mutate();
+
+            this.soundPlayID = Util.PlaySound("sfx_hunk_syringe_buff", this.gameObject);
+            Util.PlaySound("sfx_hunk_injection", this.gameObject);
+
+            if (NetworkServer.active) this.characterBody.AddBuff(Modules.Survivors.Hunk.infectedBuff);
+        }
+
+        private void OnDestroy()
+        {
+            AkSoundEngine.StopPlayingID(this.soundPlayID);
         }
 
         private void FixedUpdate()
@@ -47,7 +60,7 @@ namespace HunkMod.Modules.Components
                 if (this.characterBody.healthComponent && !this.characterBody.healthComponent.alive)
                 {
                     var summon = new MasterSummon();
-                    summon.position = this.transform.position + (Vector3.up * 8);
+                    summon.position = this.transform.position + (Vector3.up * 2);
                     summon.masterPrefab = Modules.Enemies.Parasite.spadeMaster;
                     summon.summonerBodyObject = this.gameObject;
                     var master = summon.Perform();
@@ -70,7 +83,8 @@ namespace HunkMod.Modules.Components
                 {
                     if (this.characterModel.baseRendererInfos[i].renderer)
                     {
-                        this.characterModel.baseRendererInfos[i].defaultMaterial = this.overrideMat;
+                        if (this.characterModel.baseRendererInfos[i].renderer.gameObject.GetComponent<ParticleSystemRenderer>()) this.characterModel.baseRendererInfos[i].defaultMaterial = this.overrideParticleMat;
+                        else this.characterModel.baseRendererInfos[i].defaultMaterial = this.overrideMat;
                     }
                 }
             }
@@ -83,8 +97,9 @@ namespace HunkMod.Modules.Components
             if (this.inventory)
             {
                 this.inventory.GiveItem(Modules.Survivors.Hunk.gVirus);
-                this.inventory.GiveItem(RoR2Content.Items.BoostHp, 10);
-                this.inventory.GiveItem(RoR2Content.Items.Medkit);
+                this.inventory.GiveItem(RoR2Content.Items.BoostHp);
+
+                if (this.inventory.GetItemCount(Modules.Survivors.Hunk.gVirus) >= 3) this.inventory.GiveItem(RoR2Content.Items.Medkit);
             }
 
             this.characterBody.RecalculateStats();

@@ -2327,9 +2327,10 @@
 								</Sound>
 								<Sound Name="sfx_driver_syringe_buff" ID="{C7C0B78D-1F12-486F-8772-D524F327D2FC}" ShortID="490137523">
 									<PropertyList>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
 										<Property Name="Volume" Type="Real64">
 											<ValueList>
-												<Value>-8</Value>
+												<Value>-5</Value>
 											</ValueList>
 										</Property>
 									</PropertyList>
@@ -2355,7 +2356,19 @@
 									</ActiveSourceList>
 								</Sound>
 								<RandomSequenceContainer Name="sfx_driver_injection" ID="{518F8EC2-21C1-4034-9161-B815F3F64E24}" ShortID="849014534">
+									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="1"/>
+										<Property Name="OverridePositioning" Type="bool" Value="True"/>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>5</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
 									<ReferenceList>
+										<Reference Name="Attenuation">
+											<ObjectRef Name="SuperLoud" ID="{7AFB9170-820C-4466-97A6-01891FB8A30A}" WorkUnitID="{E9A01ADD-D16C-4AEF-92DB-DCF89FC42AD2}"/>
+										</Reference>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
 										</Reference>

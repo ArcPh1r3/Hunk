@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2103035071
+CRC: 242958446
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: d93635f932c0bfabff3e577c3f57fc56
+    Hash: 5f1f279ed11bce22cb0c495c4e585346
   TypeTreeHash:
     serializedVersion: 2
     Hash: 2a966d243f1377704da8802e250c5dc9
@@ -132,6 +132,7 @@ Assets:
 - Assets/Hunk/Materials/matDisplayCase02.mat
 - Assets/Hunk/FBX/epickeycard.dae
 - Assets/Hunk/Textures/RocketLauncher/Leon_ATM-4_N.png
+- Assets/Hunk/Textures/Terminal/Terminal_albedo.png
 - Assets/Hunk/VFX/texChargeRing.png
 - Assets/Hunk/FBX/AimIdle.anim
 - Assets/Hunk/Textures/MUP/USP_29_USP_29_Normal.png
@@ -196,7 +197,6 @@ Assets:
 - Assets/Hunk/VFX/texChargeSpark.png
 - Assets/Hunk/FBX/Animations/Pistol/RunR.anim
 - Assets/Hunk/VFX/texMoonsThin.png
-- Assets/Hunk/Textures/Terminal/Terminal_albedo.jpg
 - Assets/Hunk/Icons/texHunkAchievement.png
 - Assets/Hunk/FBX/animHunkPistol.fbx
 - Assets/Hunk/Weapons/mdlSluggerOld.prefab
