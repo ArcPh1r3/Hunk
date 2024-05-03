@@ -9,7 +9,7 @@ namespace HunkMod.Modules.Components
     {
         public float mutationStopwatch;
         public Material overrideMat = Addressables.LoadAssetAsync<Material>("RoR2/Base/ParentEgg/matParentEggOuter.mat").WaitForCompletion();
-        public Material overrideParticleMat = Addressables.LoadAssetAsync<Material>("RoR2/Base/ParentEgg/matParentEggOuter.mat").WaitForCompletion();
+        public Material overrideParticleMat = Addressables.LoadAssetAsync<Material>("RoR2/Base/moon2/matBloodSiphon.mat").WaitForCompletion();
 
         private CharacterModel characterModel;
         private CharacterBody characterBody;
@@ -41,7 +41,7 @@ namespace HunkMod.Modules.Components
             this.Mutate();
 
             this.soundPlayID = Util.PlaySound("sfx_hunk_syringe_buff", this.gameObject);
-            Util.PlaySound("sfx_hunk_injection", this.gameObject);
+            //Util.PlaySound("sfx_hunk_injection", this.gameObject);
 
             if (NetworkServer.active) this.characterBody.AddBuff(Modules.Survivors.Hunk.infectedBuff);
         }

@@ -311,12 +311,14 @@ namespace HunkMod.Modules.Components
 
                 GameObject spawnedBody = DirectorCore.instance.TrySpawnObject(directorSpawnRequest);*/
 
-                var summon = new MasterSummon();
+                /*var summon = new MasterSummon();
                 summon.position = target.position + (Vector3.up * 8);
                 summon.masterPrefab = spawnCard.prefab;
                 summon.summonerBodyObject = target.gameObject;
                 summon.teamIndexOverride = TeamIndex.Void;
-                var master = summon.Perform();
+                var master = summon.Perform();*/
+
+                target.gameObject.AddComponent<VirusHandler>();
             }
 
             return true;
