@@ -148,9 +148,9 @@ namespace HunkMod
                     if (virusCount > 0)
                     {
                         //self.maxHealth += 10f * self.levelMaxHealth * virusCount;
-                        self.armor += virusCount * 5f;
-                        self.attackSpeed += virusCount * 0.05f;
-                        self.moveSpeed += virusCount * 1.5f;
+                        self.armor += virusCount * 2f;
+                        self.attackSpeed += virusCount * 0.15f;
+                        self.moveSpeed += virusCount * 2f;
                     }
                 }
             }

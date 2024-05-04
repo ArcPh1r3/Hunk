@@ -18,7 +18,7 @@ namespace HunkMod.Modules.Components
             if (this.characterBody.inventory) this.characterBody.inventory.GiveItem(RoR2Content.Items.TeleportWhenOob);
         }
 
-        private void FixedUpdate()
+        /*private void FixedUpdate()
         {
             if (this.characterBody)
             {
@@ -29,6 +29,6 @@ namespace HunkMod.Modules.Components
                     this.characterBody.master.teamIndex = TeamIndex.Void;
                 }
             }
-        }
+        }*/
     }
 }

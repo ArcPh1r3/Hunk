@@ -52,8 +52,8 @@ namespace HunkMod.SkillStates.Hunk
             base.FixedUpdate();
             this.hunk.reloadTimer = 2f;
 
-            this.skillLocator.secondary.stock = 0;
-            this.skillLocator.secondary.rechargeStopwatch = 0f;
+            //this.skillLocator.secondary.stock = 0;
+            //this.skillLocator.secondary.rechargeStopwatch = 0f;
 
             if (this.slowing)
             {
@@ -124,6 +124,8 @@ namespace HunkMod.SkillStates.Hunk
 
             this.skillLocator.primary.UnsetSkillOverride(this, Modules.Survivors.Hunk.confirmSkillDef, GenericSkill.SkillOverridePriority.Network);
             this.skillLocator.secondary.UnsetSkillOverride(this, Modules.Survivors.Hunk.cancelSkillDef, GenericSkill.SkillOverridePriority.Network);
+            this.skillLocator.secondary.stock = 0;
+            this.skillLocator.secondary.rechargeStopwatch = 0f;
 
             if (RoR2Application.isInSinglePlayer)
             {

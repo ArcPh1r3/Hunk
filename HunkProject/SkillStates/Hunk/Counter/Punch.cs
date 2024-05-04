@@ -16,7 +16,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
         {
             this.hitboxName = "Knife";
 
-            this.damageCoefficient = 10f;
+            this.damageCoefficient = 15f;
             this.pushForce = 0f;
             this.bonusForce = this.GetAimRay().direction * 1000f + (Vector3.up * 500f);
             this.baseDuration = 1f;

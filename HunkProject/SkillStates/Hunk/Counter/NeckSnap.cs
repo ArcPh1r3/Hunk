@@ -68,6 +68,11 @@ namespace HunkMod.SkillStates.Hunk.Counter
                 this.characterBody.RemoveBuff(RoR2Content.Buffs.ArmorBoost);
             }
 
+            if (base.fixedAge <= (0.8f * this.duration))
+            {
+                base.PlayAnimation("FullBody, Override", "BufferEmpty");
+            }
+
             this.animator.SetLayerWeight(this.animator.GetLayerIndex("AimYaw"), 1f);
             this.animator.SetLayerWeight(this.animator.GetLayerIndex("AimPitch"), 1f);
 
@@ -189,6 +194,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
+            if (base.fixedAge >= 0.6f * this.duration) return InterruptPriority.Skill;
             return InterruptPriority.Frozen;
         }
     }

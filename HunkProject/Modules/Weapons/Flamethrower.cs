@@ -8,7 +8,7 @@ namespace HunkMod.Modules.Weapons
     {
         public override string weaponNameToken => "FLAMETHROWER";
         public override string weaponName => "Chemical Flamethrower";
-        public override string weaponDesc => "8-round capacity 12-gauge pump-action shotgun. Its sturdy steel action makes this popular model reliable and easy to control.";
+        public override string weaponDesc => "An Umbrella-made weapon that uses pressurized gas to produce red-hot flames. Portable and refuellable, it's always ready for the long haul.";
         public override string iconName => "texFlamethrowerIcon";
         public override GameObject crosshairPrefab => Modules.Assets.shotgunCrosshairPrefab;
         public override int magSize => 300;
@@ -30,5 +30,11 @@ new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Weapon.Flam
 "ROB_HUNK_BODY_SHOOT_SHOTGUN_DESCRIPTION",
 Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texShootIcon"),
 false);
+
+        public override void Init()
+        {
+            base.Init();
+            this.weaponDef.exposeWeakPoints = false;
+        }
     }
 }

@@ -79,6 +79,7 @@ namespace HunkMod.Modules.Components
         private bool flameIsPlaying = true;
         private GameObject flamethrowerLight;
         private uint flamethrowerPlayID;
+        private bool flameInit = false;
 
         public float iFrames;
 
@@ -104,6 +105,7 @@ namespace HunkMod.Modules.Components
             Destroy(this.flamethrowerEffectInstance.GetComponent<DestroyOnTimer>());
             Destroy(this.flamethrowerEffectInstance.GetComponent<ScaleParticleSystemDuration>());;
             Destroy(this.flamethrowerEffectInstance.GetComponent<DetachParticleOnDestroyAndEndEmission>());
+            Destroy(this.flamethrowerEffectInstance.GetComponentInChildren<DynamicBone>());
 
             //this.flamethrowerEffectInstance.transform.Find("Donut").gameObject.SetActive(true);
             this.flamethrowerEffectInstance.transform.Find("Bone1/Bone2/Bone3/Bone4/FireForward").gameObject.SetActive(false);
@@ -114,6 +116,8 @@ namespace HunkMod.Modules.Components
             {
                 var main = i.main;
                 main.loop = true;
+                main.playOnAwake = false;
+                i.Stop();
             }
 
             this.flamethrowerLight = this.flamethrowerEffectInstance.GetComponentInChildren<Light>().gameObject;
@@ -127,6 +131,14 @@ namespace HunkMod.Modules.Components
             this.flamethrowerEffectInstance2.transform.localPosition = Vector3.zero;
             this.flamethrowerEffectInstance2.transform.localRotation = Quaternion.identity;
             this.flamethrowerEffectInstance2.transform.localScale = Vector3.one;
+
+            foreach (ParticleSystem i in this.flamethrowerEffectInstance2.GetComponentsInChildren<ParticleSystem>())
+            {
+                var main = i.main;
+                main.loop = true;
+                main.playOnAwake = false;
+                i.Stop();
+            }
 
             this.Invoke("SetInventoryHook", 0.5f);
         }
@@ -279,7 +291,7 @@ namespace HunkMod.Modules.Components
                 }
             }
 
-            if (this.flamethrowerLifetime < 0f)
+            if (this.flamethrowerLifetime <= 0f)
             {
                 if (this.flameIsPlaying)
                 {
@@ -294,25 +306,30 @@ namespace HunkMod.Modules.Components
                     }
                     this.flamethrowerLight.SetActive(false);
                     AkSoundEngine.StopPlayingID(this.flamethrowerPlayID);
-                    Util.PlaySound("sfx_hunk_flamethrower_end", this.gameObject);
+
+                    if (this.flameInit) Util.PlaySound("sfx_hunk_flamethrower_end", this.gameObject);
+                    this.flameInit = true;
                 }
             }
             else
             {
-                if (!this.flameIsPlaying)
+                if (this.weaponDef.nameToken.Contains("FLAME"))
                 {
-                    this.flameIsPlaying = true;
-                    foreach (ParticleSystem i in this.flamethrowerEffectInstance.GetComponentsInChildren<ParticleSystem>())
+                    if (!this.flameIsPlaying)
                     {
-                        i.Play();
+                        this.flameIsPlaying = true;
+                        foreach (ParticleSystem i in this.flamethrowerEffectInstance.GetComponentsInChildren<ParticleSystem>())
+                        {
+                            i.Play();
+                        }
+                        foreach (ParticleSystem i in this.flamethrowerEffectInstance2.GetComponentsInChildren<ParticleSystem>())
+                        {
+                            i.Play();
+                        }
+                        this.flamethrowerLight.SetActive(true);
+                        Util.PlaySound("sfx_hunk_flamethrower_start", this.gameObject);
+                        this.flamethrowerPlayID = Util.PlaySound("sfx_hunk_flamethrower_loop", this.gameObject);
                     }
-                    foreach (ParticleSystem i in this.flamethrowerEffectInstance2.GetComponentsInChildren<ParticleSystem>())
-                    {
-                        i.Play();
-                    }
-                    this.flamethrowerLight.SetActive(true);
-                    Util.PlaySound("sfx_hunk_flamethrower_start", this.gameObject);
-                    this.flamethrowerPlayID = Util.PlaySound("sfx_hunk_flamethrower_loop", this.gameObject);
                 }
             }
 

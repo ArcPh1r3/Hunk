@@ -37,6 +37,16 @@ namespace HunkMod.SkillStates.Hunk
                 this.hunk.reloadTimer = 0.33f;
             }
 
+            if (!this.swapped)
+            {
+                this.skillLocator.secondary.stock = 0;
+                this.skillLocator.secondary.rechargeStopwatch = 0f;
+            }
+            else
+            {
+                this.skillLocator.secondary.stock = 1;
+            }
+
             if (base.fixedAge >= this.duration && base.isAuthority)
             {
                 this.outer.SetNextStateToMain();
