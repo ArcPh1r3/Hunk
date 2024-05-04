@@ -39,6 +39,8 @@ namespace HunkMod.SkillStates.Hunk
                 this.currentTimeScale = 0.1f;
             }
 
+            this.skillLocator.primary.UnsetSkillOverride(this.gameObject, this.hunk.weaponDef.primarySkillDef, GenericSkill.SkillOverridePriority.Network);
+            this.skillLocator.primary.UnsetSkillOverride(this.gameObject, Modules.Survivors.Hunk.reloadSkillDef, GenericSkill.SkillOverridePriority.Network);
             EntityStateMachine.FindByCustomName(this.gameObject, "Aim").SetNextStateToMain();
 
             this.skillLocator.primary.SetSkillOverride(this, Modules.Survivors.Hunk.confirmSkillDef, GenericSkill.SkillOverridePriority.Network);

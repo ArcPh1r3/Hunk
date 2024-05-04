@@ -342,7 +342,7 @@ namespace HunkMod.Modules.Components
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.V)) this.SpawnKeycard();
+            //if (Input.GetKeyDown(KeyCode.V)) this.SpawnKeycard();
         }
 
         private void AddWeaponItem(HunkWeaponDef weaponDef)

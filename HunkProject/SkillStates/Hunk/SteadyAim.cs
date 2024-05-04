@@ -90,13 +90,13 @@ namespace HunkMod.SkillStates.Hunk
 
             if (this.hunk.ammo <= 0)
             {
-                this.skillLocator.primary.UnsetSkillOverride(this, this.hunk.weaponDef.primarySkillDef, GenericSkill.SkillOverridePriority.Network);
-                this.skillLocator.primary.SetSkillOverride(this, Modules.Survivors.Hunk.reloadSkillDef, GenericSkill.SkillOverridePriority.Network);
+                this.skillLocator.primary.UnsetSkillOverride(this.gameObject, this.hunk.weaponDef.primarySkillDef, GenericSkill.SkillOverridePriority.Network);
+                this.skillLocator.primary.SetSkillOverride(this.gameObject, Modules.Survivors.Hunk.reloadSkillDef, GenericSkill.SkillOverridePriority.Network);
             }
             else
             {
-                this.skillLocator.primary.SetSkillOverride(this, this.hunk.weaponDef.primarySkillDef, GenericSkill.SkillOverridePriority.Network);
-                this.skillLocator.primary.UnsetSkillOverride(this, Modules.Survivors.Hunk.reloadSkillDef, GenericSkill.SkillOverridePriority.Network);
+                this.skillLocator.primary.SetSkillOverride(this.gameObject, this.hunk.weaponDef.primarySkillDef, GenericSkill.SkillOverridePriority.Network);
+                this.skillLocator.primary.UnsetSkillOverride(this.gameObject, Modules.Survivors.Hunk.reloadSkillDef, GenericSkill.SkillOverridePriority.Network);
             }
 
             if (base.fixedAge > 0.05f) this.skillLocator.primary.stock = 1;
@@ -138,8 +138,8 @@ namespace HunkMod.SkillStates.Hunk
                 this.overlayController = null;
             }
 
-            this.skillLocator.primary.UnsetSkillOverride(this, this.hunk.weaponDef.primarySkillDef, GenericSkill.SkillOverridePriority.Network);
-            this.skillLocator.primary.UnsetSkillOverride(this, Modules.Survivors.Hunk.reloadSkillDef, GenericSkill.SkillOverridePriority.Network);
+            this.skillLocator.primary.UnsetSkillOverride(this.gameObject, this.hunk.weaponDef.primarySkillDef, GenericSkill.SkillOverridePriority.Network);
+            this.skillLocator.primary.UnsetSkillOverride(this.gameObject, Modules.Survivors.Hunk.reloadSkillDef, GenericSkill.SkillOverridePriority.Network);
 
             //this.FindModelChild("PistolSight").gameObject.SetActive(false);
         }
