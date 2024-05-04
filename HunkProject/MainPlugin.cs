@@ -136,9 +136,21 @@ namespace HunkMod
         {
             orig(self);
 
-            if (self && self.HasBuff(Modules.Survivors.Hunk.immobilizedBuff))
+            if (self)
             {
-                self.moveSpeed = 0f;
+                if (self.HasBuff(Modules.Survivors.Hunk.immobilizedBuff)) self.moveSpeed = 0f;
+
+                if (self.inventory)
+                {
+                    int virusCount = self.inventory.GetItemCount(Modules.Survivors.Hunk.gVirus);
+                    if (virusCount > 0)
+                    {
+                        //self.maxHealth += 10f * self.levelMaxHealth * virusCount;
+                        self.armor += virusCount * 5f;
+                        self.attackSpeed += virusCount * 0.05f;
+                        self.moveSpeed += virusCount * 1.5f;
+                    }
+                }
             }
         }
 

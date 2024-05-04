@@ -36,6 +36,7 @@ namespace HunkMod.SkillStates.Hunk
             this.hunk.desiredYOffset = 0.6f;
 
             if (NetworkServer.active) this.characterBody.AddBuff(Modules.Survivors.Hunk.immobilizedBuff);
+            this.hunk.iFrames = 0.25f;
 
             this.ApplyBuff();
             this.CreateDashEffect();
@@ -43,7 +44,6 @@ namespace HunkMod.SkillStates.Hunk
 
         public virtual void ApplyBuff()
         {
-            if (NetworkServer.active) this.characterBody.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 0.5f);
         }
 
         public virtual void CreateDashEffect()

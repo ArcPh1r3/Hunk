@@ -14,16 +14,10 @@ namespace HunkMod.Modules.Enemies
     {
         internal static Parasite instance;
 
-        internal static CharacterSpawnCard spadeSpawnCard;
-        internal static CharacterSpawnCard clubSpawnCard;
-        internal static CharacterSpawnCard heartSpawnCard;
-        internal static CharacterSpawnCard diamondSpawnCard;
-
+        internal static CharacterSpawnCard characterSpawnCard;
+    
         internal static GameObject characterPrefab;
-        internal static GameObject spadeMaster;
-        internal static GameObject clubMaster;
-        internal static GameObject heartMaster;
-        internal static GameObject diamondMaster;
+        internal static GameObject characterMaster;
 
         public static Color characterColor = new Color(145f / 255f, 0f, 1f);
 
@@ -44,14 +38,8 @@ namespace HunkMod.Modules.Enemies
 
             characterPrefab = CreateBodyPrefab();
 
-            spadeMaster = CreateMaster(characterPrefab, "RobHunkParasiteSpadeMaster");
-            spadeMaster.AddComponent<Modules.Components.KeycardHolder>().itemDef = Modules.Survivors.Hunk.spadeKeycard;
-            clubMaster = CreateMaster(characterPrefab, "RobHunkParasiteClubMaster");
-            clubMaster.AddComponent<Modules.Components.KeycardHolder>().itemDef = Modules.Survivors.Hunk.clubKeycard;
-            heartMaster = CreateMaster(characterPrefab, "RobHunkParasiteHeartMaster");
-            heartMaster.AddComponent<Modules.Components.KeycardHolder>().itemDef = Modules.Survivors.Hunk.heartKeycard;
-            diamondMaster = CreateMaster(characterPrefab, "RobHunkParasiteDiamondMaster");
-            diamondMaster.AddComponent<Modules.Components.KeycardHolder>().itemDef = Modules.Survivors.Hunk.diamondKeycard;
+            characterMaster = CreateMaster(characterPrefab, "RobHunkParasiteSpadeMaster");
+            characterMaster.AddComponent<Modules.Components.KeycardHolder>().itemDef = Modules.Survivors.Hunk.gVirusSample;
 
             CreateSpawnCards();
 
@@ -65,9 +53,11 @@ namespace HunkMod.Modules.Enemies
             #region Body
             GameObject newPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/EliteVoid/VoidInfestorBody.prefab").WaitForCompletion().InstantiateClone(bodyName, true);
             newPrefab.GetComponent<CharacterBody>().baseNameToken = bodyNameToken;
-
+ 
             MainPlugin.DestroyImmediate(newPrefab.GetComponent<ExpansionRequirementComponent>());
             MainPlugin.DestroyImmediate(newPrefab.GetComponent<DeathRewards>());
+
+            newPrefab.AddComponent<Modules.Components.ParasiteController>();
 
             Modules.Prefabs.bodyPrefabs.Add(newPrefab);
 
@@ -121,6 +111,7 @@ namespace HunkMod.Modules.Enemies
         {
             GameObject newMaster = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/EliteVoid/VoidInfestorMaster.prefab").WaitForCompletion().InstantiateClone(masterName, true);
             newMaster.GetComponent<CharacterMaster>().bodyPrefab = bodyPrefab;
+            MonoBehaviour.Destroy(newMaster.GetComponent<GivePickupsOnStart>());
             /*
             #region AI
             foreach (AISkillDriver ai in newMaster.GetComponentsInChildren<AISkillDriver>())
@@ -279,61 +270,19 @@ namespace HunkMod.Modules.Enemies
 
         private static void CreateSpawnCards()
         {
-            spadeSpawnCard = ScriptableObject.CreateInstance<CharacterSpawnCard>();
-            spadeSpawnCard.name = "cscHunkParasiteSpade";
-            spadeSpawnCard.prefab = spadeMaster;
-            spadeSpawnCard.sendOverNetwork = true;
-            spadeSpawnCard.hullSize = HullClassification.Human;
-            spadeSpawnCard.nodeGraphType = MapNodeGroup.GraphType.Ground;
-            spadeSpawnCard.requiredFlags = NodeFlags.None;
-            spadeSpawnCard.forbiddenFlags = NodeFlags.None;
-            spadeSpawnCard.directorCreditCost = 0;
-            spadeSpawnCard.occupyPosition = false;
-            spadeSpawnCard.loadout = new SerializableLoadout();
-            spadeSpawnCard.noElites = true;
-            spadeSpawnCard.forbiddenAsBoss = true;
-
-            clubSpawnCard = ScriptableObject.CreateInstance<CharacterSpawnCard>();
-            clubSpawnCard.name = "cscHunkParasiteClub";
-            clubSpawnCard.prefab = clubMaster;
-            clubSpawnCard.sendOverNetwork = true;
-            clubSpawnCard.hullSize = HullClassification.Human;
-            clubSpawnCard.nodeGraphType = MapNodeGroup.GraphType.Ground;
-            clubSpawnCard.requiredFlags = NodeFlags.None;
-            clubSpawnCard.forbiddenFlags = NodeFlags.None;
-            clubSpawnCard.directorCreditCost = 0;
-            clubSpawnCard.occupyPosition = false;
-            clubSpawnCard.loadout = new SerializableLoadout();
-            clubSpawnCard.noElites = true;
-            clubSpawnCard.forbiddenAsBoss = true;
-
-            heartSpawnCard = ScriptableObject.CreateInstance<CharacterSpawnCard>();
-            heartSpawnCard.name = "cscHunkParasiteHeart";
-            heartSpawnCard.prefab = heartMaster;
-            heartSpawnCard.sendOverNetwork = true;
-            heartSpawnCard.hullSize = HullClassification.Human;
-            heartSpawnCard.nodeGraphType = MapNodeGroup.GraphType.Ground;
-            heartSpawnCard.requiredFlags = NodeFlags.None;
-            heartSpawnCard.forbiddenFlags = NodeFlags.None;
-            heartSpawnCard.directorCreditCost = 0;
-            heartSpawnCard.occupyPosition = false;
-            heartSpawnCard.loadout = new SerializableLoadout();
-            heartSpawnCard.noElites = true;
-            heartSpawnCard.forbiddenAsBoss = true;
-
-            diamondSpawnCard = ScriptableObject.CreateInstance<CharacterSpawnCard>();
-            diamondSpawnCard.name = "cscHunkParasiteDiamond";
-            diamondSpawnCard.prefab = diamondMaster;
-            diamondSpawnCard.sendOverNetwork = true;
-            diamondSpawnCard.hullSize = HullClassification.Human;
-            diamondSpawnCard.nodeGraphType = MapNodeGroup.GraphType.Ground;
-            diamondSpawnCard.requiredFlags = NodeFlags.None;
-            diamondSpawnCard.forbiddenFlags = NodeFlags.None;
-            diamondSpawnCard.directorCreditCost = 0;
-            diamondSpawnCard.occupyPosition = false;
-            diamondSpawnCard.loadout = new SerializableLoadout();
-            diamondSpawnCard.noElites = true;
-            diamondSpawnCard.forbiddenAsBoss = true;
+            characterSpawnCard = ScriptableObject.CreateInstance<CharacterSpawnCard>();
+            characterSpawnCard.name = "cscHunkParasite";
+            characterSpawnCard.prefab = characterMaster;
+            characterSpawnCard.sendOverNetwork = true;
+            characterSpawnCard.hullSize = HullClassification.Human;
+            characterSpawnCard.nodeGraphType = MapNodeGroup.GraphType.Ground;
+            characterSpawnCard.requiredFlags = NodeFlags.None;
+            characterSpawnCard.forbiddenFlags = NodeFlags.None;
+            characterSpawnCard.directorCreditCost = 0;
+            characterSpawnCard.occupyPosition = false;
+            characterSpawnCard.loadout = new SerializableLoadout();
+            characterSpawnCard.noElites = true;
+            characterSpawnCard.forbiddenAsBoss = true;
         }
 
         private static void CreateSkins(GameObject prefab)

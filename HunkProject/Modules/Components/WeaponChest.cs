@@ -68,6 +68,17 @@ namespace HunkMod.Modules.Components
             }
 
             gunPickup.weaponDef = weaponDef;
+
+            // offset the shotgun a little
+            // i hate how horrible this is but it works
+            if (weaponDef.nameToken.Contains("SHOTGUN"))
+            {
+                var h = GetComponent<Highlight>();
+                Transform gunTransform = h.targetRenderer.transform.parent.parent.Find("WeaponHolder");
+                gunTransform.localPosition = new Vector3(-0.5f, 2.98f, 0.87f);
+                gunTransform.localScale = Vector3.one * 1.25f;
+            }
+
             gunPickup.Init();
         }
 

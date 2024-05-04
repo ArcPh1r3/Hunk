@@ -39,6 +39,9 @@ namespace HunkMod.SkillStates.Hunk
                 this.currentTimeScale = 0.1f;
             }
 
+            this.skillLocator.primary.SetSkillOverride(this, Modules.Survivors.Hunk.confirmSkillDef, GenericSkill.SkillOverridePriority.Network);
+            this.skillLocator.secondary.SetSkillOverride(this, Modules.Survivors.Hunk.cancelSkillDef, GenericSkill.SkillOverridePriority.Network);
+
             EntityStateMachine.FindByCustomName(this.gameObject, "Aim").SetNextStateToMain();
         }
 
@@ -52,13 +55,36 @@ namespace HunkMod.SkillStates.Hunk
 
             if (this.slowing)
             {
-                this.currentTimeScale += Time.unscaledDeltaTime * 1.25f;
+                this.currentTimeScale += Time.unscaledDeltaTime * 1.15f;
                 if (this.currentTimeScale >= 1f)
                 {
                     this.slowing = false;
                     this.currentTimeScale = 1f;
                 }
                 Time.timeScale = this.currentTimeScale;
+            }
+
+            if (base.isAuthority)
+            {
+                if (!this.radial.cursorInCenter && this.radial.isValidIndex)
+                {
+                    if (this.inputBank.skill1.justPressed)
+                    {
+                        Util.PlaySound("sfx_hunk_menu_click", this.gameObject);
+                        EntityStateMachine.FindByCustomName(this.gameObject, "Weapon").SetInterruptState(new Swap
+                        {
+                            index = this.radial.index
+                        }, InterruptPriority.Frozen);
+                        return;
+                    }
+
+                    if (this.inputBank.skill2.justPressed)
+                    {
+                        Util.PlaySound("sfx_hunk_menu_click", this.gameObject);
+                        this.hunk.weaponTracker.DropWeapon(this.radial.index);
+                        return;
+                    }
+                }
             }
 
             if (base.isAuthority && !this.inputBank.skill4.down)
@@ -75,7 +101,7 @@ namespace HunkMod.SkillStates.Hunk
                 }
                 else
                 {
-                    if (base.fixedAge <= 0.5f)
+                    if (base.fixedAge <= 0.35f)
                     {
                         EntityStateMachine.FindByCustomName(this.gameObject, "Weapon").SetInterruptState(new Swap
                         {
@@ -93,6 +119,9 @@ namespace HunkMod.SkillStates.Hunk
         {
             base.OnExit();
             if (this.radial) Destroy(this.radial.gameObject);
+
+            this.skillLocator.primary.UnsetSkillOverride(this, Modules.Survivors.Hunk.confirmSkillDef, GenericSkill.SkillOverridePriority.Network);
+            this.skillLocator.secondary.UnsetSkillOverride(this, Modules.Survivors.Hunk.cancelSkillDef, GenericSkill.SkillOverridePriority.Network);
 
             if (RoR2Application.isInSinglePlayer)
             {

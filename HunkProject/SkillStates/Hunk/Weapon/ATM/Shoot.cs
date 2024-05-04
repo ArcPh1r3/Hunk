@@ -8,7 +8,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.ATM
 {
     public class Shoot : BaseHunkSkillState
     {
-        public static float damageCoefficient = 32f;
+        public static float damageCoefficient = 64f;
         public static float procCoefficient = 1f;
         public float baseDuration = 1.4f; // the base skill duration. i.e. attack speed
         public static float recoil = 20f;

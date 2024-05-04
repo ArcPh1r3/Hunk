@@ -40,7 +40,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
 
             if (NetworkServer.active)
             {
-                this.characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
+                this.hunk.iFrames = this.duration;
                 this.characterBody.AddBuff(Modules.Survivors.Hunk.immobilizedBuff);
             }
 
@@ -64,8 +64,8 @@ namespace HunkMod.SkillStates.Hunk.Counter
 
             if (NetworkServer.active)
             {
-                this.characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility);
                 this.characterBody.RemoveBuff(Modules.Survivors.Hunk.immobilizedBuff);
+                this.characterBody.RemoveBuff(RoR2Content.Buffs.ArmorBoost);
             }
 
             this.animator.SetLayerWeight(this.animator.GetLayerIndex("AimYaw"), 1f);
@@ -86,11 +86,10 @@ namespace HunkMod.SkillStates.Hunk.Counter
             this.characterBody.isSprinting = false;
 
             // failsafe
-            if (!this.characterBody.HasBuff(RoR2Content.Buffs.HiddenInvincibility))
+            if (!this.characterBody.HasBuff(Modules.Survivors.Hunk.immobilizedBuff) && base.fixedAge <= 0.2f)
             {
                 if (NetworkServer.active)
                 {
-                    this.characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
                     this.characterBody.AddBuff(Modules.Survivors.Hunk.immobilizedBuff);
                 }
             }
@@ -142,6 +141,8 @@ namespace HunkMod.SkillStates.Hunk.Counter
                         base.AddRecoil2(-1f * recoil, -2f * recoil, -0.5f * recoil, 0.5f * recoil);
                     }
 
+                    this.hunk.iFrames = 0f;
+
                     if (NetworkServer.active)
                     {
                         this.target.gameObject.AddComponent<Modules.Components.HunkKnifeTracker>();
@@ -160,6 +161,8 @@ namespace HunkMod.SkillStates.Hunk.Counter
                             procChainMask = default(ProcChainMask),
                             procCoefficient = 1f
                         });
+
+                        this.characterBody.AddBuff(RoR2Content.Buffs.ArmorBoost);
                     }
                 }
             }

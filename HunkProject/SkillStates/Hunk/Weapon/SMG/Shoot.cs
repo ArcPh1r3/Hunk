@@ -6,7 +6,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.SMG
 {
     public class Shoot : BaseHunkSkillState
     {
-        public static float damageCoefficient = 2.5f;
+        public static float damageCoefficient = 2.8f;
         public static float procCoefficient = 1f;
         public static float baseDuration = 0.21f;
         public static float force = 20f;
