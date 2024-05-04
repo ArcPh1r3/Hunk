@@ -458,7 +458,7 @@ namespace HunkMod.Modules.Survivors
 
             skillLocator.passiveSkill.enabled = true;
             skillLocator.passiveSkill.skillNameToken = prefix + "_HUNK_BODY_PPASSIVE_NAME";
-            skillLocator.passiveSkill.skillDescriptionToken = prefix + "_HUNK_BODY_PPASSIVE_NAME";
+            skillLocator.passiveSkill.skillDescriptionToken = prefix + "_HUNK_BODY_PPASSIVE_DESCRIPTION";
             skillLocator.passiveSkill.icon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texPPassiveIcon");
 
             Hunk.reloadSkillDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
@@ -532,7 +532,6 @@ namespace HunkMod.Modules.Survivors
                 requiredStock = 1,
                 stockToConsume = 0,
             });
-
 
             #region Passive
             passive.rummagePassive = Modules.Skills.CreateSkillDef(new SkillDefInfo

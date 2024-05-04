@@ -1,4 +1,5 @@
 ﻿using EntityStates;
+using HunkMod.Modules.Components;
 using HunkMod.Modules.Misc;
 using RoR2;
 using RoR2.Skills;
@@ -24,11 +25,11 @@ namespace HunkMod.Modules
 
             SkillLocator skillLocator = targetPrefab.GetComponent<SkillLocator>();
 
-            /*DriverPassive passive = targetPrefab.GetComponent<DriverPassive>();
+            HunkPassive passive = targetPrefab.GetComponent<HunkPassive>();
             if (passive)
             {
                 passive.passiveSkillSlot = CreateGenericSkillWithSkillFamily(targetPrefab, "Passive");
-            }*/
+            }
 
             if ((families & (1 << 0)) != 0) {
                 skillLocator.primary = CreateGenericSkillWithSkillFamily(targetPrefab, "Primary");

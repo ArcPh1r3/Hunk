@@ -17,6 +17,7 @@ namespace HunkMod.Modules.Components
         public NetworkInstanceId netId;
 
         public bool spawnedATM = false;
+        public HunkPassive passive;
 
         public bool isAiming;
         public HunkWeaponDef weaponDef;
@@ -78,6 +79,7 @@ namespace HunkMod.Modules.Components
         {
             this.characterBody = this.GetComponent<CharacterBody>();
             ModelLocator modelLocator = this.GetComponent<ModelLocator>();
+            this.passive = this.GetComponent<HunkPassive>();
             this.childLocator = modelLocator.modelBaseTransform.GetComponentInChildren<ChildLocator>();
             this.animator = modelLocator.modelBaseTransform.GetComponentInChildren<Animator>();
             this.characterModel = modelLocator.modelBaseTransform.GetComponentInChildren<CharacterModel>();
@@ -97,7 +99,7 @@ namespace HunkMod.Modules.Components
         {
             this.InitShells();
 
-            this.EquipWeapon(this.weaponTracker.equippedIndex);
+            this.Invoke("Oops", 0.1f);
 
             if (this.characterBody)
             {
@@ -110,6 +112,11 @@ namespace HunkMod.Modules.Components
 
             //SpawnChests();
             this.SpawnTerminal();
+        }
+
+        private void Oops()
+        {
+            this.EquipWeapon(this.weaponTracker.equippedIndex);
         }
 
         private void SetInventoryHook()
@@ -591,7 +598,7 @@ namespace HunkMod.Modules.Components
             this.onWeaponUpdate(this);
         }
 
-        private void HandleBackWeapon()
+        public void HandleBackWeapon()
         {
             if (this.backWeaponInstance)
             {
@@ -753,6 +760,7 @@ namespace HunkMod.Modules.Components
 
         public void AddRandomAmmo(float multiplier = 1f)
         {
+            if (this.passive.isFullArsenal) return;
             // TODO
             // change this to a weighted selection, so stronger weapons are less likely to get ammo
 
@@ -797,6 +805,8 @@ namespace HunkMod.Modules.Components
 
         public void AddAmmoFromIndex(int index)
         {
+            if (this.passive.isFullArsenal) return;
+
             float multiplier = 1f;
 
             // alien head

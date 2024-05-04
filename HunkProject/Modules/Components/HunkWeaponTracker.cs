@@ -1,6 +1,7 @@
 ﻿using RoR2;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -13,9 +14,17 @@ namespace HunkMod.Modules.Components
         public int currentAmmo;
     };
 
+    public struct HunkStoredWeaponData
+    {
+        public HunkWeaponDef weaponDef;
+        public int totalAmmo;
+        public int currentAmmo;
+    };
+
     public class HunkWeaponTracker : MonoBehaviour
     {
         public HunkWeaponData[] weaponData = new HunkWeaponData[0];
+        public HunkWeaponData[] storedWeaponData = new HunkWeaponData[0];
         public int equippedIndex = 0;
 
         public int missionStep;
@@ -64,6 +73,7 @@ namespace HunkMod.Modules.Components
         private void Awake()
         {
             this.inventory = this.GetComponent<Inventory>();
+
             this.Init();
 
             UnityEngine.SceneManagement.SceneManager.sceneLoaded += SceneManager_sceneLoaded;
@@ -87,18 +97,6 @@ namespace HunkMod.Modules.Components
 
         private void Start()
         {
-            this.AddWeaponItem(Modules.Weapons.SMG.instance.weaponDef);
-            this.AddWeaponItem(Modules.Weapons.MUP.instance.weaponDef);
-            //this.AddWeaponItem(Modules.Weapons.Shotgun.instance.weaponDef);
-            //this.AddWeaponItem(Modules.Weapons.Slugger.instance.weaponDef);
-            //this.AddWeaponItem(Modules.Weapons.Magnum.instance.weaponDef);
-            //this.AddWeaponItem(Modules.Weapons.Revolver.instance.weaponDef);
-
-            //this.inventory.GiveItem(Modules.Survivors.Hunk.clubKeycard);
-            //this.inventory.GiveItem(Modules.Survivors.Hunk.diamondKeycard);
-            //this.inventory.GiveItem(Modules.Survivors.Hunk.heartKeycard);
-            //this.inventory.GiveItem(Modules.Survivors.Hunk.spadeKeycard);
-
             this.inventory.onItemAddedClient += this.Inventory_onItemAddedClient;
         }
 
@@ -117,61 +115,83 @@ namespace HunkMod.Modules.Components
 
         private void Init()
         {
-            this.weaponData = new HunkWeaponData[]
+            if (this.hunk.GetComponent<HunkPassive>().isFullArsenal)
             {
-                new HunkWeaponData
+                this.weaponData = new HunkWeaponData[]
                 {
-                    weaponDef = Modules.Weapons.SMG.instance.weaponDef,
-                    totalAmmo = Modules.Weapons.SMG.instance.magSize * 2,
-                    currentAmmo = Modules.Weapons.SMG.instance.magSize
-                },
-                new HunkWeaponData
-                {
-                    weaponDef = Modules.Weapons.MUP.instance.weaponDef,
-                    totalAmmo = Modules.Weapons.MUP.instance.magSize * 2,
-                    currentAmmo = Modules.Weapons.MUP.instance.magSize
-                }
-            };
+                    new HunkWeaponData
+                    {
+                        weaponDef = Modules.Weapons.SMG.instance.weaponDef,
+                        totalAmmo = Modules.Weapons.SMG.instance.magSize * 12,
+                        currentAmmo = Modules.Weapons.SMG.instance.magSize
+                    },
+                    new HunkWeaponData
+                    {
+                        weaponDef = Modules.Weapons.MUP.instance.weaponDef,
+                        totalAmmo = Modules.Weapons.MUP.instance.magSize * 20,
+                        currentAmmo = Modules.Weapons.MUP.instance.magSize
+                    },
+                    new HunkWeaponData
+                    {
+                        weaponDef = Modules.Weapons.Shotgun.instance.weaponDef,
+                        totalAmmo = Modules.Weapons.Shotgun.instance.magSize * 8,
+                        currentAmmo = Modules.Weapons.Shotgun.instance.magSize
+                    },
+                    new HunkWeaponData
+                    {
+                        weaponDef = Modules.Weapons.Slugger.instance.weaponDef,
+                        totalAmmo = Modules.Weapons.Slugger.instance.magSize * 8,
+                        currentAmmo = Modules.Weapons.Slugger.instance.magSize
+                    },
+                    new HunkWeaponData
+                    {
+                        weaponDef = Modules.Weapons.Magnum.instance.weaponDef,
+                        totalAmmo = Modules.Weapons.Magnum.instance.magSize * 5,
+                        currentAmmo = Modules.Weapons.Magnum.instance.magSize
+                    },
+                    new HunkWeaponData
+                    {
+                        weaponDef = Modules.Weapons.Revolver.instance.weaponDef,
+                        totalAmmo = Modules.Weapons.Revolver.instance.magSize * 5,
+                        currentAmmo = Modules.Weapons.Revolver.instance.magSize
+                    },
+                    new HunkWeaponData
+                    {
+                        weaponDef = Modules.Weapons.RocketLauncher.instance.weaponDef,
+                        totalAmmo = Modules.Weapons.RocketLauncher.instance.magSize,
+                        currentAmmo = Modules.Weapons.RocketLauncher.instance.magSize
+                    }
+                };
 
-            /*this.weaponData = new HunkWeaponData[]
+                this.AddWeaponItem(Modules.Weapons.SMG.instance.weaponDef);
+                this.AddWeaponItem(Modules.Weapons.MUP.instance.weaponDef);
+                this.AddWeaponItem(Modules.Weapons.Shotgun.instance.weaponDef);
+                this.AddWeaponItem(Modules.Weapons.Slugger.instance.weaponDef);
+                this.AddWeaponItem(Modules.Weapons.Magnum.instance.weaponDef);
+                this.AddWeaponItem(Modules.Weapons.Revolver.instance.weaponDef);
+                this.AddWeaponItem(Modules.Weapons.RocketLauncher.instance.weaponDef);
+            }
+            else
             {
-                new HunkWeaponData
+                this.weaponData = new HunkWeaponData[]
                 {
-                    weaponDef = Modules.Weapons.SMG.instance.weaponDef,
-                    totalAmmo = Modules.Weapons.SMG.instance.magSize * 2,
-                    currentAmmo = Modules.Weapons.SMG.instance.magSize
-                },
-                new HunkWeaponData
-                {
-                    weaponDef = Modules.Weapons.MUP.instance.weaponDef,
-                    totalAmmo = Modules.Weapons.MUP.instance.magSize * 2,
-                    currentAmmo = Modules.Weapons.MUP.instance.magSize
-                },
-                new HunkWeaponData
-                {
-                    weaponDef = Modules.Weapons.Shotgun.instance.weaponDef,
-                    totalAmmo = Modules.Weapons.Shotgun.instance.magSize,
-                    currentAmmo = Modules.Weapons.Shotgun.instance.magSize
-                },
-                new HunkWeaponData
-                {
-                    weaponDef = Modules.Weapons.Slugger.instance.weaponDef,
-                    totalAmmo = Modules.Weapons.Slugger.instance.magSize,
-                    currentAmmo = Modules.Weapons.Slugger.instance.magSize
-                },
-                new HunkWeaponData
-                {
-                    weaponDef = Modules.Weapons.Magnum.instance.weaponDef,
-                    totalAmmo = Modules.Weapons.Magnum.instance.magSize,
-                    currentAmmo = Modules.Weapons.Magnum.instance.magSize
-                },
-                new HunkWeaponData
-                {
-                    weaponDef = Modules.Weapons.Revolver.instance.weaponDef,
-                    totalAmmo = Modules.Weapons.Revolver.instance.magSize,
-                    currentAmmo = Modules.Weapons.Revolver.instance.magSize
-                }
-            };*/
+                    new HunkWeaponData
+                    {
+                        weaponDef = Modules.Weapons.SMG.instance.weaponDef,
+                        totalAmmo = Modules.Weapons.SMG.instance.magSize * 2,
+                        currentAmmo = Modules.Weapons.SMG.instance.magSize
+                    },
+                    new HunkWeaponData
+                    {
+                        weaponDef = Modules.Weapons.MUP.instance.weaponDef,
+                        totalAmmo = Modules.Weapons.MUP.instance.magSize * 2,
+                        currentAmmo = Modules.Weapons.MUP.instance.magSize
+                    }
+                };
+
+                this.AddWeaponItem(Modules.Weapons.SMG.instance.weaponDef);
+                this.AddWeaponItem(Modules.Weapons.MUP.instance.weaponDef);
+            }
         }
 
         public void SwapToLastWeapon()
@@ -203,12 +223,32 @@ namespace HunkMod.Modules.Components
 
             Array.Resize(ref this.weaponData, this.weaponData.Length + 1);
 
-            this.weaponData[this.weaponData.Length - 1] = new HunkWeaponData
+            bool hasStoredData = false;
+            foreach (HunkWeaponData j in this.storedWeaponData)
             {
-                weaponDef = weaponDef,
-                totalAmmo = 0,
-                currentAmmo = weaponDef.magSize
-            };
+                if (weaponDef == j.weaponDef)
+                {
+                    hasStoredData = true;
+                    this.RemoveStoredData(weaponDef);
+
+                    this.weaponData[this.weaponData.Length - 1] = new HunkWeaponData
+                    {
+                        weaponDef = weaponDef,
+                        totalAmmo = j.totalAmmo,
+                        currentAmmo = j.currentAmmo
+                    };
+                }
+            }
+
+            if (!hasStoredData)
+            {
+                this.weaponData[this.weaponData.Length - 1] = new HunkWeaponData
+                {
+                    weaponDef = weaponDef,
+                    totalAmmo = 0,
+                    currentAmmo = weaponDef.magSize
+                };
+            }
 
             Util.PlaySound("sfx_hunk_pickup", this.hunk.gameObject);
 
@@ -217,6 +257,87 @@ namespace HunkMod.Modules.Components
 
             // failsafe
             this.AddWeaponItem(weaponDef);
+        }
+
+        public void DropWeapon(int index)
+        {
+            if (index >= this.weaponData.Length) return;
+            if (this.weaponData[index].weaponDef == null) return;
+
+            // no repeats
+            foreach (HunkWeaponData i in this.storedWeaponData)
+            {
+                if (i.weaponDef == this.weaponData[index].weaponDef) return;
+            }
+
+            HunkWeaponDef weaponDef = this.weaponData[index].weaponDef;
+            int _current = this.weaponData[index].currentAmmo;
+            int _total = this.weaponData[index].totalAmmo;
+
+            // add an entry to the stored weapons
+            // this is for keeping your ammo when you pick up a gun again
+
+            Array.Resize(ref this.storedWeaponData, this.storedWeaponData.Length + 1);
+
+            this.storedWeaponData[this.storedWeaponData.Length - 1] = new HunkWeaponData
+            {
+                weaponDef = weaponDef,
+                totalAmmo = _total,
+                currentAmmo = _current
+            };
+
+            for (int i = index; i < this.weaponData.Length - 1; i++)
+            {
+                // move elements downwards
+                this.weaponData[i] = this.weaponData[i + 1];
+            }
+            // decrement array size
+            Array.Resize(ref this.weaponData, this.weaponData.Length - 1);
+
+            // create pickup now
+            PickupDropletController.CreatePickupDroplet(
+                PickupCatalog.FindPickupIndex(weaponDef.itemDef.itemIndex),
+                this.hunk.characterBody.corePosition,
+                this.hunk.characterBody.inputBank.aimDirection * 15f);
+
+            // remove it from the inventory
+            this.inventory.RemoveItem(weaponDef.itemDef, 100);
+
+            // adjust your equipped index if it was decremented
+            if (index < this.equippedIndex) this.equippedIndex--;
+
+            // if you just dropped your last equipped weapon, find a new one- defaults to last in inventory
+            if (this.lastEquippedIndex == index)
+            {
+                this.lastEquippedIndex = 0;
+                for (int i = 0; i < this.weaponData.Length; i++)
+                {
+                    if (i != this.equippedIndex) this.lastEquippedIndex = i;
+                }
+
+                this.hunk.HandleBackWeapon();
+            }
+            else
+            {
+                if (index < this.lastEquippedIndex) this.lastEquippedIndex--;
+            }
+        }
+
+        public void RemoveStoredData(HunkWeaponDef weaponDef)
+        {
+            int index = 0;
+            for (int j = 0; j < this.storedWeaponData.Length; j++)
+            {
+                if (this.storedWeaponData[j].weaponDef && this.storedWeaponData[j].weaponDef == weaponDef) index = j;
+            }
+
+            for (int i = index; i < this.storedWeaponData.Length - 1; i++)
+            {
+                // move elements downwards
+                this.storedWeaponData[i] = this.storedWeaponData[i + 1];
+            }
+            // decrement array size
+            Array.Resize(ref this.storedWeaponData, this.storedWeaponData.Length - 1);
         }
 
         private void Update()

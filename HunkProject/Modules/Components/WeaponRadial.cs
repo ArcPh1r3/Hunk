@@ -107,10 +107,15 @@ namespace HunkMod.Modules.Components
         {
             get
             {
-                if (this.index >= this.hunk.weaponData.Length) return false;
-                if (this.index == this.hunk.equippedIndex) return false;
-                return true;
+                return this.ValidIndex(this.index, false);
             }
+        }
+
+        public bool ValidIndex(int i, bool countEquippedAsValid = true)
+        {
+            if (i >= this.hunk.weaponData.Length) return false;
+            if (i == this.hunk.equippedIndex && !countEquippedAsValid) return false;
+            return true;
         }
 
         public bool isRealIndex
@@ -217,7 +222,7 @@ namespace HunkMod.Modules.Components
                 j++;
             }
 
-            if (_index != this.index) Util.PlaySound("sfx_hunk_menu_cursor", this.gameObject);
+            if (_index != this.index && this.ValidIndex(_index)) Util.PlaySound("sfx_hunk_menu_cursor", this.gameObject);
 
             this.index = _index;
 
