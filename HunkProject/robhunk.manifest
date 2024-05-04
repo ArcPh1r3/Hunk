@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 242958446
+CRC: 2404750080
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 5f1f279ed11bce22cb0c495c4e585346
+    Hash: 1a8ab3f3936b91a699b459b63135bc0b
   TypeTreeHash:
     serializedVersion: 2
     Hash: 2a966d243f1377704da8802e250c5dc9
@@ -95,10 +95,12 @@ Assets:
 - Assets/Hunk/FBX/Animations/Default/AirDodgeLoop.anim
 - Assets/Hunk/HUD/ChargeBar.prefab
 - Assets/Hunk/FBX/meshSMG.mesh
+- Assets/Hunk/Textures/GVirus/sm74_201_GVirus01A_A_NRMR.png
 - Assets/Hunk/Textures/WeaponCase/DirtyHardcase_DirectXNormal.png
 - Assets/Hunk/VFX/matSpark.mat
 - Assets/Hunk/Materials/matInfiniteKnife.mat
 - Assets/Hunk/FBX/Animations/Default/LightImpact2.anim
+- Assets/Hunk/Weapons/mdlFlamethrowerPickup.prefab
 - Assets/Hunk/Items/mdlKeycardSpadeOld.prefab
 - Assets/Hunk/FBX/RoundReloadEnd.anim
 - Assets/Hunk/Items/mdlKeycardHeart.prefab
@@ -131,6 +133,7 @@ Assets:
 - Assets/Hunk/Textures/AmmoBox/bullet_Diffuse.png
 - Assets/Hunk/Materials/matDisplayCase02.mat
 - Assets/Hunk/FBX/epickeycard.dae
+- Assets/Hunk/Textures/Flamethrower/Leon_FlameThrower_N.png
 - Assets/Hunk/Textures/RocketLauncher/Leon_ATM-4_N.png
 - Assets/Hunk/Textures/Terminal/Terminal_albedo.png
 - Assets/Hunk/VFX/texChargeRing.png
@@ -150,8 +153,10 @@ Assets:
 - Assets/Hunk/Icons/Weapon/texMUPIcon.png
 - Assets/Hunk/FBX/Animations/Default/DefaultPose.anim
 - Assets/Hunk/FBX/keycard.obj
+- Assets/Hunk/Textures/Flamethrower/Leon_FlameThrowerExt_D.png
 - Assets/Hunk/FBX/Animations/Default/AimPitch.anim
 - Assets/Hunk/FBX/Idle.anim
+- Assets/Hunk/Weapons/mdlFlamethrower.prefab
 - Assets/Hunk/FBX/Animations/Default/Ascend.anim
 - Assets/Hunk/FBX/Animations/Pistol/Sprint.anim
 - Assets/Hunk/Textures/Terminal/Terminal_normal.png
@@ -183,6 +188,7 @@ Assets:
 - Assets/Hunk/FBX/Animations/Pistol/RunL.anim
 - Assets/Hunk/Icons/Skill/texKnifeIcon.png
 - Assets/Hunk/Icons/texStarOverlay.png
+- Assets/Hunk/Materials/matFlamethrower.mat
 - Assets/Hunk/Materials/matMagnum2.mat
 - Assets/Hunk/Items/mdlKeycardSpade.prefab
 - Assets/Hunk/VFX/texShockwave.png
@@ -216,6 +222,7 @@ Assets:
 - Assets/Hunk/Textures/Magnum/Leon_LightningHawkNormBarrel_N.png
 - Assets/Hunk/Textures/DisplayCase/M_Weapon_Case_normal.png
 - Assets/Hunk/FBX/RunF.anim
+- Assets/Hunk/Textures/GVirus/sm74_201_GVirus01A_A_ALBM.png
 - Assets/Hunk/Icons/texHunkIcon.png
 - Assets/Hunk/FBX/Animations/maskHunkAimPitch.mask
 - Assets/Hunk/HUD/Textures/texWeakPointIndicator.png
@@ -233,6 +240,7 @@ Assets:
 - Assets/Hunk/Weapons/mdlM19Pickup.prefab
 - Assets/Hunk/Textures/Shotgun/matSlugger.mat
 - Assets/Hunk/Textures/Magnum/Leon_LightningHawkBody_D.png
+- Assets/Hunk/Textures/GVirus/sm74_201_Gvirus01A_A_EMI.png
 - Assets/Hunk/Materials/matDisplayCase01.mat
 - Assets/Hunk/FBX/displaycase2.dae
 - Assets/Hunk/FBX/meshCommando.mesh
@@ -301,6 +309,7 @@ Assets:
 - Assets/Hunk/Animations/DisplayCase/Idle.anim
 - Assets/Hunk/Textures/RocketLauncher/Leon_AntiTankRocket_N.png
 - Assets/Hunk/Materials/matHunk04.mat
+- Assets/Hunk/Textures/Flamethrower/Leon_FlameThrower_D.png
 - Assets/Hunk/Materials/matHeart.mat
 - Assets/Hunk/FBX/meshHunkB02.mesh
 - Assets/Hunk/FBX/Animations/Pistol/Idle.anim
@@ -326,12 +335,14 @@ Assets:
 - Assets/Hunk/FBX/Animations/Default/RoundReloadLoop.anim
 - Assets/Hunk/FBX/Rockets.fbx
 - Assets/Hunk/FBX/MenuIdle.anim
+- Assets/Hunk/Icons/Weapon/texFlamethrowerIcon.png
 - Assets/Hunk/VFX/HunkBigRocketGhost.prefab
 - Assets/Hunk/FBX/Animations/Default/SprintFast.anim
 - Assets/Hunk/FBX/Animations/Pistol/RunF.anim
 - Assets/Hunk/Textures/Unsorted/texDiamond.png
 - Assets/Hunk/Materials/matMUP.mat
 - Assets/Hunk/Textures/Unsorted/texHeart.png
+- Assets/Hunk/Materials/matFlamethrower2.mat
 - Assets/Hunk/FBX/Sprint.anim
 - Assets/Hunk/Materials/matSMG.mat
 - Assets/Hunk/FBX/Animations/maskHunkFreefall.mask
@@ -351,14 +362,17 @@ Assets:
 - Assets/Hunk/FBX/RunR.anim
 - Assets/Hunk/FBX/ZamOk_Electrik.fbx
 - Assets/Hunk/Icons/Weapon/texPistolIcon.png
+- Assets/Hunk/VFX/FlamethrowerEffect.prefab
 - Assets/Hunk/Weapons/mdlMUP.prefab
 - Assets/Hunk/Icons/Skill/texSlideIcon.png
+- Assets/Hunk/Materials/matGVirusSample2.mat
 - Assets/Hunk/Textures/Unsorted/texSpade.png
 - Assets/Hunk/Materials/matAmmoPickup.mat
 - Assets/Hunk/Icons/Skill/texCancelIcon.png
 - Assets/Hunk/Textures/AmmoBox/bullet_Normal.png
 - Assets/Hunk/VFX/Badass/WoodHitEffect.prefab
 - Assets/Hunk/VFX/Badass/SmallExplosion.prefab
+- Assets/Hunk/Textures/Flamethrower/Leon_FlameThrowerExt_N.png
 - Assets/Hunk/Weapons/mdlRocketLauncherPickup.prefab
 - Assets/Hunk/VFX/texSpike.png
 - Assets/Hunk/FBX/Ascend.anim

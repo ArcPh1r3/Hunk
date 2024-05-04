@@ -696,6 +696,39 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="sfx_hunk_flamethrower_loop" ID="{FEBB0A3C-00F2-41D3-900C-FB8277A0DE3F}">
+					<ChildrenList>
+						<Action Name="" ID="{C0E60390-4C2F-4DAC-80FC-96B7FE54EA14}" ShortID="962105202">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_flamethrower_loop" ID="{9D5AA26C-D206-4BCC-9A22-77FA8E9C9434}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_flamethrower_end" ID="{4975D57A-5945-4F45-803E-643E6BAA2685}">
+					<ChildrenList>
+						<Action Name="" ID="{A97C3A35-911B-4C07-ACE2-077A17DF5321}" ShortID="392795985">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_flamethrower_end" ID="{26A855F1-3D74-4971-92AA-3039A1A46DC8}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_flamethrower_start" ID="{9A956A19-9619-416E-A191-F715794E29BC}">
+					<ChildrenList>
+						<Action Name="" ID="{C4366DBA-9105-4783-A5BE-5D5E5F57296C}" ShortID="755888356">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_flamethrower_start" ID="{3FA00AF4-6DD4-46FD-9F1C-F0C55B650E73}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

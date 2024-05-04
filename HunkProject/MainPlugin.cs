@@ -106,6 +106,8 @@ namespace HunkMod
             new Modules.Weapons.RocketLauncher().Init();
             new Modules.Weapons.ATM().Init();
             new Modules.Weapons.Revolver().Init();
+            new Modules.Weapons.Flamethrower().Init();
+            new Modules.Weapons.GoldenGun().Init();
         }
 
         private void Hook()

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 
 namespace HunkMod.Modules.Components
@@ -28,6 +29,7 @@ namespace HunkMod.Modules.Components
         public HurtBox targetHurtbox;
 
         public float snapOffset = 0.25f;
+        public float flamethrowerLifetime;
 
         public CharacterBody characterBody { get; private set; }
         private ChildLocator childLocator;
@@ -72,6 +74,11 @@ namespace HunkMod.Modules.Components
         private GameObject emptyCrosshair = Modules.Assets.LoadCrosshair("Bad");
         private bool isOut;
         private CrosshairUtils.OverrideRequest crosshairOverrideRequest;
+        private GameObject flamethrowerEffectInstance;
+        private GameObject flamethrowerEffectInstance2;
+        private bool flameIsPlaying = true;
+        private GameObject flamethrowerLight;
+        private uint flamethrowerPlayID;
 
         public float iFrames;
 
@@ -91,6 +98,35 @@ namespace HunkMod.Modules.Components
             this.defaultYOffset = 1.59f;
             this.desiredYOffset = this.defaultYOffset;
             this.yOffset = this.desiredYOffset;
+
+            this.flamethrowerEffectInstance = GameObject.Instantiate(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Drones/DroneFlamethrowerEffect.prefab").WaitForCompletion());
+
+            Destroy(this.flamethrowerEffectInstance.GetComponent<DestroyOnTimer>());
+            Destroy(this.flamethrowerEffectInstance.GetComponent<ScaleParticleSystemDuration>());;
+            Destroy(this.flamethrowerEffectInstance.GetComponent<DetachParticleOnDestroyAndEndEmission>());
+
+            //this.flamethrowerEffectInstance.transform.Find("Donut").gameObject.SetActive(true);
+            this.flamethrowerEffectInstance.transform.Find("Bone1/Bone2/Bone3/Bone4/FireForward").gameObject.SetActive(false);
+            //this.flamethrowerEffectInstance.transform.Find("Donut").GetComponent<ParticleSystemRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/VFX/matOpaqueDustSpeckled.mat").WaitForCompletion();
+            this.flamethrowerEffectInstance.transform.Find("FireForward (1)").gameObject.SetActive(true);
+
+            foreach (ParticleSystem i in this.flamethrowerEffectInstance.GetComponentsInChildren<ParticleSystem>())
+            {
+                var main = i.main;
+                main.loop = true;
+            }
+
+            this.flamethrowerLight = this.flamethrowerEffectInstance.GetComponentInChildren<Light>().gameObject;
+
+            this.flamethrowerEffectInstance.transform.parent = this.childLocator.FindChild("MuzzleSMG");
+            this.flamethrowerEffectInstance.transform.localPosition = Vector3.zero;
+            this.flamethrowerEffectInstance.transform.localRotation = Quaternion.identity;
+
+            this.flamethrowerEffectInstance2 = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("FlamethrowerEffect"));
+            this.flamethrowerEffectInstance2.transform.parent = this.childLocator.FindChild("MuzzleSMG");
+            this.flamethrowerEffectInstance2.transform.localPosition = Vector3.zero;
+            this.flamethrowerEffectInstance2.transform.localRotation = Quaternion.identity;
+            this.flamethrowerEffectInstance2.transform.localScale = Vector3.one;
 
             this.Invoke("SetInventoryHook", 0.5f);
         }
@@ -192,16 +228,16 @@ namespace HunkMod.Modules.Components
             this.CheckForNeedler();
         }
 
-        public void ConsumeAmmo()
+        public void ConsumeAmmo(int amount = 1)
         {
             this.reloadTimer = 2f;
 
             if (this.characterBody.HasBuff(RoR2Content.Buffs.NoCooldowns)) return;
 
             // fake ammo sync
-            if (this.ammo <= this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo) this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo--;
+            if (this.ammo <= this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo) this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo -= amount;
 
-            this.ammo--;
+            this.ammo -= amount;
 
             if (this.ammo <= 0) this.ammo = 0;
             if (this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo <= 0) this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo = 0;
@@ -223,6 +259,7 @@ namespace HunkMod.Modules.Components
             this.lockOnTimer -= Time.fixedDeltaTime;
             this.ammoKillTimer -= Time.fixedDeltaTime;
             this.iFrames -= Time.fixedDeltaTime;
+            this.flamethrowerLifetime -= Time.fixedDeltaTime;
 
             if (NetworkServer.active)
             {
@@ -239,6 +276,43 @@ namespace HunkMod.Modules.Components
                     {
                         this.characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
                     }
+                }
+            }
+
+            if (this.flamethrowerLifetime < 0f)
+            {
+                if (this.flameIsPlaying)
+                {
+                    this.flameIsPlaying = false;
+                    foreach (ParticleSystem i in this.flamethrowerEffectInstance.GetComponentsInChildren<ParticleSystem>())
+                    {
+                        i.Stop();
+                    }
+                    foreach (ParticleSystem i in this.flamethrowerEffectInstance2.GetComponentsInChildren<ParticleSystem>())
+                    {
+                        i.Stop();
+                    }
+                    this.flamethrowerLight.SetActive(false);
+                    AkSoundEngine.StopPlayingID(this.flamethrowerPlayID);
+                    Util.PlaySound("sfx_hunk_flamethrower_end", this.gameObject);
+                }
+            }
+            else
+            {
+                if (!this.flameIsPlaying)
+                {
+                    this.flameIsPlaying = true;
+                    foreach (ParticleSystem i in this.flamethrowerEffectInstance.GetComponentsInChildren<ParticleSystem>())
+                    {
+                        i.Play();
+                    }
+                    foreach (ParticleSystem i in this.flamethrowerEffectInstance2.GetComponentsInChildren<ParticleSystem>())
+                    {
+                        i.Play();
+                    }
+                    this.flamethrowerLight.SetActive(true);
+                    Util.PlaySound("sfx_hunk_flamethrower_start", this.gameObject);
+                    this.flamethrowerPlayID = Util.PlaySound("sfx_hunk_flamethrower_loop", this.gameObject);
                 }
             }
 
@@ -611,6 +685,8 @@ namespace HunkMod.Modules.Components
 
             if (this.weaponTracker.weaponData[this.weaponTracker.lastEquippedIndex].weaponDef.storedOnBack)
             {
+                if (this.weaponTracker.lastEquippedIndex == this.weaponTracker.equippedIndex) return;
+
                 this.backWeaponDef = this.weaponTracker.weaponData[this.weaponTracker.lastEquippedIndex].weaponDef;
                 this.backWeaponInstance = GameObject.Instantiate(this.backWeaponDef.modelPrefab);
                 this.backWeaponInstance.transform.parent = this.childLocator.FindChild("BackWeapon");
@@ -625,7 +701,7 @@ namespace HunkMod.Modules.Components
                 why.transform.localRotation = Quaternion.Euler(new Vector3(25f, 0f, 180f));
 
                 DynamicBone hehe = this.childLocator.FindChild("BackWeapon").gameObject.AddComponent<DynamicBone>();
-                hehe.m_Root = hehe.transform;
+                hehe.m_Root = hehe.transform.parent;
                 hehe.m_Damping = 0.005f;
                 hehe.m_Elasticity = 0.01f;
                 hehe.m_Stiffness = 0.5f;

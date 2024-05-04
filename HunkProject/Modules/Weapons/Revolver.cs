@@ -9,7 +9,7 @@ namespace HunkMod.Modules.Weapons
         public override string weaponNameToken => "REVOLVER";
         public override string weaponName => "Quickdraw Army";
         public override string weaponDesc => "6-shot capacity .45 ACP, single action handgun. Various customizations of this gun exist, each with their own name.";
-        public override string iconName => "texM19Icon";
+        public override string iconName => "texRevolverIcon";
         public override GameObject crosshairPrefab => Modules.Assets.magnumCrosshairPrefab;
         public override int magSize => 6;
         public override float reloadDuration => 0.9f;

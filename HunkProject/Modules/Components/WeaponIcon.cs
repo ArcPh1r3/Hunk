@@ -78,6 +78,7 @@ namespace HunkMod.Modules.Components
 		private void SetDisplay(HunkController z)
 		{
 			if (!this.hunk) return;
+			if (!this.hunk.weaponDef) return;
 
 			this.DoStockFlash();
 
