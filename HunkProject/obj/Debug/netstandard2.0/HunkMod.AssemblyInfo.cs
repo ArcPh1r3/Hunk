@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HunkMod")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+232c150068c91e30452b9d297a69312631d8c01a")]
 [assembly: System.Reflection.AssemblyProductAttribute("HunkMod")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HunkMod")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
