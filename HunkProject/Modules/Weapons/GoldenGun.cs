@@ -1,6 +1,5 @@
 ﻿using RoR2.Skills;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace HunkMod.Modules.Weapons
 {
@@ -12,6 +11,7 @@ namespace HunkMod.Modules.Weapons
         public override string iconName => "texGoldenGunIcon";
         public override GameObject crosshairPrefab => Modules.Assets.magnumCrosshairPrefab;
         public override int magSize => 1;
+        public override float magPickupMultiplier => 1f;
         public override float reloadDuration => 1.8f;
         public override string ammoName => "Golden Ammo";
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlGoldenGun");

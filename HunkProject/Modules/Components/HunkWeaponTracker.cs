@@ -78,7 +78,7 @@ namespace HunkMod.Modules.Components
 
             UnityEngine.SceneManagement.SceneManager.sceneLoaded += SceneManager_sceneLoaded;
             this.CancelInvoke();
-            if (NetworkServer.active) this.Invoke("SpawnKeycard", UnityEngine.Random.Range(90f, 180f));
+            if (NetworkServer.active) this.Invoke("SpawnKeycard", 60f);
         }
 
         private void OnDestroy()
@@ -92,7 +92,7 @@ namespace HunkMod.Modules.Components
             this.spawnedKeycardThisStage = false;
 
             this.CancelInvoke();
-            if (NetworkServer.active) this.Invoke("SpawnKeycard", UnityEngine.Random.Range(90f, 180f));
+            if (NetworkServer.active) this.Invoke("SpawnKeycard", UnityEngine.Random.Range(5f, 30f));
         }
 
         private void Start()
@@ -157,6 +157,12 @@ namespace HunkMod.Modules.Components
                     },
                     new HunkWeaponData
                     {
+                        weaponDef = Modules.Weapons.Flamethrower.instance.weaponDef,
+                        totalAmmo = Modules.Weapons.Flamethrower.instance.magSize * 2,
+                        currentAmmo = Modules.Weapons.Flamethrower.instance.magSize
+                    },
+                    new HunkWeaponData
+                    {
                         weaponDef = Modules.Weapons.RocketLauncher.instance.weaponDef,
                         totalAmmo = Modules.Weapons.RocketLauncher.instance.magSize,
                         currentAmmo = Modules.Weapons.RocketLauncher.instance.magSize
@@ -169,6 +175,7 @@ namespace HunkMod.Modules.Components
                 this.AddWeaponItem(Modules.Weapons.Slugger.instance.weaponDef);
                 this.AddWeaponItem(Modules.Weapons.Magnum.instance.weaponDef);
                 this.AddWeaponItem(Modules.Weapons.Revolver.instance.weaponDef);
+                this.AddWeaponItem(Modules.Weapons.Flamethrower.instance.weaponDef);
                 this.AddWeaponItem(Modules.Weapons.RocketLauncher.instance.weaponDef);
             }
             else
@@ -377,8 +384,6 @@ namespace HunkMod.Modules.Components
 
         private bool SpawnKeycardHolder(SpawnCard spawnCard)
         {
-            this.spawnedKeycardThisStage = true;
-
             // just spawn it on a random enemy idc
             Transform target = null;
             foreach (CharacterBody i in CharacterBody.readOnlyInstancesList)

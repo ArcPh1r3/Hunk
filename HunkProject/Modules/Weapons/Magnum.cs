@@ -1,6 +1,5 @@
 ﻿using RoR2.Skills;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace HunkMod.Modules.Weapons
 {
@@ -12,8 +11,9 @@ namespace HunkMod.Modules.Weapons
         public override string iconName => "texMagnumIcon";
         public override GameObject crosshairPrefab => Modules.Assets.magnumCrosshairPrefab;
         public override int magSize => 7;
+        public override float magPickupMultiplier => 0.5f;
         public override float reloadDuration => 1.8f;
-        public override string ammoName => "MAG Ammo";
+        public override string ammoName => "MAG Rounds";
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlMagnum");
         public override HunkWeaponDef.AnimationSet animationSet => HunkWeaponDef.AnimationSet.Pistol;
         public override bool storedOnBack => false;

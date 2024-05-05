@@ -1,6 +1,5 @@
 ﻿using RoR2.Skills;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace HunkMod.Modules.Weapons
 {
@@ -12,6 +11,7 @@ namespace HunkMod.Modules.Weapons
         public override string iconName => "texSluggerIcon";
         public override GameObject crosshairPrefab => Modules.Assets.shotgunCrosshairPrefab;
         public override int magSize => 4;
+        public override float magPickupMultiplier => 2f;
         public override float reloadDuration => 0.6f;
         public override string ammoName => "Shotgun Slugs";
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlSlugger");

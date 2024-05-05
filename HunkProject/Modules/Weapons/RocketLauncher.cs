@@ -1,6 +1,5 @@
 ﻿using RoR2.Skills;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace HunkMod.Modules.Weapons
 {
@@ -12,6 +11,7 @@ namespace HunkMod.Modules.Weapons
         public override string iconName => "texRocketLauncherIcon";
         public override GameObject crosshairPrefab => Modules.Assets.rocketLauncherCrosshairPrefab;
         public override int magSize => 4;
+        public override float magPickupMultiplier => 0.5f;
         public override float reloadDuration => 3f;
         public override string ammoName => "66mm Rockets";
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlRocketLauncher");

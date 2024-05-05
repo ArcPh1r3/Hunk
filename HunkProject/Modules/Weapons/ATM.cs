@@ -1,6 +1,5 @@
 ﻿using RoR2.Skills;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace HunkMod.Modules.Weapons
 {
@@ -12,6 +11,7 @@ namespace HunkMod.Modules.Weapons
         public override string iconName => "texATMIcon";
         public override GameObject crosshairPrefab => Modules.Assets.rocketLauncherCrosshairPrefab;
         public override int magSize => 999;
+        public override float magPickupMultiplier => 1f;
         public override float reloadDuration => 3f;
         public override string ammoName => "84mm Rockets";
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlATM");

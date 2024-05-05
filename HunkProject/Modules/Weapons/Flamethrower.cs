@@ -1,6 +1,5 @@
 ﻿using RoR2.Skills;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace HunkMod.Modules.Weapons
 {
@@ -12,6 +11,7 @@ namespace HunkMod.Modules.Weapons
         public override string iconName => "texFlamethrowerIcon";
         public override GameObject crosshairPrefab => Modules.Assets.shotgunCrosshairPrefab;
         public override int magSize => 300;
+        public override float magPickupMultiplier => 0.5f;
         public override float reloadDuration => 2f;
         public override string ammoName => "Fuel";
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlFlamethrower");

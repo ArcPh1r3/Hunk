@@ -28,6 +28,7 @@ namespace HunkMod.Modules.Weapons
         public abstract string iconName { get; }
         public abstract GameObject crosshairPrefab { get; }
         public abstract int magSize { get; }
+        public abstract float magPickupMultiplier { get; }
         public abstract float reloadDuration { get; }
         public abstract string ammoName { get; }
         public abstract SkillDef primarySkillDef { get; }
@@ -64,6 +65,7 @@ namespace HunkMod.Modules.Weapons
                 icon = icon,
                 crosshairPrefab = crosshairPrefab,
                 magSize = magSize,
+                magPickupMultiplier = magPickupMultiplier,
                 reloadDuration = reloadDuration,
                 ammoName = ammoName,
                 primarySkillDef = primarySkillDef,
@@ -100,8 +102,11 @@ namespace HunkMod.Modules.Weapons
             };
             itemDef.unlockableDef = null;
 
-            itemDef.pickupModelPrefab = Modules.Assets.mainAssetBundle.LoadAsset<GameObject>(weaponDef.modelPrefab.name + "Pickup");
-            Modules.Assets.ConvertAllRenderersToHopooShader(itemDef.pickupModelPrefab);
+            if (modelPrefab)
+            {
+                itemDef.pickupModelPrefab = Modules.Assets.mainAssetBundle.LoadAsset<GameObject>(weaponDef.modelPrefab.name + "Pickup");
+                Modules.Assets.ConvertAllRenderersToHopooShader(itemDef.pickupModelPrefab);
+            }
 
             // tell me why i can't set this tell me why this breaks the entire weapon when i do it this way
             //itemDef.tier = ItemTier.NoTier;

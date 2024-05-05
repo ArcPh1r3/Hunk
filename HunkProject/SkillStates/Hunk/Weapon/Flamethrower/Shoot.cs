@@ -16,11 +16,19 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Flamethrower
         private float duration;
         private string muzzleString;
         private bool isCrit;
+        private bool startingUp;
 
         public override void OnEnter()
         {
             base.OnEnter();
             this.duration = Shoot.baseDuration / this.attackSpeedStat;
+
+            if (this.hunk.flamethrowerLifetime <= 0f)
+            {
+                this.startingUp = true;
+                this.duration = 0.2f;
+                Util.PlaySound("sfx_hunk_flamethrower_start", this.gameObject);
+            }
 
             this.muzzleString = "MuzzleSMG";
 
@@ -28,16 +36,15 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Flamethrower
 
             if (base.isAuthority)
             {
-                this.Fire();
+                 if (!this.startingUp) this.Fire();
             }
 
-            //this.PlayAnimation("Gesture, Override", "Shoot", "Shoot.playbackRate", 0.4f);
+            this.PlayAnimation("Gesture, Override", "Shoot", "Shoot.playbackRate", 0.2f);
 
-            if (this.hunk)
+            if (!this.startingUp)
             {
                 this.hunk.ConsumeAmmo(2);
                 this.hunk.flamethrowerLifetime = 0.25f / this.attackSpeedStat;
-                //this.hunk.machineGunVFX.Play();
             }
         }
 
@@ -99,6 +106,13 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Flamethrower
 
             if (base.fixedAge >= this.duration && base.isAuthority)
             {
+                if (this.startingUp)
+                {
+                    this.hunk.flamethrowerLifetime = 0.1f;
+                    this.outer.SetNextState(new Shoot());
+                    return;
+                }
+
                 this.outer.SetNextStateToMain();
                 return;
             }

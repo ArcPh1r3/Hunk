@@ -140,6 +140,9 @@ namespace HunkMod.Modules.Components
                 i.Stop();
             }
 
+            this.flamethrowerEffectInstance.SetActive(false);
+            this.flamethrowerEffectInstance2.SetActive(false);
+
             this.Invoke("SetInventoryHook", 0.5f);
         }
 
@@ -318,6 +321,10 @@ namespace HunkMod.Modules.Components
                     if (!this.flameIsPlaying)
                     {
                         this.flameIsPlaying = true;
+
+                        if (!this.flamethrowerEffectInstance.activeSelf) this.flamethrowerEffectInstance.SetActive(true);
+                        if (!this.flamethrowerEffectInstance2.activeSelf) this.flamethrowerEffectInstance2.SetActive(true);
+
                         foreach (ParticleSystem i in this.flamethrowerEffectInstance.GetComponentsInChildren<ParticleSystem>())
                         {
                             i.Play();
@@ -327,7 +334,6 @@ namespace HunkMod.Modules.Components
                             i.Play();
                         }
                         this.flamethrowerLight.SetActive(true);
-                        Util.PlaySound("sfx_hunk_flamethrower_start", this.gameObject);
                         this.flamethrowerPlayID = Util.PlaySound("sfx_hunk_flamethrower_loop", this.gameObject);
                     }
                 }
@@ -887,7 +893,7 @@ namespace HunkMod.Modules.Components
                 if (this.weaponTracker.weaponData[index].weaponDef.canPickUpAmmo) valid = true;
             }
 
-            int amount = Mathf.CeilToInt(this.weaponTracker.weaponData[index].weaponDef.magSize * multiplier);
+            int amount = Mathf.CeilToInt(this.weaponTracker.weaponData[index].weaponDef.magSize * multiplier * this.weaponTracker.weaponData[index].weaponDef.magPickupMultiplier);
 
             this.weaponTracker.weaponData[index].totalAmmo += amount;
 
@@ -922,7 +928,7 @@ namespace HunkMod.Modules.Components
                 }
             }
 
-            int amount = Mathf.CeilToInt(this.weaponTracker.weaponData[index].weaponDef.magSize * multiplier);
+            int amount = Mathf.CeilToInt(this.weaponTracker.weaponData[index].weaponDef.magSize * multiplier * this.weaponTracker.weaponData[index].weaponDef.magPickupMultiplier);
 
             this.weaponTracker.weaponData[index].totalAmmo += amount;
 

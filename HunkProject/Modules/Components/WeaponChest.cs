@@ -29,16 +29,13 @@ namespace HunkMod.Modules.Components
                 {
                     if (Modules.Helpers.HunkHasWeapon(Modules.Weapons.Flamethrower.instance.weaponDef))
                     {
-                        weaponDef = Modules.Weapons.Flamethrower.instance.weaponDef;
-                    }
-                    else
-                    {
                         // start giving the rest of the unowned weapons
                         List<HunkWeaponDef> weaponPool = new List<HunkWeaponDef>();
                         weaponPool.Add(Modules.Weapons.Shotgun.instance.weaponDef);
                         weaponPool.Add(Modules.Weapons.Slugger.instance.weaponDef);
                         weaponPool.Add(Modules.Weapons.Magnum.instance.weaponDef);
                         weaponPool.Add(Modules.Weapons.Revolver.instance.weaponDef);
+                        weaponPool.Add(Modules.Weapons.Flamethrower.instance.weaponDef);
 
                         bool foundWeapon = false;
                         foreach (HunkWeaponDef i in weaponPool)
@@ -56,6 +53,10 @@ namespace HunkMod.Modules.Components
                             // destroy this if no more weanpos are vailbnelne
                             Destroy(this.gameObject);
                         }
+                    }
+                    else
+                    {
+                        weaponDef = Modules.Weapons.Flamethrower.instance.weaponDef;
                     }
                 }
                 else

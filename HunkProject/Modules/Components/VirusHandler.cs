@@ -28,13 +28,12 @@ namespace HunkMod.Modules.Components
                 this.characterModel = modelLocator.modelTransform.GetComponent<CharacterModel>();
             }
 
-            // in between tier 1 and tier 2 elite
-            this.characterBody.baseMaxHealth *= 2f;
-            this.characterBody.baseDamage *= 4f;
+            this.characterBody.baseMaxHealth *= 4f;
+            this.characterBody.baseDamage *= 1.5f;
 
             if (this.inventory)
             {
-                this.inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
+                //this.inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
                 this.inventory.GiveItem(RoR2Content.Items.TeleportWhenOob);
             }
 
@@ -69,7 +68,7 @@ namespace HunkMod.Modules.Components
                     return;
                 }
 
-                if (!this.characterBody.outOfCombat) this.mutationStopwatch = 60f;
+                if (!this.characterBody.outOfDanger) this.mutationStopwatch = 60f;
             }
 
             if (this.mutationStopwatch <= 0f)
@@ -92,7 +91,7 @@ namespace HunkMod.Modules.Components
 
         private void Mutate()
         {
-            this.mutationStopwatch = 60f;
+            this.mutationStopwatch = 30f;
 
             if (this.inventory)
             {
@@ -105,7 +104,11 @@ namespace HunkMod.Modules.Components
             this.characterBody.RecalculateStats();
             this.characterBody.healthComponent.HealFraction(1f, default(ProcChainMask));
 
-            //Util.PlaySound("sfx_hunk_virus_spawn", this.gameObject);
+            if (this.characterModel)
+            {
+                this.characterModel.transform.localScale *= 1.15f;
+            }
+            Util.PlaySound("sfx_hunk_injection", this.gameObject);
         }
     }
 }
