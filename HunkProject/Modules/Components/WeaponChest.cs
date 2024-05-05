@@ -36,6 +36,7 @@ namespace HunkMod.Modules.Components
                         weaponPool.Add(Modules.Weapons.Magnum.instance.weaponDef);
                         weaponPool.Add(Modules.Weapons.Revolver.instance.weaponDef);
                         weaponPool.Add(Modules.Weapons.Flamethrower.instance.weaponDef);
+                        weaponPool.Add(Modules.Weapons.GrenadeLauncher.instance.weaponDef);
 
                         bool foundWeapon = false;
                         foreach (HunkWeaponDef i in weaponPool)
@@ -56,7 +57,10 @@ namespace HunkMod.Modules.Components
                     }
                     else
                     {
-                        weaponDef = Modules.Weapons.Flamethrower.instance.weaponDef;
+                        if (MainPlugin.badaBingBadaBoom) weaponDef = Modules.Weapons.Flamethrower.instance.weaponDef;
+                        else weaponDef = Modules.Weapons.GrenadeLauncher.instance.weaponDef;
+
+                        MainPlugin.badaBingBadaBoom = !MainPlugin.badaBingBadaBoom;
                     }
                 }
                 else

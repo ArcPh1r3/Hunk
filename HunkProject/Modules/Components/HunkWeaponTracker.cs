@@ -163,9 +163,9 @@ namespace HunkMod.Modules.Components
                     },
                     new HunkWeaponData
                     {
-                        weaponDef = Modules.Weapons.RocketLauncher.instance.weaponDef,
-                        totalAmmo = Modules.Weapons.RocketLauncher.instance.magSize,
-                        currentAmmo = Modules.Weapons.RocketLauncher.instance.magSize
+                        weaponDef = Modules.Weapons.GrenadeLauncher.instance.weaponDef,
+                        totalAmmo = Modules.Weapons.GrenadeLauncher.instance.magSize,
+                        currentAmmo = Modules.Weapons.GrenadeLauncher.instance.magSize
                     }
                 };
 
@@ -176,7 +176,7 @@ namespace HunkMod.Modules.Components
                 this.AddWeaponItem(Modules.Weapons.Magnum.instance.weaponDef);
                 this.AddWeaponItem(Modules.Weapons.Revolver.instance.weaponDef);
                 this.AddWeaponItem(Modules.Weapons.Flamethrower.instance.weaponDef);
-                this.AddWeaponItem(Modules.Weapons.RocketLauncher.instance.weaponDef);
+                this.AddWeaponItem(Modules.Weapons.GrenadeLauncher.instance.weaponDef);
             }
             else
             {
