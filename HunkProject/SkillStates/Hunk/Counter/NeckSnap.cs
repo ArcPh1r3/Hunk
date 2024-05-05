@@ -29,6 +29,8 @@ namespace HunkMod.SkillStates.Hunk.Counter
             base.OnEnter();
             this.animator = this.GetModelAnimator();
             this.targetPos = this.target.transform.position;
+            this.lerpSpeed *= this.attackSpeedStat;
+            this.duration /= this.attackSpeedStat;
 
             if (!this.camParamsOverrideHandle.isValid) this.camParamsOverrideHandle = Modules.CameraParams.OverrideCameraParams(base.cameraTargetParams, HunkCameraParams.MELEE, 0.25f);
 
