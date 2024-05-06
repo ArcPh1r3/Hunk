@@ -63,6 +63,7 @@ namespace HunkMod.Modules.Survivors
         internal static Material miliMat;
 
         public static List<HunkWeaponDef> defaultWeaponPool = new List<HunkWeaponDef>();
+        public static List<HunkWeaponDef> spawnedWeaponList = new List<HunkWeaponDef>();
 
         //public static string stageBlacklist = "arena,artifactworld,bazaar,goldshores,limbo,moon,moon2,mysteryspace,outro,voidoutro,voidraid,voidstage";
         //public static List<string> blacklistedStageNames = new List<string>();
@@ -2217,6 +2218,8 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
         private static void SceneDirector_Start(On.RoR2.SceneDirector.orig_Start orig, SceneDirector self)
         {
             orig(self);
+
+            spawnedWeaponList = new List<HunkWeaponDef>();
 
             int hunkCount = Helpers.hunkCount;
 

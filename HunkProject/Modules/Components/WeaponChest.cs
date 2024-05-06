@@ -46,8 +46,9 @@ namespace HunkMod.Modules.Components
                         bool foundWeapon = false;
                         foreach (HunkWeaponDef i in weaponPool)
                         {
-                            if (!Modules.Helpers.HunkHasWeapon(i))
+                            if (!Modules.Helpers.HunkHasWeapon(i) && !Modules.Survivors.Hunk.spawnedWeaponList.Contains(i))
                             {
+                                Modules.Survivors.Hunk.spawnedWeaponList.Add(i);
                                 weaponDef = i;
                                 foundWeapon = true;
                                 break;
