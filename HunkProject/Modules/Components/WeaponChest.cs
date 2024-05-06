@@ -20,9 +20,14 @@ namespace HunkMod.Modules.Components
         private void InitPickup()
         {
             HunkWeaponDef weaponDef = Modules.Weapons.MUP.instance.weaponDef;
+            string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 
-            // im just gonna hard code this rn okay.
-            // just get it working and move on. it can be cleaned up later.
+            bool fuck = false;
+            if (sceneName == "goldshores") fuck = true;
+            if (sceneName == "mysteryspace") fuck = true;
+
+                // im just gonna hard code this rn okay.
+                // just get it working and move on. it can be cleaned up later.
             if (Modules.Helpers.HunkHasWeapon(Modules.Weapons.Shotgun.instance.weaponDef) || Modules.Helpers.HunkHasWeapon(Modules.Weapons.Slugger.instance.weaponDef))
             {
                 if (Modules.Helpers.HunkHasWeapon(Modules.Weapons.Magnum.instance.weaponDef) || Modules.Helpers.HunkHasWeapon(Modules.Weapons.Revolver.instance.weaponDef))
@@ -49,7 +54,7 @@ namespace HunkMod.Modules.Components
                             }
                         }
 
-                        if (!foundWeapon)
+                        if (!foundWeapon && !fuck)
                         {
                             // destroy this if no more weanpos are vailbnelne
                             Destroy(this.gameObject);
@@ -78,8 +83,6 @@ namespace HunkMod.Modules.Components
 
                 MainPlugin.badaBingBadaBoom = !MainPlugin.badaBingBadaBoom;
             }
-
-            string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 
             if (sceneName == "goldshores") weaponDef = Modules.Weapons.GoldenGun.instance.weaponDef;
             if (sceneName == "mysteryspace") weaponDef = Modules.Weapons.BlueRose.instance.weaponDef;

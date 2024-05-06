@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2573352419
+CRC: 1896755972
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 3ab54100d9675560cbcd0ca3618423b3
+    Hash: f6b2a4295d0360823d7ce65ad919e8a4
   TypeTreeHash:
     serializedVersion: 2
     Hash: 2a966d243f1377704da8802e250c5dc9
@@ -372,6 +372,7 @@ Assets:
 - Assets/Hunk/Icons/Weapon/texSMGIcon.png
 - Assets/Hunk/AmmoInteraction.prefab
 - Assets/Hunk/VFX/texMoons.png
+- Assets/Hunk/Icons/Skill/texOSPIcon.png
 - Assets/Hunk/Textures/AmmoBox/Bullet_holder_Diffuse.png
 - Assets/Hunk/HUD/WeaponRadial.prefab
 - Assets/Hunk/FBX/Animations/maskHunkAimYaw.mask
@@ -412,6 +413,7 @@ Assets:
 - Assets/Hunk/Textures/AmmoBox/9mm_ammo_box_REMAKE_Normal.jpg
 - Assets/Hunk/Weapons/mdlMagnumPickup.prefab
 - Assets/Hunk/Materials/matDiamond.mat
+- Assets/Hunk/Icons/Skill/texSwapIcon.png
 - Assets/Hunk/FBX/Claire Pistol.fbx
 - Assets/Hunk/FBX/Animations/Default/Reload.anim
 - Assets/Hunk/FBX/Shell.dae

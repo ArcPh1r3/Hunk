@@ -6,9 +6,9 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Flamethrower
 {
     public class Shoot : BaseHunkSkillState
     {
-        public static float damageCoefficient = 4f;
+        public static float damageCoefficient = 2f;
         public static float procCoefficient = 1f;
-        public static float baseDuration = 0.2f;
+        public static float baseDuration = 0.1f;
         public static float force = 5f;
         public static float recoil = 0.5f;
         public static float range = 50f;
@@ -26,7 +26,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Flamethrower
             if (this.hunk.flamethrowerLifetime <= 0f)
             {
                 this.startingUp = true;
-                this.duration = 0.2f;
+                this.duration = 0.2f / this.attackSpeedStat;
                 Util.PlaySound("sfx_hunk_flamethrower_start", this.gameObject);
             }
 

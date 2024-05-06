@@ -463,7 +463,7 @@ namespace HunkMod.Modules.Survivors
             skillLocator.passiveSkill.enabled = true;
             skillLocator.passiveSkill.skillNameToken = prefix + "_HUNK_BODY_PPASSIVE_NAME";
             skillLocator.passiveSkill.skillDescriptionToken = prefix + "_HUNK_BODY_PPASSIVE_DESCRIPTION";
-            skillLocator.passiveSkill.icon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texPPassiveIcon");
+            skillLocator.passiveSkill.icon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texOSPIcon");
 
             Hunk.reloadSkillDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
             {
@@ -691,7 +691,7 @@ namespace HunkMod.Modules.Survivors
                 skillName = prefix + "_HUNK_BODY_SPECIAL_SWAP_NAME",
                 skillNameToken = prefix + "_HUNK_BODY_SPECIAL_SWAP_NAME",
                 skillDescriptionToken = prefix + "_HUNK_BODY_SPECIAL_SWAP_DESCRIPTION",
-                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texPassiveIcon"),
+                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texSwapIcon"),
                 activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.SwapWeapon)),
                 activationStateMachineName = "Slide",
                 baseMaxStock = 1,
