@@ -43,6 +43,13 @@ namespace HunkMod.SkillStates.Hunk.Weapon.BlueRose
 
         private void Fire()
         {
+            if (this.hunk.ammo <= 0)
+            {
+                Util.PlaySound("sfx_hunk_gun_click", this.gameObject);
+                this.duration = 0.3f;
+                return;
+            }
+
             EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab, base.gameObject, this.muzzleString, false);
 
             if (this.isCrit) Util.PlaySound("sfx_hunk_revolver_shoot", base.gameObject);

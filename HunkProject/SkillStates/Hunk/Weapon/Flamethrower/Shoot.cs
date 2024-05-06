@@ -39,7 +39,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Flamethrower
                  if (!this.startingUp) this.Fire();
             }
 
-            this.PlayAnimation("Gesture, Override", "Shoot", "Shoot.playbackRate", 0.2f);
+            //this.PlayAnimation("Gesture, Override", "Shoot", "Shoot.playbackRate", 0.2f);
 
             if (!this.startingUp)
             {
