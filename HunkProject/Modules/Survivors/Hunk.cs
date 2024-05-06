@@ -2205,15 +2205,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
         {
             orig(self);
 
-            int hunkCount = 0;
-
-            foreach (var player in PlayerCharacterMasterController.instances)
-            {
-                if (player.networkUser.bodyIndexPreference == BodyCatalog.FindBodyIndex(bodyName))
-                {
-                    hunkCount++;
-                }
-            }
+            int hunkCount = Helpers.hunkCount;
 
             if (hunkCount > 0)
             {
@@ -2349,7 +2341,10 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                         doSpawns = false;
                         break;
                     case "goldshores":
-                        doSpawns = false;
+                        pos = new Vector3(22.0251f, -35.045f, 92.92287f);
+                        rot = Quaternion.Euler(0, 195f, 0);
+                        pos2 = new Vector3(0f, 8000f, 0f);
+                        rot2 = Quaternion.Euler(0, 10, 3);
                         break;
                     case "limbo":
                         doSpawns = false;
@@ -2361,7 +2356,10 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                         doSpawns = false;
                         break;
                     case "mysteryspace":
-                        doSpawns = false;
+                        pos = new Vector3(22.0251f, -35.045f, 92.92287f);
+                        rot = Quaternion.Euler(0, 195f, 0);
+                        pos2 = new Vector3(0f, 8000f, 0f);
+                        rot2 = Quaternion.Euler(0, 10, 3);
                         break;
                     case "voidraid":
                         doSpawns = false;

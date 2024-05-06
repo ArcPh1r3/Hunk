@@ -29,10 +29,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Revolver
 
             this.isCrit = base.RollCrit();
 
-            if (base.isAuthority)
-            {
-                this.Fire();
-            }
+            this.Fire();
 
             this.PlayAnimation("Gesture, Override", "ShootMagnum", "Shoot.playbackRate", this.duration * 1.5f);
 

@@ -79,6 +79,11 @@ namespace HunkMod.Modules.Components
                 MainPlugin.badaBingBadaBoom = !MainPlugin.badaBingBadaBoom;
             }
 
+            string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+
+            if (sceneName == "goldshores") weaponDef = Modules.Weapons.GoldenGun.instance.weaponDef;
+            if (sceneName == "mysteryspace") weaponDef = Modules.Weapons.BlueRose.instance.weaponDef;
+
             gunPickup.weaponDef = weaponDef;
 
             // offset the shotgun a little
@@ -118,7 +123,7 @@ namespace HunkMod.Modules.Components
             var h = GetComponent<Highlight>();
             h.targetRenderer.transform.parent.Find("Hinge/Lock/OnLight").gameObject.SetActive(false);
 
-            if (Run.instance.stageClearCount <= 0) chestType = 2;
+            if (Run.instance.stageClearCount <= 0 || UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "goldshores") chestType = 2;
 
             if (purchaseInteraction != null)
             {

@@ -109,6 +109,7 @@ namespace HunkMod
             new Modules.Weapons.Flamethrower().Init();
             new Modules.Weapons.GrenadeLauncher().Init();
             new Modules.Weapons.GoldenGun().Init();
+            new Modules.Weapons.BlueRose().Init();
         }
 
         private void Hook()

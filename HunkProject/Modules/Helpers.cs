@@ -51,16 +51,30 @@ namespace HunkMod.Modules
         {
             get
             {
-                bool isHunkOnPlayerTeam = false;
-                foreach (CharacterBody i in CharacterBody.readOnlyInstancesList)
+                foreach (var player in PlayerCharacterMasterController.instances)
                 {
-                    if (i && i.teamComponent && i.teamComponent.teamIndex == TeamIndex.Player && i.baseNameToken == Modules.Survivors.Hunk.bodyNameToken)
+                    if (player.networkUser.bodyIndexPreference == BodyCatalog.FindBodyIndex(Modules.Survivors.Hunk.bodyName))
                     {
-                        isHunkOnPlayerTeam = true;
-                        break;
+                        return true;
                     }
                 }
-                return isHunkOnPlayerTeam;
+                return false;
+            }
+        }
+
+        public static int hunkCount
+        {
+            get
+            {
+                int i = 0;
+                foreach (var player in PlayerCharacterMasterController.instances)
+                {
+                    if (player.networkUser.bodyIndexPreference == BodyCatalog.FindBodyIndex(Modules.Survivors.Hunk.bodyName))
+                    {
+                        i++;
+                    }
+                }
+                return i;
             }
         }
 
