@@ -1602,6 +1602,9 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             // set objective bullshit..
             On.RoR2.UI.ObjectivePanelController.GetObjectiveSources += ObjectivePanelController_GetObjectiveSources;
 
+            // spawn rocket launcher on mithrix last phase
+            On.EntityStates.BrotherMonster.UltExitState.OnEnter += UltExitState_OnEnter;
+
             // if i speak i am in trouble
             On.RoR2.UI.MainMenu.BaseMainMenuScreen.Update += BaseMainMenuScreen_Update;
             // 🙈 🙉 🙊
@@ -1611,6 +1614,16 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             //On.EntityStates.GlobalSkills.LunarNeedle.ChargeLunarSecondary.PlayChargeAnimation += PlayChargeLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarNeedle.ThrowLunarSecondary.PlayThrowAnimation += PlayThrowLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += PlayRuinAnimation;
+        }
+
+        private static void UltExitState_OnEnter(On.EntityStates.BrotherMonster.UltExitState.orig_OnEnter orig, EntityStates.BrotherMonster.UltExitState self)
+        {
+            orig(self);
+
+            foreach (HunkController i in MonoBehaviour.FindObjectsOfType<HunkController>())
+            {
+                if (i) i.SpawnRocketLauncher();
+            }
         }
 
         private static void ObjectivePanelController_GetObjectiveSources(On.RoR2.UI.ObjectivePanelController.orig_GetObjectiveSources orig, ObjectivePanelController self, CharacterMaster master, List<ObjectivePanelController.ObjectiveSourceDescriptor> output)
@@ -2317,16 +2330,22 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                         break;
 
                     //WHY NOT???????????
+                    // you were breaking out of the for loop, but the switch statement wasn't broken
+                    // so the two random chests were still being spawned
+                    // it's fixed but i'll leave this commented out- putting this back in is your call
                     /*default:
+                        bool isBlacklisted = false;
                         foreach (string stage in blacklistedStageNames)
                         {
                             if (currStageName == stage)
                             {
                                 doSpawns = false;
+                                isBlacklisted = true;
                                 break;
                             }
                         }
 
+                        if (isBlacklisted) break;
                         SpawnChests();
                         SpawnChests();
                         break;*/
@@ -2341,8 +2360,8 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                         doSpawns = false;
                         break;
                     case "goldshores":
-                        pos = new Vector3(22.0251f, -35.045f, 92.92287f);
-                        rot = Quaternion.Euler(0, 195f, 0);
+                        pos = new Vector3(-11.2222f, 47.6f, -71.46585f);
+                        rot = Quaternion.Euler(0, 170f, 0);
                         pos2 = new Vector3(0f, 8000f, 0f);
                         rot2 = Quaternion.Euler(0, 10, 3);
                         break;

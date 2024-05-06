@@ -32,7 +32,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.BlueRose
 
             this.Fire();
 
-            this.PlayAnimation("Gesture, Override", "ShootMagnum", "Shoot.playbackRate", this.duration * 1.5f);
+            this.PlayAnimation("Gesture, Override", "ShootMagnum", "Shoot.playbackRate", this.duration * 0.35f);
 
             if (this.hunk)
             {

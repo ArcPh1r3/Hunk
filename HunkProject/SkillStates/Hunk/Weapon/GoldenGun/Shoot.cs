@@ -6,7 +6,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.GoldenGun
 {
     public class Shoot : BaseHunkSkillState
     {
-        public static float damageCoefficient = 9999f;
+        public static float damageCoefficient = 999f;
         public static float procCoefficient = 5f;
         public static float baseDuration = 0.8f;
         public static float force = 15000f;

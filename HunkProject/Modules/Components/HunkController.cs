@@ -949,5 +949,11 @@ namespace HunkMod.Modules.Components
             Xoroshiro128Plus rng = new Xoroshiro128Plus(Run.instance.seed);
             DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(Survivors.Hunk.terminalInteractableCard, new DirectorPlacementRule { placementMode = DirectorPlacementRule.PlacementMode.Random }, rng));
         }
+
+        public void SpawnRocketLauncher()
+        {
+            Xoroshiro128Plus rng = new Xoroshiro128Plus(Run.instance.seed);
+            DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(Survivors.Hunk.terminalInteractableCard, new DirectorPlacementRule { placementMode = DirectorPlacementRule.PlacementMode.NearestNode }, rng));
+        }
     }
 }

@@ -24,7 +24,7 @@ namespace HunkMod.Modules.Weapons
         public override float accuracyFillValue => 0.8f;
 
         public override SkillDef primarySkillDef => Modules.Skills.CreatePrimarySkillDef(
-new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Weapon.Revolver.Shoot)),
+new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Weapon.BlueRose.Shoot)),
 "Weapon",
 "ROB_HUNK_BODY_SHOOT_REVOLVER_NAME",
 "ROB_HUNK_BODY_SHOOT_REVOLVER_DESCRIPTION",
