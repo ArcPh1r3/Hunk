@@ -30,7 +30,7 @@ namespace HunkMod.Modules.Components
             }
 
             this.characterBody.baseMaxHealth *= 4f;
-            this.characterBody.baseDamage *= 1.5f;
+            this.characterBody.baseDamage *= 1.25f;
 
             if (this.inventory)
             {
@@ -53,13 +53,13 @@ namespace HunkMod.Modules.Components
 
         private void OnDisable()
         {
-            this.TrySpawn();
+            //this.TrySpawn();
             Modules.Survivors.Hunk.virusObjectiveObjects.Remove(this.gameObject);
         }
 
         private void OnDestroy()
         {
-            this.TrySpawn();
+            //this.TrySpawn();
             AkSoundEngine.StopPlayingID(this.soundPlayID);
         }
 
@@ -73,6 +73,20 @@ namespace HunkMod.Modules.Components
             summon.summonerBodyObject = this.gameObject;
             var master = summon.Perform();
             this.hasSpawnedCarrier = true;
+        }
+
+        private void Update()
+        {
+            if (this.characterBody)
+            {
+                if (this.characterBody.healthComponent && !this.characterBody.healthComponent.alive)
+                {
+                    this.TrySpawn();
+
+                    Destroy(this);
+                    return;
+                }
+            }
         }
 
         private void FixedUpdate()
@@ -89,7 +103,7 @@ namespace HunkMod.Modules.Components
                     return;
                 }
 
-                if (!this.characterBody.outOfDanger) this.mutationStopwatch = 60f;
+                if (!this.characterBody.outOfDanger) this.mutationStopwatch = 40f;
             }
 
             if (this.mutationStopwatch <= 0f)
@@ -112,14 +126,23 @@ namespace HunkMod.Modules.Components
 
         private void Mutate()
         {
-            this.mutationStopwatch = 30f;
+            this.mutationStopwatch = 20f;
 
             if (this.inventory)
             {
                 this.inventory.GiveItem(Modules.Survivors.Hunk.gVirus);
                 this.inventory.GiveItem(RoR2Content.Items.BoostHp);
 
-                if (this.inventory.GetItemCount(Modules.Survivors.Hunk.gVirus) >= 3) this.inventory.GiveItem(RoR2Content.Items.Medkit);
+                if (this.inventory.GetItemCount(Modules.Survivors.Hunk.gVirus) >= 3)
+                {
+                    this.inventory.GiveItem(Modules.Survivors.Hunk.gVirus2);
+                }
+
+                if (this.inventory.GetItemCount(Modules.Survivors.Hunk.gVirus) >= 5)
+                {
+                    this.inventory.GiveItem(Modules.Survivors.Hunk.gVirusFinal);
+                    this.inventory.GiveItem(RoR2Content.Items.Medkit);
+                }
             }
 
             this.characterBody.RecalculateStats();
@@ -127,7 +150,7 @@ namespace HunkMod.Modules.Components
 
             if (this.characterModel)
             {
-                this.characterModel.transform.localScale *= 1.15f;
+                this.characterModel.transform.localScale *= 1.1f;
             }
             Util.PlaySound("sfx_hunk_injection", this.gameObject);
         }

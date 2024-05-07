@@ -672,7 +672,10 @@ namespace HunkMod.Modules.Components
                 this.weaponRenderer.gameObject.SetActive(false);
                 if (this.heldWeaponInstance) Destroy(this.heldWeaponInstance);
 
-                this.heldWeaponInstance = GameObject.Instantiate(this.weaponDef.modelPrefab);
+                GameObject modelPrefab = this.weaponDef.modelPrefab;
+                // #swuff
+                // if your current skin has an override just swap the prefab out here and done
+                this.heldWeaponInstance = GameObject.Instantiate(modelPrefab);
                 this.heldWeaponInstance.transform.parent = this.childLocator.FindChild("Weapon");
                 this.heldWeaponInstance.transform.localPosition = Vector3.zero;
                 this.heldWeaponInstance.transform.localRotation = Quaternion.identity;
@@ -680,6 +683,7 @@ namespace HunkMod.Modules.Components
             }
             else
             {
+                // this just defaults to an smg if your wepaon doesn't have a model
                 this.weaponRenderer.gameObject.SetActive(true);
                 if (this.heldWeaponInstance) Destroy(this.heldWeaponInstance);
             }
@@ -742,7 +746,11 @@ namespace HunkMod.Modules.Components
                 if (this.weaponTracker.lastEquippedIndex == this.weaponTracker.equippedIndex) return;
 
                 this.backWeaponDef = this.weaponTracker.weaponData[this.weaponTracker.lastEquippedIndex].weaponDef;
-                this.backWeaponInstance = GameObject.Instantiate(this.backWeaponDef.modelPrefab);
+
+                GameObject modelPrefab = this.backWeaponDef.modelPrefab;
+                // #swuff
+                // same thing here. replace with skin override
+                this.backWeaponInstance = GameObject.Instantiate(modelPrefab);
                 this.backWeaponInstance.transform.parent = this.childLocator.FindChild("BackWeapon");
                 this.backWeaponInstance.transform.localPosition = new Vector3(5f, 0f, 0f);
                 this.backWeaponInstance.transform.localRotation = Quaternion.Euler(new Vector3(345f, 90f, 15f));

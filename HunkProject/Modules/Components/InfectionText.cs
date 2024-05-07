@@ -13,7 +13,7 @@ namespace HunkMod.Modules.Components
         {
             if (this.target && this.text)
             {
-                if (this.target.inventory)
+                if (this.target.inventory && this.target.inventory.GetItemCount(Modules.Survivors.Hunk.gVirus) > 0)
                 {
                     this.text.text = this.target.inventory.GetItemCount(Modules.Survivors.Hunk.gVirus).ToString();
                 }

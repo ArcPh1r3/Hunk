@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2429292472
+CRC: 2243314722
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 49956bf96c9596f2c515c24542609f93
+    Hash: 1059ffbd9b42ac3ecbdd3a1dfcbb2759
   TypeTreeHash:
     serializedVersion: 2
     Hash: 5f16f7b551fafcce7a6a6bb4023696c9
@@ -166,6 +166,7 @@ Assets:
 - Assets/Hunk/Textures/DisplayCase/M_Weapon_Case_albedo.jpeg
 - Assets/Hunk/Animations/animHunk.controller
 - Assets/Hunk/Materials/matKeyCardSpadeOld.mat
+- Assets/Hunk/Animations/VirusEye/animVirusEye.controller
 - Assets/Hunk/Animations/Default/AimYaw.anim
 - Assets/Hunk/VFX/matMoons.mat
 - Assets/Hunk/mdlHunk.prefab
@@ -204,6 +205,7 @@ Assets:
 - Assets/Hunk/Textures/Revolver/Pistol_D.jpg
 - Assets/Hunk/Animations/Default/Descend.anim
 - Assets/Hunk/Textures/Keycard/texKeycardHeart.png
+- Assets/Hunk/Items/mdlVirusEye.prefab
 - Assets/Hunk/Icons/Item/texKeycardClubIcon.png
 - Assets/Hunk/Animations/Pistol/RunB.anim
 - Assets/Hunk/Animations/Default/Sprint.anim
@@ -243,6 +245,7 @@ Assets:
 - Assets/Hunk/mdlDisplayCase.prefab
 - Assets/Hunk/Icons/Item/texKeycardHeartIcon.png
 - Assets/Hunk/Textures/body_n.png
+- Assets/Hunk/Animations/VirusEye/Idle.anim
 - Assets/Hunk/Materials/matWeaponCase.mat
 - Assets/Hunk/Animations/Default/FreefallB.anim
 - Assets/Hunk/VFX/HunkMissileGhost.prefab
