@@ -33,7 +33,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
             this.swingEffectPrefab = Modules.Assets.kickSwingEffect;
             this.hitSoundString = "";
             this.hitEffectPrefab = Modules.Assets.kickImpactEffect;
-            this.impactSound = Modules.Assets.kickImpactSoundDef.index;
+            this.impactSound = Modules.Assets.punchImpactSoundDef.index;
 
             this.damageType = DamageType.Stun1s | DamageType.ClayGoo;
             this.muzzleString = "PunchSwingMuzzle";
@@ -104,6 +104,8 @@ namespace HunkMod.SkillStates.Hunk.Counter
         protected override void TriggerHitStop()
         {
             base.TriggerHitStop();
+
+            this.hunk.TriggerCounter();
 
             if (NetworkServer.active) this.characterBody.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, this.hitStopDuration);
 

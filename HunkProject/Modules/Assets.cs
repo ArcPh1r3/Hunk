@@ -29,6 +29,7 @@ namespace HunkMod.Modules
 
         internal static NetworkSoundEventDef knifeImpactSoundDef;
         internal static NetworkSoundEventDef kickImpactSoundDef;
+        internal static NetworkSoundEventDef punchImpactSoundDef;
 
         public static GameObject headshotEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Junk/Common/VFX/WeakPointProcEffect.prefab").WaitForCompletion();
         public static GameObject virusPositionIndicator;
@@ -119,6 +120,7 @@ namespace HunkMod.Modules
 
             knifeImpactSoundDef = CreateNetworkSoundEventDef("sfx_hunk_knife_hit");
             kickImpactSoundDef = CreateNetworkSoundEventDef("sfx_hunk_kick_impact");
+            punchImpactSoundDef = CreateNetworkSoundEventDef("sfx_hunk_punch_impact");
 
             virusPositionIndicator = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/BossPositionIndicator.prefab").WaitForCompletion().InstantiateClone("HunkVirusPositionIndicator", false);
             foreach (SpriteRenderer i in virusPositionIndicator.GetComponentsInChildren<SpriteRenderer>())

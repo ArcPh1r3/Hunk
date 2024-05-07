@@ -15,7 +15,7 @@ namespace HunkMod.Modules.Weapons
         public override float reloadDuration => 1.2f;
         public override string ammoName => "M19 Rounds";
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlM19");
-        public override HunkWeaponDef.AnimationSet animationSet => HunkWeaponDef.AnimationSet.Pistol;
+        public override HunkWeaponDef.AnimationSet animationSet => HunkWeaponDef.AnimationSet.PistolAlt;
         public override bool storedOnBack => false;
         public override float damageFillValue => 0.5f;
         public override float rangefillValue => 0.7f;

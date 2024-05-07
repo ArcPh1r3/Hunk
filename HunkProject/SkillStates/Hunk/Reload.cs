@@ -41,7 +41,7 @@ namespace HunkMod.SkillStates.Hunk
                     return;
                 }
 
-                if (this.hunk.weaponDef.animationSet == HunkWeaponDef.AnimationSet.Pistol)
+                if (this.hunk.weaponDef.animationSet == HunkWeaponDef.AnimationSet.Pistol || this.hunk.weaponDef.animationSet == HunkWeaponDef.AnimationSet.PistolAlt)
                 {
                     this.animString = "ReloadPistol";
                     base.PlayCrossfade("Gesture, Override", this.animString, "Reload.playbackRate", this.duration, 0.1f);
@@ -50,6 +50,7 @@ namespace HunkMod.SkillStates.Hunk
                 }
                 else
                 {
+                    if (this.hunk.weaponDef.nameToken.Contains("GRENADE")) this.animString = "ReloadSingle";
                     base.PlayCrossfade("Gesture, Override", this.animString, "Reload.playbackRate", this.duration, 0.1f);
                     this.success = true;
                     Util.PlaySound("sfx_hunk_smg_reload_01", this.gameObject);

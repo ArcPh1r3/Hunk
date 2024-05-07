@@ -64,6 +64,7 @@ namespace HunkMod.Modules.Survivors
 
         public static List<HunkWeaponDef> defaultWeaponPool = new List<HunkWeaponDef>();
         public static List<HunkWeaponDef> spawnedWeaponList = new List<HunkWeaponDef>();
+        public static List<GameObject> virusObjectiveObjects = new List<GameObject>();
 
         //public static string stageBlacklist = "arena,artifactworld,bazaar,goldshores,limbo,moon,moon2,mysteryspace,outro,voidoutro,voidraid,voidstage";
         //public static List<string> blacklistedStageNames = new List<string>();
@@ -881,6 +882,8 @@ namespace HunkMod.Modules.Survivors
             // uhh
             Modules.ItemDisplays.PopulateDisplays();
 
+            //if (!Modules.Config.enableItemDisplays) return;
+
             ReplaceItemDisplay(RoR2Content.Items.SecondarySkillMagazine, new ItemDisplayRule[]
             {
                 new ItemDisplayRule
@@ -903,6 +906,48 @@ localScale = new Vector3(0.06F, 0.06F, 0.06F)
                     followerPrefab = ItemDisplays.LoadDisplay("DisplayGlasses"),
                     limbMask = LimbFlags.None,
 childName = "Head",
+localPos = new Vector3(-0.00025F, 6.63616F, 13.36325F),
+localAngles = new Vector3(0F, 0F, 0F),
+localScale = new Vector3(20.20473F, 21.7767F, 19.04527F)
+                }
+});
+
+            ReplaceItemDisplay(RoR2Content.Items.BleedOnHit, new ItemDisplayRule[]
+{
+                new ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = ItemDisplays.LoadDisplay("DisplayTriTip"),
+                    limbMask = LimbFlags.None,
+childName = "Chest",
+localPos = new Vector3(-19.87867F, 16.71131F, -12.58668F),
+localAngles = new Vector3(20.06403F, 44.21899F, 305.6593F),
+localScale = new Vector3(26.10918F, 26.1091F, 26.10918F)
+                }
+});
+
+            ReplaceItemDisplay(DLC1Content.Items.BleedOnHitVoid, new ItemDisplayRule[]
+{
+                new ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = ItemDisplays.LoadDisplay("DisplayTriTipVoid"),
+                    limbMask = LimbFlags.None,
+childName = "Head",
+localPos = new Vector3(-5.34769F, 16.4988F, -8.31364F),
+localAngles = new Vector3(342.8535F, 243.5605F, 253.8596F),
+localScale = new Vector3(15.58726F, 15.58725F, 15.58725F)
+                }
+});
+
+            ReplaceItemDisplay(RoR2Content.Items.ArmorReductionOnHit, new ItemDisplayRule[]
+{
+                new ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = ItemDisplays.LoadDisplay("DisplayWarhammer"),
+                    limbMask = LimbFlags.None,
+childName = "Head",
 localPos = new Vector3(0.0006F, 0.25054F, 0.04672F),
 localAngles = new Vector3(314.7648F, 358.1459F, 0.48047F),
 localScale = new Vector3(0.30902F, 0.09537F, 0.30934F)
@@ -916,10 +961,38 @@ localScale = new Vector3(0.30902F, 0.09537F, 0.30934F)
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemDisplays.LoadDisplay("DisplayWolfPelt"),
                     limbMask = LimbFlags.None,
-childName = "Head",
-localPos = new Vector3(0F, 0.18766F, -0.11041F),
-localAngles = new Vector3(302.566F, 0F, 0F),
-localScale = new Vector3(0.47332F, 0.47332F, 0.47332F)
+childName = "Chest",
+localPos = new Vector3(0.04472F, 26.87948F, -11.56151F),
+localAngles = new Vector3(21.51934F, 178.8835F, 359.2931F),
+localScale = new Vector3(23.00528F, 23.00528F, 23.00528F)
+                }
+});
+
+            ReplaceItemDisplay(RoR2Content.Items.Behemoth, new ItemDisplayRule[]
+{
+                new ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = ItemDisplays.LoadDisplay("DisplayBehemoth"),
+                    limbMask = LimbFlags.None,
+childName = "Chest",
+localPos = new Vector3(7.21928F, 30.64078F, -11.64861F),
+localAngles = new Vector3(330.8196F, 60.65011F, 22.1571F),
+localScale = new Vector3(7.26354F, 7.26354F, 7.26354F)
+                }
+});
+
+            ReplaceItemDisplay(RoR2Content.Items.Bandolier, new ItemDisplayRule[]
+{
+                new ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = ItemDisplays.LoadDisplay("DisplayBandolier"),
+                    limbMask = LimbFlags.None,
+childName = "Chest",
+localPos = new Vector3(0.04472F, 26.87948F, -11.56151F),
+localAngles = new Vector3(21.51934F, 178.8835F, 359.2931F),
+localScale = new Vector3(23.00528F, 23.00528F, 23.00528F)
                 }
 });
 
@@ -931,9 +1004,9 @@ localScale = new Vector3(0.47332F, 0.47332F, 0.47332F)
                     followerPrefab = ItemDisplays.LoadDisplay("DisplayGlassesVoid"),
                     limbMask = LimbFlags.None,
 childName = "Head",
-localPos = new Vector3(0F, 0.1555F, 0.11598F),
-localAngles = new Vector3(340.0668F, 0F, 0F),
-localScale = new Vector3(0.30387F, 0.39468F, 0.46147F)
+localPos = new Vector3(-0.00061F, 4.03076F, 13.69691F),
+localAngles = new Vector3(0F, 0F, 0F),
+localScale = new Vector3(19.83379F, 28.175F, 28.175F)
                 }
 });
 
@@ -1636,16 +1709,14 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                 HunkWeaponTracker hunk = master.GetComponent<HunkWeaponTracker>();
                 if (hunk)
                 {
-                    switch (hunk.missionStep)
+                    if (Hunk.virusObjectiveObjects.Count > 0)
                     {
-                        case 1:
-                            output.Add(new ObjectivePanelController.ObjectiveSourceDescriptor
-                            {
-                                source = master,
-                                master = master,
-                                objectiveType = typeof(Modules.Objectives.KillVirus)
-                            });
-                            break;
+                        output.Add(new ObjectivePanelController.ObjectiveSourceDescriptor
+                        {
+                            source = master,
+                            master = master,
+                            objectiveType = typeof(Modules.Objectives.KillVirus)
+                        });
                     }
 
                     if (master.inventory.GetItemCount(Hunk.gVirusSample) > 0)
@@ -1820,7 +1891,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
         {
             orig(self);
 
-            if (self && self.secondary.baseSkill.skillNameToken == MainPlugin.developerPrefix + "_HUNK_BODY_SECONDARY_AIM_NAME")
+            if (self && self.secondary && self.secondary.baseSkill && self.secondary.baseSkill.skillNameToken == MainPlugin.developerPrefix + "_HUNK_BODY_SECONDARY_AIM_NAME")
             {
                 HunkController hunk = self.GetComponent<HunkController>();
                 if (hunk)

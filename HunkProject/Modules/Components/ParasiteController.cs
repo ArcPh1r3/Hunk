@@ -30,5 +30,15 @@ namespace HunkMod.Modules.Components
                 }
             }
         }*/
+        private void OnEnable()
+        {
+            Modules.Survivors.Hunk.virusObjectiveObjects.Add(this.gameObject);
+        }
+
+        private void OnDisable()
+        {
+            Modules.Survivors.Hunk.virusObjectiveObjects.Remove(this.gameObject);
+        }
+
     }
 }

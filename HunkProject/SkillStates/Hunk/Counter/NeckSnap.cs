@@ -150,6 +150,8 @@ namespace HunkMod.SkillStates.Hunk.Counter
 
                     this.hunk.iFrames = 0f;
 
+                    this.hunk.TriggerCounter();
+
                     if (NetworkServer.active)
                     {
                         this.target.gameObject.AddComponent<Modules.Components.HunkKnifeTracker>();

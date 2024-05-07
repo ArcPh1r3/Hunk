@@ -71,6 +71,7 @@ namespace HunkMod.Modules.Components
         public float ammoKillTimer = 0f;
         private ParticleSystem speedLines;
         private Animator dodgeFlash;
+        private Animator counterFlash;
         private GameObject emptyCrosshair = Modules.Assets.LoadCrosshair("Bad");
         private bool isOut;
         private CrosshairUtils.OverrideRequest crosshairOverrideRequest;
@@ -384,6 +385,17 @@ namespace HunkMod.Modules.Components
                     rect.localPosition = Vector3.zero;
                 }
 
+                if (!this.counterFlash)
+                {
+                    this.counterFlash = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("CounterFlash")).GetComponent<Animator>();
+                    this.counterFlash.transform.parent = this.cameraController.hud.mainContainer.transform;
+                    this.counterFlash.gameObject.SetActive(false);
+
+                    RectTransform rect = this.counterFlash.GetComponent<RectTransform>();
+                    rect.sizeDelta = Vector2.one;
+                    rect.localPosition = Vector3.zero;
+                }
+
                 if (!this.speedLines)
                 {
                     this.speedLines = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("SpeedLines")).GetComponent<ParticleSystem>();
@@ -438,6 +450,15 @@ namespace HunkMod.Modules.Components
             {
                 this.dodgeFlash.gameObject.SetActive(false);
                 this.dodgeFlash.gameObject.SetActive(true);
+            }
+        }
+
+        public void TriggerCounter()
+        {
+            if (this.counterFlash)
+            {
+                this.counterFlash.gameObject.SetActive(false);
+                this.counterFlash.gameObject.SetActive(true);
             }
         }
 
@@ -671,6 +692,10 @@ namespace HunkMod.Modules.Components
             this.ToggleLayer("Gesture (Pistol)", false);
             this.ToggleLayer("FullBody (Pistol)", false);
 
+            this.ToggleLayer("Body (Pistol2)", false);
+            this.ToggleLayer("Gesture (Pistol2)", false);
+            this.ToggleLayer("FullBody (Pistol2)", false);
+
             this.ToggleLayer("Body (Rocket)", false);
             this.ToggleLayer("Gesture (Rocket)", false);
             this.ToggleLayer("FullBody (Rocket)", false);
@@ -681,6 +706,11 @@ namespace HunkMod.Modules.Components
                     this.ToggleLayer("Body (Pistol)", true);
                     this.ToggleLayer("Gesture (Pistol)", true);
                     this.ToggleLayer("FullBody (Pistol)", true);
+                    break;
+                case HunkWeaponDef.AnimationSet.PistolAlt:
+                    this.ToggleLayer("Body (Pistol2)", true);
+                    this.ToggleLayer("Gesture (Pistol2)", true);
+                    this.ToggleLayer("FullBody (Pistol2)", true);
                     break;
                 case HunkWeaponDef.AnimationSet.Rocket:
                     this.ToggleLayer("Body (Rocket)", true);

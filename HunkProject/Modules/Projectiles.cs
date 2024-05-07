@@ -1,14 +1,9 @@
 ﻿using R2API;
-using Rewired.ComponentControls.Effects;
 using RoR2;
 using RoR2.Projectile;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
-using UnityEngine.Rendering.PostProcessing;
 
 namespace HunkMod.Modules
 {
@@ -17,14 +12,17 @@ namespace HunkMod.Modules
         public static GameObject rocketProjectilePrefab;
         public static GameObject bazookaProjectilePrefab;
         public static GameObject missileProjectilePrefab;
+        public static GameObject grenadeProjectilePrefab;
 
         internal static void RegisterProjectiles()
         {
             rocketProjectilePrefab = CreateRocket(false, "HunkRocketProjectile", "HunkRocketGhost", "HunkRocketGhost");
             bazookaProjectilePrefab = CreateRocket(true, "HunkBazookaProjectile", "HunkBazookaGhost", "HunkRocketGhost");
             missileProjectilePrefab = CreateRocket(false, "HunkMissileProjectile", "HunkMissileGhost", "HunkMissileGhost");
+            grenadeProjectilePrefab = CreateRocket(false, "HunkGrenadeProjectile", "HunkGrenadeGhost", "HunkGrenadehost");
 
             rocketProjectilePrefab.GetComponent<ProjectileDamage>().damageType = DamageType.IgniteOnHit;
+            grenadeProjectilePrefab.GetComponent<ProjectileDamage>().damageType = DamageType.IgniteOnHit;
             bazookaProjectilePrefab.GetComponent<ProjectileImpactExplosion>().falloffModel = BlastAttack.FalloffModel.SweetSpot;
         }
 
@@ -56,7 +54,9 @@ namespace HunkMod.Modules
                 ghost.name = ghostName;
                 ghost.transform.GetChild(0).Find("Smoke").gameObject.AddComponent<Modules.Components.DetachOnDestroy>();
                 ghost.transform.GetChild(0).Find("Smoke").GetComponent<ParticleSystemRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/VFX/matDustDirectional.mat").WaitForCompletion();
-                ghost.transform.GetChild(0).Find("Flame").GetComponent<ParticleSystemRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Base/Golem/matVFXFlame1.mat").WaitForCompletion();
+                
+                if (ghost.transform.GetChild(0).Find("Flame"))
+                    ghost.transform.GetChild(0).Find("Flame").GetComponent<ParticleSystemRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Base/Golem/matVFXFlame1.mat").WaitForCompletion();
 
                 rocketController.ghostPrefab = ghost;
                 rocketController.startSound = "";

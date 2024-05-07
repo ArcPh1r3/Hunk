@@ -7,7 +7,7 @@ namespace HunkMod.Modules.Objectives
 	{
 		public KillVirus()
 		{
-			this.baseToken = "Neutralize the <color=#" + Helpers.voidItemHex + ">G-Virus" + Helpers.colorSuffix + " and obtain a sample";
+			this.baseToken = "Neutralize the <color=#" + Helpers.voidItemHex + ">G-Virus" + Helpers.colorSuffix;
 		}
 
 		public override string GenerateString()

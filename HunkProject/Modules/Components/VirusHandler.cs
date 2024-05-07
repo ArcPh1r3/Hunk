@@ -15,6 +15,7 @@ namespace HunkMod.Modules.Components
         private CharacterBody characterBody;
         private CharacterMaster characterMaster;
         private Inventory inventory;
+        private bool hasSpawnedCarrier;
         private uint soundPlayID;
 
         private void Awake()
@@ -45,9 +46,33 @@ namespace HunkMod.Modules.Components
             if (NetworkServer.active) this.characterBody.AddBuff(Modules.Survivors.Hunk.infectedBuff);
         }
 
+        private void OnEnable()
+        {
+            Modules.Survivors.Hunk.virusObjectiveObjects.Add(this.gameObject);
+        }
+
+        private void OnDisable()
+        {
+            this.TrySpawn();
+            Modules.Survivors.Hunk.virusObjectiveObjects.Remove(this.gameObject);
+        }
+
         private void OnDestroy()
         {
+            this.TrySpawn();
             AkSoundEngine.StopPlayingID(this.soundPlayID);
+        }
+
+        private void TrySpawn()
+        {
+            if (this.hasSpawnedCarrier) return;
+
+            var summon = new MasterSummon();
+            summon.position = this.transform.position + (Vector3.up * 2);
+            summon.masterPrefab = Modules.Enemies.Parasite.characterMaster;
+            summon.summonerBodyObject = this.gameObject;
+            var master = summon.Perform();
+            this.hasSpawnedCarrier = true;
         }
 
         private void FixedUpdate()
@@ -58,11 +83,7 @@ namespace HunkMod.Modules.Components
             {
                 if (this.characterBody.healthComponent && !this.characterBody.healthComponent.alive)
                 {
-                    var summon = new MasterSummon();
-                    summon.position = this.transform.position + (Vector3.up * 2);
-                    summon.masterPrefab = Modules.Enemies.Parasite.characterMaster;
-                    summon.summonerBodyObject = this.gameObject;
-                    var master = summon.Perform();
+                    this.TrySpawn();
 
                     Destroy(this);
                     return;

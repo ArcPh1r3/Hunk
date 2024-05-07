@@ -2,8 +2,6 @@
 using EntityStates;
 using HunkMod.SkillStates.BaseStates;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.Networking;
 
 namespace HunkMod.SkillStates.Hunk.Counter
 {
@@ -105,6 +103,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
         {
             base.TriggerHitStop();
 
+            this.hunk.TriggerCounter();
             this.hunk.iFrames = this.hitStopDuration;
 
             if (this.swingEffectInstance)
