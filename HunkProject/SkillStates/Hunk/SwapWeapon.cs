@@ -26,7 +26,7 @@ namespace HunkMod.SkillStates.Hunk
                 {
                     if (i.targetBodyObject && i.targetBodyObject == this.gameObject)
                     {
-                        this.radial.transform.parent = i.mainContainer.transform;
+                        this.radial.transform.SetParent(i.mainContainer.transform);
                         this.radial.transform.localPosition = Vector3.zero;
                         this.radial.transform.localScale = Vector3.zero;
                     }

@@ -146,25 +146,25 @@ namespace HunkMod.Modules.Components
                     new HunkWeaponData
                     {
                         weaponDef = Modules.Weapons.Magnum.instance.weaponDef,
-                        totalAmmo = Modules.Weapons.Magnum.instance.magSize * 5,
+                        totalAmmo = Modules.Weapons.Magnum.instance.magSize * 6,
                         currentAmmo = Modules.Weapons.Magnum.instance.magSize
                     },
                     new HunkWeaponData
                     {
                         weaponDef = Modules.Weapons.Revolver.instance.weaponDef,
-                        totalAmmo = Modules.Weapons.Revolver.instance.magSize * 5,
+                        totalAmmo = Modules.Weapons.Revolver.instance.magSize * 6,
                         currentAmmo = Modules.Weapons.Revolver.instance.magSize
                     },
                     new HunkWeaponData
                     {
                         weaponDef = Modules.Weapons.Flamethrower.instance.weaponDef,
-                        totalAmmo = Modules.Weapons.Flamethrower.instance.magSize * 2,
+                        totalAmmo = Modules.Weapons.Flamethrower.instance.magSize * 4,
                         currentAmmo = Modules.Weapons.Flamethrower.instance.magSize
                     },
                     new HunkWeaponData
                     {
                         weaponDef = Modules.Weapons.GrenadeLauncher.instance.weaponDef,
-                        totalAmmo = Modules.Weapons.GrenadeLauncher.instance.magSize,
+                        totalAmmo = Modules.Weapons.GrenadeLauncher.instance.magSize * 8,
                         currentAmmo = Modules.Weapons.GrenadeLauncher.instance.magSize
                     }
                 };

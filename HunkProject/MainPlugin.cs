@@ -152,7 +152,18 @@ namespace HunkMod
                         //self.maxHealth += 10f * self.levelMaxHealth * virusCount;
                         self.armor += (virusCount - 4) * 2f;
                         self.attackSpeed += virusCount * 0.15f;
-                        self.moveSpeed += virusCount * -1f;
+
+                        for (int i = 0; i < virusCount; i++)
+                        {
+                            self.moveSpeed /= 1.1f;
+                        }
+                    }
+
+                    int sampleCount = self.inventory.GetItemCount(Modules.Survivors.Hunk.gVirusSample);
+                    if (sampleCount > 0)
+                    {
+                        self.regen += (sampleCount * 0.5f);
+                        self.armor += sampleCount * 2f;
                     }
                 }
             }

@@ -991,7 +991,7 @@ namespace HunkMod.Modules.Components
 
         public void TrySpawnRocketLauncher()
         {
-            this.Invoke("SpawnRocketLauncher", 5f);
+            this.Invoke("SpawnRocketLauncher", 10f);
         }
 
         public void SpawnRocketLauncher()

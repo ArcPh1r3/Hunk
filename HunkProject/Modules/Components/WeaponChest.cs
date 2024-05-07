@@ -1,9 +1,6 @@
-﻿using HarmonyLib;
-using HunkMod.Modules.Weapons;
+﻿using HunkMod.Modules.Weapons;
 using RoR2;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -16,11 +13,12 @@ namespace HunkMod.Modules.Components
         public PurchaseInteraction purchaseInteraction;
         public PingInfoProvider pingInfoProvider;
         public GenericDisplayNameProvider genericDisplayNameProvider;
-        public HunkWeaponDef weaponDef = Modules.Weapons.MUP.instance.weaponDef;
+        public HunkWeaponDef weaponDef;
         public int chestType;
 
         private void InitPickup()
         {
+            this.weaponDef = Modules.Weapons.MUP.instance.weaponDef;
             string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 
             bool fuck = false;

@@ -68,7 +68,7 @@ namespace HunkMod.Modules.Survivors
         public static List<GameObject> virusObjectiveObjects = new List<GameObject>();
 
 
-        public static string stageBlacklist = "arena,artifactworld,bazaar,goldshores,limbo,moon,moon2,mysteryspace,outro,voidoutro,voidraid,voidstage";
+        public static string stageBlacklist = "arena,artifactworld,bazaar,limbo,moon,moon2,outro,voidoutro,voidraid,voidstage";
         public static List<string> blacklistedStageNames = new List<string>();
 
         public HealthBarStyle infectedHealthBarStyle;
@@ -1614,14 +1614,18 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             // nasty!
             GameObject pickupPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/QuestVolatileBattery/QuestVolatileBatteryWorldPickup.prefab").WaitForCompletion().InstantiateClone("HunkGunPickup", false);
             MainPlugin.Destroy(pickupPrefab.GetComponent<AwakeEvent>());
+            MainPlugin.DestroyImmediate(pickupPrefab.GetComponent<NetworkParent>());
             pickupPrefab.AddComponent<HunkGunPickup>();
 
             Transform pickupDisplayTransform = pickupPrefab.transform.Find("PickupDisplay");
-            displayCaseModel.transform.Find("Pivot/WeaponHolder").gameObject.AddComponent<NetworkIdentity>();
+            //displayCaseModel.transform.Find("Pivot/WeaponHolder").gameObject.AddComponent<NetworkIdentity>();
             pickupPrefab.transform.parent = displayCaseModel.transform.Find("Pivot/WeaponHolder");
+            pickupPrefab.transform.localPosition = Vector3.zero;
+            pickupPrefab.transform.localRotation = Quaternion.identity;
             pickupDisplayTransform.localPosition = Vector3.zero;
             pickupDisplayTransform.localRotation = Quaternion.identity;
-            pickupDisplayTransform.localScale = Vector3.one * 1f;
+            //pickupDisplayTransform.localScale = Vector3.one * 1f;
+            //displayCaseModel.transform.Find("Pivot/WeaponHolder").localScale = Vector3.one * 0.6f;
 
             chestInteractableCard = ScriptableObject.CreateInstance<InteractableSpawnCard>();
             chestInteractableCard.name = "iscHunkChest";
@@ -1666,14 +1670,18 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             // nasty!
             GameObject pickupPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/QuestVolatileBattery/QuestVolatileBatteryWorldPickup.prefab").WaitForCompletion().InstantiateClone("HunkGunPickup", false);
             MainPlugin.Destroy(pickupPrefab.GetComponent<AwakeEvent>());
+            MainPlugin.DestroyImmediate(pickupPrefab.GetComponent<NetworkParent>());
             pickupPrefab.AddComponent<HunkGunPickup>();
 
             Transform pickupDisplayTransform = pickupPrefab.transform.Find("PickupDisplay");
-            caseModel.transform.Find("Model/WeaponHolder").gameObject.AddComponent<NetworkIdentity>();
+            //caseModel.transform.Find("Model/WeaponHolder").gameObject.AddComponent<NetworkIdentity>();
             pickupPrefab.transform.parent = caseModel.transform.Find("Model/WeaponHolder");
+            pickupPrefab.transform.localPosition = Vector3.zero;
+            pickupPrefab.transform.localRotation = Quaternion.identity;
             pickupDisplayTransform.localPosition = Vector3.zero;
             pickupDisplayTransform.localRotation = Quaternion.identity;
-            pickupDisplayTransform.localScale = Vector3.one * 0.06f;
+            //pickupDisplayTransform.localScale = Vector3.one * 0.06f;
+            //caseModel.transform.Find("Model/WeaponHolder").localScale = Vector3.one * 0.6f;
 
             caseInteractableCard = ScriptableObject.CreateInstance<InteractableSpawnCard>();
             caseInteractableCard.name = "iscHunkChest2";
@@ -1788,7 +1796,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             infectedHealthBarStyle.name = "InfectedHealthBar";
             infectedHealthBarStyle.trailingOverHealthBarStyle.baseColor = new Color(1f, 42f / 255f, 107f / 255f);
 
-            infectedHealthBarStyle.trailingUnderHealthBarStyle.sprite = Addressables.LoadAssetAsync<Sprite>("RoR2/Base/Common/texWhite.png").WaitForCompletion();
+            infectedHealthBarStyle.trailingUnderHealthBarStyle.sprite = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texWhite");
             infectedHealthBarStyle.trailingUnderHealthBarStyle.baseColor = new Color(1f, 1f, 0f);
         }
 
@@ -2909,14 +2917,14 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                         break;
                     case "bazaar":
                         doSpawns = false;
-                        break;
+                        break;*/
                     case "goldshores":
                         pos = new Vector3(-11.2222f, 47.6f, -71.46585f);
                         rot = Quaternion.Euler(0, 170f, 0);
                         pos2 = new Vector3(0f, 8000f, 0f);
                         rot2 = Quaternion.Euler(0, 10, 3);
                         break;
-                    case "limbo":
+                    /*case "limbo":
                         doSpawns = false;
                         break;
                     case "moon":
@@ -2924,26 +2932,19 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                         break;
                     case "moon2":
                         doSpawns = false;
-                        break;
+                        break;*/
                     case "mysteryspace":
-                        pos = new Vector3(22.0251f, -35.045f, 92.92287f);
-                        rot = Quaternion.Euler(0, 195f, 0);
+                        pos = new Vector3(378.8849f, -170f, 194.3512f);
+                        rot = Quaternion.Euler(20f, 130f, 0f);
                         pos2 = new Vector3(0f, 8000f, 0f);
-                        rot2 = Quaternion.Euler(0, 10, 3);
+                        rot2 = Quaternion.Euler(0f, 10f, 3f);
                         break;
-                    case "voidraid":
+                    /*case "voidraid":
                         doSpawns = false;
                         break;
                     case "voidstage":
                         doSpawns = false;
-                        break;
-
-
-                    default:
-                        SpawnChests();
-                        SpawnChests();
                         break;*/
-
                 }
 
                 if (NetworkServer.active && doSpawns)

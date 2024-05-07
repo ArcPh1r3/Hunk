@@ -444,7 +444,7 @@ namespace HunkMod.Modules
             sc.radius = 25f;
 
             GameObject nadeEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/OmniExplosionVFXCommandoGrenade.prefab").WaitForCompletion();
-            GameObject radiusIndicator = GameObject.Instantiate(nadeEffect.transform.Find("Nova Sphere").gameObject);
+            GameObject radiusIndicator = nadeEffect.transform.Find("Nova Sphere").gameObject.InstantiateClone("HunkFuckShit", false);
             radiusIndicator.transform.parent = pp.transform.parent;
             radiusIndicator.transform.localPosition = Vector3.zero;
             radiusIndicator.transform.localScale = Vector3.one * 15f;
@@ -689,7 +689,7 @@ namespace HunkMod.Modules
             rectR.localScale = Vector3.one * 0.75f;
 
             GameObject nibL = GameObject.Instantiate(crosshair.transform.Find("Outer").gameObject);
-            nibL.transform.parent = crosshairPrefab.transform;
+            nibL.transform.SetParent(crosshairPrefab.transform);
             //nibL.GetComponent<Image>().sprite = Addressables.LoadAssetAsync<Sprite>("RoR2/DLC1/Railgunner/texCrosshairRailgunSniperCenter.png").WaitForCompletion();
             RectTransform rectL = nibL.GetComponent<RectTransform>();
             rectL.localEulerAngles = new Vector3(0f, 0f, 180f);

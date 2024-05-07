@@ -32,7 +32,8 @@ namespace HunkMod.Modules.Components
 
         private void KillYourself()
         {
-            this.transform.Find("PickupDisplay").localScale = Vector3.one;
+            if (this.weaponDef != Modules.Weapons.M19.instance.weaponDef) this.transform.Find("PickupDisplay").localScale = Vector3.one * 0.5f;
+            else this.transform.Find("PickupDisplay").localScale = Vector3.one;
         }
     }
 }
