@@ -1,6 +1,7 @@
 ﻿using R2API.Networking;
 using R2API.Networking.Interfaces;
 using RoR2;
+using RoR2.Navigation;
 using RoR2.Skills;
 using RoR2.UI;
 using System;
@@ -982,8 +983,26 @@ namespace HunkMod.Modules.Components
 
         public void SpawnRocketLauncher()
         {
-            Xoroshiro128Plus rng = new Xoroshiro128Plus(Run.instance.seed);
-            DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(Survivors.Hunk.terminalInteractableCard, new DirectorPlacementRule { placementMode = DirectorPlacementRule.PlacementMode.NearestNode }, rng));
+            System.Random random = new System.Random();
+            NodeGraph groundNodes = SceneInfo.instance.groundNodes;
+            List<NodeGraph.NodeIndex> nodeList = groundNodes.FindNodesInRange(transform.position, 3f, 16f, HullMask.Human);
+            NodeGraph.NodeIndex randomNode = nodeList[random.Next(nodeList.Count)];
+            if (randomNode != null)
+            {
+                Vector3 position;
+                groundNodes.GetNodePosition(randomNode, out position);
+                GameObject rocketLauncherChest = Instantiate(Survivors.Hunk.weaponChestPrefab, position, Quaternion.identity);
+                
+                WeaponChest weaponChest = GetComponent<WeaponChest>();
+                if (weaponChest != null)
+                {
+                    weaponChest.chestType = 0;
+                    weaponChest.weaponDef = Weapons.RocketLauncher.instance.weaponDef;
+                }
+
+                NetworkServer.Spawn(rocketLauncherChest);
+            }
+            //DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(Survivors.Hunk.terminalInteractableCard, new DirectorPlacementRule { placementMode = DirectorPlacementRule.PlacementMode.NearestNode }, rng));
         }
     }
 }

@@ -14,6 +14,7 @@ using R2API.Networking;
 using R2API.Networking.Interfaces;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using Moonstorm.Starstorm2;
 
 namespace HunkMod.Modules.Survivors
 {
@@ -1316,6 +1317,8 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
             weaponChestPrefab.transform.Find("HologramPivot").gameObject.SetActive(false);
 
+            weaponChestPrefab.AddComponent<PingInfoProvider>();
+
             // nasty!
             GameObject pickupPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/QuestVolatileBattery/QuestVolatileBatteryWorldPickup.prefab").WaitForCompletion().InstantiateClone("HunkGunPickup", false);
             MainPlugin.Destroy(pickupPrefab.GetComponent<AwakeEvent>());
@@ -1676,7 +1679,11 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             On.RoR2.UI.ObjectivePanelController.GetObjectiveSources += ObjectivePanelController_GetObjectiveSources;
 
             // spawn rocket launcher on mithrix last phase
-            On.EntityStates.BrotherMonster.UltExitState.OnEnter += UltExitState_OnEnter;
+            //On.EntityStates.BrotherMonster.UltExitState.OnEnter += UltExitState_OnEnter;
+            On.EntityStates.Missions.BrotherEncounter.Phase4.OnEnter += Phase4_OnEnter;
+
+            // infected name tag
+            On.RoR2.Util.GetBestBodyName += MakeInfectedName;
 
             // if i speak i am in trouble
             On.RoR2.UI.MainMenu.BaseMainMenuScreen.Update += BaseMainMenuScreen_Update;
@@ -1689,14 +1696,17 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             //On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += PlayRuinAnimation;
         }
 
-        private static void UltExitState_OnEnter(On.EntityStates.BrotherMonster.UltExitState.orig_OnEnter orig, EntityStates.BrotherMonster.UltExitState self)
+        private static void Phase4_OnEnter(On.EntityStates.Missions.BrotherEncounter.Phase4.orig_OnEnter orig, EntityStates.Missions.BrotherEncounter.Phase4 self)
         {
-            orig(self);
-
             foreach (HunkController i in MonoBehaviour.FindObjectsOfType<HunkController>())
             {
-                if (i) i.SpawnRocketLauncher();
+                if (i)
+                {
+                    i.SpawnRocketLauncher();
+                }
             }
+
+            orig(self);
         }
 
         private static void ObjectivePanelController_GetObjectiveSources(On.RoR2.UI.ObjectivePanelController.orig_GetObjectiveSources orig, ObjectivePanelController self, CharacterMaster master, List<ObjectivePanelController.ObjectiveSourceDescriptor> output)
@@ -2384,8 +2394,8 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                         rot2 = Quaternion.Euler(0, 90f, 0);
                         break;
                     case "snowyforest":
-                        pos = new Vector3(-1.71916f, 112.7f, 153.1f);
-                        rot = Quaternion.Euler(0, 54.1f, 0);
+                        pos = new Vector3(-99.5584f, 10.60039f, 102.537f);
+                        rot = Quaternion.Euler(0, 225f, 0);
                         pos2 = new Vector3(136.0166f, 65.28467f, 53.11964f);
                         rot2 = Quaternion.Euler(0, 255f, 0);
                         break;
@@ -2488,6 +2498,26 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     }
                 }
             }
+        }
+
+        private static string MakeInfectedName(On.RoR2.Util.orig_GetBestBodyName orig, GameObject bodyObject)
+        {
+            var text = orig(bodyObject);
+            var infectedIndex = infectedBuff.buffIndex;
+            if (!bodyObject)
+                return text;
+
+            if (!bodyObject.TryGetComponent<CharacterBody>(out var body))
+                return text;
+
+            if (!body.HasBuff(infectedIndex))
+            {
+                return text;
+            }
+
+            text = "Infected " + text;
+
+            return text;
         }
 
         private static void PlayVisionsAnimation(On.EntityStates.GlobalSkills.LunarNeedle.FireLunarNeedle.orig_OnEnter orig, EntityStates.GlobalSkills.LunarNeedle.FireLunarNeedle self)

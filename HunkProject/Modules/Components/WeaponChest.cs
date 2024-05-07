@@ -14,17 +14,19 @@ namespace HunkMod.Modules.Components
         public HunkGunPickup gunPickup;
         //public ChestBehavior chestBehavior;
         public PurchaseInteraction purchaseInteraction;
+        public PingInfoProvider pingInfoProvider;
         public GenericDisplayNameProvider genericDisplayNameProvider;
-        private int chestType;
+        public HunkWeaponDef weaponDef = Modules.Weapons.MUP.instance.weaponDef;
+        public int chestType;
 
         private void InitPickup()
         {
-            HunkWeaponDef weaponDef = Modules.Weapons.MUP.instance.weaponDef;
             string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 
             bool fuck = false;
             if (sceneName == "goldshores") fuck = true;
             if (sceneName == "mysteryspace") fuck = true;
+            if (sceneName == "moon2") fuck = true;
 
                 // im just gonna hard code this rn okay.
                 // just get it working and move on. it can be cleaned up later.
@@ -87,6 +89,7 @@ namespace HunkMod.Modules.Components
 
             if (sceneName == "goldshores") weaponDef = Modules.Weapons.GoldenGun.instance.weaponDef;
             if (sceneName == "mysteryspace") weaponDef = Modules.Weapons.BlueRose.instance.weaponDef;
+            if (sceneName == "moon2") weaponDef = RocketLauncher.instance.weaponDef;
 
             gunPickup.weaponDef = weaponDef;
 
@@ -105,6 +108,12 @@ namespace HunkMod.Modules.Components
                 var h = GetComponent<Highlight>();
                 Transform gunTransform = h.targetRenderer.transform.parent.parent.Find("WeaponHolder");
                 gunTransform.localPosition = new Vector3(0.6f, 2.98f, -0.16f);
+            }
+
+            if (purchaseInteraction != null)
+            {
+                purchaseInteraction.displayNameToken = string.Format("{0}{1}", Language.GetStringFormatted(MainPlugin.developerPrefix + "_HUNK_CHEST_NAME"), Language.GetStringFormatted(weaponDef.nameToken));
+                purchaseInteraction.contextToken = MainPlugin.developerPrefix + "_HUNK_CHEST_CONTEXT";
             }
 
             gunPickup.Init();
@@ -130,11 +139,14 @@ namespace HunkMod.Modules.Components
 
             purchaseInteraction = this.GetComponent<PurchaseInteraction>();
             genericDisplayNameProvider = this.GetComponent<GenericDisplayNameProvider>();
+            pingInfoProvider = this.GetComponent<PingInfoProvider>();
 
             var h = GetComponent<Highlight>();
             h.targetRenderer.transform.parent.Find("Hinge/Lock/OnLight").gameObject.SetActive(false);
 
             if (Run.instance.stageClearCount <= 0 || UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "goldshores") chestType = 2;
+
+
 
             if (purchaseInteraction != null)
             {
@@ -153,6 +165,8 @@ namespace HunkMod.Modules.Components
                         h.targetRenderer.transform.parent.Find("Hinge/Lock/Club").gameObject.SetActive(false);
                         h.targetRenderer.transform.parent.Find("Hinge/Lock/Heart").gameObject.SetActive(true);
                         h.targetRenderer.transform.parent.Find("Hinge/Lock/Diamond").gameObject.SetActive(false);
+                        if (pingInfoProvider != null)
+                            pingInfoProvider.pingIconOverride = Assets.mainAssetBundle.LoadAsset<Sprite>("texIconHeart");
                         break;
                     case 2:
                         purchaseInteraction.costType = (CostTypeIndex)Survivors.Hunk.spadeCostTypeIndex;
@@ -167,6 +181,8 @@ namespace HunkMod.Modules.Components
                         h.targetRenderer.transform.parent.Find("Hinge/Lock/Club").gameObject.SetActive(false);
                         h.targetRenderer.transform.parent.Find("Hinge/Lock/Heart").gameObject.SetActive(false);
                         h.targetRenderer.transform.parent.Find("Hinge/Lock/Diamond").gameObject.SetActive(false);
+                        if (pingInfoProvider != null)
+                            pingInfoProvider.pingIconOverride = Assets.mainAssetBundle.LoadAsset<Sprite>("texIconSpade");
                         break;
                     case 3:
                         purchaseInteraction.costType = (CostTypeIndex)Survivors.Hunk.diamondCostTypeIndex;
@@ -181,6 +197,8 @@ namespace HunkMod.Modules.Components
                         h.targetRenderer.transform.parent.Find("Hinge/Lock/Club").gameObject.SetActive(false);
                         h.targetRenderer.transform.parent.Find("Hinge/Lock/Heart").gameObject.SetActive(false);
                         h.targetRenderer.transform.parent.Find("Hinge/Lock/Diamond").gameObject.SetActive(true);
+                        if (pingInfoProvider != null)
+                            pingInfoProvider.pingIconOverride = Assets.mainAssetBundle.LoadAsset<Sprite>("texIconDiamond");
                         break;
                     case 4:
                         purchaseInteraction.costType = (CostTypeIndex)Survivors.Hunk.clubCostTypeIndex;
@@ -195,6 +213,8 @@ namespace HunkMod.Modules.Components
                         h.targetRenderer.transform.parent.Find("Hinge/Lock/Club").gameObject.SetActive(true);
                         h.targetRenderer.transform.parent.Find("Hinge/Lock/Heart").gameObject.SetActive(false);
                         h.targetRenderer.transform.parent.Find("Hinge/Lock/Diamond").gameObject.SetActive(false);
+                        if (pingInfoProvider != null)
+                            pingInfoProvider.pingIconOverride = Assets.mainAssetBundle.LoadAsset<Sprite>("texIconClub");
                         break;
                     default:
                         purchaseInteraction.costType = CostTypeIndex.Money;

@@ -39,6 +39,5 @@ namespace HunkMod.Modules.Components
         {
             Modules.Survivors.Hunk.virusObjectiveObjects.Remove(this.gameObject);
         }
-
     }
 }

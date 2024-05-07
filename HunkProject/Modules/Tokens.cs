@@ -139,25 +139,25 @@ namespace HunkMod.Modules
 
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_HEARTCHEST_NAME", "Heart-Key Weapon Case");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_HEARTCHEST_CONTEXT", "Open Heart-Key Weapon Case");
-            LanguageAPI.Add(MainPlugin.developerPrefix + "_HEARTCOST", "");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HEARTCOST", "Heart Key Card");
 
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_SPADECHEST_NAME", "Spade-Key Weapon Case");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_SPADECHEST_CONTEXT", "Open Spade-Key Weapon Case");
-            LanguageAPI.Add(MainPlugin.developerPrefix + "_SPADECOST", "");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_SPADECOST", "Spade Key Card");
 
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_CLUBCHEST_NAME", "Club-Key Weapon Case");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_CLUBCHEST_CONTEXT", "Open Club-Key Weapon Case");
-            LanguageAPI.Add(MainPlugin.developerPrefix + "_CLUBCOST", "");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_CLUBCOST", "Club Key Card");
 
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_DIAMONDCHEST_NAME", "Diamond-Key Weapon Case");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_DIAMONDCHEST_CONTEXT", "Open Diamond-Key Weapon Case");
-            LanguageAPI.Add(MainPlugin.developerPrefix + "_DIAMONDCOST", "");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_DIAMONDCOST", "Diamond Key Card");
 
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_TERMINAL_NAME", "Terminal");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_TERMINAL_CONTEXT", "Insert Sample");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_SAMPLECOST", "G-Virus Sample");
 
-            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_CHEST_NAME", "Weapon Case");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_CHEST_NAME", "Weapon Case: ");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_CHEST_CONTEXT", "Open Weapon Case");
 
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_AMMO_NAME", "Ammo");
