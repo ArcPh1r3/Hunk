@@ -100,6 +100,13 @@ namespace HunkMod.Modules.Components
                 gunTransform.localScale = Vector3.one * 1.25f;
             }
 
+            if (weaponDef.nameToken.Contains("SLUGGER"))
+            {
+                var h = GetComponent<Highlight>();
+                Transform gunTransform = h.targetRenderer.transform.parent.parent.Find("WeaponHolder");
+                gunTransform.localPosition = new Vector3(0.6f, 2.98f, -0.16f);
+            }
+
             gunPickup.Init();
         }
 
