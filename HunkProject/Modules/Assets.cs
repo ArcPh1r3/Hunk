@@ -335,8 +335,8 @@ namespace HunkMod.Modules
                 }
             };
 
-            control.transform.Find("Bracket (2)").GetComponent<RectTransform>().localScale = new Vector3(30f, 5f, 1f);
-            control.transform.Find("Bracket (3)").GetComponent<RectTransform>().localScale = new Vector3(30f, 5f, 1f);
+            control.transform.Find("Bracket (2)").GetComponent<RectTransform>().localScale = new Vector3(24f, 2f, 1f);
+            control.transform.Find("Bracket (3)").GetComponent<RectTransform>().localScale = new Vector3(24f, 2f, 1f);
             control.transform.Find("Bracket (3)").GetComponent<RectTransform>().localRotation = Quaternion.Euler(new Vector3(0f, 0f, 90f));
 
             control.transform.Find("Bracket (2)").GetComponent<Image>().sprite = Addressables.LoadAssetAsync<Sprite>("RoR2/Base/UI/texCrosshairNibBar.png").WaitForCompletion();
