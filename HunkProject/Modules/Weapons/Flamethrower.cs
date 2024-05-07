@@ -9,7 +9,7 @@ namespace HunkMod.Modules.Weapons
         public override string weaponName => "Chemical Flamethrower";
         public override string weaponDesc => "An Umbrella-made weapon that uses pressurized gas to produce red-hot flames. Portable and refuellable, it's always ready for the long haul.";
         public override string iconName => "texFlamethrowerIcon";
-        public override GameObject crosshairPrefab => Modules.Assets.shotgunCrosshairPrefab;
+        public override GameObject crosshairPrefab => Modules.Assets.rocketLauncherCrosshairPrefab;
         public override int magSize => 300;
         public override float magPickupMultiplier => 0.5f;
         public override float reloadDuration => 2f;

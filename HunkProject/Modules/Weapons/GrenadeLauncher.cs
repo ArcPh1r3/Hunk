@@ -9,7 +9,7 @@ namespace HunkMod.Modules.Weapons
         public override string weaponName => "GM-79";
         public override string weaponDesc => "Single-round break-action grenade launcher capable for firing flame rounds. Great for area damage, but slow to reload.";
         public override string iconName => "texGrenadeLauncherIcon";
-        public override GameObject crosshairPrefab => Modules.Assets.grenadeLauncherCrosshairPrefab;
+        public override GameObject crosshairPrefab => Modules.Assets.grenadeLauncherCrosshairPrefab2;
         public override int magSize => 1;
         public override float magPickupMultiplier => 2f;
         public override float reloadDuration => 2.4f;
