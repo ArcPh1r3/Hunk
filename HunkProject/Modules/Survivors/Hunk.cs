@@ -76,6 +76,9 @@ namespace HunkMod.Modules.Survivors
         public static InteractableSpawnCard chestInteractableCard;
         internal static GameObject weaponChestPrefab;
 
+        public static InteractableSpawnCard caseInteractableCard;
+        internal static GameObject weaponCasePrefab;
+
         public static CostTypeDef heartCostDef;
         public static int heartCostTypeIndex;
 
@@ -127,6 +130,7 @@ namespace HunkMod.Modules.Survivors
                 CreateAmmoInteractable();
                 CreateBarrelAmmoInteractable();
                 CreateChest();
+                CreateCase();
                 CreateTerminal();
                 CreatePod();
                 CreateHealthBarStyle();
@@ -1581,8 +1585,6 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
         private void CreateChest()
         {
-            miliMat = Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/TrimSheets/matTrimSheetMetalMilitaryEmission.mat").WaitForCompletion();
-
             GameObject displayCaseModel = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlDisplayCase"));
 
             weaponChestPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Chest2/Chest2.prefab").WaitForCompletion().InstantiateClone("HunkChest", true);
@@ -1635,6 +1637,58 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             chestInteractableCard.occupyPosition = true;
             chestInteractableCard.orientToFloor = true;
             chestInteractableCard.skipSpawnWhenSacrificeArtifactEnabled = false;
+            //chestInteractableCard.maxSpawnsPerStage = 2;
+        }
+
+        private void CreateCase()
+        {
+            GameObject caseModel = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlWeaponCase"));
+
+            weaponCasePrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Chest2/Chest2.prefab").WaitForCompletion().InstantiateClone("HunkChest2", true);
+            weaponCasePrefab.GetComponent<Highlight>().targetRenderer.enabled = false;
+            weaponCasePrefab.GetComponent<Highlight>().targetRenderer.GetComponent<SkinnedMeshRenderer>().sharedMesh = null;
+            weaponCasePrefab.AddComponent<Components.WeaponChest>();
+
+            caseModel.transform.parent = weaponCasePrefab.GetComponent<Highlight>().targetRenderer.transform;
+            caseModel.transform.localPosition = new Vector3(0f, 0f, -1.25f);
+            caseModel.transform.localRotation = Quaternion.Euler(new Vector3(90f, 0f, 0f));
+            caseModel.transform.localScale = Vector3.one * 1.3f;
+            caseModel.transform.Find("Model/CaseLower_low").gameObject.AddComponent<EntityLocator>().entity = weaponCasePrefab;
+
+            Modules.Assets.ConvertAllRenderersToHopooShader(caseModel);
+
+            weaponCasePrefab.GetComponent<Highlight>().targetRenderer = caseModel.transform.Find("Model/CaseUpped_low").gameObject.GetComponent<MeshRenderer>();
+
+            weaponCasePrefab.transform.Find("HologramPivot").gameObject.SetActive(false);
+
+            weaponCasePrefab.AddComponent<PingInfoProvider>();
+
+            // nasty!
+            GameObject pickupPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/QuestVolatileBattery/QuestVolatileBatteryWorldPickup.prefab").WaitForCompletion().InstantiateClone("HunkGunPickup", false);
+            MainPlugin.Destroy(pickupPrefab.GetComponent<AwakeEvent>());
+            pickupPrefab.AddComponent<HunkGunPickup>();
+
+            Transform pickupDisplayTransform = pickupPrefab.transform.Find("PickupDisplay");
+            caseModel.transform.Find("Model/WeaponHolder").gameObject.AddComponent<NetworkIdentity>();
+            pickupPrefab.transform.parent = caseModel.transform.Find("Model/WeaponHolder");
+            pickupDisplayTransform.localPosition = Vector3.zero;
+            pickupDisplayTransform.localRotation = Quaternion.identity;
+            pickupDisplayTransform.localScale = Vector3.one * 0.06f;
+
+            caseInteractableCard = ScriptableObject.CreateInstance<InteractableSpawnCard>();
+            caseInteractableCard.name = "iscHunkChest2";
+            caseInteractableCard.prefab = weaponCasePrefab;
+            caseInteractableCard.sendOverNetwork = true;
+            caseInteractableCard.hullSize = HullClassification.Human;
+            caseInteractableCard.nodeGraphType = RoR2.Navigation.MapNodeGroup.GraphType.Ground;
+            caseInteractableCard.requiredFlags = RoR2.Navigation.NodeFlags.None;
+            caseInteractableCard.forbiddenFlags = RoR2.Navigation.NodeFlags.None;
+
+            caseInteractableCard.directorCreditCost = 0;
+
+            caseInteractableCard.occupyPosition = true;
+            caseInteractableCard.orientToFloor = true;
+            caseInteractableCard.skipSpawnWhenSacrificeArtifactEnabled = false;
             //chestInteractableCard.maxSpawnsPerStage = 2;
         }
 
@@ -2208,7 +2262,11 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
         {
             if (Modules.Helpers.isHunkInPlay)
             {
-                if (self.gameObject.name.Contains("HunkChest"))
+                if (self.gameObject.name.Contains("HunkChest2"))
+                {
+                    Util.PlaySound("sfx_hunk_weapon_case_open", self.gameObject);
+                }
+                else if (self.gameObject.name.Contains("HunkChest") && !self.gameObject.name.Contains("2")) // bro wtf is this code seriously?
                 {
                     Util.PlaySound("sfx_hunk_keycard_accepted", self.gameObject);
                 }
@@ -2319,6 +2377,20 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
         {
             if (Modules.Helpers.isHunkInPlay)
             {
+                if (self.gameObject.name.Contains("HunkChest2"))
+                {
+                    // this is the worst place to put this btw
+
+                    self.GetComponent<WeaponChest>().gunPickup.enabled = true;
+                    self.GetComponent<WeaponChest>().gunPickup.GetComponent<GenericPickupController>().enabled = true;
+
+                    self.GetComponent<Highlight>().targetRenderer.transform.parent.parent.GetComponent<Animator>().Play("Open");
+
+                    Util.PlaySound("sfx_hunk_weapon_case_open", self.gameObject);
+
+                    return;
+                }
+
                 if (self.gameObject.name.Contains("HunkChest"))
                 {
                     // this is the worst place to put this btw

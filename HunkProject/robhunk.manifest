@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2243314722
+CRC: 825383349
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1059ffbd9b42ac3ecbdd3a1dfcbb2759
+    Hash: f4df471fdf3c8ef4489f103caab1d27c
   TypeTreeHash:
     serializedVersion: 2
     Hash: 5f16f7b551fafcce7a6a6bb4023696c9
@@ -194,6 +194,7 @@ Assets:
 - Assets/Hunk/Animations/Default/RunL.anim
 - Assets/Hunk/Icons/Weapon/texShotgunIcon.png
 - Assets/Hunk/Textures/M19/Leon_M1911_N.png
+- Assets/Hunk/Icons/texIconHeart.png
 - Assets/Hunk/HUD/Textures/texRadialDefault.png
 - Assets/Hunk/VFX/texChargeSpark.png
 - Assets/Hunk/Animations/Pistol/RunR.anim
@@ -266,6 +267,7 @@ Assets:
 - Assets/Hunk/Weapons/mdlGoldenGun.prefab
 - Assets/Hunk/HUD/Animations/DodgeOverlay.controller
 - Assets/Hunk/Animations/GrenadeLauncher/animGrenadeLauncher.controller
+- Assets/Hunk/Icons/texIconSpade.png
 - Assets/Hunk/Textures/RocketLauncher/Leon_ATM-4_D.png
 - Assets/Hunk/Animations/Pistol/SprintFast.anim
 - Assets/Hunk/Icons/Weapon/texRocketLauncherIcon.png
@@ -304,6 +306,7 @@ Assets:
 - Assets/Hunk/Animations/DisplayCase/Open.anim
 - Assets/Hunk/Textures/Shotgun/matShotgun.mat
 - Assets/Hunk/Weapons/mdlBlueRose.prefab
+- Assets/Hunk/Icons/texIconDiamond.png
 - Assets/Hunk/Textures/BlueRose/BlueRose_Alb.png
 - Assets/Hunk/Textures/Shotgun/matShotgun2.mat
 - Assets/Hunk/Textures/Revolver/Pistol_N.jpg
@@ -314,6 +317,7 @@ Assets:
 - Assets/Hunk/Textures/RocketLauncher/Leon_AntiTankRocket_N.png
 - Assets/Hunk/Materials/matHunk04.mat
 - Assets/Hunk/Textures/Flamethrower/Leon_FlameThrower_D.png
+- Assets/Hunk/Icons/texIconClub.png
 - Assets/Hunk/Materials/matHeart.mat
 - Assets/Hunk/Textures/Unsorted/texTank.png
 - Assets/Hunk/Mesh/meshHunkB02.mesh

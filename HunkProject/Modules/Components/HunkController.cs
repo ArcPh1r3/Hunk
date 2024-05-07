@@ -999,7 +999,7 @@ namespace HunkMod.Modules.Components
             {
                 Vector3 position;
                 groundNodes.GetNodePosition(randomNode, out position);
-                GameObject rocketLauncherChest = Instantiate(Survivors.Hunk.weaponChestPrefab, position, Quaternion.identity);
+                GameObject rocketLauncherChest = Instantiate(Survivors.Hunk.weaponCasePrefab, position, Quaternion.identity);
                 
                 WeaponChest weaponChest = GetComponent<WeaponChest>();
                 if (weaponChest != null)
