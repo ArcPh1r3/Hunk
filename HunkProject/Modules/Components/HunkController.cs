@@ -989,6 +989,11 @@ namespace HunkMod.Modules.Components
             DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(Survivors.Hunk.terminalInteractableCard, new DirectorPlacementRule { placementMode = DirectorPlacementRule.PlacementMode.Random }, rng));
         }
 
+        public void TrySpawnRocketLauncher()
+        {
+            this.Invoke("SpawnRocketLauncher", 5f);
+        }
+
         public void SpawnRocketLauncher()
         {
             System.Random random = new System.Random();
@@ -1009,6 +1014,14 @@ namespace HunkMod.Modules.Components
                 }
 
                 NetworkServer.Spawn(rocketLauncherChest);
+
+                EffectManager.SpawnEffect(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/SurvivorPod/PodGroundImpact.prefab").WaitForCompletion(),
+    new EffectData
+    {
+        origin = position,
+        rotation = Quaternion.identity,
+        scale = 2f
+    }, true);
             }
             //DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(Survivors.Hunk.terminalInteractableCard, new DirectorPlacementRule { placementMode = DirectorPlacementRule.PlacementMode.NearestNode }, rng));
         }

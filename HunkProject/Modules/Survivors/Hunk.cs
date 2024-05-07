@@ -2149,7 +2149,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             {
                 if (i)
                 {
-                    i.SpawnRocketLauncher();
+                    i.TrySpawnRocketLauncher();
                 }
             }
 
