@@ -1851,7 +1851,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
         private static void ShopTerminalBehavior_DropPickup(On.RoR2.ShopTerminalBehavior.orig_DropPickup orig, ShopTerminalBehavior self)
         {
-            if (Modules.Helpers.isHunkInPlay)
+            if (Modules.Helpers.isHunkInPlay && !self.gameObject.name.Contains("uplica"))
             {
                 GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, self.transform.rotation);
             }
@@ -1938,7 +1938,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     return;
                 }
 
-                if (!self.gameObject.name.Contains("Hunk") && !self.gameObject.name.Contains("Duplicator"))
+                if (!self.gameObject.name.Contains("Hunk") && !self.gameObject.name.Contains("uplica"))
                 {
                     GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, self.transform.rotation);
 

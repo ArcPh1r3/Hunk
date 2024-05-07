@@ -15,7 +15,7 @@ namespace HunkMod.Modules.Weapons
         public override float reloadDuration => 0.9f;
         public override string ammoName => "Blue Rose Ammo";
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlBlueRose");
-        public override HunkWeaponDef.AnimationSet animationSet => HunkWeaponDef.AnimationSet.Pistol;
+        public override HunkWeaponDef.AnimationSet animationSet => HunkWeaponDef.AnimationSet.PistolAlt;
         public override bool storedOnBack => false;
         public override float damageFillValue => 1f;
         public override float rangefillValue => 0.8f;

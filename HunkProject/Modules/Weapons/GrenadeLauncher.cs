@@ -7,12 +7,12 @@ namespace HunkMod.Modules.Weapons
     {
         public override string weaponNameToken => "GRENADELAUNCHER";
         public override string weaponName => "GM-79";
-        public override string weaponDesc => "A portable rocket launcher that can hold four 66mm incendiary rockets. The rockets unleash a powerful conflagration.";
+        public override string weaponDesc => "Single-round break-action grenade launcher capable for firing flame rounds. Great for area damage, but slow to reload.";
         public override string iconName => "texGrenadeLauncherIcon";
         public override GameObject crosshairPrefab => Modules.Assets.grenadeLauncherCrosshairPrefab;
         public override int magSize => 1;
         public override float magPickupMultiplier => 2f;
-        public override float reloadDuration => 2f;
+        public override float reloadDuration => 2.4f;
         public override string ammoName => "Incendiary Rounds";
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlGrenadeLauncher");
         public override HunkWeaponDef.AnimationSet animationSet => HunkWeaponDef.AnimationSet.SMG;
