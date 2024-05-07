@@ -66,6 +66,7 @@ namespace HunkMod.Modules.Survivors
         public static List<HunkWeaponDef> spawnedWeaponList = new List<HunkWeaponDef>();
         public static List<GameObject> virusObjectiveObjects = new List<GameObject>();
 
+        public HealthBarStyle infectedHealthBarStyle;
         //public static string stageBlacklist = "arena,artifactworld,bazaar,goldshores,limbo,moon,moon2,mysteryspace,outro,voidoutro,voidraid,voidstage";
         //public static List<string> blacklistedStageNames = new List<string>();
         //why not???
@@ -124,6 +125,7 @@ namespace HunkMod.Modules.Survivors
                 CreateChest();
                 CreateTerminal();
                 CreatePod();
+                CreateHealthBarStyle();
 
                 characterPrefab = CreateBodyPrefab(true);
 
@@ -891,7 +893,7 @@ namespace HunkMod.Modules.Survivors
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemDisplays.LoadDisplay("DisplayDoubleMag"),
                     limbMask = LimbFlags.None,
-childName = "GunR",
+childName = "HandR",
 localPos = new Vector3(0.00888F, -0.03648F, -0.20898F),
 localAngles = new Vector3(39.35415F, 348.9445F, 164.0792F),
 localScale = new Vector3(0.06F, 0.06F, 0.06F)
@@ -989,7 +991,7 @@ localScale = new Vector3(7.26354F, 7.26354F, 7.26354F)
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemDisplays.LoadDisplay("DisplayBandolier"),
                     limbMask = LimbFlags.None,
-childName = "Chest",
+childName = "Stomach",
 localPos = new Vector3(0.04472F, 26.87948F, -11.56151F),
 localAngles = new Vector3(21.51934F, 178.8835F, 359.2931F),
 localScale = new Vector3(23.00528F, 23.00528F, 23.00528F)
@@ -1107,7 +1109,7 @@ localScale = new Vector3(0.17982F, 0.17982F, 0.17982F)
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemDisplays.LoadDisplay("DisplayBirdEye"),
                     limbMask = LimbFlags.None,
-childName = "Head",
+childName = "HandL",
 localPos = new Vector3(0F, 0.18736F, 0.08896F),
 localAngles = new Vector3(306.9798F, 180F, 180F),
 localScale = new Vector3(0.31302F, 0.31302F, 0.31302F)
@@ -1177,7 +1179,7 @@ localScale = new Vector3(-0.2958F, 0.2958F, 0.29581F)
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemDisplays.LoadDisplay("DisplayLaserSight"),
                     limbMask = LimbFlags.None,
-childName = "Pistol",
+childName = "HandR",
 localPos = new Vector3(-0.01876F, 0.26245F, 0.11694F),
 localAngles = new Vector3(0F, 0F, 270F),
 localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
@@ -1436,6 +1438,13 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             modelTransform.Find("EscapePodArmature/Base/RotatingPanel/EscapePodMesh.002").GetComponent<MeshRenderer>().material = miliMat;
         }
 
+        private void CreateHealthBarStyle()
+        {
+            infectedHealthBarStyle = HealthBarStyle.Instantiate(Addressables.LoadAssetAsync<HealthBarStyle>("RoR2/Base/Common/CombatHealthBar.asset").WaitForCompletion());
+            infectedHealthBarStyle.name = "InfectedHealthBar";
+            infectedHealthBarStyle.trailingOverHealthBarStyle.baseColor = new Color(1f, 42f / 255f, 107f / 255f);
+        }
+
         private void CreateKeycards()
         {
             spadeKeycard = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/Base/ArtifactKey/ArtifactKey.asset").WaitForCompletion());
@@ -1676,6 +1685,9 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             // set objective bullshit..
             On.RoR2.UI.ObjectivePanelController.GetObjectiveSources += ObjectivePanelController_GetObjectiveSources;
 
+            // infected health bar
+            On.RoR2.UI.HealthBar.Update += HealthBar_Update;
+
             // spawn rocket launcher on mithrix last phase
             On.EntityStates.BrotherMonster.UltExitState.OnEnter += UltExitState_OnEnter;
 
@@ -1689,6 +1701,42 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             //On.EntityStates.GlobalSkills.LunarNeedle.ChargeLunarSecondary.PlayChargeAnimation += PlayChargeLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarNeedle.ThrowLunarSecondary.PlayThrowAnimation += PlayThrowLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += PlayRuinAnimation;
+        }
+
+        private static void HealthBar_Update(On.RoR2.UI.HealthBar.orig_Update orig, HealthBar self)
+        {
+            orig(self);
+
+            if (self && self.viewerBody)
+            {
+                if (Hunk.virusObjectiveObjects.Count > 0)
+                { 
+                    if (self.source.GetComponent<VirusHandler>() || self.source.GetComponent<ParasiteController>())
+                    {
+                        if (self.eliteBackdropRectTransform)
+                        {
+                            if (!self.transform.Find("Backdrop,Elite/Backdrop, Infected"))
+                            {
+                                GameObject infectedBackdrop = GameObject.Instantiate(self.transform.Find("Backdrop,Elite").gameObject, self.transform.Find("Backdrop,Elite"));
+                                infectedBackdrop.SetActive(true);
+                                infectedBackdrop.name = "Backdrop, Infected";
+                                infectedBackdrop.GetComponent<Image>().tintColor = new Color(1f, 111f / 255f, 184f / 255f);
+
+                                self.style = Hunk.instance.infectedHealthBarStyle;
+
+                                self.eliteBackdropRectTransform = null;
+                                self.transform.Find("Backdrop,Elite").gameObject.SetActive(true);
+
+                                MonoBehaviour.Destroy(self.GetComponent<LevelText>());
+                                var it = self.gameObject.AddComponent<InfectionText>();
+                                it.target = self.source.body;
+                                it.text = self.transform.Find("LevelRoot/ValueText").GetComponent<HGTextMeshProUGUI>();
+                                self.transform.Find("LevelRoot").gameObject.SetActive(true);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private static void BaseMainMenuScreen_Awake(On.RoR2.UI.MainMenu.BaseMainMenuScreen.orig_Awake orig, RoR2.UI.MainMenu.BaseMainMenuScreen self)
