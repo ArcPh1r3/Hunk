@@ -133,15 +133,15 @@ namespace HunkMod.SkillStates.Hunk.Weapon.BlueRose
 
             if (!this.hasFired && base.fixedAge >= (0.2f * this.duration))
             {
-                this.PlayAnimation("Gesture, Override", "ShootMagnum", "Shoot.playbackRate", this.duration * 1.5f);
                 this.hasFired = true;
 
-                if (this.hunk)
+                if (this.hunk.ammo > 0)
                 {
+                    this.PlayAnimation("Gesture, Override", "ShootMagnum", "Shoot.playbackRate", this.duration * 1.5f);
+                    this.Fire();
                     this.hunk.ConsumeAmmo();
                     this.hunk.machineGunVFX.Play();
                 }
-                this.Fire();
             }
 
             if (base.fixedAge >= this.duration && base.isAuthority)

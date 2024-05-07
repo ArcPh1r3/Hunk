@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 152818107
+CRC: 3875442167
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1bb13c21785a3e7743e8bf16e28b6a72
+    Hash: 5bf2b1370f62dc8e9ba7796bbec112e0
   TypeTreeHash:
     serializedVersion: 2
     Hash: 5f16f7b551fafcce7a6a6bb4023696c9
@@ -133,6 +133,7 @@ Assets:
 - Assets/Hunk/Textures/Terminal/Terminal_albedo.png
 - Assets/Hunk/VFX/texChargeRing.png
 - Assets/Hunk/Animations/Rocket/AimIdle.anim
+- Assets/Hunk/Materials/matTank.mat
 - Assets/Hunk/Textures/MUP/USP_29_USP_29_Normal.png
 - Assets/Hunk/Icons/Item/texKeycardSpadeIcon.png
 - Assets/Hunk/VFX/matChargeRing.mat
@@ -307,6 +308,7 @@ Assets:
 - Assets/Hunk/Materials/matHunk04.mat
 - Assets/Hunk/Textures/Flamethrower/Leon_FlameThrower_D.png
 - Assets/Hunk/Materials/matHeart.mat
+- Assets/Hunk/Textures/Unsorted/texTank.png
 - Assets/Hunk/Animations/Pistol/Idle.anim
 - Assets/Hunk/Textures/Misc/texTrimSheetMilitaryMetal.png
 - Assets/Hunk/Icons/Item/texVirusSampleIcon.png
