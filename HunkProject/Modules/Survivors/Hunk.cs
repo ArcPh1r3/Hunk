@@ -1882,7 +1882,8 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             {
                 if (damageInfo.attacker && damageInfo.attacker.name.Contains("RobHunkBody"))
                 {
-                    damageInfo.damageType = DamageType.Generic;
+                    if ((damageInfo.damageType & DamageType.Stun1s) > DamageType.Generic) damageInfo.damageType = DamageType.Stun1s;
+                    else damageInfo.damageType = DamageType.Generic;
 
                     if (self)
                     {

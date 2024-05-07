@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3875442167
+CRC: 3403074895
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 5bf2b1370f62dc8e9ba7796bbec112e0
+    Hash: 0cc0ce1df1c6c8020cbdf4c688aa0a57
   TypeTreeHash:
     serializedVersion: 2
     Hash: 5f16f7b551fafcce7a6a6bb4023696c9
@@ -90,6 +90,7 @@ Assets:
 - Assets/Hunk/VFX/BloodSpurtEffect.prefab
 - Assets/Hunk/Animations/Default/AirDodgeLoop.anim
 - Assets/Hunk/HUD/ChargeBar.prefab
+- Assets/Hunk/Mesh/meshSMG.mesh
 - Assets/Hunk/Textures/GVirus/sm74_201_GVirus01A_A_NRMR.png
 - Assets/Hunk/Textures/WeaponCase/DirtyHardcase_DirectXNormal.png
 - Assets/Hunk/VFX/matSpark.mat
@@ -109,6 +110,7 @@ Assets:
 - Assets/Hunk/Animations/WeaponCase/Idle.anim
 - Assets/Hunk/Animations/Rocket/Descend.anim
 - Assets/Hunk/VFX/ShotgunShell.prefab
+- Assets/Hunk/Mesh/meshHunkB01.mesh
 - Assets/Hunk/VFX/Badass/BigExplosion.prefab
 - Assets/Hunk/Textures/AmmoBox/9mm_Ammo_Col_Remake.jpg
 - Assets/Hunk/Animations/Default/AimPitchAiming.anim
@@ -226,6 +228,7 @@ Assets:
 - Assets/Hunk/VFX/texSpeedLineVertical.png
 - Assets/Hunk/VFX/ShotgunSlug.prefab
 - Assets/Hunk/AmmoPickup.prefab
+- Assets/Hunk/Mesh/meshHunkB03.mesh
 - Assets/Hunk/Animations/Default/RunR.anim
 - Assets/Hunk/Weapons/mdlM19Pickup.prefab
 - Assets/Hunk/Textures/Shotgun/matSlugger.mat
@@ -233,6 +236,7 @@ Assets:
 - Assets/Hunk/Textures/GVirus/sm74_201_Gvirus01A_A_EMI.png
 - Assets/Hunk/Materials/matDisplayCase01.mat
 - Assets/Hunk/Materials/matGrenade.mat
+- Assets/Hunk/Mesh/meshCommando.mesh
 - Assets/Hunk/Weapons/mdlGrenadeLauncherPickup.prefab
 - Assets/Hunk/Textures/GVirus/texGVirusSample.png
 - Assets/Hunk/Animations/Default/FreefallR.anim
@@ -309,6 +313,7 @@ Assets:
 - Assets/Hunk/Textures/Flamethrower/Leon_FlameThrower_D.png
 - Assets/Hunk/Materials/matHeart.mat
 - Assets/Hunk/Textures/Unsorted/texTank.png
+- Assets/Hunk/Mesh/meshHunkB02.mesh
 - Assets/Hunk/Animations/Pistol/Idle.anim
 - Assets/Hunk/Textures/Misc/texTrimSheetMilitaryMetal.png
 - Assets/Hunk/Icons/Item/texVirusSampleIcon.png
