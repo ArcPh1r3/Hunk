@@ -16,10 +16,10 @@ namespace HunkMod.Modules
 
         internal static void RegisterProjectiles()
         {
-            rocketProjectilePrefab = CreateRocket(false, "HunkRocketProjectile", "HunkRocketGhost", "HunkRocketGhost");
-            bazookaProjectilePrefab = CreateRocket(true, "HunkBazookaProjectile", "HunkBazookaGhost", "HunkRocketGhost");
+            rocketProjectilePrefab = CreateRocket(false, "HunkRocketProjectile", "HunkRocketGhost", "HunkBigRocketGhost");
+            bazookaProjectilePrefab = CreateRocket(true, "HunkBazookaProjectile", "HunkBazookaGhost", "HunkBigRocketGhost");
             missileProjectilePrefab = CreateRocket(false, "HunkMissileProjectile", "HunkMissileGhost", "HunkMissileGhost");
-            grenadeProjectilePrefab = CreateRocket(false, "HunkGrenadeProjectile", "HunkGrenadeGhost", "HunkGrenadehost");
+            grenadeProjectilePrefab = CreateRocket(false, "HunkGrenadeProjectile", "HunkGrenadeGhost", "HunkGrenadeGhost");
 
             rocketProjectilePrefab.GetComponent<ProjectileDamage>().damageType = DamageType.IgniteOnHit;
             grenadeProjectilePrefab.GetComponent<ProjectileDamage>().damageType = DamageType.IgniteOnHit;
@@ -36,7 +36,7 @@ namespace HunkMod.Modules
             InitializeImpactExplosion(impactExplosion);
 
             GameObject fuckMyLife = Modules.Assets.explosionEffect;
-            fuckMyLife.AddComponent<NetworkIdentity>();
+            if (!fuckMyLife.GetComponent<NetworkIdentity>()) fuckMyLife.AddComponent<NetworkIdentity>();
 
             impactExplosion.blastRadius = 15f;
             impactExplosion.destroyOnEnemy = true;

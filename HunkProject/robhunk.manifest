@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2148885053
+CRC: 1806975
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: d477ca2009fa6d6467e52ceccc42c23e
+    Hash: 53f9d47dead02b543057c3421ca6afc5
   TypeTreeHash:
     serializedVersion: 2
     Hash: 5f16f7b551fafcce7a6a6bb4023696c9
@@ -106,6 +106,7 @@ Assets:
 - Assets/Hunk/Icons/texSuperSkin.png
 - Assets/Hunk/VFX/matSpeedLine.mat
 - Assets/Hunk/VFX/matSpike.mat
+- Assets/Hunk/Animations/WeaponCase/Idle.anim
 - Assets/Hunk/Animations/Rocket/Descend.anim
 - Assets/Hunk/VFX/ShotgunShell.prefab
 - Assets/Hunk/VFX/Badass/BigExplosion.prefab
@@ -145,6 +146,7 @@ Assets:
 - Assets/Hunk/VFX/SpeedLines.prefab
 - Assets/Hunk/Weapons/mdlShotgunPickup.prefab
 - Assets/Hunk/Icons/Weapon/texMUPIcon.png
+- Assets/Hunk/Animations/WeaponCase/Open.anim
 - Assets/Hunk/Animations/Default/DefaultPose.anim
 - Assets/Hunk/Textures/Flamethrower/Leon_FlameThrowerExt_D.png
 - Assets/Hunk/Animations/Default/AimPitch.anim
@@ -243,6 +245,7 @@ Assets:
 - Assets/Hunk/HUD/WeaponChargeBar.prefab
 - Assets/Hunk/Materials/matShotgunSlug.mat
 - Assets/Hunk/HUD/Textures/texRadialSelectionOuter.png
+- Assets/Hunk/mdlWeaponCase.prefab
 - Assets/Hunk/VFX/GunLight.prefab
 - Assets/Hunk/Textures/BlueRose/BlueRose_N.png
 - Assets/Hunk/Animations/Default/FreefallN.anim
@@ -395,6 +398,7 @@ Assets:
 - Assets/Hunk/Textures/WeaponCase/Hardcase_BaseColor.png
 - Assets/Hunk/Weapons/mdlGrenadeLauncher.prefab
 - Assets/Hunk/Textures/Misc/texShell.png
+- Assets/Hunk/Animations/WeaponCase/animWeaponCase.controller
 - Assets/Hunk/Materials/matKeyCardHeart.mat
 - Assets/Hunk/HUD/Textures/texWhite.png
 - Assets/Hunk/Textures/Shotgun/Leon_RemingtonM1100_N.png
