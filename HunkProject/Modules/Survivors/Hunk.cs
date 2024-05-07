@@ -141,7 +141,7 @@ namespace HunkMod.Modules.Survivors
                 umbraMaster = CreateMaster(characterPrefab, "RobHunkMonsterMaster");
 
                 immobilizedBuff = Modules.Buffs.AddNewBuff("buffHunkImmobilized", null, Color.white, false, false, true);
-                infectedBuff = Modules.Buffs.AddNewBuff("buffHunkInfected", null, Color.yellow, false, false, false);
+                infectedBuff = Modules.Buffs.AddNewBuff("buffHunkInfected", null, Color.yellow, false, false, true);
             }
 
             Hook();
@@ -1707,7 +1707,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
         {
             orig(self);
 
-            if (self && self.viewerBody)
+            if (self && self.source)
             {
                 if (Hunk.virusObjectiveObjects.Count > 0)
                 { 
@@ -1720,18 +1720,21 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                                 GameObject infectedBackdrop = GameObject.Instantiate(self.transform.Find("Backdrop,Elite").gameObject, self.transform.Find("Backdrop,Elite"));
                                 infectedBackdrop.SetActive(true);
                                 infectedBackdrop.name = "Backdrop, Infected";
-                                infectedBackdrop.GetComponent<Image>().tintColor = new Color(1f, 111f / 255f, 184f / 255f);
+                                infectedBackdrop.GetComponent<UnityEngine.UI.Image>().color = new Color(1f, 111f / 255f, 184f / 255f);
+                                infectedBackdrop.GetComponent<RectTransform>().localScale = new Vector3(0.94f, 0.5f, 1f);
 
                                 self.style = Hunk.instance.infectedHealthBarStyle;
 
                                 self.eliteBackdropRectTransform = null;
                                 self.transform.Find("Backdrop,Elite").gameObject.SetActive(true);
+                                self.transform.Find("Backdrop,Elite/Arrow,EliteBackdrop").gameObject.SetActive(true);
 
                                 MonoBehaviour.Destroy(self.GetComponent<LevelText>());
                                 var it = self.gameObject.AddComponent<InfectionText>();
                                 it.target = self.source.body;
                                 it.text = self.transform.Find("LevelRoot/ValueText").GetComponent<HGTextMeshProUGUI>();
                                 self.transform.Find("LevelRoot").gameObject.SetActive(true);
+                                self.transform.Find("LevelRoot").GetComponent<RectTransform>().localPosition = new Vector3(-78f, -2f, 0f);
                             }
                         }
                     }
