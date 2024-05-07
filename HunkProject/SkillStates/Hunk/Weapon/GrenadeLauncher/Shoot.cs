@@ -31,7 +31,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.GrenadeLauncher
         {
             get
             {
-                return Modules.Projectiles.rocketProjectilePrefab;
+                return Modules.Projectiles.grenadeProjectilePrefab;
             }
         }
 

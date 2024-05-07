@@ -25,12 +25,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4549015225778328123}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.6020007}
-  m_LocalScale: {x: 0.26582852, y: 0.2658286, z: 0.2658286}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0.00019192764, y: 0, z: 0}
+  m_LocalScale: {x: 0.00019852021, y: 0.00019852025, z: 0.00019852024}
   m_Children: []
-  m_Father: {fileID: 4549015227355846395}
-  m_RootOrder: 1
+  m_Father: {fileID: 513926552737890779}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &4549015225778328124
 ParticleSystem:
@@ -48,7 +48,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -4781,8 +4781,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 513926552737890779}
-  - {fileID: 4549015225778328122}
-  - {fileID: 1635467527295188003}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4814,7 +4812,9 @@ Transform:
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -0, y: 0, z: -0.345}
   m_LocalScale: {x: 1339.0502, y: 1339.0503, z: 1339.0499}
-  m_Children: []
+  m_Children:
+  - {fileID: 4549015225778328122}
+  - {fileID: 1635467527295188003}
   m_Father: {fileID: 4549015227355846395}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -4890,12 +4890,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6942808307342417025}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.6020007}
-  m_LocalScale: {x: 0.26582852, y: 0.2658286, z: 0.2658286}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0.00019192764, y: 0, z: 0}
+  m_LocalScale: {x: 0.00019852021, y: 0.00019852025, z: 0.00019852024}
   m_Children: []
-  m_Father: {fileID: 4549015227355846395}
-  m_RootOrder: 2
+  m_Father: {fileID: 513926552737890779}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &2310524188071302038
 ParticleSystem:

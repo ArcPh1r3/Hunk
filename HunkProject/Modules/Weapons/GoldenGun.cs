@@ -7,11 +7,11 @@ namespace HunkMod.Modules.Weapons
     {
         public override string weaponNameToken => "GOLDGUN";
         public override string weaponName => "Golden Gun";
-        public override string weaponDesc => "1-round capacity .50 AE MAG. Gas-operated action, which is unusual for a semi-auto handgun, gives it both power and accuracy.";
+        public override string weaponDesc => "1-round capacity handgun able to kill anything in only one shot.";
         public override string iconName => "texGoldenGunIcon";
         public override GameObject crosshairPrefab => Modules.Assets.magnumCrosshairPrefab;
         public override int magSize => 1;
-        public override float magPickupMultiplier => 0.5f;
+        public override float magPickupMultiplier => 0.1f;
         public override float reloadDuration => 1.8f;
         public override string ammoName => "Golden Ammo";
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlGoldenGun");

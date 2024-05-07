@@ -1,14 +1,9 @@
 ﻿using R2API;
-using Rewired.ComponentControls.Effects;
 using RoR2;
 using RoR2.Projectile;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
-using UnityEngine.Rendering.PostProcessing;
 
 namespace HunkMod.Modules
 {
@@ -17,14 +12,17 @@ namespace HunkMod.Modules
         public static GameObject rocketProjectilePrefab;
         public static GameObject bazookaProjectilePrefab;
         public static GameObject missileProjectilePrefab;
+        public static GameObject grenadeProjectilePrefab;
 
         internal static void RegisterProjectiles()
         {
-            rocketProjectilePrefab = CreateRocket(false, "HunkRocketProjectile", "HunkRocketGhost", "HunkRocketGhost");
-            bazookaProjectilePrefab = CreateRocket(true, "HunkBazookaProjectile", "HunkBazookaGhost", "HunkRocketGhost");
+            rocketProjectilePrefab = CreateRocket(false, "HunkRocketProjectile", "HunkRocketGhost", "HunkBigRocketGhost");
+            bazookaProjectilePrefab = CreateRocket(true, "HunkBazookaProjectile", "HunkBazookaGhost", "HunkBigRocketGhost");
             missileProjectilePrefab = CreateRocket(false, "HunkMissileProjectile", "HunkMissileGhost", "HunkMissileGhost");
+            grenadeProjectilePrefab = CreateRocket(false, "HunkGrenadeProjectile", "HunkGrenadeGhost", "HunkGrenadeGhost");
 
             rocketProjectilePrefab.GetComponent<ProjectileDamage>().damageType = DamageType.IgniteOnHit;
+            grenadeProjectilePrefab.GetComponent<ProjectileDamage>().damageType = DamageType.IgniteOnHit;
             bazookaProjectilePrefab.GetComponent<ProjectileImpactExplosion>().falloffModel = BlastAttack.FalloffModel.SweetSpot;
         }
 
@@ -38,7 +36,7 @@ namespace HunkMod.Modules
             InitializeImpactExplosion(impactExplosion);
 
             GameObject fuckMyLife = Modules.Assets.explosionEffect;
-            fuckMyLife.AddComponent<NetworkIdentity>();
+            if (!fuckMyLife.GetComponent<NetworkIdentity>()) fuckMyLife.AddComponent<NetworkIdentity>();
 
             impactExplosion.blastRadius = 15f;
             impactExplosion.destroyOnEnemy = true;
