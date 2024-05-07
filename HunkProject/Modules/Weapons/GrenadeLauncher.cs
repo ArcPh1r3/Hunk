@@ -11,7 +11,7 @@ namespace HunkMod.Modules.Weapons
         public override string iconName => "texGrenadeLauncherIcon";
         public override GameObject crosshairPrefab => Modules.Assets.grenadeLauncherCrosshairPrefab2;
         public override int magSize => 1;
-        public override float magPickupMultiplier => 2f;
+        public override float magPickupMultiplier => 4f;
         public override float reloadDuration => 2.4f;
         public override string ammoName => "Incendiary Rounds";
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlGrenadeLauncher");
