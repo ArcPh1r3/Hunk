@@ -66,9 +66,8 @@ namespace HunkMod.Modules.Survivors
         public static List<HunkWeaponDef> spawnedWeaponList = new List<HunkWeaponDef>();
         public static List<GameObject> virusObjectiveObjects = new List<GameObject>();
 
-        //public static string stageBlacklist = "arena,artifactworld,bazaar,goldshores,limbo,moon,moon2,mysteryspace,outro,voidoutro,voidraid,voidstage";
-        //public static List<string> blacklistedStageNames = new List<string>();
-        //why not???
+        public static string stageBlacklist = "arena,artifactworld,bazaar,goldshores,limbo,moon,moon2,mysteryspace,outro,voidoutro,voidraid,voidstage";
+        public static List<string> blacklistedStageNames = new List<string>();
 
         public static InteractableSpawnCard chestInteractableCard;
         internal static GameObject weaponChestPrefab;
@@ -2304,9 +2303,9 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                 var pos2 = Vector3.zero;
                 var rot2 = Quaternion.Euler(0, 0, 0);
 
-                //string[] splitString = stageBlacklist.Split(',');
+                string[] splitString = stageBlacklist.Split(',');
 
-                //blacklistedStageNames = new List<string>(splitString);
+                blacklistedStageNames = new List<string>(splitString);
 
                 bool doSpawns = true;
 
@@ -2407,7 +2406,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     // you were breaking out of the for loop, but the switch statement wasn't broken
                     // so the two random chests were still being spawned
                     // it's fixed but i'll leave this commented out- putting this back in is your call
-                    /*default:
+                    default:
                         bool isBlacklisted = false;
                         foreach (string stage in blacklistedStageNames)
                         {
@@ -2419,12 +2418,14 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                             }
                         }
 
-                        if (isBlacklisted) break;
-                        SpawnChests();
-                        SpawnChests();
-                        break;*/
+                        if (!isBlacklisted)
+                        {
+                            SpawnChests();
+                            SpawnChests();
+                        }
+                        break;
                     
-                    case "arena":
+                    /*case "arena":
                         doSpawns = false;
                         break;
                     case "artifactworld":
@@ -2465,7 +2466,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     default:
                         SpawnChests();
                         SpawnChests();
-                        break;
+                        break;*/
 
                 }
 
