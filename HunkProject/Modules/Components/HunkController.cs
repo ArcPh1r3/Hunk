@@ -38,6 +38,8 @@ namespace HunkMod.Modules.Components
         private Animator animator;
         private SkillLocator skillLocator;
 
+        public GenericSkill knifeSkinSkillSlot;
+
         public int maxShellCount = 24;
 
         private int currentShell;
@@ -1024,6 +1026,14 @@ namespace HunkMod.Modules.Components
     }, true);
             }
             //DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(Survivors.Hunk.terminalInteractableCard, new DirectorPlacementRule { placementMode = DirectorPlacementRule.PlacementMode.NearestNode }, rng));
+        }
+
+        public SkillDef knifeSkin
+        {
+            get
+            {
+                return this.knifeSkinSkillSlot.skillDef;
+            }
         }
     }
 }

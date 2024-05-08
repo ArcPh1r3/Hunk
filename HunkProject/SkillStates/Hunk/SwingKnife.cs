@@ -2,18 +2,33 @@
 using EntityStates;
 using HunkMod.SkillStates.BaseStates;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
+using RoR2.Skills;
 
 namespace HunkMod.SkillStates.Hunk
 {
     public class SwingKnife : BaseMeleeAttack
     {
-        protected override string prop => "KnifeModel";
         private GameObject swingEffectInstance;
         private bool knifeHidden;
 
         public override void OnEnter()
         {
+            this.hunk = this.GetComponent<Modules.Components.HunkController>();
+
+            SkillDef knifeSkinDef = this.hunk.knifeSkin;
+            if (knifeSkinDef)
+            {
+                switch (knifeSkinDef.activationStateMachineName)
+                {
+                    case "Default":
+                        this.prop = "KnifeModel";
+                        break;
+                    case "Hidden":
+                        this.prop = "HiddenKnifeModel";
+                        break;
+                }
+            }
+
             this.hitboxName = "Knife";
 
             this.swingIndex = Random.Range(0, 3);

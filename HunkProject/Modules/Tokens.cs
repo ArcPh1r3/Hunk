@@ -108,6 +108,15 @@ namespace HunkMod.Modules
             LanguageAPI.Add(prefix + "SPECIAL_SWAP_DESCRIPTION", $"<style=cIsUtility>Swap</style> to a different <style=cIsDamage>gun</style>. Tap to swap to your <style=cIsUtility>last held gun</style>.");
             #endregion
 
+            #region Knife Skins
+            LanguageAPI.Add(prefix + "KNIFE_DEFAULT_NAME", "Combat Knife");
+            LanguageAPI.Add(prefix + "KNIFE_DEFAULT_DESCRIPTION", "A standard military-grade knife. Sure to come in handy in a pinch.");
+            LanguageAPI.Add(prefix + "KNIFE_INFINITE_NAME", "Combat Knife EX");
+            LanguageAPI.Add(prefix + "KNIFE_INFINITE_DESCRIPTION", "A specially-treated military-grade knife that's been hardened to an unbelievable degree. They say it's been made to really last.");
+            LanguageAPI.Add(prefix + "KNIFE_HIDDEN_NAME", "Hidden Blade");
+            LanguageAPI.Add(prefix + "KNIFE_HIDDEN_DESCRIPTION", "A low profile retractable blade hidden in the sleeve. Ideal for stealth operations.");
+            #endregion
+
             #region Achievements
             prefix = MainPlugin.developerPrefix + "_HUNK_";
             LanguageAPI.Add(prefix + "UNLOCKABLE_UNLOCKABLE_NAME", "Looming Dread");

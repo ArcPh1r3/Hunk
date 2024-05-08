@@ -470,6 +470,7 @@ namespace HunkMod.Modules.Survivors
         private static void CreateSkills(GameObject prefab)
         {
             HunkPassive passive = prefab.AddComponent<HunkPassive>();
+            HunkController hunk = prefab.GetComponent<HunkController>();
 
             string prefix = MainPlugin.developerPrefix;
             SkillLocator skillLocator = prefab.GetComponent<SkillLocator>();
@@ -623,7 +624,7 @@ namespace HunkMod.Modules.Survivors
                 MainPlugin.developerPrefix + "_HUNK_KEYWORD_LOOTING"
             };
 
-            SkillDef knifeAlt = Modules.Skills.CreatePrimarySkillDef(new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.SwingAltKnife)),
+            /*SkillDef knifeAlt = Modules.Skills.CreatePrimarySkillDef(new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.SwingAltKnife)),
     "Weapon",
     prefix + "_HUNK_BODY_PRIMARY_KNIFEALT_NAME",
     prefix + "_HUNK_BODY_PRIMARY_KNIFEALT_DESCRIPTION",
@@ -632,7 +633,7 @@ namespace HunkMod.Modules.Survivors
             knifeAlt.keywordTokens = new string[]
             {
                 MainPlugin.developerPrefix + "_HUNK_KEYWORD_LOOTING"
-            };
+            };*/
 
             counterSkillDef = Modules.Skills.CreatePrimarySkillDef(new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Counter.Lunge)),
     "Weapon",
@@ -642,7 +643,7 @@ namespace HunkMod.Modules.Survivors
             counterSkillDef.interruptPriority = EntityStates.InterruptPriority.PrioritySkill;
 
             Modules.Skills.AddPrimarySkills(prefab,
-                knife, knifeAlt);
+                knife);
             #endregion
 
             #region Secondary
@@ -728,6 +729,65 @@ namespace HunkMod.Modules.Survivors
 
             Modules.Skills.AddSpecialSkills(prefab, swapSkillDef);
             #endregion
+
+            #region KnifeSkins
+            SkillDef defaultKnifeSkillDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = prefix + "_HUNK_BODY_KNIFE_DEFAULT_NAME",
+                skillNameToken = prefix + "_HUNK_BODY_KNIFE_DEFAULT_NAME",
+                skillDescriptionToken = prefix + "_HUNK_BODY_KNIFE_DEFAULT_DESCRIPTION",
+                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Idle)),
+                activationStateMachineName = "Default",
+                baseMaxStock = 0,
+                baseRechargeInterval = 0f,
+                beginSkillCooldownOnSkillEnd = false,
+                canceledFromSprinting = false,
+                forceSprintDuringState = false,
+                fullRestockOnAssign = true,
+                interruptPriority = EntityStates.InterruptPriority.Any,
+                resetCooldownTimerOnUse = false,
+                isCombatSkill = false,
+                mustKeyPress = false,
+                cancelSprintingOnActivation = false,
+                rechargeStock = 0,
+                requiredStock = 0,
+                stockToConsume = 0
+            });
+
+            SkillDef hiddenKnifeSkillDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = prefix + "_HUNK_BODY_KNIFE_HIDDEN_NAME",
+                skillNameToken = prefix + "_HUNK_BODY_KNIFE_HIDDEN_NAME",
+                skillDescriptionToken = prefix + "_HUNK_BODY_KNIFE_HIDDEN_DESCRIPTION",
+                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Idle)),
+                activationStateMachineName = "Hidden",
+                baseMaxStock = 0,
+                baseRechargeInterval = 0f,
+                beginSkillCooldownOnSkillEnd = false,
+                canceledFromSprinting = false,
+                forceSprintDuringState = false,
+                fullRestockOnAssign = true,
+                interruptPriority = EntityStates.InterruptPriority.Any,
+                resetCooldownTimerOnUse = false,
+                isCombatSkill = false,
+                mustKeyPress = false,
+                cancelSprintingOnActivation = false,
+                rechargeStock = 0,
+                requiredStock = 0,
+                stockToConsume = 0
+            });
+
+            Modules.Skills.AddKnifeSkins(hunk.knifeSkinSkillSlot.skillFamily, new SkillDef[]{
+                    defaultKnifeSkillDef,
+                    hiddenKnifeSkillDef
+                });
+
+            //Modules.Skills.AddUnlockablesToFamily(passive.passiveSkillSlot.skillFamily,
+            //null, altPassiveUnlockableDef);
+            #endregion
+
 
             if (MainPlugin.scepterInstalled) InitializeScepterSkills();
         }
@@ -2177,6 +2237,9 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             // infected name tag
             On.RoR2.Util.GetBestBodyName += MakeInfectedName;
 
+            // what
+            On.RoR2.UI.LoadoutPanelController.Rebuild += LoadoutPanelController_Rebuild;
+
             // if i speak i am in trouble
             On.RoR2.UI.MainMenu.BaseMainMenuScreen.Awake += BaseMainMenuScreen_Awake;
             On.RoR2.UI.MainMenu.BaseMainMenuScreen.Update += BaseMainMenuScreen_Update;
@@ -2532,9 +2595,15 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             // this is beyond stupid lmfao who let this monkey code
             if (self.currentDisplayData.bodyIndex == BodyCatalog.FindBodyIndex("RobHunkBody"))
             {
+                int j = 0;
                 foreach (LanguageTextMeshController i in self.gameObject.GetComponentsInChildren<LanguageTextMeshController>())
                 {
-                    if (i && i.token == "LOADOUT_SKILL_MISC") i.token = "Passive";
+                    if (i && i.token == "LOADOUT_SKILL_MISC")
+                    {
+                        if (j <= 0) i.token = "Passive";
+                        else i.token = "Knife";
+                    }
+                    j++;
                 }
             }
         }
