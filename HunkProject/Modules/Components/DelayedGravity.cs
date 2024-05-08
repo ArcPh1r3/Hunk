@@ -6,7 +6,7 @@ namespace HunkMod.Modules.Components
     {
         private void Awake()
         {
-            this.Invoke("Wahoo", 3f);
+            this.Invoke("Wahoo", 1f);
         }
 
         private void Wahoo()

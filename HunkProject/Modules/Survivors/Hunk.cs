@@ -2993,7 +2993,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             On.EntityStates.ClayBruiser.Weapon.MinigunFire.FixedUpdate += MinigunFire_FixedUpdate;
 
             // if i speak i am in trouble
-            On.RoR2.UI.MainMenu.BaseMainMenuScreen.Awake += BaseMainMenuScreen_Awake;
+            //On.RoR2.UI.MainMenu.BaseMainMenuScreen.Awake += BaseMainMenuScreen_Awake;
             On.RoR2.UI.MainMenu.BaseMainMenuScreen.Update += BaseMainMenuScreen_Update;
             // 🙈 🙉 🙊
 
