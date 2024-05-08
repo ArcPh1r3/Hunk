@@ -1005,6 +1005,10 @@ namespace HunkMod.Modules.Survivors
                 model,
                 earlySupporterUnlockableDef);
 
+            CharacterModel.RendererInfo[] superInfos = new CharacterModel.RendererInfo[defaultRenderers.Length];
+            defaultRenderers.CopyTo(superInfos, 0);
+
+            superSkin.rendererInfos = superInfos;
             superSkin.rendererInfos[5].defaultMaterial = Modules.Assets.CreateMaterial("matHunk06", 10f, Color.white, 1f);
 
             superSkin.meshReplacements = defaultSkin.meshReplacements;
@@ -1327,10 +1331,10 @@ localScale = new Vector3(0.37442F, 0.43177F, 0.5829F)
                             ruleType = ItemDisplayRuleType.ParentedPrefab,
                             followerPrefab = ItemDisplays.VirusEye,
                             limbMask = LimbFlags.None,
-childName = "Head",
-localPos = new Vector3(-0.35141F, 0.49907F, 0.26666F),
-localAngles = new Vector3(297.3339F, 281.542F, 259.467F),
-localScale = new Vector3(0.37442F, 0.43177F, 0.30541F)
+childName = "Body",
+localPos = new Vector3(-0.35141F, 1.01498F, 0.30014F),
+localAngles = new Vector3(298.9637F, 306.8926F, 2.61667F),
+localScale = new Vector3(0.68332F, 0.78798F, 0.55737F)
                         }
                     }
                 }
@@ -1348,10 +1352,10 @@ localScale = new Vector3(0.37442F, 0.43177F, 0.30541F)
                             ruleType = ItemDisplayRuleType.ParentedPrefab,
                             followerPrefab = ItemDisplays.VirusEye,
                             limbMask = LimbFlags.None,
-childName = "Chest",
-localPos = new Vector3(-0.34449F, 0.58535F, 0.28165F),
-localAngles = new Vector3(295.1681F, 339.4774F, 155.8602F),
-localScale = new Vector3(0.38573F, 0.36756F, 0.33815F)
+childName = "Body",
+localPos = new Vector3(0.39853F, 0.89548F, -0.39389F),
+localAngles = new Vector3(294.165F, 162.7658F, 83.1927F),
+localScale = new Vector3(0.51132F, 0.6617F, 0.70897F)
                         }
         }
                 }
@@ -1369,10 +1373,10 @@ localScale = new Vector3(0.38573F, 0.36756F, 0.33815F)
                             ruleType = ItemDisplayRuleType.ParentedPrefab,
                             followerPrefab = ItemDisplays.VirusEye,
                             limbMask = LimbFlags.None,
-childName = "Head",
-localPos = new Vector3(0.0008F, 0.04397F, -0.07806F),
-localAngles = new Vector3(346.3586F, 180F, 1.87543F),
-localScale = new Vector3(0.37442F, 0.43177F, 0.5829F)
+childName = "Body",
+localPos = new Vector3(-0.00494F, 0.2474F, 0.84682F),
+localAngles = new Vector3(13.39955F, 354.3815F, 356.81F),
+localScale = new Vector3(0.65352F, 0.75362F, 1.01741F)
                         }
         }
                 }
@@ -1396,10 +1400,79 @@ localScale = new Vector3(0.37442F, 0.43177F, 0.5829F)
                             ruleType = ItemDisplayRuleType.ParentedPrefab,
                             followerPrefab = ItemDisplays.VirusEye,
                             limbMask = LimbFlags.None,
+childName = "Chest",
+localPos = new Vector3(-2.45199F, 1.05421F, -0.86517F),
+localAngles = new Vector3(12.60156F, 205.7276F, 116.2795F),
+localScale = new Vector3(1.64841F, 2.07425F, 1.46721F)
+                        }
+                    }
+                }
+            });
+
+            displayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            {
+                keyAsset = Hunk.gVirus2,
+                displayRuleGroup = new DisplayRuleGroup
+                {
+                    rules = new ItemDisplayRule[]
+        {
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.VirusEye,
+                            limbMask = LimbFlags.None,
+childName = "FootL",
+localPos = new Vector3(0.23025F, 0.54567F, -0.75685F),
+localAngles = new Vector3(315.5203F, 161.7386F, 214.9006F),
+localScale = new Vector3(0.49248F, 0.56073F, 0.51586F)
+                        }
+        }
+                }
+            });
+
+            displayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            {
+                keyAsset = Hunk.gVirusFinal,
+                displayRuleGroup = new DisplayRuleGroup
+                {
+                    rules = new ItemDisplayRule[]
+        {
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.VirusEye,
+                            limbMask = LimbFlags.None,
 childName = "Head",
-localPos = new Vector3(-0.35141F, 0.49907F, 0.26666F),
-localAngles = new Vector3(297.3339F, 281.542F, 259.467F),
-localScale = new Vector3(0.37442F, 0.43177F, 0.30541F)
+localPos = new Vector3(-0.03198F, 0.54857F, -0.44969F),
+localAngles = new Vector3(306.4828F, 185.0415F, 174.3479F),
+localScale = new Vector3(2.27331F, 2.91669F, 3.9376F)
+                        }
+        }
+                }
+            });
+            idrs.keyAssetRuleGroups = displayRules.ToArray();
+            #endregion
+
+            #region Beetle Guard
+            idrs = Addressables.LoadAssetAsync<ItemDisplayRuleSet>("RoR2/Base/Beetle/idrsBeetleGuard.asset").WaitForCompletion();
+            displayRules = idrs.keyAssetRuleGroups.ToList();
+
+            displayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            {
+                keyAsset = Hunk.gVirus,
+                displayRuleGroup = new DisplayRuleGroup
+                {
+                    rules = new ItemDisplayRule[]
+                    {
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.VirusEye,
+                            limbMask = LimbFlags.None,
+childName = "HandR",
+localPos = new Vector3(-0.06254F, 0.60391F, -0.66027F),
+localAngles = new Vector3(357.0576F, 201.3958F, 263.8221F),
+localScale = new Vector3(0.60461F, 0.69721F, 0.60435F)
                         }
                     }
                 }
@@ -1418,8 +1491,146 @@ localScale = new Vector3(0.37442F, 0.43177F, 0.30541F)
                             followerPrefab = ItemDisplays.VirusEye,
                             limbMask = LimbFlags.None,
 childName = "Head",
-localPos = new Vector3(-0.34449F, 0.58535F, 0.28165F),
-localAngles = new Vector3(295.1681F, 339.4774F, 155.8602F),
+localPos = new Vector3(0.60587F, 0.39132F, -0.47052F),
+localAngles = new Vector3(313.6237F, 75.64559F, 37.47511F),
+localScale = new Vector3(1.01838F, 0.97041F, 0.89277F)
+                        }
+        }
+                }
+            });
+
+            displayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            {
+                keyAsset = Hunk.gVirusFinal,
+                displayRuleGroup = new DisplayRuleGroup
+                {
+                    rules = new ItemDisplayRule[]
+        {
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.VirusEye,
+                            limbMask = LimbFlags.None,
+childName = "Head",
+localPos = new Vector3(-0.10479F, 1.55146F, -0.10945F),
+localAngles = new Vector3(292.9561F, 357.9843F, 176.711F),
+localScale = new Vector3(1.44881F, 1.8349F, 1.29496F)
+                        }
+        }
+                }
+            });
+            idrs.keyAssetRuleGroups = displayRules.ToArray();
+            #endregion
+
+            #region Bison
+            idrs = Addressables.LoadAssetAsync<ItemDisplayRuleSet>("RoR2/Base/Bison/idrsBison.asset").WaitForCompletion();
+            displayRules = idrs.keyAssetRuleGroups.ToList();
+
+            displayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            {
+                keyAsset = Hunk.gVirus,
+                displayRuleGroup = new DisplayRuleGroup
+                {
+                    rules = new ItemDisplayRule[]
+                    {
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.VirusEye,
+                            limbMask = LimbFlags.None,
+childName = "Head",
+localPos = new Vector3(-0.02246F, 0.64255F, 0.33553F),
+localAngles = new Vector3(299.4639F, 319.8605F, 172.6846F),
+localScale = new Vector3(0.18002F, 0.20759F, 0.22654F)
+                        }
+                    }
+                }
+            });
+
+            displayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            {
+                keyAsset = Hunk.gVirus2,
+                displayRuleGroup = new DisplayRuleGroup
+                {
+                    rules = new ItemDisplayRule[]
+        {
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.VirusEye,
+                            limbMask = LimbFlags.None,
+childName = "Head",
+localPos = new Vector3(-0.01497F, 0.65113F, -0.37822F),
+localAngles = new Vector3(306.1044F, 230.9469F, 327.8887F),
+localScale = new Vector3(0.16618F, 0.21809F, 0.20064F)
+                        }
+        }
+                }
+            });
+
+            displayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            {
+                keyAsset = Hunk.gVirusFinal,
+                displayRuleGroup = new DisplayRuleGroup
+                {
+                    rules = new ItemDisplayRule[]
+        {
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.VirusEye,
+                            limbMask = LimbFlags.None,
+childName = "Head",
+localPos = new Vector3(-0.09919F, 0.67496F, 0.06389F),
+localAngles = new Vector3(291.3203F, 317.8623F, 79.44216F),
+localScale = new Vector3(0.33353F, 0.38461F, 0.58257F)
+                        }
+        }
+                }
+            });
+            idrs.keyAssetRuleGroups = displayRules.ToArray();
+            #endregion
+
+            #region Templar
+            idrs = Addressables.LoadAssetAsync<ItemDisplayRuleSet>("RoR2/Base/ClayBruiser/idrsClayBruiser.asset").WaitForCompletion();
+            displayRules = idrs.keyAssetRuleGroups.ToList();
+
+            displayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            {
+                keyAsset = Hunk.gVirus,
+                displayRuleGroup = new DisplayRuleGroup
+                {
+                    rules = new ItemDisplayRule[]
+                    {
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.VirusEye,
+                            limbMask = LimbFlags.None,
+childName = "Muzzle",
+localPos = new Vector3(0F, -0.06654F, -0.20133F),
+localAngles = new Vector3(0F, 0F, 0F),
+localScale = new Vector3(0.25402F, 0.32167F, 0.25402F)
+                        }
+                    }
+                }
+            });
+
+            displayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            {
+                keyAsset = Hunk.gVirus2,
+                displayRuleGroup = new DisplayRuleGroup
+                {
+                    rules = new ItemDisplayRule[]
+        {
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.VirusEye,
+                            limbMask = LimbFlags.None,
+childName = "Head",
+localPos = new Vector3(-0.48537F, 0.03016F, 0.28992F),
+localAngles = new Vector3(331.2194F, 294.6687F, 181.9398F),
 localScale = new Vector3(0.38573F, 0.36756F, 0.33815F)
                         }
         }
@@ -1439,6 +1650,292 @@ localScale = new Vector3(0.38573F, 0.36756F, 0.33815F)
                             followerPrefab = ItemDisplays.VirusEye,
                             limbMask = LimbFlags.None,
 childName = "Head",
+localPos = new Vector3(0.00825F, 0.2264F, 0.13584F),
+localAngles = new Vector3(297.4628F, 67.79795F, 230.3572F),
+localScale = new Vector3(0.44669F, 0.51511F, 0.69541F)
+                        }
+        }
+                }
+            });
+            idrs.keyAssetRuleGroups = displayRules.ToArray();
+            #endregion
+
+            #region Elder Lemurian
+            idrs = Addressables.LoadAssetAsync<ItemDisplayRuleSet>("RoR2/Base/LemurianBruiser/idrsLemurianBruiser.asset").WaitForCompletion();
+            displayRules = idrs.keyAssetRuleGroups.ToList();
+
+            displayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            {
+                keyAsset = Hunk.gVirus,
+                displayRuleGroup = new DisplayRuleGroup
+                {
+                    rules = new ItemDisplayRule[]
+                    {
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.VirusEye,
+                            limbMask = LimbFlags.None,
+childName = "Chest",
+localPos = new Vector3(-0.73046F, 0.22604F, -2.22095F),
+localAngles = new Vector3(337.0166F, 195.3143F, 307.628F),
+localScale = new Vector3(2.20569F, 2.54354F, 1.79915F)
+                        }
+                    }
+                }
+            });
+
+            displayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            {
+                keyAsset = Hunk.gVirus2,
+                displayRuleGroup = new DisplayRuleGroup
+                {
+                    rules = new ItemDisplayRule[]
+        {
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.VirusEye,
+                            limbMask = LimbFlags.None,
+childName = "Chest",
+localPos = new Vector3(1.72582F, 2.05372F, 0.47658F),
+localAngles = new Vector3(303.0192F, 67.60723F, 195.18F),
+localScale = new Vector3(1.83411F, 1.90506F, 3.21729F)
+                        }
+        }
+                }
+            });
+
+            displayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            {
+                keyAsset = Hunk.gVirusFinal,
+                displayRuleGroup = new DisplayRuleGroup
+                {
+                    rules = new ItemDisplayRule[]
+        {
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.VirusEye,
+                            limbMask = LimbFlags.None,
+childName = "Head",
+localPos = new Vector3(0.07601F, 2.12676F, 1.07836F),
+localAngles = new Vector3(276.5894F, 16.4315F, 163.9101F),
+localScale = new Vector3(2.40804F, 2.77688F, 5.01033F)
+                        }
+        }
+                }
+            });
+            idrs.keyAssetRuleGroups = displayRules.ToArray();
+            #endregion
+
+            #region Greater Wisp
+            idrs = Addressables.LoadAssetAsync<ItemDisplayRuleSet>("RoR2/Base/GreaterWisp/idrsGreaterWisp.asset").WaitForCompletion();
+            displayRules = idrs.keyAssetRuleGroups.ToList();
+
+            displayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            {
+                keyAsset = Hunk.gVirus,
+                displayRuleGroup = new DisplayRuleGroup
+                {
+                    rules = new ItemDisplayRule[]
+                    {
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.VirusEye,
+                            limbMask = LimbFlags.None,
+childName = "MaskBase",
+localPos = new Vector3(0.47566F, 0.81408F, 0.21343F),
+localAngles = new Vector3(334.4195F, 12.17842F, 308.6803F),
+localScale = new Vector3(0.63072F, 0.71507F, 0.71507F)
+                        }
+                    }
+                }
+            });
+
+            displayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            {
+                keyAsset = Hunk.gVirus2,
+                displayRuleGroup = new DisplayRuleGroup
+                {
+                    rules = new ItemDisplayRule[]
+        {
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.VirusEye,
+                            limbMask = LimbFlags.None,
+childName = "MuzzleLeft",
+localPos = new Vector3(0.44733F, 0.10951F, 0.0809F),
+localAngles = new Vector3(0.87499F, 20.25935F, 358.3208F),
+localScale = new Vector3(0.25384F, 0.31895F, 0.39405F)
+                        },
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.VirusEye,
+                            limbMask = LimbFlags.None,
+childName = "MuzzleRight",
+localPos = new Vector3(0.08772F, -0.12623F, -0.27867F),
+localAngles = new Vector3(0.87499F, 20.25935F, 358.3208F),
+localScale = new Vector3(0.25384F, 0.31895F, 0.39405F)
+                        }
+        }
+                }
+            });
+
+            displayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            {
+                keyAsset = Hunk.gVirusFinal,
+                displayRuleGroup = new DisplayRuleGroup
+                {
+                    rules = new ItemDisplayRule[]
+        {
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.VirusEye,
+                            limbMask = LimbFlags.None,
+childName = "MaskBase",
+localPos = new Vector3(-0.10331F, 0.0761F, 0.5305F),
+localAngles = new Vector3(13.67617F, 1.18147F, 30.66892F),
+localScale = new Vector3(0.78518F, 0.90545F, 0.92726F)
+                        }
+        }
+                }
+            });
+            idrs.keyAssetRuleGroups = displayRules.ToArray();
+            #endregion
+
+            #region Parent
+            idrs = Addressables.LoadAssetAsync<ItemDisplayRuleSet>("RoR2/Base/Parent/idrsParent.asset").WaitForCompletion();
+            displayRules = idrs.keyAssetRuleGroups.ToList();
+
+            displayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            {
+                keyAsset = Hunk.gVirus,
+                displayRuleGroup = new DisplayRuleGroup
+                {
+                    rules = new ItemDisplayRule[]
+                    {
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.VirusEye,
+                            limbMask = LimbFlags.None,
+childName = "Chest",
+localPos = new Vector3(64.86555F, 2.47273F, -90.4606F),
+localAngles = new Vector3(339.4435F, 116.334F, 268.6689F),
+localScale = new Vector3(73.79612F, 66.57604F, 101.7756F)
+                        }
+                    }
+                }
+            });
+
+            displayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            {
+                keyAsset = Hunk.gVirus2,
+                displayRuleGroup = new DisplayRuleGroup
+                {
+                    rules = new ItemDisplayRule[]
+        {
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.VirusEye,
+                            limbMask = LimbFlags.None,
+childName = "Pelvis",
+localPos = new Vector3(58.78731F, 31.02789F, 53.63195F),
+localAngles = new Vector3(359.8232F, 53.31361F, 89.13486F),
+localScale = new Vector3(50.37483F, 73.41547F, 94.4957F)
+                        }
+        }
+                }
+            });
+
+            displayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            {
+                keyAsset = Hunk.gVirusFinal,
+                displayRuleGroup = new DisplayRuleGroup
+                {
+                    rules = new ItemDisplayRule[]
+        {
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.VirusEye,
+                            limbMask = LimbFlags.None,
+childName = "Head",
+localPos = new Vector3(13.39281F, 41.68724F, 1.13535F),
+localAngles = new Vector3(315.7136F, 69.70868F, 18.78091F),
+localScale = new Vector3(74.23115F, 138.2175F, 115.5637F)
+                        }
+        }
+                }
+            });
+            idrs.keyAssetRuleGroups = displayRules.ToArray();
+            #endregion
+
+            #region Imp
+            idrs = Addressables.LoadAssetAsync<ItemDisplayRuleSet>("RoR2/Base/Imp/idrsImp.asset").WaitForCompletion();
+            displayRules = idrs.keyAssetRuleGroups.ToList();
+
+            displayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            {
+                keyAsset = Hunk.gVirus,
+                displayRuleGroup = new DisplayRuleGroup
+                {
+                    rules = new ItemDisplayRule[]
+                    {
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.VirusEye,
+                            limbMask = LimbFlags.None,
+childName = "Chest",
+localPos = new Vector3(-0.09919F, 0.39778F, 0.06803F),
+localAngles = new Vector3(299.956F, 296.3019F, 63.28477F),
+localScale = new Vector3(0.20132F, 0.23216F, 0.16421F)
+                        }
+                    }
+                }
+            });
+
+            displayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            {
+                keyAsset = Hunk.gVirus2,
+                displayRuleGroup = new DisplayRuleGroup
+                {
+                    rules = new ItemDisplayRule[]
+        {
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.VirusEye,
+                            limbMask = LimbFlags.None,
+childName = "Chest",
+localPos = new Vector3(0.02974F, 0.16718F, 0.21999F),
+localAngles = new Vector3(350.9952F, 5.38308F, 359.3495F),
+localScale = new Vector3(0.25758F, 0.29703F, 0.401F)
+                        }
+        }
+                }
+            });
+
+            displayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            {
+                keyAsset = Hunk.gVirusFinal,
+                displayRuleGroup = new DisplayRuleGroup
+                {
+                    rules = new ItemDisplayRule[]
+        {
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.VirusEye,
+                            limbMask = LimbFlags.None,
+childName = "Chest",
 localPos = new Vector3(0.0008F, 0.04397F, -0.07806F),
 localAngles = new Vector3(346.3586F, 180F, 1.87543F),
 localScale = new Vector3(0.37442F, 0.43177F, 0.5829F)
@@ -1454,6 +1951,111 @@ localScale = new Vector3(0.37442F, 0.43177F, 0.5829F)
         {
             // uhh
             Modules.ItemDisplays.PopulateDisplays();
+
+            itemDisplayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            {
+                keyAsset = Hunk.spadeKeycard,
+                displayRuleGroup = new DisplayRuleGroup
+                {
+                    rules = new ItemDisplayRule[]
+        {
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.SpadeKeycard,
+                            limbMask = LimbFlags.None,
+childName = "Pelvis",
+localPos = new Vector3(18.28741F, -5.00451F, -6.3516F),
+localAngles = new Vector3(55.81532F, 102.1367F, 182.2121F),
+localScale = new Vector3(19.82461F, 22.86115F, 30.86304F)
+                        }
+        }
+                }
+            });
+
+            itemDisplayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            {
+                keyAsset = Hunk.clubKeycard,
+                displayRuleGroup = new DisplayRuleGroup
+                {
+                    rules = new ItemDisplayRule[]
+{
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.ClubKeycard,
+                            limbMask = LimbFlags.None,
+childName = "Pelvis",
+localPos = new Vector3(15.68854F, -3.62925F, -8.9425F),
+localAngles = new Vector3(54.34012F, 118.4513F, 195.6197F),
+localScale = new Vector3(19.82461F, 22.86115F, 30.86304F)
+                        }
+}
+                }
+            });
+
+            itemDisplayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            {
+                keyAsset = Hunk.heartKeycard,
+                displayRuleGroup = new DisplayRuleGroup
+                {
+                    rules = new ItemDisplayRule[]
+{
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.HeartKeycard,
+                            limbMask = LimbFlags.None,
+childName = "Pelvis",
+localPos = new Vector3(18.9826F, -4.52743F, -4.17952F),
+localAngles = new Vector3(37.62438F, 61.28591F, 139.0769F),
+localScale = new Vector3(19.82461F, 22.86115F, 30.86304F)
+                        }
+}
+                }
+            });
+
+            itemDisplayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            {
+                keyAsset = Hunk.diamondKeycard,
+                displayRuleGroup = new DisplayRuleGroup
+                {
+                    rules = new ItemDisplayRule[]
+{
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.DiamondKeycard,
+                            limbMask = LimbFlags.None,
+childName = "Pelvis",
+localPos = new Vector3(19.26896F, -5.61374F, -2.02333F),
+localAngles = new Vector3(56.2317F, 120.4924F, 171.5673F),
+localScale = new Vector3(19.82461F, 22.86115F, 30.86304F)
+                        }
+}
+                }
+            });
+
+            itemDisplayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            {
+                keyAsset = Hunk.gVirusSample,
+                displayRuleGroup = new DisplayRuleGroup
+                {
+                    rules = new ItemDisplayRule[]
+{
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.GVirusSample,
+                            limbMask = LimbFlags.None,
+childName = "Stomach",
+localPos = new Vector3(-4.27445F, 14.75704F, -16.96162F),
+localAngles = new Vector3(0F, 0F, 46.0078F),
+localScale = new Vector3(15.77204F, 15.77204F, 15.77204F)
+                        }
+}
+                }
+            });
 
             //if (!Modules.Config.enableItemDisplays) return;
 

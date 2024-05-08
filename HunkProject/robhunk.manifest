@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 606226139
+CRC: 93049688
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 77b774448d2fad2e1879bf0bc614768b
+    Hash: b0e92f7cd23650807aefae7bd29f7ac0
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9c1933516dfd54fa9ad82d4055bce09b
@@ -195,6 +195,7 @@ Assets:
 - Assets/Hunk/Items/mdlKeycardSpade.prefab
 - Assets/Hunk/VFX/texShockwave.png
 - Assets/Hunk/VFX/texDodgeFlash.png
+- Assets/Hunk/Items/DisplayKeycardDiamond.prefab
 - Assets/Hunk/Icons/Skill/texConfirmIcon.png
 - Assets/Hunk/HUD/Animations/Flash.anim
 - Assets/Hunk/Animations/Default/RunL.anim
@@ -246,6 +247,7 @@ Assets:
 - Assets/Hunk/Textures/GVirus/sm74_201_Gvirus01A_A_EMI.png
 - Assets/Hunk/Materials/matDisplayCase01.mat
 - Assets/Hunk/Materials/matGrenade.mat
+- Assets/Hunk/Items/DisplayKeycardSpade.prefab
 - Assets/Hunk/Mesh/meshCommando.mesh
 - Assets/Hunk/Weapons/mdlGrenadeLauncherPickup.prefab
 - Assets/Hunk/Textures/GVirus/texGVirusSample.png
@@ -289,6 +291,7 @@ Assets:
 - Assets/Hunk/Materials/matHunkPod.mat
 - Assets/Hunk/Mesh/0005_Resident Evil 7_ 2.mesh
 - Assets/Hunk/Textures/Tofu/texTofu.png
+- Assets/Hunk/Items/DisplayKeycardClub.prefab
 - Assets/Hunk/Animations/Pistol/AimIdle.anim
 - Assets/Hunk/Materials/matRevolver.mat
 - Assets/Hunk/Icons/Skill/texPassiveIcon.png
@@ -349,6 +352,7 @@ Assets:
 - Assets/Hunk/HUD/Textures/texChargeRing.png
 - Assets/Hunk/Textures/GrenadeLauncher/T_M381_Normal.png
 - Assets/Hunk/Textures/Knife/Leon_Knife_N.png
+- Assets/Hunk/Items/DisplayKeycardHeart.prefab
 - Assets/Hunk/Weapons/mdlSlugger.prefab
 - Assets/Hunk/Textures/Magnum/Leon_LightningHawkNormBarrel_D.png
 - Assets/Hunk/Textures/Keycard/texKeycardClub.png
@@ -403,6 +407,7 @@ Assets:
 - Assets/Hunk/VFX/Badass/SmallExplosion.prefab
 - Assets/Hunk/Textures/Flamethrower/Leon_FlameThrowerExt_N.png
 - Assets/Hunk/Weapons/mdlRocketLauncherPickup.prefab
+- Assets/Hunk/Items/DisplayGVirusSample.prefab
 - Assets/Hunk/VFX/texSpike.png
 - Assets/Hunk/Animations/Rocket/Ascend.anim
 - Assets/Hunk/HUD/DodgeFlash.prefab

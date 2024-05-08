@@ -33,7 +33,7 @@ namespace HunkMod.SkillStates.Hunk
 				ModelSkinController msc = model.GetComponent<ModelSkinController>();
 				if (msc.skins[msc.currentSkinIndex].nameToken.Contains("SUPER"))
 				{
-					//this.FindModelChild("EyeTrailL").gameObject.SetActive(true);
+					this.FindModelChild("EyeTrailL").gameObject.SetActive(true);
 					this.FindModelChild("EyeTrailR").gameObject.SetActive(true);
 
 					if (this.hunk && this.hunk.weaponTracker && Modules.Helpers.HunkHasWeapon(Modules.Weapons.ATM.instance.weaponDef, this.hunk.weaponTracker)) return;
