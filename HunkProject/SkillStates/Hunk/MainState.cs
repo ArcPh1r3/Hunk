@@ -5,6 +5,7 @@ using HunkMod.Modules;
 using HunkMod.SkillStates.Emote;
 using BepInEx.Configuration;
 using HunkMod.Modules.Components;
+using UnityEngine.AddressableAssets;
 
 namespace HunkMod.SkillStates.Hunk
 {
@@ -26,21 +27,21 @@ namespace HunkMod.SkillStates.Hunk
 
 		private void CheckForSuperSkin()
 		{
-			if (this.hunk && this.hunk.weaponTracker && Modules.Helpers.HunkHasWeapon(Modules.Weapons.ATM.instance.weaponDef, this.hunk.weaponTracker)) return;
-			if (this.hunk.spawnedATM) return;
-			if (!this.characterBody.isPlayerControlled) return;
-
 			CharacterModel model = this.GetModelTransform().GetComponent<CharacterModel>();
 			if (model && model.GetComponent<ModelSkinController>())
 			{
 				ModelSkinController msc = model.GetComponent<ModelSkinController>();
 				if (msc.skins[msc.currentSkinIndex].nameToken.Contains("SUPER"))
 				{
-					if (Util.HasEffectiveAuthority(this.gameObject))
-					{
-						Chat.AddMessage("Thanks for supporting the mod :)");
-					}
-					
+					//this.FindModelChild("EyeTrailL").gameObject.SetActive(true);
+					this.FindModelChild("EyeTrailR").gameObject.SetActive(true);
+
+					if (this.hunk && this.hunk.weaponTracker && Modules.Helpers.HunkHasWeapon(Modules.Weapons.ATM.instance.weaponDef, this.hunk.weaponTracker)) return;
+					if (this.hunk.spawnedATM) return;
+					if (!this.characterBody.isPlayerControlled) return;
+
+					this.FindModelChild("EyeTrailR").gameObject.GetComponent<TrailRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/Railgunner/matRailgunBeam.mat").WaitForCompletion();
+					this.FindModelChild("EyeTrailL").gameObject.GetComponent<TrailRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/Railgunner/matRailgunBeam.mat").WaitForCompletion();
 					this.hunk.spawnedATM = true;
 
 					PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Weapons.ATM.instance.itemDef.itemIndex), this.characterBody.corePosition, this.characterBody.inputBank.aimDirection * 30f);

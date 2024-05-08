@@ -512,6 +512,8 @@ namespace HunkMod.Modules
             knifeSwingEffectRed = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Merc/MercSwordSlash.prefab").WaitForCompletion().InstantiateClone("HunkKnifeSwingRed", false);
             Material swingMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/Huntress/matHuntressSwingTrail.mat").WaitForCompletion());
             swingMat.SetColor("_TintColor", Color.red);
+            swingMat.SetTexture("_RemapTex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Common/ColorRamps/texRampWisp.png").WaitForCompletion());
+            swingMat.SetFloat("_Boost", 4.680387f);
             knifeSwingEffectRed.transform.GetChild(0).GetComponent<ParticleSystemRenderer>().material = swingMat;
             //
 
