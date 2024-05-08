@@ -42,7 +42,12 @@ namespace HunkMod.Modules
             VirusEye.GetComponentInChildren<SkinnedMeshRenderer>().material = eyeMat;
 
             GVirusSample = Assets.mainAssetBundle.LoadAsset<GameObject>("DisplayGVirusSample");
-            Modules.Assets.ConvertAllRenderersToHopooShader(GVirusSample);
+            //Modules.Assets.ConvertAllRenderersToHopooShader(GVirusSample);
+            GVirusSample.transform.Find("Model").GetComponent<MeshRenderer>().material = Modules.Assets.CreateMaterial("matGVirusSample2", 1f, Color.white, 1f);
+            GVirusSample.transform.Find("Model/Glass").GetComponent<MeshRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/HealingPotion/matHealingPotionGlass.mat").WaitForCompletion();
+            GVirusSample.transform.Find("Model/Glass2").GetComponent<MeshRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/HealingPotion/matHealingPotionGlass.mat").WaitForCompletion();
+            GVirusSample.transform.Find("Model/30_MainMesh-2-SubMesh-1--sm74-201-Gvirus01_0.3_16_16").GetComponent<MeshRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/VoidJailer/matVoidJailerEyes.mat").WaitForCompletion();
+
             GVirusSample.AddComponent<ItemDisplay>().rendererInfos = new CharacterModel.RendererInfo[]
             {
                 new CharacterModel.RendererInfo
@@ -68,176 +73,28 @@ namespace HunkMod.Modules
                 },
                 new CharacterModel.RendererInfo
                 {
-                    defaultMaterial = Modules.Assets.CreateMaterial("matGVirusSample2", 3f, Color.white, 1f),
+                    defaultMaterial = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/VoidJailer/matVoidJailerEyes.mat").WaitForCompletion(),
                     ignoreOverlays = false,
                     defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
                     renderer = GVirusSample.transform.Find("Model/30_MainMesh-2-SubMesh-1--sm74-201-Gvirus01_0.3_16_16").GetComponent<MeshRenderer>()
                 }
             };
 
-            Material keycardMat = Modules.Assets.CreateMaterial("matKeyCardSpade", 0f, Color.black, 1f);
             SpadeKeycard = Assets.mainAssetBundle.LoadAsset<GameObject>("DisplayKeycardSpade");
-            SpadeKeycard.AddComponent<ItemDisplay>().rendererInfos = new CharacterModel.RendererInfo[]
-            {
-                new CharacterModel.RendererInfo
-                {
-                    defaultMaterial = keycardMat,
-                    ignoreOverlays = false,
-                    defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
-                    renderer = SpadeKeycard.transform.Find("Model/epickeycard/Holder_low").GetComponent<MeshRenderer>()
-                },
-                new CharacterModel.RendererInfo
-                {
-                    defaultMaterial = keycardMat,
-                    ignoreOverlays = false,
-                    defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
-                    renderer = SpadeKeycard.transform.Find("Model/epickeycard/HolderBit_low").GetComponent<MeshRenderer>()
-                },
-                new CharacterModel.RendererInfo
-                {
-                    defaultMaterial = keycardMat,
-                    ignoreOverlays = false,
-                    defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
-                    renderer = SpadeKeycard.transform.Find("Model/epickeycard/Rope/KeyRingRope_low").GetComponent<MeshRenderer>()
-                },
-                new CharacterModel.RendererInfo
-                {
-                    defaultMaterial = keycardMat,
-                    ignoreOverlays = false,
-                    defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
-                    renderer = SpadeKeycard.transform.Find("Model/epickeycard/Base/KeyCardBase_low").GetComponent<MeshRenderer>()
-                },
-                new CharacterModel.RendererInfo
-                {
-                    defaultMaterial = keycardMat,
-                    ignoreOverlays = false,
-                    defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
-                    renderer = SpadeKeycard.transform.Find("Model/epickeycard/Base/KeyCardMechanics_low").GetComponent<MeshRenderer>()
-                }
-            };
+            Modules.Assets.ConvertAllRenderersToHopooShader(SpadeKeycard);
+            SpadeKeycard.AddComponent<ItemDisplay>();
 
-            keycardMat = Modules.Assets.CreateMaterial("matKeyCardClub", 0f, Color.black, 1f);
             ClubKeycard = Assets.mainAssetBundle.LoadAsset<GameObject>("DisplayKeycardClub");
-            ClubKeycard.AddComponent<ItemDisplay>().rendererInfos = new CharacterModel.RendererInfo[]
-            {
-                new CharacterModel.RendererInfo
-                {
-                    defaultMaterial = keycardMat,
-                    ignoreOverlays = false,
-                    defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
-                    renderer = ClubKeycard.transform.Find("Model/epickeycard/Holder_low").GetComponent<MeshRenderer>()
-                },
-                new CharacterModel.RendererInfo
-                {
-                    defaultMaterial = keycardMat,
-                    ignoreOverlays = false,
-                    defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
-                    renderer = ClubKeycard.transform.Find("Model/epickeycard/HolderBit_low").GetComponent<MeshRenderer>()
-                },
-                new CharacterModel.RendererInfo
-                {
-                    defaultMaterial = keycardMat,
-                    ignoreOverlays = false,
-                    defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
-                    renderer = ClubKeycard.transform.Find("Model/epickeycard/Rope/KeyRingRope_low").GetComponent<MeshRenderer>()
-                },
-                new CharacterModel.RendererInfo
-                {
-                    defaultMaterial = keycardMat,
-                    ignoreOverlays = false,
-                    defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
-                    renderer = ClubKeycard.transform.Find("Model/epickeycard/Base/KeyCardBase_low").GetComponent<MeshRenderer>()
-                },
-                new CharacterModel.RendererInfo
-                {
-                    defaultMaterial = keycardMat,
-                    ignoreOverlays = false,
-                    defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
-                    renderer = ClubKeycard.transform.Find("Model/epickeycard/Base/KeyCardMechanics_low").GetComponent<MeshRenderer>()
-                }
-            };
+            Modules.Assets.ConvertAllRenderersToHopooShader(ClubKeycard);
+            ClubKeycard.AddComponent<ItemDisplay>();
 
-            keycardMat = Modules.Assets.CreateMaterial("matKeyCardHeart", 0f, Color.black, 1f);
             HeartKeycard = Assets.mainAssetBundle.LoadAsset<GameObject>("DisplayKeycardHeart");
-            HeartKeycard.AddComponent<ItemDisplay>().rendererInfos = new CharacterModel.RendererInfo[]
-            {
-                new CharacterModel.RendererInfo
-                {
-                    defaultMaterial = keycardMat,
-                    ignoreOverlays = false,
-                    defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
-                    renderer = HeartKeycard.transform.Find("Model/epickeycard/Holder_low").GetComponent<MeshRenderer>()
-                },
-                new CharacterModel.RendererInfo
-                {
-                    defaultMaterial = keycardMat,
-                    ignoreOverlays = false,
-                    defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
-                    renderer = HeartKeycard.transform.Find("Model/epickeycard/HolderBit_low").GetComponent<MeshRenderer>()
-                },
-                new CharacterModel.RendererInfo
-                {
-                    defaultMaterial = keycardMat,
-                    ignoreOverlays = false,
-                    defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
-                    renderer = HeartKeycard.transform.Find("Model/epickeycard/Rope/KeyRingRope_low").GetComponent<MeshRenderer>()
-                },
-                new CharacterModel.RendererInfo
-                {
-                    defaultMaterial = keycardMat,
-                    ignoreOverlays = false,
-                    defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
-                    renderer = HeartKeycard.transform.Find("Model/epickeycard/Base/KeyCardBase_low").GetComponent<MeshRenderer>()
-                },
-                new CharacterModel.RendererInfo
-                {
-                    defaultMaterial = keycardMat,
-                    ignoreOverlays = false,
-                    defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
-                    renderer = HeartKeycard.transform.Find("Model/epickeycard/Base/KeyCardMechanics_low").GetComponent<MeshRenderer>()
-                }
-            };
+            Modules.Assets.ConvertAllRenderersToHopooShader(HeartKeycard);
+            HeartKeycard.AddComponent<ItemDisplay>();
 
-            keycardMat = Modules.Assets.CreateMaterial("matKeyCardDiamond", 0f, Color.black, 1f);
             DiamondKeycard = Assets.mainAssetBundle.LoadAsset<GameObject>("DisplayKeycardDiamond");
-            DiamondKeycard.AddComponent<ItemDisplay>().rendererInfos = new CharacterModel.RendererInfo[]
-            {
-                new CharacterModel.RendererInfo
-                {
-                    defaultMaterial = keycardMat,
-                    ignoreOverlays = false,
-                    defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
-                    renderer = DiamondKeycard.transform.Find("Model/epickeycard/Holder_low").GetComponent<MeshRenderer>()
-                },
-                new CharacterModel.RendererInfo
-                {
-                    defaultMaterial = keycardMat,
-                    ignoreOverlays = false,
-                    defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
-                    renderer = DiamondKeycard.transform.Find("Model/epickeycard/HolderBit_low").GetComponent<MeshRenderer>()
-                },
-                new CharacterModel.RendererInfo
-                {
-                    defaultMaterial = keycardMat,
-                    ignoreOverlays = false,
-                    defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
-                    renderer = DiamondKeycard.transform.Find("Model/epickeycard/Rope/KeyRingRope_low").GetComponent<MeshRenderer>()
-                },
-                new CharacterModel.RendererInfo
-                {
-                    defaultMaterial = keycardMat,
-                    ignoreOverlays = false,
-                    defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
-                    renderer = DiamondKeycard.transform.Find("Model/epickeycard/Base/KeyCardBase_low").GetComponent<MeshRenderer>()
-                },
-                new CharacterModel.RendererInfo
-                {
-                    defaultMaterial = keycardMat,
-                    ignoreOverlays = false,
-                    defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
-                    renderer = DiamondKeycard.transform.Find("Model/epickeycard/Base/KeyCardMechanics_low").GetComponent<MeshRenderer>()
-                }
-            };
+            Modules.Assets.ConvertAllRenderersToHopooShader(DiamondKeycard);
+            DiamondKeycard.AddComponent<ItemDisplay>();
 
             PopulateFromBody("Commando");
             PopulateFromBody("Croco");

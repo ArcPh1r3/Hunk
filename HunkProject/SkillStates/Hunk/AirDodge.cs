@@ -121,6 +121,14 @@ namespace HunkMod.SkillStates.Hunk
                 }
             }
 
+            foreach (Modules.Components.GolemLaser i in Modules.Survivors.Hunk.golemLasers)
+            {
+                if (i && Vector3.Distance(i.endPoint, this.transform.position) <= this.checkRadius * 0.5f)
+                {
+                    return true;
+                }
+            }
+
             return false;
         }
 
