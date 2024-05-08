@@ -13,8 +13,6 @@ using HunkMod.Modules.Components;
 using R2API.Networking;
 using R2API.Networking.Interfaces;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
-using Moonstorm.Starstorm2;
 
 namespace HunkMod.Modules.Survivors
 {
@@ -44,6 +42,7 @@ namespace HunkMod.Modules.Survivors
         internal static List<ItemDisplayRuleSet.KeyAssetRuleGroup> itemDisplayRules;
 
         internal static UnlockableDef characterUnlockableDef;
+        internal static UnlockableDef masteryUnlockableDef;
         internal static UnlockableDef lightweightUnlockableDef;
         internal static UnlockableDef earlySupporterUnlockableDef;
 
@@ -123,6 +122,7 @@ namespace HunkMod.Modules.Survivors
                 forceUnlock = Modules.Config.ForceUnlockConfig("Hunk");
 
                 //if (!forceUnlock.Value) characterUnlockableDef = R2API.UnlockableAPI.AddUnlockable<Achievements.DriverUnlockAchievement>();
+                masteryUnlockableDef = R2API.UnlockableAPI.AddUnlockable<Achievements.HunkMonsoonAchievement>();
                 lightweightUnlockableDef = R2API.UnlockableAPI.AddUnlockable<Achievements.HunkLightweightAchievement>();
                 earlySupporterUnlockableDef = R2API.UnlockableAPI.AddUnlockable<Achievements.HunkSupporterAchievement>();
 
@@ -770,27 +770,102 @@ namespace HunkMod.Modules.Survivors
                 mainRenderer,
                 model);
 
-            /*defaultSkin.meshReplacements = new SkinDef.MeshReplacement[]
+            defaultSkin.meshReplacements = new SkinDef.MeshReplacement[]
             {
                 new SkinDef.MeshReplacement
                 {
-                    renderer = mainRenderer,
-                    mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("meshDriver")
+                    renderer = childLocator.FindChild("Model01").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("0000_Resident Evil 7_ 1")
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model02").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("0001_Resident Evil 7_ 2")
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model03").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("0002_Resident Evil 7_ 3")
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model04").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("0003_Resident Evil 7_ 4")
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model05").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("0004_Resident Evil 7_ 1")
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model06").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("0005_Resident Evil 7_ 2")
                 }
-            };*/
+            };
 
             skins.Add(defaultSkin);
             #endregion
 
             #region MasterySkin
-            SkinDef masterySkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_LIGHTWEIGHT_SKIN_NAME",
+            SkinDef masterySkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_TOFU_SKIN_NAME",
+                Assets.mainAssetBundle.LoadAsset<Sprite>("texTofuSkin"),
+                SkinRendererInfos(defaultRenderers,
+                new Material[]
+                {
+                    Modules.Assets.CreateMaterial("matTofu", 0f, Color.black, 1f),
+                    Modules.Assets.CreateMaterial("matBeret", 0f, Color.black, 1f)
+                }),
+                mainRenderer,
+                model,
+                masteryUnlockableDef);
+
+            masterySkin.meshReplacements = new SkinDef.MeshReplacement[]
+            {
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model01").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("meshTofu")
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model02").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("meshTofuHat")
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model03").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = null
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model04").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = null
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model05").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = null
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model06").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = null
+                }
+            };
+
+            skins.Add(masterySkin);
+            #endregion
+
+            #region LightweightSkin
+            SkinDef lightweightSkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_LIGHTWEIGHT_SKIN_NAME",
                 Assets.mainAssetBundle.LoadAsset<Sprite>("texLightweightSkin"),
                 defaultRenderers,
                 mainRenderer,
                 model,
                 lightweightUnlockableDef);
 
-            masterySkin.meshReplacements = new SkinDef.MeshReplacement[]
+            lightweightSkin.meshReplacements = new SkinDef.MeshReplacement[]
             {
                 new SkinDef.MeshReplacement
                 {
@@ -809,7 +884,7 @@ namespace HunkMod.Modules.Survivors
                 }
             };
 
-            skins.Add(masterySkin);
+            skins.Add(lightweightSkin);
             #endregion
 
             #region CommandoSkin
@@ -1501,7 +1576,13 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             CharacterModel.RendererInfo[] newRendererInfos = new CharacterModel.RendererInfo[defaultRenderers.Length];
             defaultRenderers.CopyTo(newRendererInfos, 0);
 
-            newRendererInfos[0].defaultMaterial = materials[0];
+            for (int i = 0; i < materials.Length; i++)
+            {
+                if (materials[i])
+                {
+                    newRendererInfos[i].defaultMaterial = materials[i];
+                }
+            }
 
             return newRendererInfos;
         }
