@@ -43,8 +43,10 @@ namespace HunkMod.Modules.Survivors
 
         internal static UnlockableDef characterUnlockableDef;
         internal static UnlockableDef masteryUnlockableDef;
+        internal static UnlockableDef cqcUnlockableDef;
         internal static UnlockableDef lightweightUnlockableDef;
         internal static UnlockableDef earlySupporterUnlockableDef;
+        internal static UnlockableDef completionUnlockableDef;
 
         // skill overrides
         internal static SkillDef reloadSkillDef;
@@ -125,8 +127,10 @@ namespace HunkMod.Modules.Survivors
 
                 //if (!forceUnlock.Value) characterUnlockableDef = R2API.UnlockableAPI.AddUnlockable<Achievements.DriverUnlockAchievement>();
                 masteryUnlockableDef = R2API.UnlockableAPI.AddUnlockable<Achievements.HunkMonsoonAchievement>();
+                cqcUnlockableDef = R2API.UnlockableAPI.AddUnlockable<Achievements.HunkCQCAchievement>();
                 lightweightUnlockableDef = R2API.UnlockableAPI.AddUnlockable<Achievements.HunkLightweightAchievement>();
                 earlySupporterUnlockableDef = R2API.UnlockableAPI.AddUnlockable<Achievements.HunkSupporterAchievement>();
+                completionUnlockableDef = R2API.UnlockableAPI.AddUnlockable<Achievements.HunkCompletionAchievement>();
 
                 CreateKeycards();
                 CreateAmmoInteractable();
@@ -484,9 +488,9 @@ namespace HunkMod.Modules.Survivors
 
             Hunk.reloadSkillDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
             {
-                skillName = prefix + "_DRIVER_BODY_PRIMARY_RELOAD_NAME",
-                skillNameToken = prefix + "_DRIVER_BODY_PRIMARY_RELOAD_NAME",
-                skillDescriptionToken = prefix + "_DRIVER_BODY_RELOAD_DESCRIPTION",
+                skillName = prefix + "_HUNK_BODY_PRIMARY_RELOAD_NAME",
+                skillNameToken = prefix + "_HUNK_BODY_PRIMARY_RELOAD_NAME",
+                skillDescriptionToken = prefix + "_HUNK_BODY_RELOAD_DESCRIPTION",
                 skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texConfirmIcon"),
                 activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Reload)),
                 activationStateMachineName = "Weapon",
@@ -508,9 +512,9 @@ namespace HunkMod.Modules.Survivors
 
             Hunk.confirmSkillDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
             {
-                skillName = prefix + "_DRIVER_BODY_CONFIRM_NAME",
-                skillNameToken = prefix + "_DRIVER_BODY_CONFIRM_NAME",
-                skillDescriptionToken = prefix + "_DRIVER_BODY_CONFIRM_DESCRIPTION",
+                skillName = prefix + "_HUNK_BODY_CONFIRM_NAME",
+                skillNameToken = prefix + "_HUNK_BODY_CONFIRM_NAME",
+                skillDescriptionToken = prefix + "_HUNK_BODY_CONFIRM_DESCRIPTION",
                 skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texConfirmIcon"),
                 activationState = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Idle)),
                 activationStateMachineName = "fuck",
@@ -532,9 +536,9 @@ namespace HunkMod.Modules.Survivors
 
             Hunk.cancelSkillDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
             {
-                skillName = prefix + "_DRIVER_BODY_CANCEL_NAME",
-                skillNameToken = prefix + "_DRIVER_BODY_CANCEL_NAME",
-                skillDescriptionToken = prefix + "_DRIVER_BODY_CANCEL_DESCRIPTION",
+                skillName = prefix + "_HUNK_BODY_CANCEL_NAME",
+                skillNameToken = prefix + "_HUNK_BODY_CANCEL_NAME",
+                skillDescriptionToken = prefix + "_HUNK_BODY_CANCEL_DESCRIPTION",
                 skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texCancelIcon"),
                 activationState = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Idle)),
                 activationStateMachineName = "fuck",
@@ -584,7 +588,7 @@ namespace HunkMod.Modules.Survivors
                 skillName = prefix + "_HUNK_BODY_PASSIVE2_NAME",
                 skillNameToken = prefix + "_HUNK_BODY_PASSIVE2_NAME",
                 skillDescriptionToken = prefix + "_HUNK_BODY_PASSIVE2_DESCRIPTION",
-                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texLeadfootIcon"),
+                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texPassive2Icon"),
                 activationState = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Idle)),
                 activationStateMachineName = "",
                 baseMaxStock = 1,
@@ -608,8 +612,8 @@ namespace HunkMod.Modules.Survivors
                     passive.fullArsenalPassive
                 });
 
-            //Modules.Skills.AddUnlockablesToFamily(passive.passiveSkillSlot.skillFamily,
-            //null, altPassiveUnlockableDef);
+            Modules.Skills.AddUnlockablesToFamily(passive.passiveSkillSlot.skillFamily,
+            null, completionUnlockableDef);
             #endregion
 
             #region Primary
@@ -736,7 +740,7 @@ namespace HunkMod.Modules.Survivors
                 skillName = prefix + "_HUNK_BODY_KNIFE_DEFAULT_NAME",
                 skillNameToken = prefix + "_HUNK_BODY_KNIFE_DEFAULT_NAME",
                 skillDescriptionToken = prefix + "_HUNK_BODY_KNIFE_DEFAULT_DESCRIPTION",
-                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"),
+                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeDefault"),
                 activationState = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Idle)),
                 activationStateMachineName = "Default",
                 baseMaxStock = 0,
@@ -760,7 +764,7 @@ namespace HunkMod.Modules.Survivors
                 skillName = prefix + "_HUNK_BODY_KNIFE_HIDDEN_NAME",
                 skillNameToken = prefix + "_HUNK_BODY_KNIFE_HIDDEN_NAME",
                 skillDescriptionToken = prefix + "_HUNK_BODY_KNIFE_HIDDEN_DESCRIPTION",
-                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"),
+                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeHidden"),
                 activationState = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Idle)),
                 activationStateMachineName = "Hidden",
                 baseMaxStock = 0,
@@ -784,8 +788,8 @@ namespace HunkMod.Modules.Survivors
                     hiddenKnifeSkillDef
                 });
 
-            //Modules.Skills.AddUnlockablesToFamily(passive.passiveSkillSlot.skillFamily,
-            //null, altPassiveUnlockableDef);
+            Modules.Skills.AddUnlockablesToFamily(hunk.knifeSkinSkillSlot.skillFamily,
+            null, cqcUnlockableDef);
             #endregion
 
 
@@ -2971,18 +2975,22 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             // set objective bullshit..
             On.RoR2.UI.ObjectivePanelController.GetObjectiveSources += ObjectivePanelController_GetObjectiveSources;
 
-            // infected health bar
-            On.RoR2.UI.HealthBar.Update += HealthBar_Update;
-
             // spawn rocket launcher on mithrix last phase
             //On.EntityStates.BrotherMonster.UltExitState.OnEnter += UltExitState_OnEnter;
             On.EntityStates.Missions.BrotherEncounter.Phase4.OnEnter += Phase4_OnEnter;
+
+            // infected health bar
+            On.RoR2.UI.HealthBar.Update += HealthBar_Update;
 
             // infected name tag
             On.RoR2.Util.GetBestBodyName += MakeInfectedName;
 
             // what
             On.RoR2.UI.LoadoutPanelController.Rebuild += LoadoutPanelController_Rebuild;
+
+            // make dodges more consistent
+            On.EntityStates.Bison.Charge.FixedUpdate += Charge_FixedUpdate;
+            On.EntityStates.ClayBruiser.Weapon.MinigunFire.FixedUpdate += MinigunFire_FixedUpdate;
 
             // if i speak i am in trouble
             On.RoR2.UI.MainMenu.BaseMainMenuScreen.Awake += BaseMainMenuScreen_Awake;
@@ -2994,6 +3002,18 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             //On.EntityStates.GlobalSkills.LunarNeedle.ChargeLunarSecondary.PlayChargeAnimation += PlayChargeLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarNeedle.ThrowLunarSecondary.PlayThrowAnimation += PlayThrowLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += PlayRuinAnimation;
+        }
+
+        private static void MinigunFire_FixedUpdate(On.EntityStates.ClayBruiser.Weapon.MinigunFire.orig_FixedUpdate orig, EntityStates.ClayBruiser.Weapon.MinigunFire self)
+        {
+            if (self.characterBody) self.characterBody.outOfCombatStopwatch = 0f;
+            orig(self);
+        }
+
+        private static void Charge_FixedUpdate(On.EntityStates.Bison.Charge.orig_FixedUpdate orig, EntityStates.Bison.Charge self)
+        {
+            if (self.characterBody) self.characterBody.outOfCombatStopwatch = 0f;
+            orig(self);
         }
 
         private static void HealthBar_Update(On.RoR2.UI.HealthBar.orig_Update orig, HealthBar self)
@@ -3162,8 +3182,9 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             {
                 if (self.gameObject.name.Contains("HunkChest2"))
                 {
-                    Util.PlaySound("sfx_hunk_weapon_case_open", self.gameObject);
+                    //Util.PlaySound("sfx_hunk_weapon_case_open", self.gameObject);
                 }
+
                 else if (self.gameObject.name.Contains("HunkChest") && !self.gameObject.name.Contains("2")) // bro wtf is this code seriously?
                 {
                     Util.PlaySound("sfx_hunk_keycard_accepted", self.gameObject);

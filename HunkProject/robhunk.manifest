@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 93049688
+CRC: 1117385714
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: b0e92f7cd23650807aefae7bd29f7ac0
+    Hash: 5e10069f4afc96acc17670756703235c
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9c1933516dfd54fa9ad82d4055bce09b
@@ -90,6 +90,7 @@ Assets:
 - Assets/Hunk/Textures/Shotgun/Leon_RemingtonM1100P_D.png
 - Assets/Hunk/Animations/maskHunkGesture.mask
 - Assets/Hunk/Icons/Skill/texShootIcon.png
+- Assets/Hunk/Icons/Skill/texPassive2Icon.png
 - Assets/Hunk/VFX/BloodSpurtEffect.prefab
 - Assets/Hunk/Animations/Default/AirDodgeLoop.anim
 - Assets/Hunk/HUD/ChargeBar.prefab
@@ -185,6 +186,7 @@ Assets:
 - Assets/Hunk/Animations/Default/ShootSlugger.anim
 - Assets/Hunk/Textures/WeaponCase/DirtyHardcase_BaseColor.png
 - Assets/Hunk/Icons/Weapon/texRevolverIcon.png
+- Assets/Hunk/Icons/Skill/texKnifeDefault.png
 - Assets/Hunk/Animations/Pistol/Descend.anim
 - Assets/Hunk/Materials/matHunk03.mat
 - Assets/Hunk/Animations/Pistol/RunL.anim
@@ -331,6 +333,7 @@ Assets:
 - Assets/Hunk/Animations/Rocket/RunB.anim
 - Assets/Hunk/Items/mdlKeycardHeartOld.prefab
 - Assets/Hunk/Animations/DisplayCase/Idle.anim
+- Assets/Hunk/Icons/Skill/texKnifeHidden.png
 - Assets/Hunk/Textures/RocketLauncher/Leon_AntiTankRocket_N.png
 - Assets/Hunk/Materials/matTofu.mat
 - Assets/Hunk/Materials/matHunk04.mat

@@ -32,6 +32,8 @@ namespace HunkMod.Modules.Components
         public float snapOffset = 0.25f;
         public float flamethrowerLifetime;
 
+        private int counterCount;
+
         public CharacterBody characterBody { get; private set; }
         private ChildLocator childLocator;
         private CharacterModel characterModel;
@@ -48,6 +50,7 @@ namespace HunkMod.Modules.Components
         private GameObject[] slugObjects;
 
         public Action<HunkController> onWeaponUpdate;
+        public static Action<int> onCounter;
 
         public int maxAmmo;
         public int ammo;
@@ -463,6 +466,10 @@ namespace HunkMod.Modules.Components
                 this.counterFlash.gameObject.SetActive(false);
                 this.counterFlash.gameObject.SetActive(true);
             }
+
+            this.counterCount++;
+            if (onCounter == null) return;
+            onCounter(this.counterCount);
         }
 
         private void Update()

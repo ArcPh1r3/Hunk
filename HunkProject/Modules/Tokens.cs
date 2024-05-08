@@ -123,6 +123,10 @@ namespace HunkMod.Modules
             LanguageAPI.Add(prefix + "UNLOCKABLE_ACHIEVEMENT_NAME", "Looming Dread");
             LanguageAPI.Add(prefix + "UNLOCKABLE_ACHIEVEMENT_DESC", "Reach stage 3 in less than 15 minutes.");
 
+            LanguageAPI.Add(prefix + "COMPLETION_UNLOCKABLE_NAME", "HUNK: Grim Reaper");
+            LanguageAPI.Add(prefix + "COMPLETION_ACHIEVEMENT_NAME", "HUNK: Grim Reaper");
+            LanguageAPI.Add(prefix + "COMPLETION_ACHIEVEMENT_DESC", "As HUNK, beat the game or obliterate.");
+
             LanguageAPI.Add(prefix + "MONSOON_UNLOCKABLE_NAME", "HUNK: Mastery");
             LanguageAPI.Add(prefix + "MONSOON_ACHIEVEMENT_NAME", "HUNK: Mastery");
             LanguageAPI.Add(prefix + "MONSOON_ACHIEVEMENT_DESC", "As HUNK, beat the game or obliterate on Monsoon.");
@@ -131,9 +135,13 @@ namespace HunkMod.Modules
             LanguageAPI.Add(prefix + "SUPPORTER_ACHIEVEMENT_NAME", "HUNK: Early Supporter");
             LanguageAPI.Add(prefix + "SUPPORTER_ACHIEVEMENT_DESC", "Play HUNK before his official release.");
                 
-            LanguageAPI.Add(prefix + "LIGHTWEIGHT_UNLOCKABLE_NAME", "HUNK: Mayhem");
-            LanguageAPI.Add(prefix + "LIGHTWEIGHT_ACHIEVEMENT_NAME", "HUNK: Mayhem");
+            LanguageAPI.Add(prefix + "LIGHTWEIGHT_UNLOCKABLE_NAME", "HUNK: Minimalist");
+            LanguageAPI.Add(prefix + "LIGHTWEIGHT_ACHIEVEMENT_NAME", "HUNK: Minimalist");
             LanguageAPI.Add(prefix + "LIGHTWEIGHT_ACHIEVEMENT_DESC", "As HUNK, clear stage 1 with no items.");
+
+            LanguageAPI.Add(prefix + "CQC_UNLOCKABLE_NAME", "HUNK: CQC (Close-Quarters Combat)");
+            LanguageAPI.Add(prefix + "CQC_ACHIEVEMENT_NAME", "HUNK: CQC (Close-Quarters Combat)");
+            LanguageAPI.Add(prefix + "CQC_ACHIEVEMENT_DESC", "As HUNK, perform 10 successful counterattacks on one stage.");
             #endregion
 
 
