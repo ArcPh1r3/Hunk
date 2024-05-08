@@ -111,6 +111,8 @@ namespace HunkMod.Modules.Survivors
         internal static BuffDef immobilizedBuff;
         internal static BuffDef infectedBuff;
 
+        public static List<GolemLaser> golemLasers = new List<GolemLaser>();
+
         internal void CreateCharacter()
         {
             instance = this;

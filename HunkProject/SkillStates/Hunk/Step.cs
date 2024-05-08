@@ -138,11 +138,37 @@ namespace HunkMod.SkillStates.Hunk
                 }
             }
 
+            foreach (Modules.Components.GolemLaser i in Modules.Survivors.Hunk.golemLasers)
+            {
+                if (i && Vector3.Distance(i.endPoint, this.transform.position) <= this.checkRadius * 0.5f)
+                {
+                    Roll nextState = new Roll();
+                    outer.SetNextState(nextState);
+                    return true;
+                }
+            }
+
             return false;
         }
 
         public override void FixedUpdate()
         {
+            if (this.slowFlag2 && base.isAuthority)
+            {
+                this.characterMotor.jumpCount = 0;
+                if (this.inputBank.jump.justPressed)
+                {
+                    base.PlayCrossfade("FullBody, Override", "BufferEmpty", 0.05f);
+                    this.characterMotor.Motor.ForceUnground();
+                    this.outer.SetNextStateToMain();
+                    return;
+                }
+            }
+            else
+            {
+                this.characterMotor.jumpCount = this.characterBody.maxJumpCount;
+            }
+
             base.FixedUpdate();
             this.characterBody.aimTimer = -1f;
             this.hunk.reloadTimer = 1f;
@@ -201,13 +227,12 @@ namespace HunkMod.SkillStates.Hunk
         {
             this.DampenVelocity();
             this.hunk.isRolling = false;
-
-            /*if (cameraTargetParams)
-            {
-                cameraTargetParams.RemoveParamsOverride(camOverrideHandle, 0.2f);
-            }*/
+            this.characterMotor.jumpCount = 0;
+            this.hunk.desiredYOffset = this.hunk.defaultYOffset;
 
             base.OnExit();
+
+            if (base.isAuthority && this.inputBank.moveVector != Vector3.zero) this.characterBody.isSprinting = true;
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

@@ -141,6 +141,8 @@ namespace HunkMod.Modules
             viewer.visualizerPrefab = headshotVisualizer;
             bool dynamicCrosshair = Modules.Config.dynamicCrosshair.Value;
 
+            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Golem/LaserGolem.prefab").WaitForCompletion().AddComponent<Modules.Components.GolemLaser>();
+
             #region Pistol Crosshair
             pistolCrosshairPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/StandardCrosshair.prefab").WaitForCompletion().InstantiateClone("HunkPistolCrosshair", false);
             pistolCrosshairPrefab.GetComponent<RawImage>().enabled = false;
