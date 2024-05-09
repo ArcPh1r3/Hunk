@@ -1,15 +1,12 @@
-# Driver
-- Adds the Driver, an original character based on the Driver from the film Drive (2011)
-- Fully functional base kit with many weapon pickups that give him new attacks- all weapons can be found on the Wiki on this page
-- Has item displays, unlockable skins and skills and is fully multiplayer compatible
+# HUNK
+- Adds HUNK from the Resident Evil franchise
+- Has a couple item displays, unlockable skins and skills and is fully multiplayer compatible
 - Configurable stats and a few other things to mess around with
 - Full Risk of Options support for all configuration options
-- Ancient Scepter support and crosscompat with a couple other mods
-- Many more weapons planned!!!!
 
-[![](https://raw.githubusercontent.com/ArcPh1r3/DriverMod/main/Release/FuckShit/screen1.png)]()
+[![](https://github.com/ArcPh1r3/Hunk/blob/main/Release/FuckShit/screen1.png?raw=true)]()
 
-[![](https://raw.githubusercontent.com/ArcPh1r3/DriverMod/main/Release/FuckShit/screen2.png)]()
+[![](https://github.com/ArcPh1r3/Hunk/blob/main/Release/FuckShit/screen2.png?raw=true)]()
 
 [![](https://raw.githubusercontent.com/ArcPh1r3/DriverMod/main/Release/FuckShit/screen3.png)]()
 

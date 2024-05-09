@@ -18,7 +18,7 @@ namespace HunkMod.Modules
             desc = desc + "< ! > Scrounge around in opened chests for a chance to find ammo for your current weapons." + Environment.NewLine + Environment.NewLine;
 
             string outro = "..and so he left, fine.";
-            string outroFailure = "..and so he vanished, human unit never killed.";
+            string outroFailure = "..and so he vanished, human unit now killed.";
 
             string lore = "You're not any less of a man if you don't pull the trigger.\n";
             lore += "You're not necessarily a man if you do.\n";
