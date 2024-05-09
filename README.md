@@ -104,5 +104,8 @@ ___
 
 ## Changelog
 
+`1.0.1`
+- tiny fix whoops
+
 `1.0.0`
 - Initial release
