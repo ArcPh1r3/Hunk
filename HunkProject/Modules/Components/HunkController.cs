@@ -32,6 +32,9 @@ namespace HunkMod.Modules.Components
         public float snapOffset = 0.25f;
         public float flamethrowerLifetime;
 
+        public bool immobilized;
+        private bool _wasImmobilized;
+
         private int counterCount;
 
         public CharacterBody characterBody { get; private set; }
@@ -283,6 +286,17 @@ namespace HunkMod.Modules.Components
             this.iFrames -= Time.fixedDeltaTime;
             this.flamethrowerLifetime -= Time.fixedDeltaTime;
 
+            if (this.characterBody)
+            {
+                if (this.immobilized)
+                {
+                    this.characterBody.moveSpeed = 0f;
+                }
+
+                if (this._wasImmobilized && !this.immobilized) this.characterBody.RecalculateStats();
+                this._wasImmobilized = this.immobilized;
+            }
+
             if (NetworkServer.active)
             {
                 if (this.characterBody.HasBuff(RoR2Content.Buffs.HiddenInvincibility))
@@ -531,6 +545,7 @@ namespace HunkMod.Modules.Components
         private void TryReload()
         {
             if (!this.weaponDef.allowAutoReload) return;
+            if (!this.characterBody.hasAuthority) return;
 
             if (this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo > 0)
             {
@@ -559,12 +574,43 @@ namespace HunkMod.Modules.Components
             new SyncStoredWeapon(identity.netId, newWeapon.index, ammo).Send(NetworkDestination.Clients);
         }
 
-        public void ServerGetAmmo()
+        public void ServerDropWeapon(int index)
+        {
+            if (!NetworkServer.active) return;
+
+            NetworkIdentity identity = this.GetComponent<NetworkIdentity>();
+            if (!identity) return;
+
+            new SyncGunDrop2(identity.netId, index).Send(NetworkDestination.Clients);
+        }
+
+        public void ClientDropWeapon(int index)
+        {
+            this.weaponTracker.DropWeapon(index);
+        }
+
+        public void ServerSetWeapon(int index)
+        {
+            if (!NetworkServer.active) return;
+
+            this.weaponTracker.nextWeapon = index;
+        }
+
+        public void ServerGetAmmo(float multiplier = 1f)
         {
             NetworkIdentity identity = this.GetComponent<NetworkIdentity>();
             if (!identity) return;
 
-            new SyncAmmoPickup(identity.netId).Send(NetworkDestination.Clients);
+            bool valid = false;
+            int index = 0;
+
+            while (!valid)
+            {
+                index = UnityEngine.Random.Range(0, this.weaponTracker.weaponData.Length);
+                if (this.weaponTracker.weaponData[index].weaponDef.canPickUpAmmo) valid = true;
+            }
+
+            new SyncAmmoPickup(identity.netId, multiplier, index).Send(NetworkDestination.Clients);
         }
 
         public void ServerPickUpWeapon(HunkWeaponDef newWeapon, bool cutAmmo, HunkController hunkController, bool isAmmoBox = false)
@@ -950,11 +996,9 @@ namespace HunkMod.Modules.Components
             effect.GetComponentInChildren<RoR2.UI.LanguageTextMeshController>().token = "+" + amount + " " + this.weaponTracker.weaponData[index].weaponDef.ammoName;
         }
 
-        public void AddAmmoFromIndex(int index)
+        public void AddAmmoFromIndex(int index, float multiplier = 1f)
         {
             if (this.passive.isFullArsenal) return;
-
-            float multiplier = 1f;
 
             // alien head
             if (this.characterBody && this.characterBody.inventory)
@@ -988,12 +1032,16 @@ namespace HunkMod.Modules.Components
 
         private void SpawnChests()
         {
+            if (!NetworkServer.active) return;
+
             Xoroshiro128Plus rng = new Xoroshiro128Plus(Run.instance.seed);
             DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(Survivors.Hunk.chestInteractableCard, new DirectorPlacementRule { placementMode = DirectorPlacementRule.PlacementMode.Random }, rng));
         }
 
         private void SpawnTerminal()
         {
+            if (!NetworkServer.active) return;
+
             Xoroshiro128Plus rng = new Xoroshiro128Plus(Run.instance.seed);
             DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(Survivors.Hunk.terminalInteractableCard, new DirectorPlacementRule { placementMode = DirectorPlacementRule.PlacementMode.Random }, rng));
         }
@@ -1005,6 +1053,10 @@ namespace HunkMod.Modules.Components
 
         public void SpawnRocketLauncher()
         {
+            Util.PlaySound("sfx_hunk_weapon_case_drop", this.gameObject);
+
+            if (!NetworkServer.active) return;
+
             System.Random random = new System.Random();
             NodeGraph groundNodes = SceneInfo.instance.groundNodes;
             List<NodeGraph.NodeIndex> nodeList = groundNodes.FindNodesInRange(transform.position, 3f, 16f, HullMask.Human);

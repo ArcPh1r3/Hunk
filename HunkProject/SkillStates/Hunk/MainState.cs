@@ -6,6 +6,7 @@ using HunkMod.SkillStates.Emote;
 using BepInEx.Configuration;
 using HunkMod.Modules.Components;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Networking;
 
 namespace HunkMod.SkillStates.Hunk
 {
@@ -35,16 +36,15 @@ namespace HunkMod.SkillStates.Hunk
 				{
 					this.FindModelChild("EyeTrailL").gameObject.SetActive(true);
 					this.FindModelChild("EyeTrailR").gameObject.SetActive(true);
-
-					if (this.hunk && this.hunk.weaponTracker && Modules.Helpers.HunkHasWeapon(Modules.Weapons.ATM.instance.weaponDef, this.hunk.weaponTracker)) return;
-					if (this.hunk.spawnedATM) return;
-					if (!this.characterBody.isPlayerControlled) return;
+					if (this.teamComponent.teamIndex != TeamIndex.Player) return;
 
 					this.FindModelChild("EyeTrailR").gameObject.GetComponent<TrailRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/Railgunner/matRailgunBeam.mat").WaitForCompletion();
 					this.FindModelChild("EyeTrailL").gameObject.GetComponent<TrailRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/Railgunner/matRailgunBeam.mat").WaitForCompletion();
-					this.hunk.spawnedATM = true;
 
-					PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Weapons.ATM.instance.itemDef.itemIndex), this.characterBody.corePosition, this.characterBody.inputBank.aimDirection * 30f);
+					if (this.hunk && this.hunk.weaponTracker && Modules.Helpers.HunkHasWeapon(Modules.Weapons.ATM.instance.weaponDef, this.hunk.weaponTracker)) return;
+					if (this.hunk.spawnedATM) return;
+					this.hunk.spawnedATM = true;
+					if (NetworkServer.active) PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Weapons.ATM.instance.itemDef.itemIndex), this.characterBody.corePosition, -this.characterBody.inputBank.aimDirection * 20f);
 				}
 			}
 		}

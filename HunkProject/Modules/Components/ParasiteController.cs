@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using RoR2;
+using UnityEngine.Networking;
 
 namespace HunkMod.Modules.Components
 {
@@ -15,21 +16,9 @@ namespace HunkMod.Modules.Components
 
         private void Huh()
         {
-            if (this.characterBody.inventory) this.characterBody.inventory.GiveItem(RoR2Content.Items.TeleportWhenOob);
+            if (NetworkServer.active && this.characterBody && this.characterBody.inventory) this.characterBody.inventory.GiveItem(RoR2Content.Items.TeleportWhenOob);
         }
 
-        /*private void FixedUpdate()
-        {
-            if (this.characterBody)
-            {
-                this.characterBody.teamComponent.teamIndex = TeamIndex.Void;
-
-                if (this.characterBody.master)
-                {
-                    this.characterBody.master.teamIndex = TeamIndex.Void;
-                }
-            }
-        }*/
         private void OnEnable()
         {
             Modules.Survivors.Hunk.virusObjectiveObjects.Add(this.gameObject);

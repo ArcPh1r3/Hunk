@@ -29,8 +29,7 @@ namespace HunkMod.SkillStates.Hunk
             this.skillLocator.secondary.rechargeStopwatch = 0f;
 
             this.hunk.desiredYOffset = 0.6f;
-
-            if (NetworkServer.active) this.characterBody.AddBuff(Modules.Survivors.Hunk.immobilizedBuff);
+            this.hunk.immobilized = true;
 
             this.ApplyBuff();
             this.CreateDashEffect();
@@ -104,13 +103,13 @@ namespace HunkMod.SkillStates.Hunk
         {
             this.DampenVelocity();
             this.hunk.isRolling = false;
+            this.hunk.immobilized = false;
             this.characterMotor.jumpCount = 0;
             this.hunk.desiredYOffset = this.hunk.defaultYOffset;
             this.skillLocator.primary.UnsetSkillOverride(this, Modules.Survivors.Hunk.counterSkillDef, GenericSkill.SkillOverridePriority.Contextual);
 
             base.OnExit();
 
-            if (NetworkServer.active) this.characterBody.RemoveBuff(Modules.Survivors.Hunk.immobilizedBuff);
             if (base.isAuthority && this.inputBank.moveVector != Vector3.zero) this.characterBody.isSprinting = true;
         }
 

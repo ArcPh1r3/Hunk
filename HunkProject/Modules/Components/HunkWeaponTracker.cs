@@ -1,4 +1,6 @@
-﻿using RoR2;
+﻿using R2API.Networking;
+using R2API.Networking.Interfaces;
+using RoR2;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,8 +30,10 @@ namespace HunkMod.Modules.Components
         public int equippedIndex = 0;
 
         public int missionStep;
-
         public int lastEquippedIndex = 1;
+        public int nextWeapon;
+
+        public bool ignoreFlag = false;
 
         private HunkController hunk
         {
@@ -117,6 +121,8 @@ namespace HunkMod.Modules.Components
         {
             if (this.hunk.GetComponent<HunkPassive>().isFullArsenal)
             {
+                this.ignoreFlag = true;
+
                 this.weaponData = new HunkWeaponData[]
                 {
                     new HunkWeaponData
@@ -257,7 +263,7 @@ namespace HunkMod.Modules.Components
                 };
             }
 
-            Util.PlaySound("sfx_hunk_pickup", this.hunk.gameObject);
+            Util.PlaySound("sfx_hunk_weapon_get", this.hunk.gameObject);
 
             // redundant notification lmao
             //this.hunk.PickUpWeapon(weaponDef);
@@ -302,13 +308,16 @@ namespace HunkMod.Modules.Components
             Array.Resize(ref this.weaponData, this.weaponData.Length - 1);
 
             // create pickup now
-            PickupDropletController.CreatePickupDroplet(
-                PickupCatalog.FindPickupIndex(weaponDef.itemDef.itemIndex),
-                this.hunk.characterBody.corePosition,
-                this.hunk.characterBody.inputBank.aimDirection * 15f);
+            if (NetworkServer.active)
+            {
+                PickupDropletController.CreatePickupDroplet(
+                    PickupCatalog.FindPickupIndex(weaponDef.itemDef.itemIndex),
+                    this.hunk.characterBody.corePosition,
+                    this.hunk.characterBody.inputBank.aimDirection * 15f);
 
-            // remove it from the inventory
-            this.inventory.RemoveItem(weaponDef.itemDef, 100);
+                // remove it from the inventory
+                this.inventory.RemoveItem(weaponDef.itemDef, 100);
+            }
 
             // adjust your equipped index if it was decremented
             if (index < this.equippedIndex) this.equippedIndex--;
@@ -354,6 +363,7 @@ namespace HunkMod.Modules.Components
 
         private void AddWeaponItem(HunkWeaponDef weaponDef)
         {
+            if (!NetworkServer.active) return;
             if (this.inventory.GetItemCount(weaponDef.itemDef) <= 0) this.inventory.GiveItem(weaponDef.itemDef);
         }
 
@@ -390,8 +400,11 @@ namespace HunkMod.Modules.Components
             {
                 if (i && i.teamComponent && i.teamComponent.teamIndex == TeamIndex.Monster && i.healthComponent.alive)
                 {
-                    target = i.transform;
-                    break;
+                    if (!i.GetComponent<VirusHandler>() && !i.GetComponent<ParasiteController>())
+                    {
+                        target = i.transform;
+                        break;
+                    }
                 }
             }
 
@@ -403,41 +416,23 @@ namespace HunkMod.Modules.Components
 
             if (NetworkServer.active)
             {
-                /*DirectorSpawnRequest directorSpawnRequest = new DirectorSpawnRequest(spawnCard, new DirectorPlacementRule
+                NetworkIdentity identity = this.GetComponent<NetworkIdentity>();
+                if (identity)
                 {
-                    placementMode = DirectorPlacementRule.PlacementMode.Direct,
-                    minDistance = 0f,
-                    maxDistance = 0f,
-                    position = target.position + (Vector3.up * 8f)
-                }, Run.instance.runRNG);
+                    new SyncVirus(identity.netId, target.gameObject).Send(NetworkDestination.Clients);
+                }
 
-                GameObject spawnedBody = DirectorCore.instance.TrySpawnObject(directorSpawnRequest);*/
-
-                /*var summon = new MasterSummon();
-                summon.position = target.position + (Vector3.up * 8);
-                summon.masterPrefab = spawnCard.prefab;
-                summon.summonerBodyObject = target.gameObject;
-                summon.teamIndexOverride = TeamIndex.Void;
-                var master = summon.Perform();*/
-
-                target.gameObject.AddComponent<VirusHandler>();
+                /*target.gameObject.AddComponent<VirusHandler>();
 
                 GameObject positionIndicator = GameObject.Instantiate(Modules.Assets.virusPositionIndicator);
                 positionIndicator.transform.parent = target.transform;
                 positionIndicator.transform.localPosition = Vector3.zero;
-
-                positionIndicator.GetComponent<PositionIndicator>().targetTransform = target.GetComponent<CharacterBody>().mainHurtBox.transform;
+                positionIndicator.GetComponent<PositionIndicator>().targetTransform = target.GetComponent<CharacterBody>().mainHurtBox.transform;*/
 
                 this.missionStep = 1;
-                //this.gameObject.AddComponent<HunkMissionController>();
             }
 
             return true;
         }
-        // ummm
-        /*PickupDropletController.CreatePickupDroplet(
-            PickupCatalog.FindPickupIndex(itemDef.itemIndex),
-            this.hunk.characterBody.corePosition,
-            this.hunk.characterBody.inputBank.aimDirection * 10f);*/
     }
 }

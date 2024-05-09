@@ -1,6 +1,9 @@
 ﻿using EntityStates;
+using R2API.Networking;
+using R2API.Networking.Interfaces;
 using RoR2;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace HunkMod.SkillStates.Hunk.Weapon.BlueRose
 {
@@ -109,6 +112,10 @@ namespace HunkMod.SkillStates.Hunk.Weapon.BlueRose
                         effectData.SetHurtBoxReference(hitInfo.hitHurtBox);
                         EffectManager.SpawnEffect(Modules.Assets.headshotEffect, effectData, true);
                         Util.PlaySound("sfx_hunk_headshot", base.gameObject);
+
+                        NetworkIdentity identity = this.GetComponent<NetworkIdentity>();
+                        if (identity) new Modules.Components.SyncHeadshot(identity.netId, hitInfo.hitHurtBox.healthComponent.gameObject).Send(NetworkDestination.Server);
+
                         hitInfo.hitHurtBox.healthComponent.gameObject.AddComponent<Modules.Components.HunkHeadshotTracker>();
                     }
                 };

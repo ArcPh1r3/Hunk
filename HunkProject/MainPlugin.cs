@@ -5,9 +5,8 @@ using RoR2;
 using System.Security;
 using System.Security.Permissions;
 using UnityEngine;
+using RoR2.Projectile;
 using R2API.Networking;
-using HunkMod.Modules.Components;
-using HunkMod.Modules.Survivors;
 using System.Collections.Generic;
 
 [module: UnverifiableCode]
@@ -55,6 +54,7 @@ namespace HunkMod
         public static bool greenAlienHeadInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.Borbo.GreenAlienHead");
 
         public static List<HurtBox> hurtboxesList = new List<HurtBox>();
+        public static List<Modules.Components.HunkProjectileTracker> projectileList = new List<Modules.Components.HunkProjectileTracker>();
 
         private void Awake()
         {
@@ -70,7 +70,6 @@ namespace HunkMod
             Modules.Projectiles.RegisterProjectiles();
             Modules.Tokens.AddTokens();
             Modules.ItemDisplays.PopulateDisplays();
-            //Modules.WeaponChest.Initialize(); not yet.
 
             new Modules.Survivors.Hunk().CreateCharacter();
             new Modules.Enemies.Parasite().CreateCharacter();
@@ -80,6 +79,13 @@ namespace HunkMod
             NetworkingAPI.RegisterMessageType<Modules.Components.SyncStoredWeapon>();
             NetworkingAPI.RegisterMessageType<Modules.Components.SyncDecapitation>();
             NetworkingAPI.RegisterMessageType<Modules.Components.SyncAmmoPickup>();
+            NetworkingAPI.RegisterMessageType<Modules.Components.SyncGunDrop>();
+            NetworkingAPI.RegisterMessageType<Modules.Components.SyncGunDrop2>();
+            NetworkingAPI.RegisterMessageType<Modules.Components.SyncGunSwap>();
+            NetworkingAPI.RegisterMessageType<Modules.Components.SyncVirus>();
+            NetworkingAPI.RegisterMessageType<Modules.Components.SyncCombatStopwatch>();
+            NetworkingAPI.RegisterMessageType<Modules.Components.SyncWeaponCaseOpen>();
+            NetworkingAPI.RegisterMessageType<Modules.Components.SyncHeadshot>();
 
             Hook();
 
@@ -122,6 +128,14 @@ namespace HunkMod
 
             On.RoR2.HurtBox.OnEnable += HurtBox_OnEnable;
             On.RoR2.HurtBox.OnDisable += HurtBox_OnDisable;
+
+            On.RoR2.Projectile.ProjectileGhostController.Awake += ProjectileGhostController_Awake;
+        }
+
+        private void ProjectileGhostController_Awake(On.RoR2.Projectile.ProjectileGhostController.orig_Awake orig, ProjectileGhostController self)
+        {
+            if (self) self.gameObject.AddComponent<Modules.Components.HunkProjectileTracker>();
+            orig(self);
         }
 
         private void HurtBox_OnEnable(On.RoR2.HurtBox.orig_OnEnable orig, HurtBox self)

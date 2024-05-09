@@ -1,6 +1,9 @@
 ﻿using RoR2;
 using UnityEngine;
 using EntityStates;
+using UnityEngine.Networking;
+using R2API.Networking;
+using R2API.Networking.Interfaces;
 
 namespace HunkMod.SkillStates.Hunk.Weapon.Slugger
 {
@@ -111,6 +114,10 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Slugger
                             effectData.SetHurtBoxReference(hitInfo.hitHurtBox);
                             //EffectManager.SpawnEffect(Modules.Assets.headshotEffect, effectData, true);
                             Util.PlaySound("sfx_hunk_headshot", hitInfo.hitHurtBox.gameObject);
+
+                            NetworkIdentity identity = this.GetComponent<NetworkIdentity>();
+                            if (identity) new Modules.Components.SyncHeadshot(identity.netId, hitInfo.hitHurtBox.healthComponent.gameObject).Send(NetworkDestination.Server);
+
                             hitInfo.hitHurtBox.healthComponent.gameObject.AddComponent<Modules.Components.HunkHeadshotTracker>();
                         }
                     };

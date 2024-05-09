@@ -2484,6 +2484,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             weaponChestPrefab.GetComponent<Highlight>().targetRenderer.GetComponent<SkinnedMeshRenderer>().sharedMesh = null;
             weaponChestPrefab.AddComponent<Components.WeaponChest>();
 
+
             displayCaseModel.transform.parent = weaponChestPrefab.GetComponent<Highlight>().targetRenderer.transform;
             displayCaseModel.transform.localPosition = new Vector3(0f, 0f, -2.1f);
             displayCaseModel.transform.localRotation = Quaternion.Euler(new Vector3(90f, 0f, 0f));
@@ -2992,6 +2993,9 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             On.EntityStates.Bison.Charge.FixedUpdate += Charge_FixedUpdate;
             On.EntityStates.ClayBruiser.Weapon.MinigunFire.FixedUpdate += MinigunFire_FixedUpdate;
 
+            // network dodge. fuck you.
+            On.RoR2.CharacterBody.OnSkillActivated += CharacterBody_OnSkillActivated;
+
             // if i speak i am in trouble
             //On.RoR2.UI.MainMenu.BaseMainMenuScreen.Awake += BaseMainMenuScreen_Awake;
             On.RoR2.UI.MainMenu.BaseMainMenuScreen.Update += BaseMainMenuScreen_Update;
@@ -3002,6 +3006,19 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             //On.EntityStates.GlobalSkills.LunarNeedle.ChargeLunarSecondary.PlayChargeAnimation += PlayChargeLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarNeedle.ThrowLunarSecondary.PlayThrowAnimation += PlayThrowLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += PlayRuinAnimation;
+        }
+
+        private static void CharacterBody_OnSkillActivated(On.RoR2.CharacterBody.orig_OnSkillActivated orig, CharacterBody self, GenericSkill skill)
+        {
+            if (self && skill)
+            {
+                if (skill.isCombatSkill)
+                {
+                    NetworkIdentity identity = self.GetComponent<NetworkIdentity>();
+                    if (identity) new SyncCombatStopwatch(identity.netId, self.gameObject).Send(NetworkDestination.Clients);
+                }
+            }
+            orig(self, skill);
         }
 
         private static void MinigunFire_FixedUpdate(On.EntityStates.ClayBruiser.Weapon.MinigunFire.orig_FixedUpdate orig, EntityStates.ClayBruiser.Weapon.MinigunFire self)
@@ -3302,10 +3319,19 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
                     self.GetComponent<WeaponChest>().gunPickup.enabled = true;
                     self.GetComponent<WeaponChest>().gunPickup.GetComponent<GenericPickupController>().enabled = true;
-
                     self.GetComponent<Highlight>().targetRenderer.transform.parent.parent.GetComponent<Animator>().Play("Open");
-
                     Util.PlaySound("sfx_hunk_weapon_case_open", self.gameObject);
+
+                    if (RoR2Application.isInMultiPlayer)
+                    {
+                        PickupDropletController.CreatePickupDroplet(
+                            PickupCatalog.FindPickupIndex(self.GetComponent<WeaponChest>().weaponDef.itemDef.itemIndex),
+                            self.transform.position + Vector3.up,
+                            Vector3.up * 25f);
+
+                        NetworkIdentity identity = self.GetComponent<NetworkIdentity>();
+                        if (identity) new SyncWeaponCaseOpen(identity.netId, self.GetComponent<Highlight>().targetRenderer.transform.parent.parent.gameObject).Send(NetworkDestination.Clients);
+                    }
 
                     return;
                 }
@@ -3316,26 +3342,35 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
                     self.GetComponent<WeaponChest>().gunPickup.enabled = true;
                     self.GetComponent<WeaponChest>().gunPickup.GetComponent<GenericPickupController>().enabled = true;
-
                     self.GetComponent<Highlight>().targetRenderer.transform.parent.parent.parent.GetComponent<Animator>().Play("Open");
-
                     Util.PlaySound("sfx_hunk_weapon_case_open", self.gameObject);
+
+                    if (RoR2Application.isInMultiPlayer)
+                    {
+                        PickupDropletController.CreatePickupDroplet(
+                            PickupCatalog.FindPickupIndex(self.GetComponent<WeaponChest>().weaponDef.itemDef.itemIndex),
+                            self.transform.position + Vector3.up,
+                            Vector3.up * 25f);
+
+                        NetworkIdentity identity = self.GetComponent<NetworkIdentity>();
+                        if (identity) new SyncWeaponCaseOpen(identity.netId, self.GetComponent<Highlight>().targetRenderer.transform.parent.parent.gameObject).Send(NetworkDestination.Clients);
+                    }
 
                     return;
                 }
 
                 if (!self.gameObject.name.Contains("Hunk") && !self.gameObject.name.Contains("uplica"))
                 {
-                    GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, self.transform.rotation);
+                    NetworkServer.Spawn(GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, self.transform.rotation));
 
                     if (self.tier3Chance >= 0.2f)
                     {
-                        GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, self.transform.rotation);
+                        NetworkServer.Spawn(GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, self.transform.rotation));
                     }
 
                     if (self.tier3Chance >= 1f)
                     {
-                        GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, self.transform.rotation);
+                        NetworkServer.Spawn(GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, self.transform.rotation));
                     }
                 }
 

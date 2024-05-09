@@ -1,0 +1,10 @@
+{
+    "name": "Driver",
+    "version_number": "1.6.4",
+    "website_url": "https://github.com/ArcPh1r3/DriverMod",
+    "description": "Adds the Driver, a mostly grounded survivor focused on simple gunplay. New skills and passives!!",
+    "dependencies": [
+        "bbepis-BepInExPack-5.4.1905",
+        "tristanmcpherson-R2API-5.0.5"
+    ]
+}

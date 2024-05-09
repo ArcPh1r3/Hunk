@@ -32,7 +32,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
             this.skillLocator.secondary.stock = 0;
             this.skillLocator.secondary.rechargeStopwatch = 0f;
 
-            if (NetworkServer.active) this.characterBody.AddBuff(Modules.Survivors.Hunk.immobilizedBuff);
+            this.hunk.immobilized = true;
 
             this.ApplyBuff();
             this.CreateDashEffect();
@@ -62,9 +62,9 @@ namespace HunkMod.SkillStates.Hunk.Counter
                 {
                     base.characterDirection.forward = this.slipVector;
                 }
-
-                this.CheckForCounterattack();
             }
+
+            this.CheckForCounterattack();
 
             if (!this.peepee && base.fixedAge >= (0.52f * this.duration))
             {
@@ -132,15 +132,12 @@ namespace HunkMod.SkillStates.Hunk.Counter
 					{
                         if (hurtBox.healthComponent.gameObject.name == "LemurianBody(Clone)")
                         {
-                            this.outer.SetNextState(new NeckSnap
+                            if (base.isAuthority)
                             {
-                                target = hurtBox.healthComponent
-                            });
-
-                            foreach (EntityStateMachine i in hurtBox.healthComponent.GetComponents<EntityStateMachine>())
-                            {
-                                if (i.customName == "Body") i.SetNextState(new NeckSnapped());
-                                else i.SetNextStateToMain();
+                                this.outer.SetNextState(new NeckSnap
+                                {
+                                    targetObject = hurtBox.healthComponent.gameObject
+                                });
                             }
 
                             return true;
@@ -148,11 +145,11 @@ namespace HunkMod.SkillStates.Hunk.Counter
 
                         if (hurtBox.healthComponent.body.hullClassification == HullClassification.BeetleQueen || hurtBox.healthComponent.body.hullClassification == HullClassification.Golem)
                         {
-                            this.outer.SetNextState(new Punch());
+                            if (base.isAuthority) this.outer.SetNextState(new Punch());
                             return true;
                         }
 
-                        this.outer.SetNextState(new Kick());
+                        if (base.isAuthority) this.outer.SetNextState(new Kick());
                         return true;
 					}
 				}
@@ -163,9 +160,9 @@ namespace HunkMod.SkillStates.Hunk.Counter
 
         public override void OnExit()
         {
-            base.OnExit();
+            this.hunk.immobilized = false;
 
-            if (NetworkServer.active) this.characterBody.RemoveBuff(Modules.Survivors.Hunk.immobilizedBuff);
+            base.OnExit();
 
             if (base.isAuthority && this.inputBank.moveVector != Vector3.zero) this.characterBody.isSprinting = true;
         }

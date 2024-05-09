@@ -45,15 +45,16 @@ namespace HunkMod.Modules.Components
 			if (!this.opened)
 			{
 				this.Networkopened = true;
-				EntityStateMachine esm = base.GetComponent<EntityStateMachine>();
-				if (esm) esm.SetNextState(new Opening());
+				//EntityStateMachine esm = base.GetComponent<EntityStateMachine>();
+				//if (esm) esm.SetNextState(new Opening());
 				HunkController hunk = activator.GetComponent<HunkController>();
 				if (hunk)
 				{
-					hunk.AddRandomAmmo(this.multiplier);
+					hunk.ServerGetAmmo(this.multiplier);
 				}
 
 				if (this.destroyOnOpen) Destroy(this.destroyOnOpen);
+				NetworkServer.Destroy(this.gameObject);
 			}
 		}
 

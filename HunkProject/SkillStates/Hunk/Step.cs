@@ -76,6 +76,8 @@ namespace HunkMod.SkillStates.Hunk
             this.skillLocator.secondary.stock = 0;
             this.skillLocator.secondary.rechargeStopwatch = -0.3f;
 
+            this.hunk.immobilized = true;
+
             this.CreateDashEffect();
         }
 
@@ -106,17 +108,20 @@ namespace HunkMod.SkillStates.Hunk
                 {
                     if (hp.body.outOfCombatStopwatch <= 1.4f)
                     {
-                        Roll nextState = new Roll();
-                       
-                        /*foreach (HurtBox i in h.hurtBoxGroup.hurtBoxes)
+                        if (base.isAuthority)
                         {
-                            if (i.isSniperTarget)
-                            {
-                                this.hunk.targetHurtbox = i;
-                            }
-                        }*/
+                            Roll nextState = new Roll();
 
-                        outer.SetNextState(nextState);
+                            /*foreach (HurtBox i in h.hurtBoxGroup.hurtBoxes)
+                            {
+                                if (i.isSniperTarget)
+                                {
+                                    this.hunk.targetHurtbox = i;
+                                }
+                            }*/
+
+                            outer.SetNextState(nextState);
+                        }
                         return true;
                     }
                 }
@@ -131,10 +136,26 @@ namespace HunkMod.SkillStates.Hunk
                 {
                     if (pc.teamFilter.teamIndex != characterBody.teamComponent.teamIndex)
                     {
-                        Roll nextState = new Roll();
-                        outer.SetNextState(nextState);
+                        if (base.isAuthority)
+                        {
+                            Roll nextState = new Roll();
+                            outer.SetNextState(nextState);
+                        }
                         return true;
                     }
+                }
+            }
+
+            foreach (Modules.Components.HunkProjectileTracker i in MainPlugin.projectileList)
+            {
+                if (i && Vector3.Distance(i.transform.position, this.transform.position) <= this.checkRadius)
+                {
+                    if (base.isAuthority)
+                    {
+                        Roll nextState = new Roll();
+                        outer.SetNextState(nextState);
+                    }
+                    return true;
                 }
             }
 
@@ -142,8 +163,11 @@ namespace HunkMod.SkillStates.Hunk
             {
                 if (i && Vector3.Distance(i.endPoint, this.transform.position) <= this.checkRadius * 0.5f)
                 {
-                    Roll nextState = new Roll();
-                    outer.SetNextState(nextState);
+                    if (base.isAuthority)
+                    {
+                        Roll nextState = new Roll();
+                        outer.SetNextState(nextState);
+                    }
                     return true;
                 }
             }
@@ -227,6 +251,7 @@ namespace HunkMod.SkillStates.Hunk
         {
             this.DampenVelocity();
             this.hunk.isRolling = false;
+            this.hunk.immobilized = false;
             this.characterMotor.jumpCount = 0;
             this.hunk.desiredYOffset = this.hunk.defaultYOffset;
 

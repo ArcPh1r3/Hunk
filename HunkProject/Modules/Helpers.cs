@@ -82,9 +82,12 @@ namespace HunkMod.Modules
         {
             foreach (HunkWeaponTracker hunk in GameObject.FindObjectsOfType<HunkWeaponTracker>())
             {
-                foreach (HunkWeaponData i in hunk.weaponData)
+                if (!hunk.ignoreFlag)
                 {
-                    if (i.weaponDef == weaponDef) return true;
+                    foreach (HunkWeaponData i in hunk.weaponData)
+                    {
+                        if (i.weaponDef == weaponDef) return true;
+                    }
                 }
             }
 

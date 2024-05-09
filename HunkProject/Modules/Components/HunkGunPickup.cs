@@ -28,6 +28,9 @@ namespace HunkMod.Modules.Components
             if (!this.weaponDef) this.weaponDef = Modules.Weapons.M19.instance.weaponDef;
 
             this.GetComponent<GenericPickupController>().SetPickupIndexFromString("ItemIndex." + this.weaponDef.itemDef.name);
+            this.GetComponent<GenericPickupController>().pickupIndex = PickupCatalog.FindPickupIndex("ItemIndex." + this.weaponDef.itemDef.name);
+            this.GetComponent<GenericPickupController>().NetworkpickupIndex = PickupCatalog.FindPickupIndex("ItemIndex." + this.weaponDef.itemDef.name);
+            this.GetComponentInChildren<PickupDisplay>().SetPickupIndex(PickupCatalog.FindPickupIndex("ItemIndex." + this.weaponDef.itemDef.name));
         }
 
         private void KillYourself()
