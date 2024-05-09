@@ -75,7 +75,7 @@ If you enjoy my work and would like to support me, you can donate to my [Ko-fi](
 ## Credits
 rob - Code, animation, sfx, mostly everything
 
-swuff - Code, design help, entire interactable system
+swuff - Code, design help, entire interactable system, just an awesome co-dev overall
 
 Thingw - Secondary and Special skill icons
 
