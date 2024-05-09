@@ -26,8 +26,8 @@ namespace HunkMod.Modules.Weapons
         public override SkillDef primarySkillDef => Modules.Skills.CreatePrimarySkillDef(
 new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Weapon.Flamethrower.Shoot)),
 "Weapon",
-"ROB_HUNK_BODY_SHOOT_SHOTGUN_NAME",
-"ROB_HUNK_BODY_SHOOT_SHOTGUN_DESCRIPTION",
+"ROB_HUNK_BODY_SHOOT_FLAMETHROWER_NAME",
+"ROB_HUNK_BODY_SHOOT_FLAMETHROWER_DESCRIPTION",
 Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texShootIcon"),
 false);
 
