@@ -1,6 +1,7 @@
 # HUNK
 - Adds HUNK from the Resident Evil franchise
 - Has a couple item displays, unlockable skins and skills and is fully multiplayer compatible
+- Comes with a unique side objective and a handful of unique weapons to obtain (permanently)
 - Configurable stats and a few other things to mess around with
 - Full Risk of Options support for all configuration options
 
