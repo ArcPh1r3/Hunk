@@ -104,6 +104,11 @@ namespace HunkMod.Modules.Components
             this.inventory.onItemAddedClient += this.Inventory_onItemAddedClient;
         }
 
+        public void SetHunk(HunkController i)
+        {
+
+        }
+
         private void Inventory_onItemAddedClient(ItemIndex itemIndex)
         {
             if (itemIndex == Modules.Survivors.Hunk.gVirusSample.itemIndex) this.missionStep = 0;
@@ -412,7 +417,7 @@ namespace HunkMod.Modules.Components
 
             if (!target) return false;
 
-            Util.PlaySound("sfx_hunk_virus_spawn", this.gameObject);
+            if (Modules.Config.globalInfectionSound.Value) Util.PlaySound("sfx_hunk_virus_spawn", this.gameObject);
 
             if (NetworkServer.active)
             {

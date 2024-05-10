@@ -59,6 +59,18 @@ Open up the weapon menu and swap weapons. Pressing secondary will drop the selec
 
 ___
 
+# Unique Item Interactions
+Since cooldown items do almost nothing on HUNK, most of them have unique interactions that play around his ammo system instead
+
+Backup Magazine - +1 fake bullet every time you complete a reload
+Bandolier - Gives you half a mag of fake bullets on pickup
+Alien Head - Increased ammo on pickup, same scaling and nerfed if Green Alien Head is installed
+Brainstalks - Shots don't consume ammo while active
+
+FAKE BULLETS can be fired without consuming any actual ammo, but are all lost when you reload or swap weapons
+
+___
+
 # Compatibility Stuff
 
 ### RiskUI
@@ -94,15 +106,40 @@ Big thanks to everyone in the community for all the valuable feedback and critic
 - Proper skill icons
 - More mod crosscompat
 - More unique counterattacks
+- Item displays
+- Translation support
+- Ancient Scepter support
+- Emotes
 
 ## Known Issues
 - Most item displays are missing
 - Ragdoll is extremely broken
 - Weapon menu doesn't work on controller
+- Emote buttons are there but he doesn't have any animations yet
+- Ally projectiles trigger perfect dodges; haven't decided if this is worth keeping as a mechanic yet
+- Goobo Jr. has no ammo and only shanks
 
 ___
 
 ## Changelog
+
+`1.0.3`
+- Added config to disable the global sound cue when an Infected enemy spawns; don't blame me if you turn this off and they mutate to max level
+- Infection is now capped at 5 mutation stacks, but the final stack gives much more noticeable buffs to compensate
+- ^There is a config option to uncap it and restore the original behavior
+- Lightning Hawk damage: 1800% > 2400%
+- Quickdraw Army damage: 1800% > 2400%, fire rate drastically increased
+- ^ damage being equal to shotguns made no sense as they're single target only
+- G-Virus infection is now capped at 5 stacks; this can be disabled in config for those who enjoy spawning superbosses
+- Fixed Lightweight unlock; apparently monsters were giving you the unlock as they had no items
+- Fixed MUP and M19 SFX not playing for others in multiplayer
+- Fixed Weapon Cases breaking in singleplayer when EmptyChestsBeGone or ChestQoL were installed
+- Fixed Bandolier pickups getting rid of any excess ammo from a Backup Mag if you had any
+- Fixed G-Virus (the hidden item given to Infected enemies) showing up in the logbook
+- Fixed ammo pickups being visible (and stealable) by non-HUNK players in multiplayer
+
+`1.0.2`
+- attempted another bugfix..
 
 `1.0.1`
 - tiny fix whoops

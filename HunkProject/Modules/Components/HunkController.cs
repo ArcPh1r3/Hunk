@@ -160,8 +160,6 @@ namespace HunkMod.Modules.Components
         {
             this.InitShells();
 
-            this.Invoke("Oops", 0.1f);
-
             if (this.characterBody)
             {
                 CameraTargetParams ctp = this.characterBody.GetComponent<CameraTargetParams>();
@@ -171,11 +169,13 @@ namespace HunkMod.Modules.Components
                 }
             }
 
+            this.Invoke("Init", 0.3f);
+
             //SpawnChests();
             this.SpawnTerminal();
         }
 
-        private void Oops()
+        private void Init()
         {
             this.EquipWeapon(this.weaponTracker.equippedIndex);
         }
@@ -199,6 +199,7 @@ namespace HunkMod.Modules.Components
                 {
                     HunkWeaponTracker i = this.characterBody.master.GetComponent<HunkWeaponTracker>();
                     if (!i) i = this.characterBody.master.gameObject.AddComponent<HunkWeaponTracker>();
+                    i.SetHunk(this);
                     this._weaponTracker = i;
                     return i;
                 }
@@ -272,6 +273,7 @@ namespace HunkMod.Modules.Components
 
         public void ApplyBandolier()
         {
+            if (this.ammo > this.maxAmmo) return;
             if (this.ammo - this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo >= this.maxAmmo && this.ammo != this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo) return;
 
             this.ammo += Mathf.CeilToInt(this.maxAmmo * 0.5f);

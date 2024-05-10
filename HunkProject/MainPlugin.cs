@@ -21,6 +21,8 @@ namespace HunkMod
     [BepInDependency("com.TeamMoonstorm.Starstorm2", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.RiskySleeps.ClassicItemsReturns", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.Borbo.GreenAlienHead", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("Faust.QoLChests", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.Elysium.ECBG", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("bubbet.riskui", BepInDependency.DependencyFlags.SoftDependency)]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
     [BepInPlugin(MODUID, MODNAME, MODVERSION)]
@@ -40,7 +42,7 @@ namespace HunkMod
     {
         public const string MODUID = "com.rob.Hunk";
         public const string MODNAME = "Hunk";
-        public const string MODVERSION = "1.0.1";
+        public const string MODVERSION = "1.0.3";
 
         public const string developerPrefix = "ROB";
 
@@ -52,6 +54,8 @@ namespace HunkMod
         public static bool rooInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
         public static bool riskUIInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("bubbet.riskui");
         public static bool greenAlienHeadInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.Borbo.GreenAlienHead");
+        public static bool qolChestsInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("Faust.QoLChests");
+        public static bool emptyChestsInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.Elysium.ECBG");
 
         public static List<HurtBox> hurtboxesList = new List<HurtBox>();
         public static List<Modules.Components.HunkProjectileTracker> projectileList = new List<Modules.Components.HunkProjectileTracker>();

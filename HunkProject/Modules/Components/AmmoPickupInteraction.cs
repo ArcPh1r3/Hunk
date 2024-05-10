@@ -70,6 +70,12 @@ namespace HunkMod.Modules.Components
 
 		public void OnEnable()
 		{
+			if (!Modules.Helpers.isLocalUserHunk)
+			{
+				Destroy(this.gameObject);
+				return;
+			}
+
 			InstanceTracker.Add<AmmoPickupInteraction>(this);
 		}
 

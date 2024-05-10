@@ -38,18 +38,18 @@ namespace HunkMod.Modules.Achievements
 
             if (Run.instance.stageClearCount >= 1)
             {
-                if (characterBody.master && characterBody.master.inventory && base.meetsBodyRequirement)
+                if (characterBody.inventory && base.meetsBodyRequirement && characterBody.baseNameToken == Modules.Survivors.Hunk.bodyNameToken)
                 {
                     bool fuck = false;
 
-                    if (characterBody.master.inventory.GetTotalItemCountOfTier(ItemTier.Tier1) > 0) fuck = true;
-                    if (characterBody.master.inventory.GetTotalItemCountOfTier(ItemTier.Tier2) > 0) fuck = true;
-                    if (characterBody.master.inventory.GetTotalItemCountOfTier(ItemTier.Tier3) > 0) fuck = true;
-                    if (characterBody.master.inventory.GetTotalItemCountOfTier(ItemTier.Boss) > 0) fuck = true;
-                    if (characterBody.master.inventory.GetTotalItemCountOfTier(ItemTier.Lunar) > 0) fuck = true;
-                    if (characterBody.master.inventory.GetTotalItemCountOfTier(ItemTier.VoidTier1) > 0) fuck = true;
-                    if (characterBody.master.inventory.GetTotalItemCountOfTier(ItemTier.VoidTier2) > 0) fuck = true;
-                    if (characterBody.master.inventory.GetTotalItemCountOfTier(ItemTier.VoidBoss) > 0) fuck = true;
+                    if (characterBody.inventory.GetTotalItemCountOfTier(ItemTier.Tier1) > 0) fuck = true;
+                    if (characterBody.inventory.GetTotalItemCountOfTier(ItemTier.Tier2) > 0) fuck = true;
+                    if (characterBody.inventory.GetTotalItemCountOfTier(ItemTier.Tier3) > 0) fuck = true;
+                    if (characterBody.inventory.GetTotalItemCountOfTier(ItemTier.Boss) > 0) fuck = true;
+                    if (characterBody.inventory.GetTotalItemCountOfTier(ItemTier.Lunar) > 0) fuck = true;
+                    if (characterBody.inventory.GetTotalItemCountOfTier(ItemTier.VoidTier1) > 0) fuck = true;
+                    if (characterBody.inventory.GetTotalItemCountOfTier(ItemTier.VoidTier2) > 0) fuck = true;
+                    if (characterBody.inventory.GetTotalItemCountOfTier(ItemTier.VoidBoss) > 0) fuck = true;
 
                     if (!fuck) base.Grant();
                 }

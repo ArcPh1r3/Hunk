@@ -1,6 +1,6 @@
 {
     "name": "HUNK",
-    "version_number": "1.0.1",
+    "version_number": "1.0.3",
     "website_url": "https://github.com/ArcPh1r3/Hunk/tree/main",
     "description": "Adds HUNK, a survivor with a focus on resource management and risky CQC. Fully multiplayer compatible!",
     "dependencies": [

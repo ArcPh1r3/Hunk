@@ -32,10 +32,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.MUP
 
             this.isCrit = base.RollCrit();
 
-            if (base.isAuthority)
-            {
-                this.Fire();
-            }
+            this.Fire();
 
             this.PlayAnimation("Gesture, Override", "Shoot", "Shoot.playbackRate", this.duration);
 

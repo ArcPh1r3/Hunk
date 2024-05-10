@@ -125,6 +125,15 @@ namespace HunkMod.Modules.Components
         {
             this.mutationStopwatch = 20f;
 
+            bool capped = Modules.Config.capInfection.Value;
+            if (capped)
+            {
+                if (this.inventory && this.inventory.GetItemCount(Modules.Survivors.Hunk.gVirusFinal) > 0)
+                {
+                    return;
+                }
+            }
+
             if (NetworkServer.active)
             {
                 if (this.inventory)
@@ -140,7 +149,16 @@ namespace HunkMod.Modules.Components
                     if (this.inventory.GetItemCount(Modules.Survivors.Hunk.gVirus) >= 5)
                     {
                         this.inventory.GiveItem(Modules.Survivors.Hunk.gVirusFinal);
-                        this.inventory.GiveItem(RoR2Content.Items.Medkit);
+                        if (capped)
+                        {
+                            this.inventory.GiveItem(RoR2Content.Items.Medkit, 5);
+                            this.inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
+                            this.inventory.GiveItem(RoR2Content.Items.BoostHp, 2);
+                        }
+                        else
+                        {
+                            this.inventory.GiveItem(RoR2Content.Items.Medkit);
+                        }
                     }
                 }
             }

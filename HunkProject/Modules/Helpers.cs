@@ -62,6 +62,19 @@ namespace HunkMod.Modules
             }
         }
 
+        public static bool isLocalUserHunk
+        {
+            get
+            {
+                var localPlayers = LocalUserManager.readOnlyLocalUsersList;
+                foreach (LocalUser i in localPlayers)
+                {
+                    if (i.cachedBody.baseNameToken == Modules.Survivors.Hunk.bodyNameToken) return true;
+                }
+                return false;
+            }
+        }
+
         public static int hunkCount
         {
             get

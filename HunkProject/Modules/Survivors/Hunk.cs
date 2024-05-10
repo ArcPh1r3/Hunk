@@ -2817,7 +2817,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             gVirusSample.pickupModelPrefab.transform.Find("Model/Glass2").GetComponent<MeshRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/HealingPotion/matHealingPotionGlass.mat").WaitForCompletion();
             //gVirusSample.pickupModelPrefab.transform.Find("Model/Liquid").GetComponent<MeshRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/EliteVoid/matVoidInfestorEyes.mat").WaitForCompletion();
 
-            gVirus = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/Base/ArtifactKey/ArtifactKey.asset").WaitForCompletion());
+            gVirus = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/Base/DrizzlePlayerHelper/DrizzlePlayerHelper.asset").WaitForCompletion());
             gVirus.name = "GVirus";
             gVirus.nameToken = "ROB_HUNK_G_VIRUS_NAME";
             gVirus.descriptionToken = "ROB_HUNK_G_VIRUS_DESC";
@@ -2838,7 +2838,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             };
             gVirus.unlockableDef = null;
 
-            gVirus2 = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/Base/ArtifactKey/ArtifactKey.asset").WaitForCompletion());
+            gVirus2 = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/Base/DrizzlePlayerHelper/DrizzlePlayerHelper.asset").WaitForCompletion());
             gVirus2.name = "GVirus2";
             gVirus2.nameToken = "ROB_HUNK_G_VIRUS2_NAME";
             gVirus2.descriptionToken = "ROB_HUNK_G_VIRUS_DESC";
@@ -2859,7 +2859,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             };
             gVirus2.unlockableDef = null;
 
-            gVirusFinal = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/Base/ArtifactKey/ArtifactKey.asset").WaitForCompletion());
+            gVirusFinal = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/Base/DrizzlePlayerHelper/DrizzlePlayerHelper.asset").WaitForCompletion());
             gVirusFinal.name = "GVirusFinal";
             gVirusFinal.nameToken = "ROB_HUNK_G_VIRUSFINAL_NAME";
             gVirusFinal.descriptionToken = "ROB_HUNK_G_VIRUS_DESC";
@@ -3345,7 +3345,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     self.GetComponent<Highlight>().targetRenderer.transform.parent.parent.parent.GetComponent<Animator>().Play("Open");
                     Util.PlaySound("sfx_hunk_weapon_case_open", self.gameObject);
 
-                    if (RoR2Application.isInMultiPlayer)
+                    if (RoR2Application.isInMultiPlayer || MainPlugin.qolChestsInstalled || MainPlugin.emptyChestsInstalled)
                     {
                         PickupDropletController.CreatePickupDroplet(
                             PickupCatalog.FindPickupIndex(self.GetComponent<WeaponChest>().weaponDef.itemDef.itemIndex),
