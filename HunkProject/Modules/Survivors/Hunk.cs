@@ -2996,6 +2996,9 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             On.EntityStates.Bison.Charge.FixedUpdate += Charge_FixedUpdate;
             On.EntityStates.ClayBruiser.Weapon.MinigunFire.FixedUpdate += MinigunFire_FixedUpdate;
 
+            // escape bgm
+            On.RoR2.EscapeSequenceController.BeginEscapeSequence += EscapeSequenceController_BeginEscapeSequence;
+
             // network dodge. fuck you.
             On.RoR2.CharacterBody.OnSkillActivated += CharacterBody_OnSkillActivated;
 
@@ -3009,6 +3012,28 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             //On.EntityStates.GlobalSkills.LunarNeedle.ChargeLunarSecondary.PlayChargeAnimation += PlayChargeLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarNeedle.ThrowLunarSecondary.PlayThrowAnimation += PlayThrowLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += PlayRuinAnimation;
+        }
+
+        private static void EscapeSequenceController_OnDisable(On.RoR2.EscapeSequenceController.orig_OnDisable orig, EscapeSequenceController self)
+        {
+            orig(self);
+        }
+
+        private static void EscapeSequenceController_BeginEscapeSequence(On.RoR2.EscapeSequenceController.orig_BeginEscapeSequence orig, EscapeSequenceController self)
+        {
+            orig(self);
+            
+            if (Modules.Config.customEscapeSequence.Value)
+            {
+                foreach (Modules.Components.HunkController i in MonoBehaviour.FindObjectsOfType<Modules.Components.HunkController>())
+                {
+                    if (i && i.characterBody.hasAuthority)
+                    {
+                        i.StartBGM();
+                        i.StartDialogue2();
+                    }
+                }
+            }
         }
 
         private static void GenericPickupController_AttemptGrant(On.RoR2.GenericPickupController.orig_AttemptGrant orig, GenericPickupController self, CharacterBody body)
@@ -3028,14 +3053,14 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                             {
                                 if (i.weaponDef.itemDef.nameToken == nameToken)
                                 {
-                                    if (hunk.notificationHandler) hunk.notificationHandler.Init("You already have a " + Language.GetString(i.weaponDef.nameToken));
+                                    if (hunk.notificationHandler) hunk.notificationHandler.Init("You already have a " + Language.GetString(i.weaponDef.nameToken), Color.red);
                                     return; // prevent duplicate pickups
                                 }
                             }
 
                             if (hunk.weaponTracker.weaponData.Length > 7)
                             {
-                                if (hunk.notificationHandler) hunk.notificationHandler.Init("Inventory full!\nDrop a weapon to pick this up");
+                                if (hunk.notificationHandler) hunk.notificationHandler.Init("Inventory full!\nDrop a weapon to pick this up", Color.red);
                                 return; // prevent excess pickups
                             }
                         }
@@ -3781,7 +3806,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
                 // generic notification
 
-                if (!!mainContainer.Find("NotificationPanel"))
+                if (!mainContainer.Find("NotificationPanel"))
                 {
                     GameObject notificationObject = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("GenericTextPanel"), mainContainer);
                     notificationObject.name = "NotificationPanel";

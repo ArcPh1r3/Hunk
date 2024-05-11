@@ -9,6 +9,7 @@ namespace HunkMod.Modules.Components
         public HUD targetHUD;
         public HunkController hunk;
 
+        private Color baseColor;
         private TextMeshProUGUI text;
         private float fadeSpeed = 8f;
         private float opacity;
@@ -28,7 +29,7 @@ namespace HunkMod.Modules.Components
 
             this.opacity = 0f;
 
-            Color c = this.text.color;
+            Color c = this.baseColor;
             c.a = this.opacity;
             this.text.color = c;
         }
@@ -72,15 +73,16 @@ namespace HunkMod.Modules.Components
                     break;
             }
 
-            Color c = this.text.color;
+            Color c = this.baseColor;
             c.a = this.opacity;
             this.text.color = c;
         }
 
-        public void Init(string newText, float duration = 3f)
+        public void Init(string newText, Color color, float duration = 3f)
         {
             this.text.text = newText;
             this.opacity = 0f;
+            this.baseColor = color;
             this.stopwatch = duration;
             this.subState = SubState.Starting;
         }

@@ -91,6 +91,7 @@ namespace HunkMod.Modules.Components
         private GameObject flamethrowerLight;
         private uint flamethrowerPlayID;
         private bool flameInit = false;
+        private uint bgmPlayID;
 
         public float iFrames;
 
@@ -179,6 +180,11 @@ namespace HunkMod.Modules.Components
         private void Init()
         {
             this.EquipWeapon(this.weaponTracker.equippedIndex);
+
+            if (Modules.Config.customEscapeSequence.Value)
+            {
+                if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "moon" || UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "moon2") this.StartDialogue1();
+            }
         }
 
         private void SetInventoryHook()
@@ -489,43 +495,18 @@ namespace HunkMod.Modules.Components
             onCounter(this.counterCount);
         }
 
-        private void Update()
+        /*private void Update()
         {
-            /*if (Input.GetKeyDown(KeyCode.V))
+            if (Input.GetKeyDown(KeyCode.V))
             {
-                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Weapons.Shotgun.instance.itemDef.itemIndex), this.characterBody.corePosition, this.characterBody.inputBank.aimDirection * 10f);
+                this.gameObject.AddComponent<HunkDialogue>();
             }
 
             if (Input.GetKeyDown(KeyCode.B))
             {
-                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Weapons.Slugger.instance.itemDef.itemIndex), this.characterBody.corePosition, this.characterBody.inputBank.aimDirection * 10f);
+                this.gameObject.AddComponent<HunkDialogue2>();
             }
-
-            if (Input.GetKeyDown(KeyCode.N))
-            {
-                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Weapons.SMG.instance.itemDef.itemIndex), this.characterBody.corePosition, this.characterBody.inputBank.aimDirection * 10f);
-            }
-
-            if (Input.GetKeyDown(KeyCode.M))
-            {
-                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Weapons.RocketLauncher.instance.itemDef.itemIndex), this.characterBody.corePosition, this.characterBody.inputBank.aimDirection * 10f);
-            }
-
-            if (Input.GetKeyDown(KeyCode.U))
-            {
-                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Weapons.Revolver.instance.itemDef.itemIndex), this.characterBody.corePosition, this.characterBody.inputBank.aimDirection * 10f);
-            }
-
-            if (Input.GetKeyDown(KeyCode.I))
-            {
-                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Weapons.M19.instance.itemDef.itemIndex), this.characterBody.corePosition, this.characterBody.inputBank.aimDirection * 10f);
-            }
-
-            if (Input.GetKeyDown(KeyCode.O))
-            {
-                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Weapons.MUP.instance.itemDef.itemIndex), this.characterBody.corePosition, this.characterBody.inputBank.aimDirection * 10f);
-            }*/
-        }
+        }*/
 
         private void TryLockOn()
         {
@@ -927,6 +908,11 @@ namespace HunkMod.Modules.Components
             if (this.currentSlug >= this.maxShellCount) this.currentSlug = 0;
         }
 
+        public void StartBGM()
+        {
+            this.bgmPlayID = Util.PlaySound("bgm_hunk_loomingdread", this.gameObject);
+        }
+
         private void OnDestroy()
         {
             if (this.shellObjects != null && this.shellObjects.Length > 0)
@@ -952,6 +938,9 @@ namespace HunkMod.Modules.Components
 
             if (this.speedLines) Destroy(this.speedLines.gameObject);
             if (this.dodgeFlash) Destroy(this.dodgeFlash.gameObject);
+
+            AkSoundEngine.StopPlayingID(this.flamethrowerPlayID);
+            AkSoundEngine.StopPlayingID(this.bgmPlayID);
         }
 
         public void AddRandomAmmo(float multiplier = 1f)
@@ -1088,6 +1077,20 @@ namespace HunkMod.Modules.Components
     }, true);
             }
             //DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(Survivors.Hunk.terminalInteractableCard, new DirectorPlacementRule { placementMode = DirectorPlacementRule.PlacementMode.NearestNode }, rng));
+        }
+
+        public void StartDialogue1()
+        {
+            if (!this.characterBody.hasAuthority || !this.characterBody.isPlayerControlled) return;
+
+            this.gameObject.AddComponent<HunkDialogue>();
+        }
+
+        public void StartDialogue2()
+        {
+            if (!this.characterBody.hasAuthority || !this.characterBody.isPlayerControlled) return;
+
+            this.gameObject.AddComponent<HunkDialogue2>();
         }
 
         public SkillDef knifeSkin

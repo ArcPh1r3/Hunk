@@ -806,6 +806,83 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="bgm_hunk_loomingdread" ID="{24A22068-A125-49E9-AB64-C21DAE1B37C6}">
+					<ChildrenList>
+						<Action Name="" ID="{33310F73-54F3-4E26-B7DE-754AB4D74001}" ShortID="502369962">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="bgm_hunk_loomingdread" ID="{1E05DC9F-CDCE-4077-BCF3-CD38D322B9C6}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="vo_hunk_01" ID="{2A7DBAC8-7BD0-410B-92F8-BCD9145E05CB}">
+					<ChildrenList>
+						<Action Name="" ID="{9695E2DE-E703-45AA-BA19-47CFD01D2297}" ShortID="672091022">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="vo_hunk_01" ID="{6DADA7D7-2DF2-4EC4-A128-5209FD96DB08}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="vo_hunk_02" ID="{B53EF346-ECDD-435F-AC4C-C8D047554F88}">
+					<ChildrenList>
+						<Action Name="" ID="{7571CCE6-E743-40D0-8271-6A44D917133A}" ShortID="1055906906">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="vo_hunk_02" ID="{59BD70AE-BA99-4198-9BB4-4D433FDB696F}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="vo_hunk_03" ID="{6B879FBC-988E-4D56-8225-B0206D634728}">
+					<ChildrenList>
+						<Action Name="" ID="{5731227C-0DB2-45CA-841F-14C459A21954}" ShortID="578829635">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="vo_hunk_03" ID="{27A37B42-01CD-4B92-83C9-1060D6906432}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="vo_hunk_04" ID="{A5CDC608-DF2B-4856-86BB-47A49E9684B8}">
+					<ChildrenList>
+						<Action Name="" ID="{47950A18-E8A6-4B4A-934B-81C5FA748A1E}" ShortID="1067184698">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="vo_hunk_04" ID="{C42F262D-140C-45D9-AD69-FEEA7D10228B}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="vo_hunk_05" ID="{146C451A-D2D8-415F-B4E3-FDCE3A7E2A13}">
+					<ChildrenList>
+						<Action Name="" ID="{952F2050-5172-4B90-A5CC-3A19CD01F6F7}" ShortID="953240583">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="vo_hunk_05" ID="{68F84B5A-AE5A-4114-9020-6AAFF5878D5C}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="vo_hunk_06" ID="{DED81E19-90F4-4870-9FE1-5CA2E550FDF9}">
+					<ChildrenList>
+						<Action Name="" ID="{6A03616A-D1BA-42AF-ACDB-3E0DC8E667F1}" ShortID="434258702">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="vo_hunk_06" ID="{B5C6B8A4-5945-4775-8FE4-B28A278DBD8E}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

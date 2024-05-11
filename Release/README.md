@@ -123,6 +123,10 @@ ___
 
 ## Changelog
 
+`1.0.7`
+- Added a custom escape sequence with BGM and everything (can be disabled in config if you hate epicness)
+- Fixed possibility of Chemnical Flamethrower SFX playing infinitely if HUNK died while using it (unsure if this actually happened, but just in case)
+
 `1.0.6`
 - Added custom portrait for Tofu
 

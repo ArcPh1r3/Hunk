@@ -17,6 +17,11 @@
 							<ValueList>
 								<Value>1</Value>
 							</ValueList>
+							<ModifierList>
+								<ModifierInfo>
+									<Modifier Name="" ID="{609EC142-789F-4339-880D-5C95B77BDC05}"/>
+								</ModifierInfo>
+							</ModifierList>
 							<RTPCList>
 								<RTPC Name="" ID="{2CCF60F9-1C14-450B-A829-781B191F45B3}" ShortID="940786589">
 									<ReferenceList>
@@ -5236,6 +5241,13 @@
 							</ActiveSourceList>
 						</Sound>
 						<Sound Name="sfx_hunk_death" ID="{7628D9F2-DC76-49AF-A7AE-8F0DE7E0B4CF}" ShortID="420779206">
+							<PropertyList>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-8</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
@@ -5255,6 +5267,190 @@
 							</ChildrenList>
 							<ActiveSourceList>
 								<ActiveSource Name="sfx_hunk_death" ID="{6E56D7AD-D5B4-46E7-B828-808679648630}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<ActorMixer Name="VO" ID="{62BB02C4-EB21-4D11-991D-9CED1AE3A1FB}" ShortID="565487899">
+							<PropertyList>
+								<Property Name="OverridePositioning" Type="bool" Value="True"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{92A1A0F3-7047-4165-95AE-D5CFCC30AE61}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<Sound Name="vo_hunk_01" ID="{6DADA7D7-2DF2-4EC4-A128-5209FD96DB08}" ShortID="226549291">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{92A1A0F3-7047-4165-95AE-D5CFCC30AE61}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="vo_hunk_01" ID="{F6D2B3E1-322F-431D-A4F5-CC2E0469C484}">
+											<Language>SFX</Language>
+											<AudioFile>vo_hunk_01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="358803198"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="vo_hunk_01" ID="{F6D2B3E1-322F-431D-A4F5-CC2E0469C484}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="vo_hunk_02" ID="{59BD70AE-BA99-4198-9BB4-4D433FDB696F}" ShortID="502034341">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{92A1A0F3-7047-4165-95AE-D5CFCC30AE61}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="vo_hunk_02" ID="{1FEED1D6-F532-45A3-93F9-992B6B47CE96}">
+											<Language>SFX</Language>
+											<AudioFile>vo_hunk_02.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="1039971439"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="vo_hunk_02" ID="{1FEED1D6-F532-45A3-93F9-992B6B47CE96}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="vo_hunk_03" ID="{27A37B42-01CD-4B92-83C9-1060D6906432}" ShortID="479275973">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{92A1A0F3-7047-4165-95AE-D5CFCC30AE61}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="vo_hunk_03" ID="{24B10CC6-9776-4C66-8B87-F00713C26D29}">
+											<Language>SFX</Language>
+											<AudioFile>vo_hunk_03.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="1022398572"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="vo_hunk_03" ID="{24B10CC6-9776-4C66-8B87-F00713C26D29}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="vo_hunk_04" ID="{C42F262D-140C-45D9-AD69-FEEA7D10228B}" ShortID="588259774">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{92A1A0F3-7047-4165-95AE-D5CFCC30AE61}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="vo_hunk_04" ID="{76D1405D-5A68-4DBE-8FB3-EA4C4BD9909A}">
+											<Language>SFX</Language>
+											<AudioFile>vo_hunk_04.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="530052504"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="vo_hunk_04" ID="{76D1405D-5A68-4DBE-8FB3-EA4C4BD9909A}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="vo_hunk_05" ID="{68F84B5A-AE5A-4114-9020-6AAFF5878D5C}" ShortID="1033590814">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{92A1A0F3-7047-4165-95AE-D5CFCC30AE61}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="vo_hunk_05" ID="{CA6BE81F-F497-48F7-BAC1-E99A79C59E7B}">
+											<Language>SFX</Language>
+											<AudioFile>vo_hunk_05.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="441719611"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="vo_hunk_05" ID="{CA6BE81F-F497-48F7-BAC1-E99A79C59E7B}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="vo_hunk_06" ID="{B5C6B8A4-5945-4775-8FE4-B28A278DBD8E}" ShortID="417539231">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{92A1A0F3-7047-4165-95AE-D5CFCC30AE61}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="vo_hunk_06" ID="{34E5A318-337C-4CF4-A15F-D0272513DCE0}">
+											<Language>SFX</Language>
+											<AudioFile>vo_hunk_06.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="1045283151"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="vo_hunk_06" ID="{34E5A318-337C-4CF4-A15F-D0272513DCE0}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+							</ChildrenList>
+						</ActorMixer>
+					</ChildrenList>
+				</ActorMixer>
+				<ActorMixer Name="BGM" ID="{1324B2EC-9F10-42D5-8B65-4E3A5F224026}" ShortID="529989243">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{92A1A0F3-7047-4165-95AE-D5CFCC30AE61}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<Sound Name="bgm_hunk_loomingdread" ID="{1E05DC9F-CDCE-4077-BCF3-CD38D322B9C6}" ShortID="394907908">
+							<PropertyList>
+								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{92A1A0F3-7047-4165-95AE-D5CFCC30AE61}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="bgm_hunk_loomingdread" ID="{2C4E7CBB-8AEB-4BCD-A95D-A5962C1037F6}">
+									<Language>SFX</Language>
+									<AudioFile>bgm_hunk_loomingdread.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="178568114"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="bgm_hunk_loomingdread" ID="{2C4E7CBB-8AEB-4BCD-A95D-A5962C1037F6}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
 					</ChildrenList>

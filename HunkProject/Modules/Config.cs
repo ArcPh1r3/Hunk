@@ -18,6 +18,7 @@ namespace HunkMod.Modules
         public static ConfigEntry<bool> enableRecoil;
         public static ConfigEntry<bool> capInfection;
         public static ConfigEntry<bool> globalInfectionSound;
+        public static ConfigEntry<bool> customEscapeSequence;
         public static ConfigEntry<bool> overTheShoulderCamera;
         public static ConfigEntry<bool> overTheShoulderCamera2;
         public static ConfigEntry<bool> cursed;
@@ -62,6 +63,12 @@ true,
 "Infection Sound Cue",
 true,
 "Set to false to disable the global sound cue when an Infected enemy spawns. (Client-side)");
+
+            customEscapeSequence
+= Config.BindAndOptions("01 - General",
+"Custom Escape Sequence",
+true,
+"Set to false to disable the custom Moon escape sequence. (Client-side)");
 
             enableRecoil
 = Config.BindAndOptions("01 - General",
