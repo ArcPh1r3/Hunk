@@ -38,7 +38,7 @@ namespace HunkMod.Modules.Achievements
 
             if (Run.instance.stageClearCount >= 1)
             {
-                if (characterBody.inventory && base.meetsBodyRequirement && characterBody.baseNameToken == Modules.Survivors.Hunk.bodyNameToken)
+                if (characterBody.inventory && base.meetsBodyRequirement && characterBody.baseNameToken == Modules.Survivors.Hunk.bodyNameToken && characterBody.isPlayerControlled)
                 {
                     bool fuck = false;
 

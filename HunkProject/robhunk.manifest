@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3747478363
+CRC: 2295794459
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 052789bc4149ab4957f2088a6605ba0c
+    Hash: 65f60c01ca24b8a117b452a45943073a
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9c1933516dfd54fa9ad82d4055bce09b
@@ -385,6 +385,7 @@ Assets:
 - Assets/Hunk/Materials/matKeyCardClub.mat
 - Assets/Hunk/Textures/Shotgun/Leon_RemingtonM1100P_N.png
 - Assets/Hunk/Icons/Weapon/texSMGIcon.png
+- Assets/Hunk/HUD/GenericTextPanel.prefab
 - Assets/Hunk/AmmoInteraction.prefab
 - Assets/Hunk/VFX/texMoons.png
 - Assets/Hunk/Icons/Skill/texOSPIcon.png

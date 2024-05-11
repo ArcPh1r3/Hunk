@@ -69,7 +69,7 @@ namespace HunkMod.Modules
                 var localPlayers = LocalUserManager.readOnlyLocalUsersList;
                 foreach (LocalUser i in localPlayers)
                 {
-                    if (i.cachedBody.baseNameToken == Modules.Survivors.Hunk.bodyNameToken) return true;
+                    if (i.cachedBody.baseNameToken == Modules.Survivors.Hunk.bodyNameToken && i.cachedBody.hasAuthority) return true;
                 }
                 return false;
             }

@@ -34,10 +34,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Flamethrower
 
             this.isCrit = base.RollCrit();
 
-            if (base.isAuthority)
-            {
-                 if (!this.startingUp) this.Fire();
-            }
+            if (!this.startingUp) this.Fire();
 
             //this.PlayAnimation("Gesture, Override", "Shoot", "Shoot.playbackRate", 0.2f);
 
@@ -104,17 +101,23 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Flamethrower
         {
             base.FixedUpdate();
 
-            if (base.fixedAge >= this.duration && base.isAuthority)
+            if (base.fixedAge >= this.duration)
             {
                 if (this.startingUp)
                 {
                     this.hunk.flamethrowerLifetime = 0.1f;
-                    this.outer.SetNextState(new Shoot());
-                    return;
+                    if (base.isAuthority)
+                    {
+                        this.outer.SetNextState(new Shoot());
+                        return;
+                    }
                 }
 
-                this.outer.SetNextStateToMain();
-                return;
+                if (base.isAuthority)
+                {
+                    this.outer.SetNextStateToMain();
+                    return;
+                }
             }
         }
 

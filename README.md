@@ -113,15 +113,27 @@ Big thanks to everyone in the community for all the valuable feedback and critic
 
 ## Known Issues
 - Most item displays are missing
-- Ragdoll is extremely broken
 - Weapon menu doesn't work on controller
 - Emote buttons are there but he doesn't have any animations yet
 - Ally projectiles trigger perfect dodges; haven't decided if this is worth keeping as a mechanic yet
 - Goobo Jr. has no ammo and only shanks
+- Weapon cases are not fully synced; this is purely visual and has no actual gameplay impact
 
 ___
 
 ## Changelog
+
+`1.0.5`
+- Fixed anyone being able to pick up HUNK's guns
+- Fixed HUNK being able to grab more guns even with a full inventory
+- Fixed HUNK being able to grab duplicate guns
+- Fixed broken ragdoll turning into some body horror monstrosity and covering the whole screen
+- Fixed Goobo Jr. giving the Lightweight achievement
+- Fixed Goobo also spawning the ATM-4
+- Fixed ammo pickups in multiplayer properly this time
+
+`1.0.4`
+- Fixed Chemical Flamethrower spamming its startup sound for everyone else, inflicting severe pain to everyone's eardrums
 
 `1.0.3`
 - Added config to disable the global sound cue when an Infected enemy spawns; don't blame me if you turn this off and they mutate to max level

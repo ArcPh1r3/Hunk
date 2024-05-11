@@ -23,6 +23,7 @@ namespace HunkMod
     [BepInDependency("com.Borbo.GreenAlienHead", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("Faust.QoLChests", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.Elysium.ECBG", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.xoxfaby.UnlockAll", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("bubbet.riskui", BepInDependency.DependencyFlags.SoftDependency)]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
     [BepInPlugin(MODUID, MODNAME, MODVERSION)]
@@ -42,7 +43,7 @@ namespace HunkMod
     {
         public const string MODUID = "com.rob.Hunk";
         public const string MODNAME = "Hunk";
-        public const string MODVERSION = "1.0.3";
+        public const string MODVERSION = "1.0.5";
 
         public const string developerPrefix = "ROB";
 
@@ -56,6 +57,7 @@ namespace HunkMod
         public static bool greenAlienHeadInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.Borbo.GreenAlienHead");
         public static bool qolChestsInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("Faust.QoLChests");
         public static bool emptyChestsInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.Elysium.ECBG");
+        public static bool unlockAllInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.xoxfaby.UnlockAll");
 
         public static List<HurtBox> hurtboxesList = new List<HurtBox>();
         public static List<Modules.Components.HunkProjectileTracker> projectileList = new List<Modules.Components.HunkProjectileTracker>();
@@ -128,7 +130,7 @@ namespace HunkMod
             On.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
 
             // uncomment this if network testing
-            //On.RoR2.Networking.NetworkManagerSystemSteam.OnClientConnect += (s, u, t) => { };
+            On.RoR2.Networking.NetworkManagerSystemSteam.OnClientConnect += (s, u, t) => { };
 
             On.RoR2.HurtBox.OnEnable += HurtBox_OnEnable;
             On.RoR2.HurtBox.OnDisable += HurtBox_OnDisable;

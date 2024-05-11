@@ -43,6 +43,7 @@ namespace HunkMod.SkillStates.Hunk
 
 					if (this.hunk && this.hunk.weaponTracker && Modules.Helpers.HunkHasWeapon(Modules.Weapons.ATM.instance.weaponDef, this.hunk.weaponTracker)) return;
 					if (this.hunk.spawnedATM) return;
+					if (!this.characterBody.isPlayerControlled) return;
 					this.hunk.spawnedATM = true;
 					if (NetworkServer.active) PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Weapons.ATM.instance.itemDef.itemIndex), this.characterBody.corePosition, -this.characterBody.inputBank.aimDirection * 20f);
 				}

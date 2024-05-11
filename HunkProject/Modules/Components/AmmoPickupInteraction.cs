@@ -34,6 +34,21 @@ namespace HunkMod.Modules.Components
 			{
 				return Interactability.Disabled;
 			}
+
+			if (activator)
+            {
+				CharacterBody cb = activator.GetComponent<CharacterBody>();
+				if (cb && cb.baseNameToken != Modules.Survivors.Hunk.bodyNameToken) return Interactability.Disabled;
+				else
+                {
+					if (cb)
+                    {
+						HunkPassive passive = cb.GetComponent<HunkPassive>();
+						if (passive.isFullArsenal) return Interactability.Disabled;
+                    }
+                }
+            }
+
 			return Interactability.Available;
 		}
 
@@ -70,11 +85,12 @@ namespace HunkMod.Modules.Components
 
 		public void OnEnable()
 		{
-			if (!Modules.Helpers.isLocalUserHunk)
+			// this helper is probably broken. oh well
+			/*if (!Modules.Helpers.isLocalUserHunk)
 			{
 				Destroy(this.gameObject);
 				return;
-			}
+			}*/
 
 			InstanceTracker.Add<AmmoPickupInteraction>(this);
 		}

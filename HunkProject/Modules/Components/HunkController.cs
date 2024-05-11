@@ -37,6 +37,7 @@ namespace HunkMod.Modules.Components
 
         private int counterCount;
 
+        public HunkNotificationHandler notificationHandler;
         public CharacterBody characterBody { get; private set; }
         private ChildLocator childLocator;
         private CharacterModel characterModel;

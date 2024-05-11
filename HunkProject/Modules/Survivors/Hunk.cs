@@ -204,10 +204,10 @@ namespace HunkMod.Modules.Survivors
 
             //newPrefab.AddComponent<NinjaMod.Modules.Components.NinjaController>();
 
-            //SfxLocator sfx = newPrefab.GetComponent<SfxLocator>();
+            SfxLocator sfx = newPrefab.GetComponent<SfxLocator>();
             //sfx.barkSound = "";
             //sfx.landingSound = "";
-            //sfx.deathSound = "";
+            sfx.deathSound = "sfx_hunk_death";
             //sfx.fallDamageSound = "";
 
             //FootstepHandler footstep = newPrefab.GetComponentInChildren<FootstepHandler>();
@@ -1017,7 +1017,7 @@ namespace HunkMod.Modules.Survivors
 
             superSkin.meshReplacements = defaultSkin.meshReplacements;
 
-            skins.Add(superSkin);
+            if (!MainPlugin.unlockAllInstalled) skins.Add(superSkin);
             #endregion
 
             skinController.skins = skins.ToArray();
@@ -2980,6 +2980,9 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             //On.EntityStates.BrotherMonster.UltExitState.OnEnter += UltExitState_OnEnter;
             On.EntityStates.Missions.BrotherEncounter.Phase4.OnEnter += Phase4_OnEnter;
 
+            // prevent guns from being picked up by non hunk or hunk with full inventory
+            On.RoR2.GenericPickupController.AttemptGrant += GenericPickupController_AttemptGrant;
+
             // infected health bar
             On.RoR2.UI.HealthBar.Update += HealthBar_Update;
 
@@ -3006,6 +3009,45 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             //On.EntityStates.GlobalSkills.LunarNeedle.ChargeLunarSecondary.PlayChargeAnimation += PlayChargeLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarNeedle.ThrowLunarSecondary.PlayThrowAnimation += PlayThrowLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += PlayRuinAnimation;
+        }
+
+        private static void GenericPickupController_AttemptGrant(On.RoR2.GenericPickupController.orig_AttemptGrant orig, GenericPickupController self, CharacterBody body)
+        {
+            if (self && body)
+            {
+                if (self.pickupIndex.isValid)
+                {
+                    string nameToken = PickupCatalog.GetPickupDef(self.pickupIndex).nameToken;
+                    if (nameToken.Contains("ROB_HUNK_WEAPON_"))
+                    {
+                        if (body.baseNameToken == Hunk.bodyNameToken)
+                        {
+                            HunkController hunk = body.GetComponent<HunkController>();
+                            if (!hunk) return; // < should never happen
+                            foreach (HunkWeaponData i in hunk.weaponTracker.weaponData)
+                            {
+                                if (i.weaponDef.itemDef.nameToken == nameToken)
+                                {
+                                    if (hunk.notificationHandler) hunk.notificationHandler.Init("You already have a " + Language.GetString(i.weaponDef.nameToken));
+                                    return; // prevent duplicate pickups
+                                }
+                            }
+
+                            if (hunk.weaponTracker.weaponData.Length > 7)
+                            {
+                                if (hunk.notificationHandler) hunk.notificationHandler.Init("Inventory full!\nDrop a weapon to pick this up");
+                                return; // prevent excess pickups
+                            }
+                        }
+                        else
+                        {
+                            return; // non-hunk can't pick up guns
+                        }
+                    }
+                }
+            }
+
+            orig(self, body);
         }
 
         private static void CharacterBody_OnSkillActivated(On.RoR2.CharacterBody.orig_OnSkillActivated orig, CharacterBody self, GenericSkill skill)
@@ -3253,6 +3295,9 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             orig(self);
             Transform buttonPanel = self.transform.Find("SafeZone/GenericMenuButtonPanel/ModPanel(Clone)");
             if (buttonPanel) buttonPanel.GetComponent<RectTransform>().localRotation = Quaternion.Euler(new Vector3(0f, 90f, 0f));
+
+            buttonPanel = self.transform.Find("SafeZone/GenericMenuButtonPanel/JuicePanel/ModPanel(Clone)");
+            if (buttonPanel) buttonPanel.gameObject.SetActive(false);
         }
 
         private static void Row_AddButton(On.RoR2.UI.LoadoutPanelController.Row.orig_AddButton orig, object self, LoadoutPanelController owner, Sprite icon, string titleToken, string bodyToken, Color tooltipColor, UnityEngine.Events.UnityAction callback, string unlockableName, ViewablesCatalog.Node viewableNode, bool isWIP)
@@ -3378,7 +3423,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                 {
                     self.GetComponent<PurchaseInteraction>().SetAvailable(true);
 
-                    PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(self.GetComponent<Terminal>().itemDef.itemIndex), self.transform.position, (self.transform.forward * 5f) + Vector3.up * 25f);
+                    PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(self.GetComponent<Terminal>().itemDef.itemIndex), self.transform.position + (Vector3.up * 0.5f), (self.transform.forward * 3f) + Vector3.up * 10f);
 
                     return;
                 }
@@ -3401,7 +3446,8 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     if (i && i.token == "LOADOUT_SKILL_MISC")
                     {
                         if (j <= 0) i.token = "Passive";
-                        else i.token = "Knife";
+                        else if (j == 1) i.token = "Knife";
+                        else i.token = "Aspect";
                     }
                     j++;
                 }
@@ -3579,7 +3625,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
                     Transform healthbarContainer = hud.transform.Find("MainContainer").Find("MainUIArea").Find("SpringCanvas").Find("BottomLeftCluster").Find("BarRoots").Find("LevelDisplayCluster");
 
-                    if (!hud.transform.Find("MainContainer").Find("MainUIArea").Find("SpringCanvas").Find("BottomLeftCluster").Find("AmmoTracker"))
+                    if (!hud.transform.Find("MainContainer/MainUIArea/CrosshairCanvas/CrosshairExtras/AmmoTracker"))
                     {
                         GameObject ammoTracker = GameObject.Instantiate(healthbarContainer.gameObject, hud.transform.Find("MainContainer").Find("MainUIArea").Find("SpringCanvas").Find("BottomLeftCluster"));
                         ammoTracker.name = "AmmoTracker";
@@ -3606,6 +3652,26 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                         rect.pivot = new Vector2(0.5f, 0f);
                         rect.anchoredPosition = new Vector2(50f, 0f);
                         rect.localPosition = new Vector3(50f, -95f, 0f);
+                    }
+
+                    // generic notification
+
+                    if (!hud.transform.Find("MainContainer/MainUIArea/CrosshairCanvas/CrosshairExtras/NotificationPanel"))
+                    {
+                        GameObject notificationObject = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("GenericTextPanel"), healthbarContainer);
+                        notificationObject.name = "NotificationPanel";
+                        notificationObject.transform.SetParent(hud.transform.Find("MainContainer").Find("MainUIArea").Find("CrosshairCanvas").Find("CrosshairExtras"));
+
+                        HunkNotificationHandler notificationHandler = notificationObject.AddComponent<HunkNotificationHandler>();
+                        notificationHandler.targetHUD = hud;
+
+                        rect = notificationObject.GetComponent<RectTransform>();
+                        rect.localScale = new Vector3(1f, 1f, 1f);
+                        rect.anchorMin = new Vector2(0f, 0f);
+                        rect.anchorMax = new Vector2(0f, 0f);
+                        rect.pivot = new Vector2(0f, 0f);
+                        rect.anchoredPosition = new Vector2(50f, 0f);
+                        rect.localPosition = new Vector3(0f, -350f, 0f);
                     }
                 }
             }
@@ -3711,6 +3777,26 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     rect.pivot = new Vector2(0.5f, 0f);
                     rect.anchoredPosition = new Vector2(50f, 0f);
                     rect.localPosition = new Vector3(100f, -150f, 0f);
+                }
+
+                // generic notification
+
+                if (!!mainContainer.Find("NotificationPanel"))
+                {
+                    GameObject notificationObject = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("GenericTextPanel"), mainContainer);
+                    notificationObject.name = "NotificationPanel";
+                    notificationObject.transform.SetParent(mainContainer);
+
+                    HunkNotificationHandler notificationHandler = notificationObject.AddComponent<HunkNotificationHandler>();
+                    notificationHandler.targetHUD = hud;
+
+                    rect = notificationObject.GetComponent<RectTransform>();
+                    rect.localScale = new Vector3(1f, 1f, 1f);
+                    rect.anchorMin = new Vector2(0f, 0f);
+                    rect.anchorMax = new Vector2(0f, 0f);
+                    rect.pivot = new Vector2(0f, 0f);
+                    rect.anchoredPosition = new Vector2(50f, 0f);
+                    rect.localPosition = new Vector3(0f, -350f, 0f);
                 }
             }
         }

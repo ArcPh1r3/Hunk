@@ -795,6 +795,17 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="sfx_hunk_death" ID="{4D768D86-33B0-4D3F-93A2-9044B703CB34}">
+					<ChildrenList>
+						<Action Name="" ID="{713C0710-9808-4A93-8864-3D14E29DAF83}" ShortID="831471166">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_death" ID="{7628D9F2-DC76-49AF-A7AE-8F0DE7E0B4CF}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>
