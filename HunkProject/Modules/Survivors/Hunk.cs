@@ -3473,8 +3473,8 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                         if (j <= 0) i.token = "Passive";
                         else if (j == 1) i.token = "Knife";
                         else i.token = "Aspect";
+                        j++;
                     }
-                    j++;
                 }
             }
         }

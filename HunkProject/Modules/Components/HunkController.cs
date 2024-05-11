@@ -1033,6 +1033,7 @@ namespace HunkMod.Modules.Components
         private void SpawnTerminal()
         {
             if (!NetworkServer.active) return;
+            if (!this.characterBody.isPlayerControlled) return;
 
             Xoroshiro128Plus rng = new Xoroshiro128Plus(Run.instance.seed);
             DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(Survivors.Hunk.terminalInteractableCard, new DirectorPlacementRule { placementMode = DirectorPlacementRule.PlacementMode.Random }, rng));
