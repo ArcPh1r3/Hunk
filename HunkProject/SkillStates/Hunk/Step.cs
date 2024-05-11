@@ -234,6 +234,7 @@ namespace HunkMod.SkillStates.Hunk
             {
                 this.slowFlag3 = true;
                 this.coeff = 4f;
+                this.hunk.immobilized = false;
             }
 
             if (base.isAuthority && base.fixedAge >= this.duration)

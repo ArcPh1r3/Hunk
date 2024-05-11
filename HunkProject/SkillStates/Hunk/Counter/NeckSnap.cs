@@ -81,10 +81,10 @@ namespace HunkMod.SkillStates.Hunk.Counter
                 this.characterBody.RemoveBuff(RoR2Content.Buffs.ArmorBoost);
             }
 
-            if (base.fixedAge <= (0.8f * this.duration))
+            /*if (base.fixedAge <= (0.8f * this.duration))
             {
                 base.PlayAnimation("FullBody, Override", "BufferEmpty");
-            }
+            }*/
 
             this.animator.SetLayerWeight(this.animator.GetLayerIndex("AimYaw"), 1f);
             this.animator.SetLayerWeight(this.animator.GetLayerIndex("AimPitch"), 1f);
@@ -127,9 +127,19 @@ namespace HunkMod.SkillStates.Hunk.Counter
                 this.target.body.aimTimer = -1f;
             }
 
-            if (base.fixedAge >= 0.65f * this.duration)
+            if (base.fixedAge >= 0.75f * this.duration)
             {
                 this.aimWeight = Mathf.Lerp(this.aimWeight, 1f, Time.fixedDeltaTime * 0.5f);
+
+                if (base.isAuthority)
+                {
+                    if (this.inputBank.moveVector != Vector3.zero)
+                    {
+                        base.PlayAnimation("Body", "Sprint");
+                        this.outer.SetNextStateToMain();
+                        return;
+                    }
+                }
             }
             else
             {
@@ -139,8 +149,10 @@ namespace HunkMod.SkillStates.Hunk.Counter
             if (!this.hasSnapped && base.fixedAge >= 0.455f * this.duration)
             {
                 this.hasSnapped = true;
+                this.hunk.immobilized = false;
 
                 Util.PlaySound("sfx_hunk_snap", this.gameObject);
+
 
                 if (this.target)
                 {
@@ -198,7 +210,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            if (base.fixedAge >= 0.6f * this.duration) return InterruptPriority.Skill;
+            if (base.fixedAge >= 0.46f * this.duration) return InterruptPriority.Skill;
             return InterruptPriority.Frozen;
         }
 
