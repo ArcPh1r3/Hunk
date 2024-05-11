@@ -3607,30 +3607,9 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     weaponSlot.transform.Find("DisplayRoot").Find("EquipmentStack").gameObject.SetActive(false);
                     weaponSlot.transform.Find("DisplayRoot").Find("CooldownText").gameObject.SetActive(false);
 
-                    // duration bar
-                    GameObject chargeBar = GameObject.Instantiate(Assets.mainAssetBundle.LoadAsset<GameObject>("WeaponChargeBar"));
-                    chargeBar.transform.SetParent(weaponSlot.transform.Find("DisplayRoot"));
-
-                    RectTransform rect = chargeBar.GetComponent<RectTransform>();
-
-                    rect.localScale = new Vector3(0.75f, 0.1f, 1f);
-                    rect.anchorMin = new Vector2(0f, 0f);
-                    rect.anchorMax = new Vector2(0f, 0f);
-                    rect.pivot = new Vector2(0.5f, 0f);
-                    rect.anchoredPosition = new Vector2(-10f, 13f);
-                    rect.localPosition = new Vector3(-33f, -10f, 0f);
-                    rect.rotation = Quaternion.Euler(new Vector3(0f, 0f, 90f));
-
-                    weaponIconComponent.durationDisplay = chargeBar;
-                    weaponIconComponent.durationBar = chargeBar.transform.GetChild(1).gameObject.GetComponent<UnityEngine.UI.Image>();
-                    weaponIconComponent.durationBarRed = chargeBar.transform.GetChild(0).gameObject.GetComponent<UnityEngine.UI.Image>();
-
-                    MonoBehaviour.Destroy(equipmentIconComponent);
-
-
                     // weapon pickup notification
 
-                    GameObject notificationPanel = GameObject.Instantiate(hud.transform.Find("MainContainer").Find("NotificationArea").gameObject);
+                    /*GameObject notificationPanel = GameObject.Instantiate(hud.transform.Find("MainContainer").Find("NotificationArea").gameObject);
                     notificationPanel.transform.SetParent(hud.transform.Find("MainContainer"), true);
                     notificationPanel.GetComponent<RectTransform>().localPosition = new Vector3(0f, -265f, -150f);
                     notificationPanel.transform.localScale = Vector3.one;
@@ -3642,7 +3621,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     _new.genericNotificationPrefab = Modules.Assets.weaponNotificationPrefab;
                     _new.notificationQueue = hud.targetMaster.gameObject.AddComponent<WeaponNotificationQueue>();
 
-                    _old.enabled = false;
+                    _old.enabled = false;*/
 
 
 
@@ -3654,7 +3633,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     {
                         GameObject ammoTracker = GameObject.Instantiate(healthbarContainer.gameObject, hud.transform.Find("MainContainer").Find("MainUIArea").Find("SpringCanvas").Find("BottomLeftCluster"));
                         ammoTracker.name = "AmmoTracker";
-                        ammoTracker.transform.SetParent(hud.transform.Find("MainContainer").Find("MainUIArea").Find("CrosshairCanvas").Find("CrosshairExtras"));
+                        ammoTracker.transform.SetParent(hud.transform.Find("MainContainer/MainUIArea/CrosshairCanvas/CrosshairExtras"));
 
                         GameObject.DestroyImmediate(ammoTracker.transform.GetChild(0).gameObject);
                         MonoBehaviour.Destroy(ammoTracker.GetComponentInChildren<LevelText>());
@@ -3670,7 +3649,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
                         ammoTracker.transform.Find("LevelDisplayRoot").GetComponent<RectTransform>().anchoredPosition = new Vector2(-12f, 0f);
 
-                        rect = ammoTracker.GetComponent<RectTransform>();
+                        RectTransform rect = ammoTracker.GetComponent<RectTransform>();
                         rect.localScale = new Vector3(0.8f, 0.8f, 1f);
                         rect.anchorMin = new Vector2(0f, 0f);
                         rect.anchorMax = new Vector2(0f, 0f);
@@ -3690,7 +3669,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                         HunkNotificationHandler notificationHandler = notificationObject.AddComponent<HunkNotificationHandler>();
                         notificationHandler.targetHUD = hud;
 
-                        rect = notificationObject.GetComponent<RectTransform>();
+                        RectTransform rect = notificationObject.GetComponent<RectTransform>();
                         rect.localScale = new Vector3(1f, 1f, 1f);
                         rect.anchorMin = new Vector2(0f, 0f);
                         rect.anchorMax = new Vector2(0f, 0f);
