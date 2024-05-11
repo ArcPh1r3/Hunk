@@ -1,5 +1,6 @@
 ﻿using RoR2;
 using EntityStates;
+using UnityEngine.Networking;
 
 namespace HunkMod.SkillStates.Hunk
 {
@@ -27,6 +28,8 @@ namespace HunkMod.SkillStates.Hunk
             if (base.fixedAge >= (0.5f * this.duration) && !this.swapped)
             {
                 this.swapped = true;
+
+                this.index = this.hunk.weaponTracker.nextWeapon;
 
                 if (this.index != -1) this.hunk.SwapToWeapon(this.index);
                 else this.hunk.SwapToLastWeapon();
@@ -57,6 +60,17 @@ namespace HunkMod.SkillStates.Hunk
         {
             if (this.swapped) return InterruptPriority.Any;
             return InterruptPriority.Death;
+        }
+
+        public override void OnSerialize(NetworkWriter writer)
+        {
+            writer.Write(this.index);
+        }
+
+        public override void OnDeserialize(NetworkReader reader)
+        {
+            this.index = reader.ReadInt32();
+            this.GetComponent<Modules.Components.HunkController>().weaponTracker.nextWeapon = this.index;
         }
     }
 }

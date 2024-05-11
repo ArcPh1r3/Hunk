@@ -2,6 +2,7 @@
 using EntityStates;
 using HunkMod.SkillStates.BaseStates;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace HunkMod.SkillStates.Hunk.Counter
 {

@@ -62,6 +62,19 @@ namespace HunkMod.Modules
             }
         }
 
+        public static bool isLocalUserHunk
+        {
+            get
+            {
+                var localPlayers = LocalUserManager.readOnlyLocalUsersList;
+                foreach (LocalUser i in localPlayers)
+                {
+                    if (i.cachedBody.baseNameToken == Modules.Survivors.Hunk.bodyNameToken && i.cachedBody.hasAuthority) return true;
+                }
+                return false;
+            }
+        }
+
         public static int hunkCount
         {
             get
@@ -82,9 +95,12 @@ namespace HunkMod.Modules
         {
             foreach (HunkWeaponTracker hunk in GameObject.FindObjectsOfType<HunkWeaponTracker>())
             {
-                foreach (HunkWeaponData i in hunk.weaponData)
+                if (!hunk.ignoreFlag)
                 {
-                    if (i.weaponDef == weaponDef) return true;
+                    foreach (HunkWeaponData i in hunk.weaponData)
+                    {
+                        if (i.weaponDef == weaponDef) return true;
+                    }
                 }
             }
 

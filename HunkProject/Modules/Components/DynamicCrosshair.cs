@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 namespace HunkMod.Modules.Components
 {
+    [DisallowMultipleComponent]
     public class DynamicCrosshair : MonoBehaviour
     {
         public float range = 256f;

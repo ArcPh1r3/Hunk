@@ -1,12 +1,15 @@
 ﻿using EntityStates;
+using R2API.Networking;
+using R2API.Networking.Interfaces;
 using RoR2;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace HunkMod.SkillStates.Hunk.Weapon.BlueRose
 {
     public class Shoot : BaseHunkSkillState
     {
-        public static float damageCoefficient = 18f;
+        public static float damageCoefficient = 24f;
         public static float procCoefficient = 1f;
         public static float baseDuration = 0.8f;
         public static float force = 3000f;
@@ -32,7 +35,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.BlueRose
 
             this.Fire();
 
-            this.PlayAnimation("Gesture, Override", "ShootMagnum", "Shoot.playbackRate", this.duration * 0.35f);
+            this.PlayAnimation("Gesture, Override", "Shoot", "Shoot.playbackRate", this.duration * 0.35f);
 
             if (this.hunk)
             {
@@ -109,6 +112,10 @@ namespace HunkMod.SkillStates.Hunk.Weapon.BlueRose
                         effectData.SetHurtBoxReference(hitInfo.hitHurtBox);
                         EffectManager.SpawnEffect(Modules.Assets.headshotEffect, effectData, true);
                         Util.PlaySound("sfx_hunk_headshot", base.gameObject);
+
+                        NetworkIdentity identity = this.GetComponent<NetworkIdentity>();
+                        if (identity) new Modules.Components.SyncHeadshot(identity.netId, hitInfo.hitHurtBox.healthComponent.gameObject).Send(NetworkDestination.Server);
+
                         hitInfo.hitHurtBox.healthComponent.gameObject.AddComponent<Modules.Components.HunkHeadshotTracker>();
                     }
                 };
@@ -137,7 +144,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.BlueRose
 
                 if (this.hunk.ammo > 0)
                 {
-                    this.PlayAnimation("Gesture, Override", "ShootMagnum", "Shoot.playbackRate", this.duration * 1.5f);
+                    this.PlayAnimation("Gesture, Override", "Shoot", "Shoot.playbackRate", this.duration * 1.5f);
                     this.Fire();
                     this.hunk.ConsumeAmmo();
                     this.hunk.machineGunVFX.Play();

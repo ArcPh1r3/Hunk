@@ -16,6 +16,8 @@ namespace HunkMod.Modules
         public static ConfigEntry<float> baseDropRate;
         public static ConfigEntry<bool> dynamicCrosshair;
         public static ConfigEntry<bool> enableRecoil;
+        public static ConfigEntry<bool> capInfection;
+        public static ConfigEntry<bool> globalInfectionSound;
         public static ConfigEntry<bool> overTheShoulderCamera;
         public static ConfigEntry<bool> overTheShoulderCamera2;
         public static ConfigEntry<bool> cursed;
@@ -48,6 +50,18 @@ namespace HunkMod.Modules
 "Dynamic Crosshair",
 true,
 "If set to false, will no longer highlight the crosshair when hovering over entities. (Client-side)", true);
+
+            capInfection
+= Config.BindAndOptions("01 - General",
+"Cap Infection",
+true,
+"Caps G-Virus infection at 5 stacks of mutation. Set to false to restore the original infinite scaling.");
+
+            globalInfectionSound
+= Config.BindAndOptions("01 - General",
+"Infection Sound Cue",
+true,
+"Set to false to disable the global sound cue when an Infected enemy spawns. (Client-side)");
 
             enableRecoil
 = Config.BindAndOptions("01 - General",

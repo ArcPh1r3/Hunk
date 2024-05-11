@@ -25,10 +25,10 @@ namespace HunkMod.Modules.Components
         private TextMeshProUGUI[] statText;
         private Image[] statFill;
 
-        internal RoR2.UI.MPInput input = GameObject.Find("MPEventSystem Player0").GetComponent<RoR2.UI.MPInput>();
+        internal RoR2.UI.MPInput input;
         internal RoR2.UI.MPEventSystem events;
 
-        private float scaleSpeed = 10f;
+        private float scaleSpeed = 14f;
 
         private void Awake()
         {
@@ -40,9 +40,7 @@ namespace HunkMod.Modules.Components
             this.ammoCount = this.transform.Find("Center/Inner/StatsPanel/Ammo").GetComponent<TextMeshProUGUI>();
             this.statsPanel = this.transform.Find("Center/Inner/StatsPanel").gameObject;
 
-            this.events = input.GetFieldValue<RoR2.UI.MPEventSystem>("eventSystem");
-            this.events.cursorOpenerForGamepadCount += 1;
-            this.events.cursorOpenerCount += 1;
+            this.input = GameObject.Find("MPEventSystem Player0").GetComponent<RoR2.UI.MPInput>();
 
             this.statText = new TextMeshProUGUI[]
             {
@@ -75,6 +73,10 @@ namespace HunkMod.Modules.Components
         private void Start()
         {
             Util.PlaySound("sfx_hunk_menu_open", this.gameObject);
+
+            this.events = input.GetFieldValue<RoR2.UI.MPEventSystem>("eventSystem");
+            this.events.cursorOpenerForGamepadCount += 1;
+            this.events.cursorOpenerCount += 1;
 
             if (this.localUser == null)
             {

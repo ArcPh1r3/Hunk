@@ -34,8 +34,7 @@ namespace HunkMod.SkillStates.Hunk
             this.skillLocator.primary.SetSkillOverride(this, Modules.Survivors.Hunk.counterSkillDef, GenericSkill.SkillOverridePriority.Contextual);
 
             this.hunk.desiredYOffset = 0.6f;
-
-            if (NetworkServer.active) this.characterBody.AddBuff(Modules.Survivors.Hunk.immobilizedBuff);
+            this.hunk.immobilized = true;
             this.hunk.iFrames = 0.25f;
 
             this.ApplyBuff();
@@ -121,11 +120,10 @@ namespace HunkMod.SkillStates.Hunk
             this.hunk.isRolling = false;
             this.characterMotor.jumpCount = 0;
             this.hunk.desiredYOffset = this.hunk.defaultYOffset;
+            this.hunk.immobilized = false;
             this.skillLocator.primary.UnsetSkillOverride(this, Modules.Survivors.Hunk.counterSkillDef, GenericSkill.SkillOverridePriority.Contextual);
 
             base.OnExit();
-
-            if (NetworkServer.active) this.characterBody.RemoveBuff(Modules.Survivors.Hunk.immobilizedBuff);
 
             if (base.isAuthority && this.inputBank.moveVector != Vector3.zero) this.characterBody.isSprinting = true;
         }

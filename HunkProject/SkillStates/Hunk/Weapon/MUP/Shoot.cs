@@ -1,6 +1,9 @@
 ﻿using EntityStates;
+using R2API.Networking;
+using R2API.Networking.Interfaces;
 using RoR2;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace HunkMod.SkillStates.Hunk.Weapon.MUP
 {
@@ -29,10 +32,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.MUP
 
             this.isCrit = base.RollCrit();
 
-            if (base.isAuthority)
-            {
-                this.Fire();
-            }
+            this.Fire();
 
             this.PlayAnimation("Gesture, Override", "Shoot", "Shoot.playbackRate", this.duration);
 
@@ -104,7 +104,14 @@ namespace HunkMod.SkillStates.Hunk.Weapon.MUP
                         effectData.SetHurtBoxReference(hitInfo.hitHurtBox);
                         //EffectManager.SpawnEffect(Modules.Assets.headshotEffect, effectData, true);
                         Util.PlaySound("sfx_hunk_headshot", base.gameObject);
-                        if (this.isCrit) hitInfo.hitHurtBox.healthComponent.gameObject.AddComponent<Modules.Components.HunkHeadshotTracker>();
+
+                        if (this.isCrit)
+                        {
+                            NetworkIdentity identity = this.GetComponent<NetworkIdentity>();
+                            if (identity) new Modules.Components.SyncHeadshot(identity.netId, hitInfo.hitHurtBox.healthComponent.gameObject).Send(NetworkDestination.Server);
+
+                            hitInfo.hitHurtBox.healthComponent.gameObject.AddComponent<Modules.Components.HunkHeadshotTracker>();
+                        }
                     }
                 };
 

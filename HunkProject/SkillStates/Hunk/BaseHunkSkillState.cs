@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using EntityStates;
 using HunkMod.Modules.Components;
+using System;
 
 namespace HunkMod.SkillStates.Hunk
 {
@@ -37,13 +38,7 @@ namespace HunkMod.SkillStates.Hunk
         }
         protected HunkController hunk;
         protected HunkWeaponDef cachedWeaponDef;
-        protected virtual string prop
-        {
-            get
-            {
-                return "";
-            }
-        }
+        protected virtual string prop { get; set; }
 
         public override void OnEnter()
         {
@@ -53,7 +48,7 @@ namespace HunkMod.SkillStates.Hunk
             base.OnEnter();
 
             if (this.hideGun) this.GetModelChildLocator().FindChild("Weapon").gameObject.SetActive(false);
-            if (this.prop != "") this.GetModelChildLocator().FindChild(this.prop).gameObject.SetActive(true);
+            if (!String.IsNullOrEmpty(this.prop)) this.GetModelChildLocator().FindChild(this.prop).gameObject.SetActive(true);
         }
 
         public override void FixedUpdate()
@@ -72,7 +67,7 @@ namespace HunkMod.SkillStates.Hunk
             base.OnExit();
 
             if (this.hideGun) this.GetModelChildLocator().FindChild("Weapon").gameObject.SetActive(true);
-            if (this.prop != "") this.GetModelChildLocator().FindChild(this.prop).gameObject.SetActive(false);
+            if (!String.IsNullOrEmpty(this.prop)) this.GetModelChildLocator().FindChild(this.prop).gameObject.SetActive(false);
         }
     }
 }

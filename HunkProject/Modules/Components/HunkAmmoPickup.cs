@@ -21,15 +21,7 @@ namespace HunkMod.Modules.Components
 			BeginRapidlyActivatingAndDeactivating blinker = this.transform.parent.GetComponentInChildren<BeginRapidlyActivatingAndDeactivating>();
 			if (blinker)
 			{
-				bool isHunk = false;
-
-				var localPlayers = LocalUserManager.readOnlyLocalUsersList;
-				foreach (LocalUser i in localPlayers)
-				{
-					if (i.cachedBody.baseNameToken == Modules.Survivors.Hunk.bodyNameToken) isHunk = true;
-				}
-
-				if (!isHunk)
+				if (!Modules.Helpers.isLocalUserHunk)
 				{
 					blinker.blinkingRootObject.SetActive(false);
 					Destroy(blinker);

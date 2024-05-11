@@ -4,16 +4,13 @@ using UnityEngine;
 using UnityEngine.Networking;
 using RoR2;
 using System.IO;
-using RoR2.Audio;
 using System.Collections.Generic;
-using RoR2.Projectile;
 using UnityEngine.AddressableAssets;
 using TMPro;
 using RoR2.UI;
 using UnityEngine.UI;
 using HunkMod.Modules.Components;
 using UnityEngine.Rendering.PostProcessing;
-using Moonstorm.Starstorm2.Survivors;
 
 namespace HunkMod.Modules
 {
@@ -44,7 +41,9 @@ namespace HunkMod.Modules
         public static GameObject magnumCrosshairPrefab;
         public static GameObject smgCrosshairPrefab;
         public static GameObject rocketLauncherCrosshairPrefab;
+        public static GameObject rocketLauncherCrosshairPrefab2;
         public static GameObject grenadeLauncherCrosshairPrefab;
+        public static GameObject grenadeLauncherCrosshairPrefab2;
         public static GameObject needlerCrosshairPrefab;
         public static GameObject shotgunCrosshairPrefab;
         public static GameObject circleCrosshairPrefab;
@@ -141,6 +140,8 @@ namespace HunkMod.Modules
 
             viewer.visualizerPrefab = headshotVisualizer;
             bool dynamicCrosshair = Modules.Config.dynamicCrosshair.Value;
+
+            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Golem/LaserGolem.prefab").WaitForCompletion().AddComponent<Modules.Components.GolemLaser>();
 
             #region Pistol Crosshair
             pistolCrosshairPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/StandardCrosshair.prefab").WaitForCompletion().InstantiateClone("HunkPistolCrosshair", false);
@@ -270,6 +271,83 @@ namespace HunkMod.Modules
             MainPlugin.Destroy(shotgunCrosshairPrefab.transform.GetChild(1).gameObject);
             #endregion
 
+            #region Grenade Launcher Crosshair 2
+            grenadeLauncherCrosshairPrefab2 = PrefabAPI.InstantiateClone(RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/Crosshair/LoaderCrosshair"), "HunkGrenadeLauncherCrosshair2", false);
+            MainPlugin.Destroy(grenadeLauncherCrosshairPrefab2.GetComponent<LoaderHookCrosshairController>());
+            if (dynamicCrosshair) grenadeLauncherCrosshairPrefab2.AddComponent<DynamicCrosshair>();
+
+            grenadeLauncherCrosshairPrefab2.GetComponent<RawImage>().enabled = false;
+
+            control = grenadeLauncherCrosshairPrefab2.GetComponent<CrosshairController>();
+
+            control.maxSpreadAlpha = 0;
+            control.maxSpreadAngle = 3;
+            control.minSpreadAlpha = 0;
+            control.spriteSpreadPositions = new CrosshairController.SpritePosition[]
+            {
+                new CrosshairController.SpritePosition
+                {
+                    target = grenadeLauncherCrosshairPrefab2.transform.GetChild(2).GetComponent<RectTransform>(),
+                    zeroPosition = new Vector3(-32f, 0, 0),
+                    onePosition = new Vector3(-75f, 0, 0)
+                },
+                new CrosshairController.SpritePosition
+                {
+                    target = grenadeLauncherCrosshairPrefab2.transform.GetChild(3).GetComponent<RectTransform>(),
+                    zeroPosition = new Vector3(32f, 0, 0),
+                    onePosition = new Vector3(75f, 0, 0)
+                }
+            };
+
+            control.transform.Find("Bracket (2)").GetComponent<RectTransform>().localScale = new Vector3(2f, 2f, 1f);
+            control.transform.Find("Bracket (3)").GetComponent<RectTransform>().localScale = new Vector3(2f, 2f, 1f);
+
+            control.transform.Find("Bracket (2)").GetComponent<Image>().sprite = Addressables.LoadAssetAsync<Sprite>("RoR2/DLC1/Railgunner/texCrosshairRailgunnerBracket.png").WaitForCompletion();
+            control.transform.Find("Bracket (3)").GetComponent<Image>().sprite = Addressables.LoadAssetAsync<Sprite>("RoR2/DLC1/Railgunner/texCrosshairRailgunnerBracket.png").WaitForCompletion();
+
+            MainPlugin.Destroy(grenadeLauncherCrosshairPrefab2.transform.GetChild(0).gameObject);
+            MainPlugin.Destroy(grenadeLauncherCrosshairPrefab2.transform.GetChild(1).gameObject);
+            #endregion
+
+            #region Rocket Launcher Crosshair 2
+            rocketLauncherCrosshairPrefab2 = PrefabAPI.InstantiateClone(RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/Crosshair/LoaderCrosshair"), "HunkRocketLauncherCrosshair2", false);
+            MainPlugin.Destroy(rocketLauncherCrosshairPrefab2.GetComponent<LoaderHookCrosshairController>());
+            if (dynamicCrosshair) rocketLauncherCrosshairPrefab2.AddComponent<DynamicCrosshair>();
+
+            rocketLauncherCrosshairPrefab2.GetComponent<RawImage>().texture = Addressables.LoadAssetAsync<Sprite>("RoR2/Base/UI/texCrosshairCircle.png").WaitForCompletion().texture;
+
+            control = rocketLauncherCrosshairPrefab2.GetComponent<CrosshairController>();
+
+            control.maxSpreadAlpha = 0;
+            control.maxSpreadAngle = 3;
+            control.minSpreadAlpha = 0;
+            control.spriteSpreadPositions = new CrosshairController.SpritePosition[]
+            {
+                new CrosshairController.SpritePosition
+                {
+                    target = rocketLauncherCrosshairPrefab2.transform.GetChild(2).GetComponent<RectTransform>(),
+                    zeroPosition = new Vector3(0f, 0, 0),
+                    onePosition = new Vector3(0f, 0, 0)
+                },
+                new CrosshairController.SpritePosition
+                {
+                    target = rocketLauncherCrosshairPrefab2.transform.GetChild(3).GetComponent<RectTransform>(),
+                    zeroPosition = new Vector3(0f, 0, 0),
+                    onePosition = new Vector3(0f, 0, 0)
+                }
+            };
+
+            control.transform.Find("Bracket (2)").GetComponent<RectTransform>().localScale = new Vector3(24f, 2f, 1f);
+            control.transform.Find("Bracket (3)").GetComponent<RectTransform>().localScale = new Vector3(24f, 2f, 1f);
+            control.transform.Find("Bracket (3)").GetComponent<RectTransform>().localRotation = Quaternion.Euler(new Vector3(0f, 0f, 90f));
+
+            control.transform.Find("Bracket (2)").GetComponent<Image>().sprite = Addressables.LoadAssetAsync<Sprite>("RoR2/Base/UI/texCrosshairNibBar.png").WaitForCompletion();
+            control.transform.Find("Bracket (3)").GetComponent<Image>().sprite = Addressables.LoadAssetAsync<Sprite>("RoR2/Base/UI/texCrosshairNibBar.png").WaitForCompletion();
+
+            MainPlugin.Destroy(rocketLauncherCrosshairPrefab2.transform.GetChild(0).gameObject);
+            MainPlugin.Destroy(rocketLauncherCrosshairPrefab2.transform.GetChild(1).gameObject);
+            #endregion
+
             circleCrosshairPrefab = CreateCrosshair();
 
             shotgunShell = mainAssetBundle.LoadAsset<GameObject>("ShotgunShell");
@@ -368,7 +446,7 @@ namespace HunkMod.Modules
             sc.radius = 25f;
 
             GameObject nadeEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/OmniExplosionVFXCommandoGrenade.prefab").WaitForCompletion();
-            GameObject radiusIndicator = GameObject.Instantiate(nadeEffect.transform.Find("Nova Sphere").gameObject);
+            GameObject radiusIndicator = nadeEffect.transform.Find("Nova Sphere").gameObject.InstantiateClone("HunkFuckShit", false);
             radiusIndicator.transform.parent = pp.transform.parent;
             radiusIndicator.transform.localPosition = Vector3.zero;
             radiusIndicator.transform.localScale = Vector3.one * 15f;
@@ -434,6 +512,8 @@ namespace HunkMod.Modules
             knifeSwingEffectRed = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Merc/MercSwordSlash.prefab").WaitForCompletion().InstantiateClone("HunkKnifeSwingRed", false);
             Material swingMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/Huntress/matHuntressSwingTrail.mat").WaitForCompletion());
             swingMat.SetColor("_TintColor", Color.red);
+            swingMat.SetTexture("_RemapTex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Common/ColorRamps/texRampWisp.png").WaitForCompletion());
+            swingMat.SetFloat("_Boost", 4.680387f);
             knifeSwingEffectRed.transform.GetChild(0).GetComponent<ParticleSystemRenderer>().material = swingMat;
             //
 
@@ -613,7 +693,7 @@ namespace HunkMod.Modules
             rectR.localScale = Vector3.one * 0.75f;
 
             GameObject nibL = GameObject.Instantiate(crosshair.transform.Find("Outer").gameObject);
-            nibL.transform.parent = crosshairPrefab.transform;
+            nibL.transform.SetParent(crosshairPrefab.transform);
             //nibL.GetComponent<Image>().sprite = Addressables.LoadAssetAsync<Sprite>("RoR2/DLC1/Railgunner/texCrosshairRailgunSniperCenter.png").WaitForCompletion();
             RectTransform rectL = nibL.GetComponent<RectTransform>();
             rectL.localEulerAngles = new Vector3(0f, 0f, 180f);

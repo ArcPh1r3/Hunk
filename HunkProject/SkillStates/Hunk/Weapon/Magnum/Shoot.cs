@@ -1,12 +1,15 @@
 ﻿using EntityStates;
+using R2API.Networking;
+using R2API.Networking.Interfaces;
 using RoR2;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace HunkMod.SkillStates.Hunk.Weapon.Magnum
 {
     public class Shoot : BaseHunkSkillState
     {
-        public static float damageCoefficient = 16f;
+        public static float damageCoefficient = 24f;
         public static float procCoefficient = 1f;
         public static float baseDuration = 0.8f;
         public static float force = 1500f;
@@ -101,6 +104,10 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Magnum
                         effectData.SetHurtBoxReference(hitInfo.hitHurtBox);
                         EffectManager.SpawnEffect(Modules.Assets.headshotEffect, effectData, true);
                         Util.PlaySound("sfx_hunk_headshot", base.gameObject);
+
+                        NetworkIdentity identity = this.GetComponent<NetworkIdentity>();
+                        if (identity) new Modules.Components.SyncHeadshot(identity.netId, hitInfo.hitHurtBox.healthComponent.gameObject).Send(NetworkDestination.Server);
+
                         hitInfo.hitHurtBox.healthComponent.gameObject.AddComponent<Modules.Components.HunkHeadshotTracker>();
                     }
                 };

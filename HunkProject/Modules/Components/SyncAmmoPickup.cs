@@ -9,19 +9,25 @@ namespace HunkMod.Modules.Components
     internal class SyncAmmoPickup : INetMessage
     {
         private NetworkInstanceId netId;
+        private long multiplier;
+        private int index;
 
         public SyncAmmoPickup()
         {
         }
 
-        public SyncAmmoPickup(NetworkInstanceId netId)
+        public SyncAmmoPickup(NetworkInstanceId netId, float mult, int index)
         {
             this.netId = netId;
+            this.multiplier = Mathf.RoundToInt(mult * 100f);
+            this.index = index;
         }
 
         public void Deserialize(NetworkReader reader)
         {
             this.netId = reader.ReadNetworkId();
+            this.multiplier = reader.ReadInt64();
+            this.index = reader.ReadInt32();
         }
 
         public void OnReceived()
@@ -32,22 +38,15 @@ namespace HunkMod.Modules.Components
             HunkController hunk = bodyObject.GetComponent<HunkController>();
             if (hunk)
             {
-                bool valid = false;
-                int index = 0;
-
-                while (!valid)
-                {
-                    index = UnityEngine.Random.Range(0, hunk.weaponTracker.weaponData.Length);
-                    if (hunk.weaponTracker.weaponData[index].weaponDef.canPickUpAmmo) valid = true;
-                }
-
-                hunk.AddAmmoFromIndex(index);
+                hunk.AddAmmoFromIndex(this.index, this.multiplier * 0.01f);
             }
         }
 
         public void Serialize(NetworkWriter writer)
         {
             writer.Write(this.netId);
+            writer.Write(this.multiplier);
+            writer.Write(this.index);
         }
     }
 }

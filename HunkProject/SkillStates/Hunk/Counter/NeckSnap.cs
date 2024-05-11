@@ -11,7 +11,8 @@ namespace HunkMod.SkillStates.Hunk.Counter
         protected override bool hideGun => true;
 
         public float duration = 3f;
-        public HealthComponent target;
+        private HealthComponent target;
+        public GameObject targetObject;
 
         public float lerpSpeed = 4f;
 
@@ -28,22 +29,32 @@ namespace HunkMod.SkillStates.Hunk.Counter
         {
             base.OnEnter();
             this.animator = this.GetModelAnimator();
+            this.target = this.targetObject.GetComponent<HealthComponent>();
             this.targetPos = this.target.transform.position;
             this.lerpSpeed *= this.attackSpeedStat;
             this.duration /= this.attackSpeedStat;
+
+            if (NetworkServer.active)
+            {
+                foreach (EntityStateMachine i in this.target.GetComponents<EntityStateMachine>())
+                {
+                    if (i.customName == "Body") i.SetNextState(new NeckSnapped());
+                    else i.SetNextStateToMain();
+                }
+            }
 
             if (!this.camParamsOverrideHandle.isValid) this.camParamsOverrideHandle = Modules.CameraParams.OverrideCameraParams(base.cameraTargetParams, HunkCameraParams.MELEE, 0.25f);
 
             Vector3 fakePos = this.targetPos;
             fakePos.y = this.transform.position.y;
             this.lookVector = (this.transform.position - fakePos).normalized;
+            this.hunk.immobilized = true;
 
             base.PlayAnimation("FullBody, Override", "NeckSnap", "Dodge.playbackRate", this.duration);
 
             if (NetworkServer.active)
             {
                 this.hunk.iFrames = this.duration;
-                this.characterBody.AddBuff(Modules.Survivors.Hunk.immobilizedBuff);
             }
 
             this.desiredPos = this.targetPos + (this.lookVector * this.hunk.snapOffset);
@@ -62,11 +73,11 @@ namespace HunkMod.SkillStates.Hunk.Counter
 
             base.OnExit();
 
+            this.hunk.immobilized = false;
             this.cameraTargetParams.RemoveParamsOverride(this.camParamsOverrideHandle);
 
             if (NetworkServer.active)
             {
-                this.characterBody.RemoveBuff(Modules.Survivors.Hunk.immobilizedBuff);
                 this.characterBody.RemoveBuff(RoR2Content.Buffs.ArmorBoost);
             }
 
@@ -92,15 +103,6 @@ namespace HunkMod.SkillStates.Hunk.Counter
             this.characterMotor.jumpCount = this.characterBody.maxJumpCount;
             this.characterBody.isSprinting = false;
 
-            // failsafe
-            if (!this.characterBody.HasBuff(Modules.Survivors.Hunk.immobilizedBuff) && base.fixedAge <= 0.2f)
-            {
-                if (NetworkServer.active)
-                {
-                    this.characterBody.AddBuff(Modules.Survivors.Hunk.immobilizedBuff);
-                }
-            }
-
             if (base.isAuthority)
             {
                 if (base.fixedAge >= this.duration)
@@ -114,7 +116,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
             this.characterDirection.moveVector = -this.lookVector;
             this.characterDirection.forward = -this.lookVector;
 
-            if (this.target)
+            if (this.target && NetworkServer.active)
             {
                 this.target.body.characterMotor.velocity = Vector3.zero;
                 this.target.body.characterMotor.moveDirection = Vector3.zero;
@@ -178,13 +180,11 @@ namespace HunkMod.SkillStates.Hunk.Counter
 
             if (base.fixedAge >= 0.75f * this.duration)
             {
-                if (this.characterBody.HasBuff(Modules.Survivors.Hunk.immobilizedBuff))
-                {
-                    if (NetworkServer.active) this.characterBody.RemoveBuff(Modules.Survivors.Hunk.immobilizedBuff);
-                }
+                this.hunk.immobilized = false;
             }
             else
             {
+                this.hunk.immobilized = true;
                 this.skillLocator.secondary.stock = 0;
                 this.skillLocator.secondary.rechargeStopwatch = -0.3f;
             }
@@ -200,6 +200,16 @@ namespace HunkMod.SkillStates.Hunk.Counter
         {
             if (base.fixedAge >= 0.6f * this.duration) return InterruptPriority.Skill;
             return InterruptPriority.Frozen;
+        }
+
+        public override void OnSerialize(NetworkWriter writer)
+        {
+            writer.Write(this.targetObject);
+        }
+
+        public override void OnDeserialize(NetworkReader reader)
+        {
+            this.targetObject = reader.ReadGameObject();
         }
     }
 }

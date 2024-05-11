@@ -18,7 +18,7 @@ namespace HunkMod.Modules.Components
         private bool hasSpawnedCarrier;
         private uint soundPlayID;
 
-        private void Awake()
+        private void Start()
         {
             this.characterBody = this.GetComponent<CharacterBody>();
             this.characterMaster = this.characterBody.master;
@@ -30,20 +30,21 @@ namespace HunkMod.Modules.Components
             }
 
             this.characterBody.baseMaxHealth *= 4f;
-            this.characterBody.baseDamage *= 1.5f;
-
-            if (this.inventory)
-            {
-                //this.inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
-                this.inventory.GiveItem(RoR2Content.Items.TeleportWhenOob);
-            }
+            this.characterBody.baseDamage *= 1.25f;
 
             this.Mutate();
 
             this.soundPlayID = Util.PlaySound("sfx_hunk_syringe_buff", this.gameObject);
             //Util.PlaySound("sfx_hunk_injection", this.gameObject);
 
-            if (NetworkServer.active) this.characterBody.AddBuff(Modules.Survivors.Hunk.infectedBuff);
+            if (NetworkServer.active)
+            {
+                this.characterBody.AddBuff(Modules.Survivors.Hunk.infectedBuff);
+                if (this.inventory)
+                {
+                    this.inventory.GiveItem(RoR2Content.Items.TeleportWhenOob);
+                }
+            }
         }
 
         private void OnEnable()
@@ -53,19 +54,15 @@ namespace HunkMod.Modules.Components
 
         private void OnDisable()
         {
-            this.TrySpawn();
+            //this.TrySpawn();
             Modules.Survivors.Hunk.virusObjectiveObjects.Remove(this.gameObject);
-        }
-
-        private void OnDestroy()
-        {
-            this.TrySpawn();
             AkSoundEngine.StopPlayingID(this.soundPlayID);
         }
 
         private void TrySpawn()
         {
             if (this.hasSpawnedCarrier) return;
+            if (!NetworkServer.active) return;
 
             var summon = new MasterSummon();
             summon.position = this.transform.position + (Vector3.up * 2);
@@ -73,6 +70,20 @@ namespace HunkMod.Modules.Components
             summon.summonerBodyObject = this.gameObject;
             var master = summon.Perform();
             this.hasSpawnedCarrier = true;
+        }
+
+        private void Update()
+        {
+            if (this.characterBody)
+            {
+                if (this.characterBody.healthComponent && !this.characterBody.healthComponent.alive)
+                {
+                    this.TrySpawn();
+
+                    Destroy(this);
+                    return;
+                }
+            }
         }
 
         private void FixedUpdate()
@@ -89,7 +100,7 @@ namespace HunkMod.Modules.Components
                     return;
                 }
 
-                if (!this.characterBody.outOfDanger) this.mutationStopwatch = 60f;
+                if (!this.characterBody.outOfDanger) this.mutationStopwatch = 40f;
             }
 
             if (this.mutationStopwatch <= 0f)
@@ -112,22 +123,53 @@ namespace HunkMod.Modules.Components
 
         private void Mutate()
         {
-            this.mutationStopwatch = 30f;
+            this.mutationStopwatch = 20f;
 
-            if (this.inventory)
+            bool capped = Modules.Config.capInfection.Value;
+            if (capped)
             {
-                this.inventory.GiveItem(Modules.Survivors.Hunk.gVirus);
-                this.inventory.GiveItem(RoR2Content.Items.BoostHp);
+                if (this.inventory && this.inventory.GetItemCount(Modules.Survivors.Hunk.gVirusFinal) > 0)
+                {
+                    return;
+                }
+            }
 
-                if (this.inventory.GetItemCount(Modules.Survivors.Hunk.gVirus) >= 3) this.inventory.GiveItem(RoR2Content.Items.Medkit);
+            if (NetworkServer.active)
+            {
+                if (this.inventory)
+                {
+                    this.inventory.GiveItem(Modules.Survivors.Hunk.gVirus);
+                    this.inventory.GiveItem(RoR2Content.Items.BoostHp);
+
+                    if (this.inventory.GetItemCount(Modules.Survivors.Hunk.gVirus) >= 3)
+                    {
+                        this.inventory.GiveItem(Modules.Survivors.Hunk.gVirus2);
+                    }
+
+                    if (this.inventory.GetItemCount(Modules.Survivors.Hunk.gVirus) >= 5)
+                    {
+                        this.inventory.GiveItem(Modules.Survivors.Hunk.gVirusFinal);
+                        if (capped)
+                        {
+                            this.inventory.GiveItem(RoR2Content.Items.Medkit, 5);
+                            this.inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
+                            this.inventory.GiveItem(RoR2Content.Items.BoostHp, 2);
+                        }
+                        else
+                        {
+                            this.inventory.GiveItem(RoR2Content.Items.Medkit);
+                        }
+                    }
+                }
             }
 
             this.characterBody.RecalculateStats();
-            this.characterBody.healthComponent.HealFraction(1f, default(ProcChainMask));
+
+            if (NetworkServer.active) this.characterBody.healthComponent.HealFraction(1f, default(ProcChainMask));
 
             if (this.characterModel)
             {
-                this.characterModel.transform.localScale *= 1.15f;
+                this.characterModel.transform.localScale *= 1.1f;
             }
             Util.PlaySound("sfx_hunk_injection", this.gameObject);
         }

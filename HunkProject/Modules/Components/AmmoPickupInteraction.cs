@@ -34,6 +34,21 @@ namespace HunkMod.Modules.Components
 			{
 				return Interactability.Disabled;
 			}
+
+			if (activator)
+            {
+				CharacterBody cb = activator.GetComponent<CharacterBody>();
+				if (cb && cb.baseNameToken != Modules.Survivors.Hunk.bodyNameToken) return Interactability.Disabled;
+				else
+                {
+					if (cb)
+                    {
+						HunkPassive passive = cb.GetComponent<HunkPassive>();
+						if (passive.isFullArsenal) return Interactability.Disabled;
+                    }
+                }
+            }
+
 			return Interactability.Available;
 		}
 
@@ -45,15 +60,16 @@ namespace HunkMod.Modules.Components
 			if (!this.opened)
 			{
 				this.Networkopened = true;
-				EntityStateMachine esm = base.GetComponent<EntityStateMachine>();
-				if (esm) esm.SetNextState(new Opening());
+				//EntityStateMachine esm = base.GetComponent<EntityStateMachine>();
+				//if (esm) esm.SetNextState(new Opening());
 				HunkController hunk = activator.GetComponent<HunkController>();
 				if (hunk)
 				{
-					hunk.AddRandomAmmo(this.multiplier);
+					hunk.ServerGetAmmo(this.multiplier);
 				}
 
 				if (this.destroyOnOpen) Destroy(this.destroyOnOpen);
+				NetworkServer.Destroy(this.gameObject);
 			}
 		}
 
@@ -69,6 +85,13 @@ namespace HunkMod.Modules.Components
 
 		public void OnEnable()
 		{
+			// this helper is probably broken. oh well
+			/*if (!Modules.Helpers.isLocalUserHunk)
+			{
+				Destroy(this.gameObject);
+				return;
+			}*/
+
 			InstanceTracker.Add<AmmoPickupInteraction>(this);
 		}
 

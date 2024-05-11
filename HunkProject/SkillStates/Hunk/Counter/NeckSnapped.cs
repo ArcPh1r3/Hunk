@@ -27,7 +27,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
             if (!this.hasSnapped && base.fixedAge >= 0.455f * this.duration)
             {
                 this.hasSnapped = true;
-                this.characterBody.RemoveBuff(RoR2Content.Buffs.ArmorBoost);
+                if (NetworkServer.active) this.characterBody.RemoveBuff(RoR2Content.Buffs.ArmorBoost);
 
                 this.modelLocator.modelTransform.gameObject.AddComponent<Modules.Components.Snapped>();
             }

@@ -31,6 +31,8 @@ namespace HunkMod.SkillStates.Hunk
 
             base.characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
 
+            Util.PlaySound("sfx_hunk_airdodge", this.gameObject);
+
             hits = new List<HurtBox>();
             search = new SphereSearch();
             search.mask = LayerIndex.entityPrecise.mask;
@@ -118,6 +120,23 @@ namespace HunkMod.SkillStates.Hunk
                     {
                         return true;
                     }
+                }
+            }
+
+            foreach (Modules.Components.HunkProjectileTracker i in MainPlugin.projectileList)
+            {
+                if (i && Vector3.Distance(i.transform.position, this.transform.position) <= this.checkRadius)
+                {
+                    return true;
+                }
+            }
+
+
+            foreach (Modules.Components.GolemLaser i in Modules.Survivors.Hunk.golemLasers)
+            {
+                if (i && Vector3.Distance(i.endPoint, this.transform.position) <= this.checkRadius * 0.5f)
+                {
+                    return true;
                 }
             }
 

@@ -11,7 +11,7 @@ namespace HunkMod.SkillStates
 		{
 			base.OnEnter();
 
-			Vector3 vector = Vector3.up * 3f;
+			/*Vector3 vector = Vector3.up * 3f;
 			if (base.characterMotor)
 			{
 				vector += base.characterMotor.velocity;
@@ -36,7 +36,9 @@ namespace HunkMod.SkillStates
 
 					ragdollController.BeginRagdoll(vector);
 				}
-			}
+			}*/
+
+			Destroy(this.modelLocator.modelTransform.gameObject);
 		}
 
 		public override void PlayDeathAnimation(float crossfadeDuration = 0.1f)

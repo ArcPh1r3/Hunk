@@ -9,9 +9,9 @@ namespace HunkMod.Modules.Weapons
         public override string weaponName => "Chemical Flamethrower";
         public override string weaponDesc => "An Umbrella-made weapon that uses pressurized gas to produce red-hot flames. Portable and refuellable, it's always ready for the long haul.";
         public override string iconName => "texFlamethrowerIcon";
-        public override GameObject crosshairPrefab => Modules.Assets.shotgunCrosshairPrefab;
+        public override GameObject crosshairPrefab => Modules.Assets.rocketLauncherCrosshairPrefab;
         public override int magSize => 300;
-        public override float magPickupMultiplier => 0.5f;
+        public override float magPickupMultiplier => 1f;
         public override float reloadDuration => 2f;
         public override string ammoName => "Fuel";
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlFlamethrower");
@@ -26,8 +26,8 @@ namespace HunkMod.Modules.Weapons
         public override SkillDef primarySkillDef => Modules.Skills.CreatePrimarySkillDef(
 new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Weapon.Flamethrower.Shoot)),
 "Weapon",
-"ROB_HUNK_BODY_SHOOT_SHOTGUN_NAME",
-"ROB_HUNK_BODY_SHOOT_SHOTGUN_DESCRIPTION",
+"ROB_HUNK_BODY_SHOOT_FLAMETHROWER_NAME",
+"ROB_HUNK_BODY_SHOOT_FLAMETHROWER_DESCRIPTION",
 Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texShootIcon"),
 false);
 

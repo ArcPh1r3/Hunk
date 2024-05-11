@@ -76,6 +76,8 @@ namespace HunkMod.SkillStates.Hunk
             this.skillLocator.secondary.stock = 0;
             this.skillLocator.secondary.rechargeStopwatch = -0.3f;
 
+            this.hunk.immobilized = true;
+
             this.CreateDashEffect();
         }
 
@@ -106,17 +108,20 @@ namespace HunkMod.SkillStates.Hunk
                 {
                     if (hp.body.outOfCombatStopwatch <= 1.4f)
                     {
-                        Roll nextState = new Roll();
-                       
-                        /*foreach (HurtBox i in h.hurtBoxGroup.hurtBoxes)
+                        if (base.isAuthority)
                         {
-                            if (i.isSniperTarget)
-                            {
-                                this.hunk.targetHurtbox = i;
-                            }
-                        }*/
+                            Roll nextState = new Roll();
 
-                        outer.SetNextState(nextState);
+                            /*foreach (HurtBox i in h.hurtBoxGroup.hurtBoxes)
+                            {
+                                if (i.isSniperTarget)
+                                {
+                                    this.hunk.targetHurtbox = i;
+                                }
+                            }*/
+
+                            outer.SetNextState(nextState);
+                        }
                         return true;
                     }
                 }
@@ -131,10 +136,39 @@ namespace HunkMod.SkillStates.Hunk
                 {
                     if (pc.teamFilter.teamIndex != characterBody.teamComponent.teamIndex)
                     {
-                        Roll nextState = new Roll();
-                        outer.SetNextState(nextState);
+                        if (base.isAuthority)
+                        {
+                            Roll nextState = new Roll();
+                            outer.SetNextState(nextState);
+                        }
                         return true;
                     }
+                }
+            }
+
+            foreach (Modules.Components.HunkProjectileTracker i in MainPlugin.projectileList)
+            {
+                if (i && Vector3.Distance(i.transform.position, this.transform.position) <= this.checkRadius)
+                {
+                    if (base.isAuthority)
+                    {
+                        Roll nextState = new Roll();
+                        outer.SetNextState(nextState);
+                    }
+                    return true;
+                }
+            }
+
+            foreach (Modules.Components.GolemLaser i in Modules.Survivors.Hunk.golemLasers)
+            {
+                if (i && Vector3.Distance(i.endPoint, this.transform.position) <= this.checkRadius * 0.5f)
+                {
+                    if (base.isAuthority)
+                    {
+                        Roll nextState = new Roll();
+                        outer.SetNextState(nextState);
+                    }
+                    return true;
                 }
             }
 
@@ -143,6 +177,22 @@ namespace HunkMod.SkillStates.Hunk
 
         public override void FixedUpdate()
         {
+            if (this.slowFlag2 && base.isAuthority)
+            {
+                this.characterMotor.jumpCount = 0;
+                if (this.inputBank.jump.justPressed)
+                {
+                    base.PlayCrossfade("FullBody, Override", "BufferEmpty", 0.05f);
+                    this.characterMotor.Motor.ForceUnground();
+                    this.outer.SetNextStateToMain();
+                    return;
+                }
+            }
+            else
+            {
+                this.characterMotor.jumpCount = this.characterBody.maxJumpCount;
+            }
+
             base.FixedUpdate();
             this.characterBody.aimTimer = -1f;
             this.hunk.reloadTimer = 1f;
@@ -201,13 +251,13 @@ namespace HunkMod.SkillStates.Hunk
         {
             this.DampenVelocity();
             this.hunk.isRolling = false;
-
-            /*if (cameraTargetParams)
-            {
-                cameraTargetParams.RemoveParamsOverride(camOverrideHandle, 0.2f);
-            }*/
+            this.hunk.immobilized = false;
+            this.characterMotor.jumpCount = 0;
+            this.hunk.desiredYOffset = this.hunk.defaultYOffset;
 
             base.OnExit();
+
+            if (base.isAuthority && this.inputBank.moveVector != Vector3.zero) this.characterBody.isSprinting = true;
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

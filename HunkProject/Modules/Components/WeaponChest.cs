@@ -1,9 +1,6 @@
-﻿using HarmonyLib;
-using HunkMod.Modules.Weapons;
+﻿using HunkMod.Modules.Weapons;
 using RoR2;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -16,11 +13,12 @@ namespace HunkMod.Modules.Components
         public PurchaseInteraction purchaseInteraction;
         public PingInfoProvider pingInfoProvider;
         public GenericDisplayNameProvider genericDisplayNameProvider;
-        public HunkWeaponDef weaponDef = Modules.Weapons.MUP.instance.weaponDef;
+        public HunkWeaponDef weaponDef;
         public int chestType;
 
         private void InitPickup()
         {
+            this.weaponDef = Modules.Weapons.MUP.instance.weaponDef;
             string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 
             bool fuck = false;
@@ -114,6 +112,8 @@ namespace HunkMod.Modules.Components
             {
                 purchaseInteraction.displayNameToken = string.Format("{0}{1}", Language.GetStringFormatted(MainPlugin.developerPrefix + "_HUNK_CHEST_NAME"), Language.GetStringFormatted(weaponDef.nameToken));
                 purchaseInteraction.contextToken = MainPlugin.developerPrefix + "_HUNK_CHEST_CONTEXT";
+
+                if (sceneName == "moon2") purchaseInteraction.costType = CostTypeIndex.None;
             }
 
             gunPickup.Init();
@@ -142,10 +142,10 @@ namespace HunkMod.Modules.Components
             pingInfoProvider = this.GetComponent<PingInfoProvider>();
 
             var h = GetComponent<Highlight>();
-            h.targetRenderer.transform.parent.Find("Hinge/Lock/OnLight").gameObject.SetActive(false);
+            if (h.targetRenderer.transform.parent.Find("Hinge")) h.targetRenderer.transform.parent.Find("Hinge/Lock/OnLight").gameObject.SetActive(false);
 
             if (Run.instance.stageClearCount <= 0 || UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "goldshores") chestType = 2;
-
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "moon2") chestType = 0;
 
 
             if (purchaseInteraction != null)

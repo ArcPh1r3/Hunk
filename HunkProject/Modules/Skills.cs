@@ -43,6 +43,13 @@ namespace HunkMod.Modules
             if ((families & (1 << 3)) != 0) {
                 skillLocator.special = CreateGenericSkillWithSkillFamily(targetPrefab, "Special");
             }
+
+            HunkController hunk = targetPrefab.GetComponent<HunkController>();
+            if (hunk)
+            {
+                hunk.knifeSkinSkillSlot = CreateGenericSkillWithSkillFamily(targetPrefab, "Knife");
+                hunk.knifeSkinSkillSlot.hideInCharacterSelect = true;
+            }
         }
 
         public static GenericSkill CreateGenericSkillWithSkillFamily(GameObject targetPrefab, string familyName, bool hidden = false) {
@@ -97,6 +104,10 @@ namespace HunkMod.Modules
         public static void AddPassiveSkills(SkillFamily passiveSkillFamily, params SkillDef[] skillDefs)
         {
             AddSkillsToFamily(passiveSkillFamily, skillDefs);
+        }
+        public static void AddKnifeSkins(SkillFamily skillFamily, params SkillDef[] skillDefs)
+        {
+            AddSkillsToFamily(skillFamily, skillDefs);
         }
 
         /// <summary>

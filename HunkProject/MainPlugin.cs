@@ -5,9 +5,8 @@ using RoR2;
 using System.Security;
 using System.Security.Permissions;
 using UnityEngine;
+using RoR2.Projectile;
 using R2API.Networking;
-using HunkMod.Modules.Components;
-using HunkMod.Modules.Survivors;
 using System.Collections.Generic;
 
 [module: UnverifiableCode]
@@ -22,6 +21,9 @@ namespace HunkMod
     [BepInDependency("com.TeamMoonstorm.Starstorm2", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.RiskySleeps.ClassicItemsReturns", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.Borbo.GreenAlienHead", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("Faust.QoLChests", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.Elysium.ECBG", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.xoxfaby.UnlockAll", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("bubbet.riskui", BepInDependency.DependencyFlags.SoftDependency)]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
     [BepInPlugin(MODUID, MODNAME, MODVERSION)]
@@ -41,7 +43,7 @@ namespace HunkMod
     {
         public const string MODUID = "com.rob.Hunk";
         public const string MODNAME = "Hunk";
-        public const string MODVERSION = "1.0.0";
+        public const string MODVERSION = "1.0.6";
 
         public const string developerPrefix = "ROB";
 
@@ -53,8 +55,12 @@ namespace HunkMod
         public static bool rooInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
         public static bool riskUIInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("bubbet.riskui");
         public static bool greenAlienHeadInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.Borbo.GreenAlienHead");
+        public static bool qolChestsInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("Faust.QoLChests");
+        public static bool emptyChestsInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.Elysium.ECBG");
+        public static bool unlockAllInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.xoxfaby.UnlockAll");
 
         public static List<HurtBox> hurtboxesList = new List<HurtBox>();
+        public static List<Modules.Components.HunkProjectileTracker> projectileList = new List<Modules.Components.HunkProjectileTracker>();
 
         private void Awake()
         {
@@ -70,7 +76,6 @@ namespace HunkMod
             Modules.Projectiles.RegisterProjectiles();
             Modules.Tokens.AddTokens();
             Modules.ItemDisplays.PopulateDisplays();
-            //Modules.WeaponChest.Initialize(); not yet.
 
             new Modules.Survivors.Hunk().CreateCharacter();
             new Modules.Enemies.Parasite().CreateCharacter();
@@ -80,6 +85,13 @@ namespace HunkMod
             NetworkingAPI.RegisterMessageType<Modules.Components.SyncStoredWeapon>();
             NetworkingAPI.RegisterMessageType<Modules.Components.SyncDecapitation>();
             NetworkingAPI.RegisterMessageType<Modules.Components.SyncAmmoPickup>();
+            NetworkingAPI.RegisterMessageType<Modules.Components.SyncGunDrop>();
+            NetworkingAPI.RegisterMessageType<Modules.Components.SyncGunDrop2>();
+            NetworkingAPI.RegisterMessageType<Modules.Components.SyncGunSwap>();
+            NetworkingAPI.RegisterMessageType<Modules.Components.SyncVirus>();
+            NetworkingAPI.RegisterMessageType<Modules.Components.SyncCombatStopwatch>();
+            NetworkingAPI.RegisterMessageType<Modules.Components.SyncWeaponCaseOpen>();
+            NetworkingAPI.RegisterMessageType<Modules.Components.SyncHeadshot>();
 
             Hook();
 
@@ -122,6 +134,14 @@ namespace HunkMod
 
             On.RoR2.HurtBox.OnEnable += HurtBox_OnEnable;
             On.RoR2.HurtBox.OnDisable += HurtBox_OnDisable;
+
+            On.RoR2.Projectile.ProjectileGhostController.Awake += ProjectileGhostController_Awake;
+        }
+
+        private void ProjectileGhostController_Awake(On.RoR2.Projectile.ProjectileGhostController.orig_Awake orig, ProjectileGhostController self)
+        {
+            if (self) self.gameObject.AddComponent<Modules.Components.HunkProjectileTracker>();
+            orig(self);
         }
 
         private void HurtBox_OnEnable(On.RoR2.HurtBox.orig_OnEnable orig, HurtBox self)
@@ -152,7 +172,18 @@ namespace HunkMod
                         //self.maxHealth += 10f * self.levelMaxHealth * virusCount;
                         self.armor += (virusCount - 4) * 2f;
                         self.attackSpeed += virusCount * 0.15f;
-                        self.moveSpeed += virusCount * -1f;
+
+                        for (int i = 0; i < virusCount; i++)
+                        {
+                            self.moveSpeed /= 1.1f;
+                        }
+                    }
+
+                    int sampleCount = self.inventory.GetItemCount(Modules.Survivors.Hunk.gVirusSample);
+                    if (sampleCount > 0)
+                    {
+                        self.regen += (sampleCount * 0.5f);
+                        self.armor += sampleCount * 2f;
                     }
                 }
             }

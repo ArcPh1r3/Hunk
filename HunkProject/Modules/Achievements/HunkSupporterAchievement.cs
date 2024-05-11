@@ -34,21 +34,30 @@ namespace HunkMod.Modules.Achievements
 
         private void Check(CharacterBody characterBody)
         {
-            if (base.meetsBodyRequirement) base.Grant();
+            //if (base.meetsBodyRequirement) base.Grant();
         }
 
         public override void OnInstall()
         {
             base.OnInstall();
 
-            CharacterBody.onBodyStartGlobal += Check;
+            //CharacterBody.onBodyStartGlobal += Check;
+            //On.RoR2.Run.BeginStage += Run_BeginStage;
+        }
+
+        private void Run_BeginStage(On.RoR2.Run.orig_BeginStage orig, Run self)
+        {
+            orig(self);
+
+            //if (base.meetsBodyRequirement) base.Grant();
         }
 
         public override void OnUninstall()
         {
             base.OnUninstall();
 
-            CharacterBody.onBodyStartGlobal -= Check;
+            //CharacterBody.onBodyStartGlobal -= Check;
+            //On.RoR2.Run.BeginStage -= Run_BeginStage;
         }
     }
 }

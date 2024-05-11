@@ -18,7 +18,7 @@ namespace HunkMod.SkillStates.Parasite
 				//	PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(this.characterBody.master.GetComponent<Modules.Components.KeycardHolder>().itemDef.itemIndex), this.characterBody.corePosition, Vector3.up * 20f);
 				if (this.characterBody.master.GetComponent<Modules.Components.KeycardHolder>())
 				{
-					PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Survivors.Hunk.gVirusSample.itemIndex), this.characterBody.corePosition, Vector3.up * 20f);
+					PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Survivors.Hunk.gVirusSample.itemIndex), this.characterBody.corePosition + (Vector3.up * 0.5f), Vector3.up * 20f);
 					//if (Modules.Components.HunkMissionController.instance) Modules.Components.HunkMissionController.instance.NextStep();
 				}
 

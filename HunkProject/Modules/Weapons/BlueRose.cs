@@ -11,7 +11,7 @@ namespace HunkMod.Modules.Weapons
         public override string iconName => "texBlueRoseIcon";
         public override GameObject crosshairPrefab => Modules.Assets.magnumCrosshairPrefab;
         public override int magSize => 6;
-        public override float magPickupMultiplier => 0.5f;
+        public override float magPickupMultiplier => 1f;
         public override float reloadDuration => 0.9f;
         public override string ammoName => "Blue Rose Ammo";
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlBlueRose");
@@ -26,8 +26,8 @@ namespace HunkMod.Modules.Weapons
         public override SkillDef primarySkillDef => Modules.Skills.CreatePrimarySkillDef(
 new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Weapon.BlueRose.Shoot)),
 "Weapon",
-"ROB_HUNK_BODY_SHOOT_REVOLVER_NAME",
-"ROB_HUNK_BODY_SHOOT_REVOLVER_DESCRIPTION",
+"ROB_HUNK_BODY_SHOOT_BLUEROSE_NAME",
+"ROB_HUNK_BODY_SHOOT_BLUEROSE_DESCRIPTION",
 Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texShootIcon"),
 false);
 

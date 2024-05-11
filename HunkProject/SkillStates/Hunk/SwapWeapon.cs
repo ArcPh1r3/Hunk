@@ -3,6 +3,9 @@ using UnityEngine;
 using RoR2;
 using RoR2.UI;
 using HunkMod.Modules.Components;
+using UnityEngine.Networking;
+using R2API.Networking;
+using R2API.Networking.Interfaces;
 
 namespace HunkMod.SkillStates.Hunk
 {
@@ -26,7 +29,7 @@ namespace HunkMod.SkillStates.Hunk
                 {
                     if (i.targetBodyObject && i.targetBodyObject == this.gameObject)
                     {
-                        this.radial.transform.parent = i.mainContainer.transform;
+                        this.radial.transform.SetParent(i.mainContainer.transform);
                         this.radial.transform.localPosition = Vector3.zero;
                         this.radial.transform.localScale = Vector3.zero;
                     }
@@ -77,13 +80,20 @@ namespace HunkMod.SkillStates.Hunk
                         {
                             index = this.radial.index
                         }, InterruptPriority.Frozen);
+
+                        this.hunk.weaponTracker.nextWeapon = this.radial.index;
+                        NetworkIdentity identity = this.GetComponent<NetworkIdentity>();
+                        if (identity) new SyncGunSwap(identity.netId, this.radial.index).Send(NetworkDestination.Server);
                         return;
                     }
 
                     if (this.inputBank.skill2.justPressed)
                     {
                         Util.PlaySound("sfx_hunk_menu_click", this.gameObject);
-                        this.hunk.weaponTracker.DropWeapon(this.radial.index);
+
+                        //this.hunk.weaponTracker.DropWeapon(this.radial.index);
+                        NetworkIdentity identity = this.GetComponent<NetworkIdentity>();
+                        if (identity) new SyncGunDrop(identity.netId, this.radial.index).Send(NetworkDestination.Server);
                         return;
                     }
                 }
@@ -95,6 +105,7 @@ namespace HunkMod.SkillStates.Hunk
                 {
                     if (this.radial.isValidIndex)
                     {
+                        this.hunk.weaponTracker.nextWeapon = this.radial.index;
                         EntityStateMachine.FindByCustomName(this.gameObject, "Weapon").SetInterruptState(new Swap
                         {
                             index = this.radial.index
@@ -105,6 +116,7 @@ namespace HunkMod.SkillStates.Hunk
                 {
                     if (base.fixedAge <= 0.35f)
                     {
+                        this.hunk.weaponTracker.nextWeapon = -1;
                         EntityStateMachine.FindByCustomName(this.gameObject, "Weapon").SetInterruptState(new Swap
                         {
                             index = -1

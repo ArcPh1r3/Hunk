@@ -32,11 +32,19 @@ namespace HunkMod.Modules.Components
         public float snapOffset = 0.25f;
         public float flamethrowerLifetime;
 
+        public bool immobilized;
+        private bool _wasImmobilized;
+
+        private int counterCount;
+
+        public HunkNotificationHandler notificationHandler;
         public CharacterBody characterBody { get; private set; }
         private ChildLocator childLocator;
         private CharacterModel characterModel;
         private Animator animator;
         private SkillLocator skillLocator;
+
+        public GenericSkill knifeSkinSkillSlot;
 
         public int maxShellCount = 24;
 
@@ -46,6 +54,7 @@ namespace HunkMod.Modules.Components
         private GameObject[] slugObjects;
 
         public Action<HunkController> onWeaponUpdate;
+        public static Action<int> onCounter;
 
         public int maxAmmo;
         public int ammo;
@@ -152,8 +161,6 @@ namespace HunkMod.Modules.Components
         {
             this.InitShells();
 
-            this.Invoke("Oops", 0.1f);
-
             if (this.characterBody)
             {
                 CameraTargetParams ctp = this.characterBody.GetComponent<CameraTargetParams>();
@@ -163,11 +170,13 @@ namespace HunkMod.Modules.Components
                 }
             }
 
+            this.Invoke("Init", 0.3f);
+
             //SpawnChests();
             this.SpawnTerminal();
         }
 
-        private void Oops()
+        private void Init()
         {
             this.EquipWeapon(this.weaponTracker.equippedIndex);
         }
@@ -191,6 +200,7 @@ namespace HunkMod.Modules.Components
                 {
                     HunkWeaponTracker i = this.characterBody.master.GetComponent<HunkWeaponTracker>();
                     if (!i) i = this.characterBody.master.gameObject.AddComponent<HunkWeaponTracker>();
+                    i.SetHunk(this);
                     this._weaponTracker = i;
                     return i;
                 }
@@ -264,6 +274,7 @@ namespace HunkMod.Modules.Components
 
         public void ApplyBandolier()
         {
+            if (this.ammo > this.maxAmmo) return;
             if (this.ammo - this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo >= this.maxAmmo && this.ammo != this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo) return;
 
             this.ammo += Mathf.CeilToInt(this.maxAmmo * 0.5f);
@@ -277,6 +288,17 @@ namespace HunkMod.Modules.Components
             this.ammoKillTimer -= Time.fixedDeltaTime;
             this.iFrames -= Time.fixedDeltaTime;
             this.flamethrowerLifetime -= Time.fixedDeltaTime;
+
+            if (this.characterBody)
+            {
+                if (this.immobilized)
+                {
+                    this.characterBody.moveSpeed = 0f;
+                }
+
+                if (this._wasImmobilized && !this.immobilized) this.characterBody.RecalculateStats();
+                this._wasImmobilized = this.immobilized;
+            }
 
             if (NetworkServer.active)
             {
@@ -461,6 +483,10 @@ namespace HunkMod.Modules.Components
                 this.counterFlash.gameObject.SetActive(false);
                 this.counterFlash.gameObject.SetActive(true);
             }
+
+            this.counterCount++;
+            if (onCounter == null) return;
+            onCounter(this.counterCount);
         }
 
         private void Update()
@@ -522,6 +548,7 @@ namespace HunkMod.Modules.Components
         private void TryReload()
         {
             if (!this.weaponDef.allowAutoReload) return;
+            if (!this.characterBody.hasAuthority) return;
 
             if (this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo > 0)
             {
@@ -550,12 +577,43 @@ namespace HunkMod.Modules.Components
             new SyncStoredWeapon(identity.netId, newWeapon.index, ammo).Send(NetworkDestination.Clients);
         }
 
-        public void ServerGetAmmo()
+        public void ServerDropWeapon(int index)
+        {
+            if (!NetworkServer.active) return;
+
+            NetworkIdentity identity = this.GetComponent<NetworkIdentity>();
+            if (!identity) return;
+
+            new SyncGunDrop2(identity.netId, index).Send(NetworkDestination.Clients);
+        }
+
+        public void ClientDropWeapon(int index)
+        {
+            this.weaponTracker.DropWeapon(index);
+        }
+
+        public void ServerSetWeapon(int index)
+        {
+            if (!NetworkServer.active) return;
+
+            this.weaponTracker.nextWeapon = index;
+        }
+
+        public void ServerGetAmmo(float multiplier = 1f)
         {
             NetworkIdentity identity = this.GetComponent<NetworkIdentity>();
             if (!identity) return;
 
-            new SyncAmmoPickup(identity.netId).Send(NetworkDestination.Clients);
+            bool valid = false;
+            int index = 0;
+
+            while (!valid)
+            {
+                index = UnityEngine.Random.Range(0, this.weaponTracker.weaponData.Length);
+                if (this.weaponTracker.weaponData[index].weaponDef.canPickUpAmmo) valid = true;
+            }
+
+            new SyncAmmoPickup(identity.netId, multiplier, index).Send(NetworkDestination.Clients);
         }
 
         public void ServerPickUpWeapon(HunkWeaponDef newWeapon, bool cutAmmo, HunkController hunkController, bool isAmmoBox = false)
@@ -672,7 +730,10 @@ namespace HunkMod.Modules.Components
                 this.weaponRenderer.gameObject.SetActive(false);
                 if (this.heldWeaponInstance) Destroy(this.heldWeaponInstance);
 
-                this.heldWeaponInstance = GameObject.Instantiate(this.weaponDef.modelPrefab);
+                GameObject modelPrefab = this.weaponDef.modelPrefab;
+                // #swuff
+                // if your current skin has an override just swap the prefab out here and done
+                this.heldWeaponInstance = GameObject.Instantiate(modelPrefab);
                 this.heldWeaponInstance.transform.parent = this.childLocator.FindChild("Weapon");
                 this.heldWeaponInstance.transform.localPosition = Vector3.zero;
                 this.heldWeaponInstance.transform.localRotation = Quaternion.identity;
@@ -680,6 +741,7 @@ namespace HunkMod.Modules.Components
             }
             else
             {
+                // this just defaults to an smg if your wepaon doesn't have a model
                 this.weaponRenderer.gameObject.SetActive(true);
                 if (this.heldWeaponInstance) Destroy(this.heldWeaponInstance);
             }
@@ -742,7 +804,11 @@ namespace HunkMod.Modules.Components
                 if (this.weaponTracker.lastEquippedIndex == this.weaponTracker.equippedIndex) return;
 
                 this.backWeaponDef = this.weaponTracker.weaponData[this.weaponTracker.lastEquippedIndex].weaponDef;
-                this.backWeaponInstance = GameObject.Instantiate(this.backWeaponDef.modelPrefab);
+
+                GameObject modelPrefab = this.backWeaponDef.modelPrefab;
+                // #swuff
+                // same thing here. replace with skin override
+                this.backWeaponInstance = GameObject.Instantiate(modelPrefab);
                 this.backWeaponInstance.transform.parent = this.childLocator.FindChild("BackWeapon");
                 this.backWeaponInstance.transform.localPosition = new Vector3(5f, 0f, 0f);
                 this.backWeaponInstance.transform.localRotation = Quaternion.Euler(new Vector3(345f, 90f, 15f));
@@ -933,11 +999,9 @@ namespace HunkMod.Modules.Components
             effect.GetComponentInChildren<RoR2.UI.LanguageTextMeshController>().token = "+" + amount + " " + this.weaponTracker.weaponData[index].weaponDef.ammoName;
         }
 
-        public void AddAmmoFromIndex(int index)
+        public void AddAmmoFromIndex(int index, float multiplier = 1f)
         {
             if (this.passive.isFullArsenal) return;
-
-            float multiplier = 1f;
 
             // alien head
             if (this.characterBody && this.characterBody.inventory)
@@ -971,18 +1035,31 @@ namespace HunkMod.Modules.Components
 
         private void SpawnChests()
         {
+            if (!NetworkServer.active) return;
+
             Xoroshiro128Plus rng = new Xoroshiro128Plus(Run.instance.seed);
             DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(Survivors.Hunk.chestInteractableCard, new DirectorPlacementRule { placementMode = DirectorPlacementRule.PlacementMode.Random }, rng));
         }
 
         private void SpawnTerminal()
         {
+            if (!NetworkServer.active) return;
+
             Xoroshiro128Plus rng = new Xoroshiro128Plus(Run.instance.seed);
             DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(Survivors.Hunk.terminalInteractableCard, new DirectorPlacementRule { placementMode = DirectorPlacementRule.PlacementMode.Random }, rng));
         }
 
+        public void TrySpawnRocketLauncher()
+        {
+            this.Invoke("SpawnRocketLauncher", 10f);
+        }
+
         public void SpawnRocketLauncher()
         {
+            Util.PlaySound("sfx_hunk_weapon_case_drop", this.gameObject);
+
+            if (!NetworkServer.active) return;
+
             System.Random random = new System.Random();
             NodeGraph groundNodes = SceneInfo.instance.groundNodes;
             List<NodeGraph.NodeIndex> nodeList = groundNodes.FindNodesInRange(transform.position, 3f, 16f, HullMask.Human);
@@ -991,7 +1068,7 @@ namespace HunkMod.Modules.Components
             {
                 Vector3 position;
                 groundNodes.GetNodePosition(randomNode, out position);
-                GameObject rocketLauncherChest = Instantiate(Survivors.Hunk.weaponChestPrefab, position, Quaternion.identity);
+                GameObject rocketLauncherChest = Instantiate(Survivors.Hunk.weaponCasePrefab, position, Quaternion.identity);
                 
                 WeaponChest weaponChest = GetComponent<WeaponChest>();
                 if (weaponChest != null)
@@ -1001,8 +1078,24 @@ namespace HunkMod.Modules.Components
                 }
 
                 NetworkServer.Spawn(rocketLauncherChest);
+
+                EffectManager.SpawnEffect(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/SurvivorPod/PodGroundImpact.prefab").WaitForCompletion(),
+    new EffectData
+    {
+        origin = position,
+        rotation = Quaternion.identity,
+        scale = 2f
+    }, true);
             }
             //DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(Survivors.Hunk.terminalInteractableCard, new DirectorPlacementRule { placementMode = DirectorPlacementRule.PlacementMode.NearestNode }, rng));
+        }
+
+        public SkillDef knifeSkin
+        {
+            get
+            {
+                return this.knifeSkinSkillSlot.skillDef;
+            }
         }
     }
 }

@@ -7,11 +7,11 @@ namespace HunkMod.Modules.Weapons
     {
         public override string weaponNameToken => "GRENADELAUNCHER";
         public override string weaponName => "GM-79";
-        public override string weaponDesc => "Single-round break-action grenade launcher capable for firing flame rounds. Great for area damage, but slow to reload.";
+        public override string weaponDesc => "Single-round break-action grenade launcher capable of firing flame rounds. Great for area damage, but slow to reload.";
         public override string iconName => "texGrenadeLauncherIcon";
-        public override GameObject crosshairPrefab => Modules.Assets.grenadeLauncherCrosshairPrefab;
+        public override GameObject crosshairPrefab => Modules.Assets.grenadeLauncherCrosshairPrefab2;
         public override int magSize => 1;
-        public override float magPickupMultiplier => 2f;
+        public override float magPickupMultiplier => 4f;
         public override float reloadDuration => 2.4f;
         public override string ammoName => "Incendiary Rounds";
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlGrenadeLauncher");
@@ -26,8 +26,8 @@ namespace HunkMod.Modules.Weapons
         public override SkillDef primarySkillDef => Modules.Skills.CreatePrimarySkillDef(
 new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Weapon.GrenadeLauncher.Shoot)),
 "Weapon",
-"ROB_HUNK_BODY_SHOOT_ROCKETLAUNCHER_NAME",
-"ROB_HUNK_BODY_SHOOT_ROCKETLAUNCHER_DESCRIPTION",
+"ROB_HUNK_BODY_SHOOT_GRENADELAUNCHER_NAME",
+"ROB_HUNK_BODY_SHOOT_GRENADELAUNCHER_DESCRIPTION",
 Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texShootIcon"),
 false);
 

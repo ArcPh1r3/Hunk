@@ -19,10 +19,11 @@ namespace HunkMod.Modules
             rocketProjectilePrefab = CreateRocket(false, "HunkRocketProjectile", "HunkRocketGhost", "HunkBigRocketGhost");
             bazookaProjectilePrefab = CreateRocket(true, "HunkBazookaProjectile", "HunkBazookaGhost", "HunkBigRocketGhost");
             missileProjectilePrefab = CreateRocket(false, "HunkMissileProjectile", "HunkMissileGhost", "HunkMissileGhost");
-            grenadeProjectilePrefab = CreateRocket(false, "HunkGrenadeProjectile", "HunkGrenadeGhost", "HunkGrenadeGhost");
+            grenadeProjectilePrefab = CreateRocket(true, "HunkGrenadeProjectile", "HunkGrenadeGhost", "HunkGrenadeGhost");
 
             rocketProjectilePrefab.GetComponent<ProjectileDamage>().damageType = DamageType.IgniteOnHit;
             grenadeProjectilePrefab.GetComponent<ProjectileDamage>().damageType = DamageType.IgniteOnHit;
+            grenadeProjectilePrefab.GetComponent<ProjectileImpactExplosion>().blastRadius = 12f;
             bazookaProjectilePrefab.GetComponent<ProjectileImpactExplosion>().falloffModel = BlastAttack.FalloffModel.SweetSpot;
         }
 
@@ -60,7 +61,8 @@ namespace HunkMod.Modules
                 rocketController.startSound = "";
             }
 
-            projectilePrefab.GetComponent<Rigidbody>().useGravity = gravity;
+            projectilePrefab.GetComponent<Rigidbody>().useGravity = false;
+            if (gravity) projectilePrefab.AddComponent<Modules.Components.DelayedGravity>();
 
             Prefabs.projectilePrefabs.Add(projectilePrefab);
 

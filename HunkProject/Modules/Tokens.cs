@@ -18,7 +18,7 @@ namespace HunkMod.Modules
             desc = desc + "< ! > Scrounge around in opened chests for a chance to find ammo for your current weapons." + Environment.NewLine + Environment.NewLine;
 
             string outro = "..and so he left, fine.";
-            string outroFailure = "..and so he vanished, human unit never killed.";
+            string outroFailure = "..and so he vanished, human unit now killed.";
 
             string lore = "You're not any less of a man if you don't pull the trigger.\n";
             lore += "You're not necessarily a man if you do.\n";
@@ -32,6 +32,7 @@ namespace HunkMod.Modules
 
             #region Skins
             LanguageAPI.Add(prefix + "DEFAULT_SKIN_NAME", "Default");
+            LanguageAPI.Add(prefix + "TOFU_SKIN_NAME", "Tofu");
             LanguageAPI.Add(prefix + "SUPER_SKIN_NAME", "<color=#" + Helpers.yellowItemHex + ">Early Supporter" + Helpers.colorSuffix);
             LanguageAPI.Add(prefix + "LIGHTWEIGHT_SKIN_NAME", "Lightweight");
             LanguageAPI.Add(prefix + "COMMANDO_SKIN_NAME", "Commando");
@@ -58,14 +59,14 @@ namespace HunkMod.Modules
             LanguageAPI.Add(prefix + "PRIMARY_KNIFE_NAME", "Combat Knife");
             LanguageAPI.Add(prefix + "PRIMARY_KNIFE_DESCRIPTION", $"<style=cIsUtility>Looting.</style> <style=cIsDamage>Slash</style> close-range combatants for <style=cIsDamage>{100f * 3.5}% damage</style>.");
 
-            LanguageAPI.Add(prefix + "PRIMARY_KNIFEALT_NAME", "Hidden Blade");
-            LanguageAPI.Add(prefix + "PRIMARY_KNIFEALT_DESCRIPTION", $"<style=cIsUtility>Looting.</style> <style=cIsDamage>Slash</style> close-range combatants for <style=cIsDamage>{100f * 2.2}% damage</style>. <style=cIsDamage>Attacks from behind are Critical Strikes.</style>");
-
             LanguageAPI.Add(prefix + "SHOOT_ATM_NAME", "Fire");
             LanguageAPI.Add(prefix + "SHOOT_ATM_DESCRIPTION", "Shoot for <style=cIsDamage>6400% damage</style>. <style=cIsUtility>Deals most damage on direct hits.</style>");
 
             LanguageAPI.Add(prefix + "SHOOT_ROCKETLAUNCHER_NAME", "Fire");
             LanguageAPI.Add(prefix + "SHOOT_ROCKETLAUNCHER_DESCRIPTION", "Shoot for <style=cIsDamage>4800% damage</style>. <style=cIsDamage>Igniting.</style>");
+
+            LanguageAPI.Add(prefix + "SHOOT_GRENADELAUNCHER_NAME", "Fire");
+            LanguageAPI.Add(prefix + "SHOOT_GRENADELAUNCHER_DESCRIPTION", "Shoot for <style=cIsDamage>4800% damage</style>. <style=cIsDamage>Igniting.</style>");
 
             LanguageAPI.Add(prefix + "SHOOT_FLAMETHROWER_NAME", "Fire");
             LanguageAPI.Add(prefix + "SHOOT_FLAMETHROWER_DESCRIPTION", "Shoot a stream of flame for <style=cIsDamage>500% damage</style>. <style=cIsUtility>Ignites.</style>");
@@ -74,13 +75,19 @@ namespace HunkMod.Modules
             LanguageAPI.Add(prefix + "SHOOT_M19_DESCRIPTION", "Shoot for <style=cIsDamage>700% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
 
             LanguageAPI.Add(prefix + "SHOOT_MAGNUM_NAME", "Fire");
-            LanguageAPI.Add(prefix + "SHOOT_MAGNUM_DESCRIPTION", "Shoot for <style=cIsDamage>1800% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
+            LanguageAPI.Add(prefix + "SHOOT_MAGNUM_DESCRIPTION", "Shoot for <style=cIsDamage>2400% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
 
             LanguageAPI.Add(prefix + "SHOOT_MUP_NAME", "Fire");
             LanguageAPI.Add(prefix + "SHOOT_MUP_DESCRIPTION", "Shoot for <style=cIsDamage>320% damage</style>. <style=cIsUtility>25% headshot bonus.</style>");
 
             LanguageAPI.Add(prefix + "SHOOT_REVOLVER_NAME", "Fire");
-            LanguageAPI.Add(prefix + "SHOOT_REVOLVER_DESCRIPTION", "Shoot for <style=cIsDamage>1800% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
+            LanguageAPI.Add(prefix + "SHOOT_REVOLVER_DESCRIPTION", "Shoot for <style=cIsDamage>2400% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
+
+            LanguageAPI.Add(prefix + "SHOOT_GOLDGUN_NAME", "Fire");
+            LanguageAPI.Add(prefix + "SHOOT_GOLDGUN_DESCRIPTION", "Shoot for <style=cIsDamage>99999% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
+
+            LanguageAPI.Add(prefix + "SHOOT_BLUEROSE_NAME", "Fire");
+            LanguageAPI.Add(prefix + "SHOOT_BLUEROSE_DESCRIPTION", "Shoot for <style=cIsDamage>2400x2% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
 
             LanguageAPI.Add(prefix + "SHOOT_SHOTGUN_NAME", "Fire");
             LanguageAPI.Add(prefix + "SHOOT_SHOTGUN_DESCRIPTION", "Shoot for <style=cIsDamage>140x14% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
@@ -107,23 +114,40 @@ namespace HunkMod.Modules
             LanguageAPI.Add(prefix + "SPECIAL_SWAP_DESCRIPTION", $"<style=cIsUtility>Swap</style> to a different <style=cIsDamage>gun</style>. Tap to swap to your <style=cIsUtility>last held gun</style>.");
             #endregion
 
+            #region Knife Skins
+            LanguageAPI.Add(prefix + "KNIFE_DEFAULT_NAME", "Combat Knife");
+            LanguageAPI.Add(prefix + "KNIFE_DEFAULT_DESCRIPTION", "A standard military-grade knife. Sure to come in handy in a pinch.");
+            LanguageAPI.Add(prefix + "KNIFE_INFINITE_NAME", "Combat Knife EX");
+            LanguageAPI.Add(prefix + "KNIFE_INFINITE_DESCRIPTION", "A specially-treated military-grade knife that's been hardened to an unbelievable degree. They say it's been made to really last.");
+            LanguageAPI.Add(prefix + "KNIFE_HIDDEN_NAME", "Hidden Blade");
+            LanguageAPI.Add(prefix + "KNIFE_HIDDEN_DESCRIPTION", "A low profile retractable blade hidden in the sleeve. Ideal for stealth operations.");
+            #endregion
+
             #region Achievements
             prefix = MainPlugin.developerPrefix + "_HUNK_";
             LanguageAPI.Add(prefix + "UNLOCKABLE_UNLOCKABLE_NAME", "Looming Dread");
             LanguageAPI.Add(prefix + "UNLOCKABLE_ACHIEVEMENT_NAME", "Looming Dread");
             LanguageAPI.Add(prefix + "UNLOCKABLE_ACHIEVEMENT_DESC", "Reach stage 3 in less than 15 minutes.");
 
-            LanguageAPI.Add(prefix + "MONSOONUNLOCKABLE_UNLOCKABLE_NAME", "HUNK: Mastery");
-            LanguageAPI.Add(prefix + "MONSOONUNLOCKABLE_ACHIEVEMENT_NAME", "HUNK: Mastery");
-            LanguageAPI.Add(prefix + "MONSOONUNLOCKABLE_ACHIEVEMENT_DESC", "As HUNK, beat the game or obliterate on Monsoon.");
+            LanguageAPI.Add(prefix + "COMPLETION_UNLOCKABLE_NAME", "HUNK: Grim Reaper");
+            LanguageAPI.Add(prefix + "COMPLETION_ACHIEVEMENT_NAME", "HUNK: Grim Reaper");
+            LanguageAPI.Add(prefix + "COMPLETION_ACHIEVEMENT_DESC", "As HUNK, beat the game or obliterate.");
+
+            LanguageAPI.Add(prefix + "MONSOON_UNLOCKABLE_NAME", "HUNK: Mastery");
+            LanguageAPI.Add(prefix + "MONSOON_ACHIEVEMENT_NAME", "HUNK: Mastery");
+            LanguageAPI.Add(prefix + "MONSOON_ACHIEVEMENT_DESC", "As HUNK, beat the game or obliterate on Monsoon.");
 
             LanguageAPI.Add(prefix + "SUPPORTER_UNLOCKABLE_NAME", "HUNK: Early Supporter");
             LanguageAPI.Add(prefix + "SUPPORTER_ACHIEVEMENT_NAME", "HUNK: Early Supporter");
             LanguageAPI.Add(prefix + "SUPPORTER_ACHIEVEMENT_DESC", "Play HUNK before his official release.");
                 
-            LanguageAPI.Add(prefix + "LIGHTWEIGHT_UNLOCKABLE_NAME", "HUNK: Mayhem");
-            LanguageAPI.Add(prefix + "LIGHTWEIGHT_ACHIEVEMENT_NAME", "HUNK: Mayhem");
+            LanguageAPI.Add(prefix + "LIGHTWEIGHT_UNLOCKABLE_NAME", "HUNK: Minimalist");
+            LanguageAPI.Add(prefix + "LIGHTWEIGHT_ACHIEVEMENT_NAME", "HUNK: Minimalist");
             LanguageAPI.Add(prefix + "LIGHTWEIGHT_ACHIEVEMENT_DESC", "As HUNK, clear stage 1 with no items.");
+
+            LanguageAPI.Add(prefix + "CQC_UNLOCKABLE_NAME", "HUNK: CQC (Close-Quarters Combat)");
+            LanguageAPI.Add(prefix + "CQC_ACHIEVEMENT_NAME", "HUNK: CQC (Close-Quarters Combat)");
+            LanguageAPI.Add(prefix + "CQC_ACHIEVEMENT_DESC", "As HUNK, perform 10 successful counterattacks on one stage.");
             #endregion
 
 

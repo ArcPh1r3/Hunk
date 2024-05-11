@@ -22,8 +22,8 @@ namespace HunkMod.SkillStates.Hunk.Weapon.RocketLauncher
         {
             get
             {
-                if (this.isCrit) return "sfx_driver_rocket_launcher_shoot";
-                return "sfx_driver_rocket_launcher_shoot";
+                if (this.isCrit) return "sfx_hunk_rocket_fire";
+                return "sfx_hunk_rocket_fire";
             }
         }
 
