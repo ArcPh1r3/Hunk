@@ -2461,8 +2461,8 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                         rot2 = Quaternion.Euler(0, 255f, 0);
                         break;
                     case "ancientloft":
-                        pos = new Vector3(-65.35076f, 60.30833f, -292.9549f);
-                        rot = Quaternion.Euler(0, 354.5f, 0);
+                        pos = new Vector3(-65.35076f, 60.30833f, -291.5549f);
+                        rot = Quaternion.Euler(0, 0f, 0);
                         pos2 = new Vector3(129.4765f, 10.40331f, 46.3731f);
                         rot2 = Quaternion.Euler(0, 0, 0);
                         break;
