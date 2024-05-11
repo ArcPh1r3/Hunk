@@ -111,6 +111,14 @@ namespace HunkMod.SkillStates.Hunk
                             index = this.radial.index
                         }, InterruptPriority.Frozen);
                     }
+                    else if(this.radial.ValidIndex(this.radial.controllerLatchIndex,false))
+                    {
+                        this.hunk.weaponTracker.nextWeapon = this.radial.controllerLatchIndex;
+                        EntityStateMachine.FindByCustomName(this.gameObject, "Weapon").SetInterruptState(new Swap
+                        {
+                            index = this.radial.controllerLatchIndex
+                        }, InterruptPriority.Frozen);
+                    }
                 }
                 else
                 {
