@@ -43,7 +43,7 @@ namespace HunkMod
     {
         public const string MODUID = "com.rob.Hunk";
         public const string MODNAME = "Hunk";
-        public const string MODVERSION = "1.0.5";
+        public const string MODVERSION = "1.0.6";
 
         public const string developerPrefix = "ROB";
 
@@ -130,7 +130,7 @@ namespace HunkMod
             On.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
 
             // uncomment this if network testing
-            On.RoR2.Networking.NetworkManagerSystemSteam.OnClientConnect += (s, u, t) => { };
+            //On.RoR2.Networking.NetworkManagerSystemSteam.OnClientConnect += (s, u, t) => { };
 
             On.RoR2.HurtBox.OnEnable += HurtBox_OnEnable;
             On.RoR2.HurtBox.OnDisable += HurtBox_OnDisable;

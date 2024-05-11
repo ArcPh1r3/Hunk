@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2295794459
+CRC: 1858123316
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 65f60c01ca24b8a117b452a45943073a
+    Hash: 63cef3139fd79791b5a63c8a266e7246
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9c1933516dfd54fa9ad82d4055bce09b
@@ -137,6 +137,7 @@ Assets:
 - Assets/Hunk/Materials/matBlueRose.mat
 - Assets/Hunk/Textures/Tofu/texBeretNormal.png
 - Assets/Hunk/Textures/Flamethrower/Leon_FlameThrower_N.png
+- Assets/Hunk/Icons/texTofuIcon.png
 - Assets/Hunk/Weapons/mdlGoldenGunPickup.prefab
 - Assets/Hunk/Textures/RocketLauncher/Leon_ATM-4_N.png
 - Assets/Hunk/Textures/Terminal/Terminal_albedo.png
@@ -436,6 +437,7 @@ Assets:
 - Assets/Hunk/Icons/Weapon/texATMIcon.png
 - Assets/Hunk/Textures/WeaponCase/Hardcase_BaseColor.png
 - Assets/Hunk/Textures/Tofu/texTofuNormal.png
+- Assets/Hunk/Icons/texTofuAchievement.png
 - Assets/Hunk/Weapons/mdlGrenadeLauncher.prefab
 - Assets/Hunk/Textures/Misc/texShell.png
 - Assets/Hunk/Animations/WeaponCase/animWeaponCase.controller

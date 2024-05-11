@@ -123,6 +123,9 @@ ___
 
 ## Changelog
 
+`1.0.6`
+- Added custom portrait for Tofu
+
 `1.0.5`
 - Fixed anyone being able to pick up HUNK's guns
 - Fixed HUNK being able to grab more guns even with a full inventory

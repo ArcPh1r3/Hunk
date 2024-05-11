@@ -13,7 +13,7 @@ namespace HunkMod.Modules.Achievements
         public override string PrerequisiteUnlockableIdentifier { get; } = "";
         public override string UnlockableNameToken { get; } = MainPlugin.developerPrefix + "_HUNK_MONSOON_UNLOCKABLE_NAME";
         public override string AchievementDescToken { get; } = MainPlugin.developerPrefix + "_HUNK_MONSOON_ACHIEVEMENT_DESC";
-        public override Sprite Sprite { get; } = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texTofuSkin");
+        public override Sprite Sprite { get; } = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texTofuAchievement");
 
         public override Func<string> GetHowToUnlock { get; } = (() => Language.GetStringFormatted("UNLOCK_VIA_ACHIEVEMENT_FORMAT", new object[]
                             {

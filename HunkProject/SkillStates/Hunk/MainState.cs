@@ -47,6 +47,10 @@ namespace HunkMod.SkillStates.Hunk
 					this.hunk.spawnedATM = true;
 					if (NetworkServer.active) PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Weapons.ATM.instance.itemDef.itemIndex), this.characterBody.corePosition, -this.characterBody.inputBank.aimDirection * 20f);
 				}
+				else if (msc.skins[msc.currentSkinIndex].nameToken.Contains("TOFU"))
+				{
+					this.characterBody.portraitIcon = Modules.Assets.LoadCharacterIcon("Tofu");
+				}
 			}
 		}
 
