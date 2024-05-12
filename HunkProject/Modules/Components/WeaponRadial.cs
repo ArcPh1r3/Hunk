@@ -264,13 +264,13 @@ namespace HunkMod.Modules.Components
                 j++;
             }
 
-            if (_index != this.index && this.ValidIndex(_index))
+            if (this.ValidIndex(_index))
             {
-                Util.PlaySound("sfx_hunk_menu_cursor", this.gameObject);
+                if(this.index != _index) Util.PlaySound("sfx_hunk_menu_cursor", this.gameObject);
                 if(this.controllerInput)
                 {
                     this.controllerLatchIndex = _index;
-                    this.controllerLatchTimer = 15;
+                    this.controllerLatchTimer = 40;
                 }
             }
 
