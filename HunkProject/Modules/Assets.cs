@@ -764,7 +764,11 @@ namespace HunkMod.Modules
                 {
                     if (i.material)
                     {
-                        i.material.shader = hotpoo;
+                        // exclude trails from this for obvious reasons
+                        if (!i.GetComponent<TrailRenderer>())
+                        {
+                            i.material.shader = hotpoo;
+                        }
                     }
                 }
             }

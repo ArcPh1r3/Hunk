@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2997828114
+CRC: 2288879207
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 87ade6a17c20f6aeabc94e37b2ca5df5
+    Hash: 9340bbcce769861b2b3db83bc1ac50c5
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 9c1933516dfd54fa9ad82d4055bce09b
+    Hash: c0613469c5f5f41ecc95af7ab71e2d70
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -52,6 +52,8 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
 - Class: 115
+  Script: {instanceID: 0}
+- Class: 120
   Script: {instanceID: 0}
 - Class: 128
   Script: {instanceID: 0}
@@ -106,6 +108,7 @@ Assets:
 - Assets/Hunk/Items/mdlKeycardSpadeOld.prefab
 - Assets/Hunk/Animations/Default/RoundReloadEnd.anim
 - Assets/Hunk/Weapons/mdlBlueRosePickup.prefab
+- Assets/Hunk/Textures/Attachments/03___Default_1001_normal.png
 - Assets/Hunk/Items/mdlKeycardHeart.prefab
 - Assets/Hunk/VFX/matShockwave.mat
 - Assets/Hunk/HUD/Textures/texHudBar.png
@@ -341,6 +344,7 @@ Assets:
 - Assets/Hunk/Textures/Flamethrower/Leon_FlameThrower_D.png
 - Assets/Hunk/Icons/texIconClub.png
 - Assets/Hunk/Materials/matHeart.mat
+- Assets/Hunk/Materials/matLaserSight.mat
 - Assets/Hunk/Textures/Unsorted/texTank.png
 - Assets/Hunk/Mesh/meshHunkB02.mesh
 - Assets/Hunk/Animations/Pistol/Idle.anim
@@ -426,13 +430,13 @@ Assets:
 - Assets/Hunk/Materials/matClub.mat
 - Assets/Hunk/Weapons/mdlATMPickup.prefab
 - Assets/Hunk/Weapons/mdlSluggerPickup.prefab
+- Assets/Hunk/Textures/Attachments/03___Default_1001_albedo.jpeg
 - Assets/Hunk/Textures/AmmoBox/9mm_ammo_box_REMAKE_Normal.jpg
 - Assets/Hunk/Weapons/mdlMagnumPickup.prefab
 - Assets/Hunk/Materials/matDiamond.mat
 - Assets/Hunk/VFX/HunkGrenadeGhost.prefab
 - Assets/Hunk/Icons/Skill/texSwapIcon.png
 - Assets/Hunk/HUD/CounterFlash.prefab
-- Assets/Hunk/Animations/Default/Reload.anim
 - Assets/Hunk/Icons/Weapon/texMagnumIcon.png
 - Assets/Hunk/Icons/Weapon/texATMIcon.png
 - Assets/Hunk/Textures/WeaponCase/Hardcase_BaseColor.png

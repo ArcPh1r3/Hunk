@@ -48,6 +48,8 @@ namespace HunkMod.SkillStates.Hunk.Weapon.SMG
             if (this.isCrit) Util.PlaySound("sfx_hunk_smg_shoot", base.gameObject);
             else Util.PlaySound("sfx_hunk_smg_shoot", base.gameObject);
 
+            float spreadBloom = 0.7f;
+
             if (base.isAuthority)
             {
                 Ray aimRay = base.GetAimRay2();
@@ -55,6 +57,16 @@ namespace HunkMod.SkillStates.Hunk.Weapon.SMG
                 float recoilAmplitude = Shoot.recoil / this.attackSpeedStat;
 
                 base.AddRecoil2(-1f * recoilAmplitude, -2f * recoilAmplitude, -0.5f * recoilAmplitude, 0.5f * recoilAmplitude);
+
+                float spread = this.characterBody.spreadBloomAngle * 3f;
+                BulletAttack.FalloffModel falloff = BulletAttack.FalloffModel.DefaultBullet;
+
+                if (this.characterBody.inventory && this.characterBody.inventory.GetItemCount(Modules.Weapons.SMG.laserSight) > 0)
+                {
+                    spread = 0f;
+                    falloff = BulletAttack.FalloffModel.None;
+                    spreadBloom = 0.4f;
+                }
 
                 BulletAttack bulletAttack = new BulletAttack
                 {
@@ -64,12 +76,12 @@ namespace HunkMod.SkillStates.Hunk.Weapon.SMG
                     damage = Shoot.damageCoefficient * this.damageStat,
                     damageColorIndex = DamageColorIndex.Default,
                     damageType = DamageType.Generic,
-                    falloffModel = BulletAttack.FalloffModel.DefaultBullet,
+                    falloffModel = falloff,
                     maxDistance = Shoot.range,
                     force = Shoot.force,
                     hitMask = LayerIndex.CommonMasks.bullet,
                     minSpread = 0f,
-                    maxSpread = this.characterBody.spreadBloomAngle * 3f,
+                    maxSpread = spread,
                     isCrit = this.isCrit,
                     owner = this.gameObject,
                     muzzleName = muzzleString,
@@ -109,7 +121,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.SMG
                 bulletAttack.Fire();
             }
 
-            base.characterBody.AddSpreadBloom(0.7f);
+            base.characterBody.AddSpreadBloom(spreadBloom);
         }
 
         private GameObject tracerPrefab

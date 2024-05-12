@@ -6,6 +6,12 @@ namespace HunkMod.Modules.Components
     public class WeaponBehavior : MonoBehaviour
     {
         protected HunkController hunk;
+        protected ChildLocator childLocator;
+
+        private void Awake()
+        {
+            this.childLocator = this.GetComponent<ChildLocator>();
+        }
 
         private void GetHunkController()
         {

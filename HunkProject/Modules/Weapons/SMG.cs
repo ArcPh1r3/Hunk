@@ -1,5 +1,8 @@
-﻿using RoR2.Skills;
+﻿using R2API;
+using RoR2;
+using RoR2.Skills;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace HunkMod.Modules.Weapons
 {
@@ -30,5 +33,40 @@ new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Weapon.SMG.
 "ROB_HUNK_BODY_SHOOT_SMG_DESCRIPTION",
 Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texShootIcon"),
 false);
+
+        public static ItemDef laserSight;
+
+        public override void Init()
+        {
+            base.Init();
+
+            this.modelPrefab.AddComponent<Modules.Components.SMGBehavior>();
+
+            laserSight = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/DLC1/CloverVoid/CloverVoid.asset").WaitForCompletion());
+            laserSight.name = "ROB_HUNK_WEAPON_ADDON_" + weaponNameToken + "_NAME";
+            laserSight.nameToken = "ROB_HUNK_WEAPON_ADDON_" + weaponNameToken + "_NAME";
+            laserSight.descriptionToken = "ROB_HUNK_WEAPON_ADDON_" + weaponNameToken + "_DESC";
+            laserSight.pickupToken = "ROB_HUNK_WEAPON_ADDON_" + weaponNameToken + "_DESC";
+            laserSight.loreToken = "ROB_HUNK_WEAPON_ADDON_" + weaponNameToken + "_DESC";
+            laserSight.canRemove = false;
+            laserSight.hidden = false;
+            laserSight.pickupIconSprite = weaponDef.icon;
+            laserSight.requiredExpansion = null;
+            laserSight.tags = new ItemTag[]
+            {
+                ItemTag.AIBlacklist,
+                ItemTag.BrotherBlacklist,
+                ItemTag.CannotCopy,
+                ItemTag.CannotDuplicate,
+                ItemTag.CannotSteal,
+                ItemTag.WorldUnique
+            };
+            laserSight.unlockableDef = null;
+
+            HunkWeaponCatalog.itemDefs.Add(laserSight);
+
+            LanguageAPI.Add("ROB_HUNK_WEAPON_ADDON_" + weaponNameToken + "_NAME", "Laser Sight (LE 5)");
+            LanguageAPI.Add("ROB_HUNK_WEAPON_ADDON_" + weaponNameToken + "_DESC", "A custom part for the LE 5 that allows for lightning-fast aiming.");
+        }
     }
 }
