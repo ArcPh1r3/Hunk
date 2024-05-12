@@ -188,8 +188,13 @@ namespace HunkMod.Modules.Components
             get
             {
                 Vector3 mousePosition =  new Vector3(this.inputModule.input.mousePosition.x - (Screen.width / 2.0f), this.inputModule.input.mousePosition.y - (Screen.height / 2.0f), 0f);
+                if(this.controllerInput)
+                {
+                    var player = (this.inputModule.input as MPInput).player;
+                    mousePosition = new Vector3(player.GetAxis(23),player.GetAxis(24),0);
+                }
                 float dist = Vector3.Distance(mousePosition, this.center.localPosition);
-                return dist <= (controllerInput? 1f : 172f);
+                return dist <= (controllerInput? 0.2f : 172f);
             }
         }
 
@@ -219,7 +224,7 @@ namespace HunkMod.Modules.Components
                 var player = (inputModule.input as MPInput).player;
                 mousePosition = new Vector3(player.GetAxis(23),player.GetAxis(24),0);
             }
-            if(this.controllerLatchTimer < 0)
+            if(this.controllerLatchTimer <= 0)
             {
                 this.controllerLatchIndex = 99;
                 this.controllerLatchTimer = 0;
