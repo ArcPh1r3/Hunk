@@ -767,7 +767,20 @@ namespace HunkMod.Modules
                         // exclude trails from this for obvious reasons
                         if (!i.GetComponent<TrailRenderer>())
                         {
+                            Texture normalMap = null;
+                            if (i.material.GetTexture("_BumpMap") != null)
+                            {
+                                // transfer normal maps cuz im not gay
+                                normalMap = i.material.GetTexture("_BumpMap");
+                            }
+
                             i.material.shader = hotpoo;
+
+                            if (normalMap != null)
+                            {
+                                i.material.SetTexture("_NormalTex", normalMap);
+                                i.material.SetFloat("_NormalStrength", 1f);
+                            }
                         }
                     }
                 }
