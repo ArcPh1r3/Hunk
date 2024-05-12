@@ -768,7 +768,7 @@ namespace HunkMod.Modules
                         if (!i.GetComponent<TrailRenderer>())
                         {
                             Texture normalMap = null;
-                            if (i.material.GetTexture("_BumpMap") != null)
+                            if (i.material.HasProperty("_BumpMap"))
                             {
                                 // transfer normal maps cuz im not gay
                                 normalMap = i.material.GetTexture("_BumpMap");
