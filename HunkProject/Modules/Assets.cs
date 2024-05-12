@@ -764,8 +764,8 @@ namespace HunkMod.Modules
                 {
                     if (i.material)
                     {
-                        // exclude trails from this for obvious reasons
-                        if (!i.GetComponent<TrailRenderer>())
+                        // exclude lines from this for obvious reasons
+                        if (!i.GetComponent<LineRenderer>())
                         {
                             Texture normalMap = null;
                             if (i.material.HasProperty("_BumpMap"))
