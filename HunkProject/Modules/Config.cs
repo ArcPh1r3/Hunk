@@ -19,6 +19,10 @@ namespace HunkMod.Modules
         public static ConfigEntry<bool> capInfection;
         public static ConfigEntry<bool> globalInfectionSound;
         public static ConfigEntry<bool> customEscapeSequence;
+        public static ConfigEntry<bool> permanentInfectionEvent;
+        public static ConfigEntry<bool> showWeaponIcon;
+        public static ConfigEntry<bool> fancyAmmoDisplay;
+        public static ConfigEntry<float> baseAmmoPanelOpacity;
         public static ConfigEntry<bool> overTheShoulderCamera;
         public static ConfigEntry<bool> overTheShoulderCamera2;
         public static ConfigEntry<bool> cursed;
@@ -69,6 +73,30 @@ true,
 "Custom Escape Sequence",
 true,
 "Set to false to disable the custom Moon escape sequence. (Client-side)");
+
+            permanentInfectionEvent
+= Config.BindAndOptions("01 - General",
+"Permanent Infection Event",
+false,
+"Set to true to cause an Infected enemy to spawn on every stage, regardless of how many Keycards you have.");
+
+            showWeaponIcon
+= Config.BindAndOptions("01 - General",
+"Show Gun Icon",
+true,
+"Set to false to disable the gun icon next to your skills. (Client-side)");
+
+            fancyAmmoDisplay
+= Config.BindAndOptions("01 - General",
+"Fancy Ammo Display",
+true,
+"Set to false to disable the fancy ammo display and use the old, simple one. (Client-side)");
+
+            baseAmmoPanelOpacity
+    = Config.BindAndOptionsSlider("01 - General",
+             "Base Ammo Panel Opacity",
+             80f,
+             "Opacity of the black panel the ammo count is shown on", 0f, 100f);
 
             enableRecoil
 = Config.BindAndOptions("01 - General",

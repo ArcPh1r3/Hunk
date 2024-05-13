@@ -380,7 +380,7 @@ namespace HunkMod.Modules.Components
                 return;
             }
 
-            if (this.hasAllKeycards)
+            if (this.hasAllKeycards && !Modules.Config.permanentInfectionEvent.Value)
             {
                 this.CancelInvoke();
                 return;
