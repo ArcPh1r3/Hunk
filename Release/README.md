@@ -129,6 +129,15 @@ ___
 
 ## Changelog
 
+`1.0.10`
+- Added config to hide the gun icon from the HUD as it's kinda unnecessary and just clutter (unlike Driver who needs it)
+- Added the fancy ammo display from RiskUI to the normal UI, with a config to revert this
+- Added config to control the opacity of the background for this ammo display
+- Added config to let the infection event continue even after getting every keycard
+- GM-79 damage: 1600% > 3200%, it was simply way too weak for its very limited availability
+- Non-HUNK players can no longer pick up G-Virus Samples or U.C. Keycards, this can also be reverted via config
+- Fixed broken weapon icon again
+
 `1.0.9`
 - Fixed broken weapon icon and NRE spam
 
