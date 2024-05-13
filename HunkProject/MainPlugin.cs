@@ -43,7 +43,7 @@ namespace HunkMod
     {
         public const string MODUID = "com.rob.Hunk";
         public const string MODNAME = "Hunk";
-        public const string MODVERSION = "1.0.6";
+        public const string MODVERSION = "1.0.9";
 
         public const string developerPrefix = "ROB";
 
@@ -170,8 +170,9 @@ namespace HunkMod
                     if (virusCount > 0)
                     {
                         //self.maxHealth += 10f * self.levelMaxHealth * virusCount;
-                        self.armor += (virusCount - 4) * 2f;
-                        self.attackSpeed += virusCount * 0.15f;
+                        self.armor += (virusCount - 4) * 2.5f;
+                        self.attackSpeed += virusCount * 0.05f;
+                        self.damage += virusCount * 1.5f;
 
                         for (int i = 0; i < virusCount; i++)
                         {

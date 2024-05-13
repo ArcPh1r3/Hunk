@@ -19,9 +19,6 @@ namespace HunkMod.Modules.Components
 		public GameObject reminderFlashPanelObject;
 		public GameObject isReadyPanelObject;
 		public TooltipProvider tooltipProvider;
-		public GameObject durationDisplay;
-		public Image durationBar;
-		public Image durationBarRed;
 
 		private void Update()
         {
@@ -56,22 +53,9 @@ namespace HunkMod.Modules.Components
         {
 			if (this.hunk.maxAmmo > 0f)
             {
-				//this.durationDisplay.SetActive(true);
-				this.durationDisplay.SetActive(false);
-
-				/*float fill = Util.Remap(this.iDrive.ammo, 0f, this.iDrive.maxAmmo, 0f, 1f);
-
-				if (this.durationBarRed)
-				{
-					if (fill >= 1f) this.durationBarRed.fillAmount = 1f;
-					this.durationBarRed.fillAmount = Mathf.Lerp(this.durationBarRed.fillAmount, fill, Time.deltaTime * 2f);
-				}
-
-				this.durationBar.fillAmount = fill;*/
             }
 			else
             {
-				this.durationDisplay.SetActive(false);
             }
         }
 

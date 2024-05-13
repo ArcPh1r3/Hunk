@@ -41,8 +41,24 @@ namespace HunkMod.Modules.Components
                             this.laserSight.SetActive(true);
                             if (equipped) this.laser.SetActive(this.hunk.isAiming);
                         }
+                        else
+                        {
+                            this.laserSight.SetActive(false);
+                        }
+                    }
+                    else
+                    {
+                        this.laserSight.SetActive(false);
                     }
                 }
+                else
+                {
+                    this.laserSight.SetActive(false);
+                }
+            }
+            else
+            {
+                this.laserSight.SetActive(false);
             }
         }
 

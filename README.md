@@ -62,10 +62,15 @@ ___
 # Unique Item Interactions
 Since cooldown items do almost nothing on HUNK, most of them have unique interactions that play around his ammo system instead
 
+
 Backup Magazine - +1 fake bullet every time you complete a reload
+
 Bandolier - Gives you half a mag of fake bullets on pickup
+
 Alien Head - Increased ammo on pickup, same scaling and nerfed if Green Alien Head is installed
+
 Brainstalks - Shots don't consume ammo while active
+
 
 FAKE BULLETS can be fired without consuming any actual ammo, but are all lost when you reload or swap weapons
 
@@ -90,6 +95,8 @@ rob - Code, animation, sfx, mostly everything
 
 swuff - Code, design help, entire interactable system, just an awesome co-dev overall
 
+RandomlyAwesome - Controller support for radial menu
+
 Thingw - Secondary and Special skill icons
 
 Bruh - Golden Gun gun model
@@ -113,7 +120,6 @@ Big thanks to everyone in the community for all the valuable feedback and critic
 
 ## Known Issues
 - Most item displays are missing
-- Weapon menu doesn't work on controller
 - Emote buttons are there but he doesn't have any animations yet
 - Ally projectiles trigger perfect dodges; haven't decided if this is worth keeping as a mechanic yet
 - Goobo Jr. has no ammo and only shanks
@@ -123,9 +129,19 @@ ___
 
 ## Changelog
 
+`1.0.9`
+- Fixed broken weapon icon and NRE spam
+
+`1.0.8`
+- Neck snap can now be cancelled early by simply moving, and the dodge cancel window has been moved to immediately after the snap
+- Stage 5 Infected monsters now swap to the neutral team, heavily nerfed their sustain as well
+- Reanimated SMG and Pistol reloads
+- Fixed weapon/item models not having any normal maps
+- Fixed weapon menu not working on controllers (fix by RandomlyAwesome!)
+
 `1.0.7`
 - Added a custom escape sequence with BGM and everything (can be disabled in config if you hate epicness)
-- Fixed possibility of Chemnical Flamethrower SFX playing infinitely if HUNK died while using it (unsure if this actually happened, but just in case)
+- Fixed possibility of Chemical Flamethrower SFX playing infinitely if HUNK died while using it (unsure if this actually happened, but just in case)
 
 `1.0.6`
 - Added custom portrait for Tofu

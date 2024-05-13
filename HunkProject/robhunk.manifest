@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 789060789
+CRC: 1824768036
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1b3e82e413771c3ba828926a39593c7c
+    Hash: e8aec35e1023225100c53ea69be4213f
   TypeTreeHash:
     serializedVersion: 2
     Hash: c0613469c5f5f41ecc95af7ab71e2d70
@@ -183,7 +183,7 @@ Assets:
 - Assets/Hunk/mdlHunk.prefab
 - Assets/Hunk/Materials/matShotgunShell.mat
 - Assets/Hunk/Animations/Rocket/RunL.anim
-- Assets/Hunk/Animations/Pistol/Reload.anim
+- Assets/Hunk/Animations/Pistol/ReloadOld.anim
 - Assets/Hunk/Items/mdlGVirusSample.prefab
 - Assets/Hunk/Weapons/mdlATM.prefab
 - Assets/Hunk/Textures/Knife/Leon_Knife_D.png

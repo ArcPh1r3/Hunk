@@ -3721,7 +3721,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                 weaponSlot.transform.Find("DisplayRoot").Find("CooldownText").gameObject.SetActive(false);
 
                 // duration bar
-                GameObject chargeBar = GameObject.Instantiate(Assets.mainAssetBundle.LoadAsset<GameObject>("WeaponChargeBar"));
+                /*GameObject chargeBar = GameObject.Instantiate(Assets.mainAssetBundle.LoadAsset<GameObject>("WeaponChargeBar"));
                 chargeBar.transform.SetParent(weaponSlot.transform.Find("DisplayRoot"));
 
                 RectTransform rect = chargeBar.GetComponent<RectTransform>();
@@ -3732,11 +3732,11 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                 rect.pivot = new Vector2(0.5f, 0f);
                 rect.localPosition = new Vector3(0f, 0f, 0f);
                 rect.anchoredPosition = new Vector2(-8f, 36f);
-                rect.rotation = Quaternion.Euler(new Vector3(0f, 0f, 90f));
+                rect.rotation = Quaternion.Euler(new Vector3(0f, 0f, 90f));*/
 
-                weaponIconComponent.durationDisplay = chargeBar;
-                weaponIconComponent.durationBar = chargeBar.transform.GetChild(1).gameObject.GetComponent<UnityEngine.UI.Image>();
-                weaponIconComponent.durationBarRed = chargeBar.transform.GetChild(0).gameObject.GetComponent<UnityEngine.UI.Image>();
+                //weaponIconComponent.durationDisplay = chargeBar;
+                //weaponIconComponent.durationBar = chargeBar.transform.GetChild(1).gameObject.GetComponent<UnityEngine.UI.Image>();
+                //weaponIconComponent.durationBarRed = chargeBar.transform.GetChild(0).gameObject.GetComponent<UnityEngine.UI.Image>();
 
                 MonoBehaviour.Destroy(equipmentIconComponent);
                 MonoBehaviour.Destroy(x);
@@ -3774,7 +3774,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     ammoTrackerComponent.currentText = ammoTracker.transform.Find("Current").gameObject.GetComponent<TMPro.TextMeshProUGUI>();
                     ammoTrackerComponent.totalText = ammoTracker.transform.Find("Total").gameObject.GetComponent<TMPro.TextMeshProUGUI>();
 
-                    rect = ammoTracker.GetComponent<RectTransform>();
+                    RectTransform rect = ammoTracker.GetComponent<RectTransform>();
                     rect.localScale = new Vector3(1f, 1f, 1f);
                     rect.anchorMin = new Vector2(0f, 0f);
                     rect.anchorMax = new Vector2(0f, 0f);
@@ -3794,7 +3794,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     HunkNotificationHandler notificationHandler = notificationObject.AddComponent<HunkNotificationHandler>();
                     notificationHandler.targetHUD = hud;
 
-                    rect = notificationObject.GetComponent<RectTransform>();
+                    RectTransform rect = notificationObject.GetComponent<RectTransform>();
                     rect.localScale = new Vector3(1f, 1f, 1f);
                     rect.anchorMin = new Vector2(0f, 0f);
                     rect.anchorMax = new Vector2(0f, 0f);
