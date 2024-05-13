@@ -23,6 +23,7 @@ namespace HunkMod.Modules
         public static ConfigEntry<bool> showWeaponIcon;
         public static ConfigEntry<bool> fancyAmmoDisplay;
         public static ConfigEntry<float> baseAmmoPanelOpacity;
+        public static ConfigEntry<bool> blacklistHunkItems;
         public static ConfigEntry<bool> overTheShoulderCamera;
         public static ConfigEntry<bool> overTheShoulderCamera2;
         public static ConfigEntry<bool> cursed;
@@ -97,6 +98,12 @@ true,
              "Base Ammo Panel Opacity",
              80f,
              "Opacity of the black panel the ammo count is shown on", 0f, 100f);
+
+            blacklistHunkItems
+= Config.BindAndOptions("01 - General",
+"Multiplayer Protection",
+true,
+"Prevents Non-HUNK players from grabbing HUNK's key items (G-Virus Sample and Keycards). Set to false if you have faith in your allies.");
 
             enableRecoil
 = Config.BindAndOptions("01 - General",

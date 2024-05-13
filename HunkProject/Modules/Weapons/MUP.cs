@@ -1,5 +1,8 @@
-﻿using RoR2.Skills;
+﻿using R2API;
+using RoR2;
+using RoR2.Skills;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace HunkMod.Modules.Weapons
 {
@@ -30,5 +33,40 @@ new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Weapon.MUP.
 "ROB_HUNK_BODY_SHOOT_MUP_DESCRIPTION",
 Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texShootIcon"),
 false);
+
+        public static ItemDef gunStock;
+
+        public override void Init()
+        {
+            base.Init();
+
+            this.modelPrefab.AddComponent<Modules.Components.MUPBehavior>();
+
+            gunStock = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/DLC1/CloverVoid/CloverVoid.asset").WaitForCompletion());
+            gunStock.name = "ROB_HUNK_WEAPON_ADDON_" + weaponNameToken + "_NAME";
+            gunStock.nameToken = "ROB_HUNK_WEAPON_ADDON_" + weaponNameToken + "_NAME";
+            gunStock.descriptionToken = "ROB_HUNK_WEAPON_ADDON_" + weaponNameToken + "_DESC";
+            gunStock.pickupToken = "ROB_HUNK_WEAPON_ADDON_" + weaponNameToken + "_DESC";
+            gunStock.loreToken = "ROB_HUNK_WEAPON_ADDON_" + weaponNameToken + "_DESC";
+            gunStock.canRemove = false;
+            gunStock.hidden = false;
+            gunStock.pickupIconSprite = weaponDef.icon;
+            gunStock.requiredExpansion = null;
+            gunStock.tags = new ItemTag[]
+            {
+                ItemTag.AIBlacklist,
+                ItemTag.BrotherBlacklist,
+                ItemTag.CannotCopy,
+                ItemTag.CannotDuplicate,
+                ItemTag.CannotSteal,
+                ItemTag.WorldUnique
+            };
+            gunStock.unlockableDef = null;
+
+            HunkWeaponCatalog.itemDefs.Add(gunStock);
+
+            LanguageAPI.Add("ROB_HUNK_WEAPON_ADDON_" + weaponNameToken + "_NAME", "Gun Stock (MUP)");
+            LanguageAPI.Add("ROB_HUNK_WEAPON_ADDON_" + weaponNameToken + "_DESC", "A custom part for the MUP that allows the gun to fire 3 rounds per pull of the trigger.");
+        }
     }
 }

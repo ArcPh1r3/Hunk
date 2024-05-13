@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1824768036
+CRC: 2739650206
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: e8aec35e1023225100c53ea69be4213f
+    Hash: 2a272696c1aa035ccad8b53dd0cb15f3
   TypeTreeHash:
     serializedVersion: 2
     Hash: c0613469c5f5f41ecc95af7ab71e2d70
@@ -92,6 +92,7 @@ Assets:
 - Assets/Hunk/Textures/Shotgun/Leon_RemingtonM1100P_D.png
 - Assets/Hunk/Animations/maskHunkGesture.mask
 - Assets/Hunk/Icons/Skill/texShootIcon.png
+- Assets/Hunk/Weapons/mdlFlashlight.prefab
 - Assets/Hunk/Icons/Skill/texPassive2Icon.png
 - Assets/Hunk/VFX/BloodSpurtEffect.prefab
 - Assets/Hunk/Animations/Default/AirDodgeLoop.anim
@@ -119,6 +120,7 @@ Assets:
 - Assets/Hunk/Animations/WeaponCase/Idle.anim
 - Assets/Hunk/Animations/Rocket/Descend.anim
 - Assets/Hunk/VFX/ShotgunShell.prefab
+- Assets/Hunk/Textures/Matilda/Leon_VP70Custom_N.png
 - Assets/Hunk/Mesh/meshHunkB01.mesh
 - Assets/Hunk/VFX/Badass/BigExplosion.prefab
 - Assets/Hunk/Textures/AmmoBox/9mm_Ammo_Col_Remake.jpg
@@ -127,6 +129,8 @@ Assets:
 - Assets/Hunk/Items/mdlKeycardClubOld.prefab
 - Assets/Hunk/VFX/Badass/MetalHitEffect.prefab
 - Assets/Hunk/Textures/Shotgun/Leon_RemingtonM1100P_S.png
+- Assets/Hunk/Textures/Magnum/Leon_LightningHawkLongBarrel_N.png
+- Assets/Hunk/Materials/matMagnum4.mat
 - Assets/Hunk/Textures/SMG/Leon_LI5_D.png
 - Assets/Hunk/HUD/Textures/texBulletIndicator.png
 - Assets/Hunk/Textures/GoldenGun/texGoldenGunNormal.png
@@ -174,6 +178,7 @@ Assets:
 - Assets/Hunk/Materials/matTerminal.mat
 - Assets/Hunk/Textures/jacket_n.png
 - Assets/Hunk/Materials/matKnife.mat
+- Assets/Hunk/Textures/Magnum/Leon_LightningHawkLongBarrel_D.png
 - Assets/Hunk/Textures/DisplayCase/M_Weapon_Case_albedo.jpeg
 - Assets/Hunk/Animations/animHunk.controller
 - Assets/Hunk/Materials/matKeyCardSpadeOld.mat
@@ -220,6 +225,7 @@ Assets:
 - Assets/Hunk/Animations/Default/Descend.anim
 - Assets/Hunk/Textures/Keycard/texKeycardHeart.png
 - Assets/Hunk/Items/mdlVirusEye.prefab
+- Assets/Hunk/Textures/Flashlight/Leon_Flashlight_D.png
 - Assets/Hunk/Icons/Item/texKeycardClubIcon.png
 - Assets/Hunk/Animations/Pistol/RunB.anim
 - Assets/Hunk/Animations/Default/Sprint.anim
@@ -259,6 +265,7 @@ Assets:
 - Assets/Hunk/Textures/GVirus/texGVirusSample.png
 - Assets/Hunk/Animations/Default/FreefallR.anim
 - Assets/Hunk/mdlDisplayCase.prefab
+- Assets/Hunk/Textures/Flashlight/Leon_Flashlight_N.png
 - Assets/Hunk/Icons/Item/texKeycardHeartIcon.png
 - Assets/Hunk/Textures/body_n.png
 - Assets/Hunk/Animations/VirusEye/Idle.anim
@@ -279,6 +286,7 @@ Assets:
 - Assets/Hunk/Animations/Default/Idle.anim
 - Assets/Hunk/Materials/matHunk05.mat
 - Assets/Hunk/Items/mdlKeycardDiamond.prefab
+- Assets/Hunk/Textures/Matilda/Leon_VP70Custom_S.png
 - Assets/Hunk/Icons/Weapon/texGoldenGunIcon.png
 - Assets/Hunk/Weapons/mdlGoldenGun.prefab
 - Assets/Hunk/Icons/texTofuSkin.png
@@ -302,8 +310,10 @@ Assets:
 - Assets/Hunk/Materials/matRevolver.mat
 - Assets/Hunk/Icons/Skill/texPassiveIcon.png
 - Assets/Hunk/Weapons/mdlRevolverPickup.prefab
+- Assets/Hunk/Textures/Magnum/Leon_LightningHawkSight_D.png
 - Assets/Hunk/Textures/Keycard/texKeycardNormal.png
 - Assets/Hunk/Textures/jacket_albm.png
+- Assets/Hunk/Materials/matFlashlight.mat
 - Assets/Hunk/Weapons/mdlSMG.prefab
 - Assets/Hunk/Textures/Shotgun/Leon_RemingtonM1100_S.png
 - Assets/Hunk/Textures/equipment_n.png
@@ -346,6 +356,7 @@ Assets:
 - Assets/Hunk/Materials/matHeart.mat
 - Assets/Hunk/Materials/matLaserSight.mat
 - Assets/Hunk/Textures/Unsorted/texTank.png
+- Assets/Hunk/Textures/Magnum/Leon_LightningHawkSight_N.png
 - Assets/Hunk/Mesh/meshHunkB02.mesh
 - Assets/Hunk/Animations/Pistol/Idle.anim
 - Assets/Hunk/Textures/Misc/texTrimSheetMilitaryMetal.png
@@ -371,6 +382,7 @@ Assets:
 - Assets/Hunk/Animations/DisplayCase/animDisplayCase.controller
 - Assets/Hunk/VFX/texSpeedLine.png
 - Assets/Hunk/Icons/Weapon/texSluggerIcon.png
+- Assets/Hunk/Weapons/mdlFlashlightPickup.prefab
 - Assets/Hunk/Textures/GrenadeLauncher/T_M79_Albedo.png
 - Assets/Hunk/Animations/Default/RoundReloadLoop.anim
 - Assets/Hunk/Animations/Rocket/MenuIdle.anim
@@ -383,6 +395,7 @@ Assets:
 - Assets/Hunk/Textures/Unsorted/texDiamond.png
 - Assets/Hunk/Materials/matMUP.mat
 - Assets/Hunk/Textures/Unsorted/texHeart.png
+- Assets/Hunk/Materials/matMagnum3.mat
 - Assets/Hunk/Materials/matFlamethrower2.mat
 - Assets/Hunk/Animations/Rocket/Sprint.anim
 - Assets/Hunk/Materials/matSMG.mat
@@ -412,6 +425,7 @@ Assets:
 - Assets/Hunk/Materials/matAmmoPickup.mat
 - Assets/Hunk/Icons/Skill/texCancelIcon.png
 - Assets/Hunk/Textures/AmmoBox/bullet_Normal.png
+- Assets/Hunk/Materials/matMatilda.mat
 - Assets/Hunk/VFX/Badass/WoodHitEffect.prefab
 - Assets/Hunk/VFX/Badass/SmallExplosion.prefab
 - Assets/Hunk/Textures/Flamethrower/Leon_FlameThrowerExt_N.png

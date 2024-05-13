@@ -66,7 +66,7 @@ namespace HunkMod.Modules
             LanguageAPI.Add(prefix + "SHOOT_ROCKETLAUNCHER_DESCRIPTION", "Shoot for <style=cIsDamage>4800% damage</style>. <style=cIsDamage>Igniting.</style>");
 
             LanguageAPI.Add(prefix + "SHOOT_GRENADELAUNCHER_NAME", "Fire");
-            LanguageAPI.Add(prefix + "SHOOT_GRENADELAUNCHER_DESCRIPTION", "Shoot for <style=cIsDamage>4800% damage</style>. <style=cIsDamage>Igniting.</style>");
+            LanguageAPI.Add(prefix + "SHOOT_GRENADELAUNCHER_DESCRIPTION", "Shoot for <style=cIsDamage>3200% damage</style>. <style=cIsDamage>Igniting.</style>");
 
             LanguageAPI.Add(prefix + "SHOOT_FLAMETHROWER_NAME", "Fire");
             LanguageAPI.Add(prefix + "SHOOT_FLAMETHROWER_DESCRIPTION", "Shoot a stream of flame for <style=cIsDamage>500% damage</style>. <style=cIsUtility>Ignites.</style>");

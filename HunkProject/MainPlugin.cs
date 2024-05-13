@@ -43,7 +43,7 @@ namespace HunkMod
     {
         public const string MODUID = "com.rob.Hunk";
         public const string MODNAME = "Hunk";
-        public const string MODVERSION = "1.0.9";
+        public const string MODVERSION = "1.0.10";
 
         public const string developerPrefix = "ROB";
 
@@ -122,6 +122,7 @@ namespace HunkMod
             new Modules.Weapons.GrenadeLauncher().Init();
             new Modules.Weapons.GoldenGun().Init();
             new Modules.Weapons.BlueRose().Init();
+            new Modules.Weapons.Flashlight().Init();
         }
 
         private void Hook()

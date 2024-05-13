@@ -54,19 +54,19 @@ namespace HunkMod.SkillStates.Hunk.Weapon.SMG
             {
                 Ray aimRay = base.GetAimRay2();
 
-                float recoilAmplitude = Shoot.recoil / this.attackSpeedStat;
-
-                base.AddRecoil2(-1f * recoilAmplitude, -2f * recoilAmplitude, -0.5f * recoilAmplitude, 0.5f * recoilAmplitude);
-
                 float spread = this.characterBody.spreadBloomAngle * 3f;
                 BulletAttack.FalloffModel falloff = BulletAttack.FalloffModel.DefaultBullet;
+                float recoilAmplitude = Shoot.recoil / this.attackSpeedStat;
 
                 if (this.characterBody.inventory && this.characterBody.inventory.GetItemCount(Modules.Weapons.SMG.laserSight) > 0)
                 {
+                    recoil *= 0.25f;
                     spread = 0f;
                     falloff = BulletAttack.FalloffModel.None;
-                    spreadBloom = 0.4f;
+                    spreadBloom = 0.1f;
                 }
+
+                base.AddRecoil2(-1f * recoilAmplitude, -2f * recoilAmplitude, -0.5f * recoilAmplitude, 0.5f * recoilAmplitude);
 
                 BulletAttack bulletAttack = new BulletAttack
                 {

@@ -3071,11 +3071,14 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     }
 
                     // prevent others from grabbing samples and keycards
-                    if (nameToken == Hunk.gVirusSample.nameToken || (nameToken.Contains("ROB_HUNK_") && nameToken.Contains("_KEYCARD_")))
+                    if (Modules.Config.blacklistHunkItems.Value)
                     {
-                        if (body.baseNameToken != Hunk.bodyNameToken)
+                        if (nameToken == Hunk.gVirusSample.nameToken || (nameToken.Contains("ROB_HUNK_") && nameToken.Contains("_KEYCARD_")))
                         {
-                            return;
+                            if (body.baseNameToken != Hunk.bodyNameToken)
+                            {
+                                return;
+                            }
                         }
                     }
                 }
