@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2739650206
+CRC: 2774960670
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 2a272696c1aa035ccad8b53dd0cb15f3
+    Hash: 3812cc60aa535a3ed03909682f9514ad
   TypeTreeHash:
     serializedVersion: 2
     Hash: c0613469c5f5f41ecc95af7ab71e2d70
@@ -251,6 +251,7 @@ Assets:
 - Assets/Hunk/VFX/texSpeedLineVertical.png
 - Assets/Hunk/VFX/ShotgunSlug.prefab
 - Assets/Hunk/AmmoPickup.prefab
+- Assets/Hunk/Icons/texIconTerminal.png
 - Assets/Hunk/Mesh/meshHunkB03.mesh
 - Assets/Hunk/Animations/Default/RunR.anim
 - Assets/Hunk/Weapons/mdlM19Pickup.prefab

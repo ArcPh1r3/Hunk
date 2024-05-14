@@ -135,6 +135,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
                 {
                     if (this.inputBank.moveVector != Vector3.zero)
                     {
+                        this.skillLocator.secondary.rechargeStopwatch = 1f;
                         base.PlayAnimation("Body", "Sprint");
                         this.outer.SetNextStateToMain();
                         return;

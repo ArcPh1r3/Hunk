@@ -2610,6 +2610,8 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             //terminalPrefab.GetComponent<ModelLocator>().modelTransform = terminalModel.transform;
             //^ this fixes the highlight bug but breaks the entire chest! fun!
 
+            terminalPrefab.AddComponent<PingInfoProvider>().pingIconOverride = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texIconTerminal");
+
             GameObject beam = GameObject.Instantiate(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/arena/ArenaMissionController.prefab").WaitForCompletion().transform.Find("NullSafeZone (1)/BuiltInEffects/WardOn").gameObject);
             beam.SetActive(true);
             beam.transform.parent = terminalModel.transform;
@@ -2957,6 +2959,9 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             // bandolier
             On.RoR2.SkillLocator.ApplyAmmoPack += SkillLocator_ApplyAmmoPack;
 
+            // custom shield overlay
+            if (Modules.Config.fancyShield.Value) On.RoR2.CharacterModel.UpdateOverlays += CharacterModel_UpdateOverlays;
+
             // knife ammo drop mechanic
             On.RoR2.HealthComponent.TakeDamage += HealthComponent_TakeDamage;
 
@@ -3012,6 +3017,29 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             //On.EntityStates.GlobalSkills.LunarNeedle.ChargeLunarSecondary.PlayChargeAnimation += PlayChargeLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarNeedle.ThrowLunarSecondary.PlayThrowAnimation += PlayThrowLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += PlayRuinAnimation;
+        }
+
+        private static void CharacterModel_UpdateOverlays(On.RoR2.CharacterModel.orig_UpdateOverlays orig, CharacterModel self)
+        {
+            Material cachedMat1 = null;
+            Material cachedMat2 = null;
+
+            if (self && self.body && self.body.baseNameToken == Hunk.bodyNameToken)
+            {
+                cachedMat1 = CharacterModel.energyShieldMaterial;
+                cachedMat2 = CharacterModel.voidShieldMaterial;
+
+                CharacterModel.energyShieldMaterial = Modules.Assets.shieldOverlayMat;
+                CharacterModel.voidShieldMaterial = Modules.Assets.voidShieldOverlayMat;
+            }
+
+            orig(self);
+
+            if (self && self.body && self.body.baseNameToken == Hunk.bodyNameToken)
+            {
+                CharacterModel.energyShieldMaterial = cachedMat1;
+                CharacterModel.voidShieldMaterial = cachedMat2;
+            }
         }
 
         private static void EscapeSequenceController_OnDisable(On.RoR2.EscapeSequenceController.orig_OnDisable orig, EscapeSequenceController self)

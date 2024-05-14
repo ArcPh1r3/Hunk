@@ -34,6 +34,7 @@ namespace HunkMod.Modules.Components
 
         public bool immobilized;
         private bool _wasImmobilized;
+        private GameObject shieldOverlay;
 
         private int counterCount;
 
@@ -92,6 +93,9 @@ namespace HunkMod.Modules.Components
         private uint flamethrowerPlayID;
         private bool flameInit = false;
         private uint bgmPlayID;
+        private bool shieldIsVoid;
+        private bool _shieldIsVoid;
+        private bool fancyShield = true;
 
         public float iFrames;
 
@@ -154,6 +158,11 @@ namespace HunkMod.Modules.Components
 
             this.flamethrowerEffectInstance.SetActive(false);
             this.flamethrowerEffectInstance2.SetActive(false);
+
+            this.fancyShield = Modules.Config.shieldBubble.Value;
+            this.shieldOverlay = this.childLocator.FindChild("ShieldOverlay").gameObject;
+            this.shieldOverlay.GetComponent<MeshRenderer>().material = Modules.Assets.shieldMat;
+            if (this.fancyShield) this.shieldOverlay.AddComponent<HunkShieldHandler>();
 
             this.Invoke("SetInventoryHook", 0.5f);
         }
@@ -259,6 +268,12 @@ namespace HunkMod.Modules.Components
         private void Inventory_onInventoryChanged()
         {
             this.CheckForNeedler();
+
+            if (this.characterBody.inventory.GetItemCount(DLC1Content.Items.MissileVoid) > 0)
+            {
+                this.shieldIsVoid = true;
+            }
+            else this.shieldIsVoid = false;
         }
 
         public void ConsumeAmmo(int amount = 1)
@@ -304,6 +319,8 @@ namespace HunkMod.Modules.Components
 
                 if (this._wasImmobilized && !this.immobilized) this.characterBody.RecalculateStats();
                 this._wasImmobilized = this.immobilized;
+
+                this.HandleShield();
             }
 
             if (NetworkServer.active)
@@ -1100,6 +1117,26 @@ namespace HunkMod.Modules.Components
             {
                 return this.knifeSkinSkillSlot.skillDef;
             }
+        }
+
+        private void HandleShield()
+        {
+            if (this.characterBody.healthComponent.shield > 0)
+            {
+                this.shieldOverlay.SetActive(this.fancyShield);
+            }
+            else
+            {
+                this.shieldOverlay.SetActive(false);
+            }
+
+            if (this._shieldIsVoid != this.shieldIsVoid)
+            {
+                if (this.shieldIsVoid) this.shieldOverlay.GetComponent<MeshRenderer>().material = Modules.Assets.voidShieldMat;
+                else this.shieldOverlay.GetComponent<MeshRenderer>().material = Modules.Assets.shieldMat;
+            }
+
+            this._shieldIsVoid = this.shieldIsVoid;
         }
     }
 }

@@ -23,6 +23,8 @@ namespace HunkMod.Modules
         public static ConfigEntry<bool> showWeaponIcon;
         public static ConfigEntry<bool> fancyAmmoDisplay;
         public static ConfigEntry<float> baseAmmoPanelOpacity;
+        public static ConfigEntry<bool> fancyShield;
+        public static ConfigEntry<bool> shieldBubble;
         public static ConfigEntry<bool> blacklistHunkItems;
         public static ConfigEntry<bool> overTheShoulderCamera;
         public static ConfigEntry<bool> overTheShoulderCamera2;
@@ -98,6 +100,18 @@ true,
              "Base Ammo Panel Opacity",
              80f,
              "Opacity of the black panel the ammo count is shown on", 0f, 100f);
+
+            fancyShield
+= Config.BindAndOptions("01 - General",
+"Fancy Shield",
+true,
+"Set to false to disable the custom shield overlay and use the ugly vanilla overlay. (Client-side)", true);
+
+            shieldBubble
+= Config.BindAndOptions("01 - General",
+"Shield Bubble",
+false,
+"Set to true to enable a custom shield bubble. Only works with Fancy Shield enabled! (Client-side)", true);
 
             blacklistHunkItems
 = Config.BindAndOptions("01 - General",

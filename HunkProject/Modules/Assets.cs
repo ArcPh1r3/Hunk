@@ -33,6 +33,12 @@ namespace HunkMod.Modules
 
         public static Material dodgeOverlayMat;
 
+        public static Material shieldOverlayMat;
+        public static Material voidShieldOverlayMat;
+        public static Material shieldMat;
+        public static Material voidShieldMat;
+        public static Material ravagerMat;
+
         public static GameObject ammoPickupEffectPrefab;
         public static GameObject explosionEffect;
         public static GameObject smallExplosionEffect;
@@ -663,6 +669,42 @@ namespace HunkMod.Modules
             ConvertAllRenderersToHopooShader(ammoPickupModel);
 
             dodgeOverlayMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/moon2/matBloodSiphon.mat").WaitForCompletion());
+
+            shieldMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/DLC1/BearVoid/matBearVoidShield.mat").WaitForCompletion());
+            shieldMat.SetTexture("_RemapTex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Common/ColorRamps/texRampShield.png").WaitForCompletion());
+            shieldMat.SetTexture("_Cloud1Tex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Common/texHologramCloud.png").WaitForCompletion());
+            shieldMat.SetFloat("_Boost", 20f);
+            shieldMat.SetFloat("_AlphaBoost", 0.25f);
+            shieldMat.SetFloat("_AlphaBias", 0.125f);
+
+            voidShieldMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/DLC1/BearVoid/matBearVoidShield.mat").WaitForCompletion());
+            voidShieldMat.SetTexture("_RemapTex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Common/ColorRamps/texRampShield.png").WaitForCompletion());
+            voidShieldMat.SetTexture("_Cloud1Tex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Common/texCloudStroke1.png").WaitForCompletion());
+            voidShieldMat.SetColor("_TintColor", new Color(1f, 0f, 45f / 255f, 1f));
+            voidShieldMat.SetFloat("_Boost", 20f);
+            voidShieldMat.SetFloat("_AlphaBoost", 0.25f);
+            voidShieldMat.SetFloat("_AlphaBias", 0.125f);
+
+            shieldOverlayMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/DLC1/VoidMegaCrab/matVoidCrabMatterOverlay.mat").WaitForCompletion());
+            shieldOverlayMat.SetTexture("_Cloud1Tex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Common/texCloudStroke1.png").WaitForCompletion());
+            shieldOverlayMat.SetColor("_TintColor", new Color(0f, 88f / 255f, 144f / 255f, 1f));
+            shieldOverlayMat.SetFloat("_Boost", 6.5f);
+            shieldOverlayMat.SetFloat("_AlphaBoost", 4f);
+            shieldOverlayMat.SetFloat("_AlphaBias", 0.6f);
+
+            voidShieldOverlayMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/DLC1/VoidMegaCrab/matVoidCrabMatterOverlay.mat").WaitForCompletion());
+            voidShieldOverlayMat.SetTexture("_Cloud1Tex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Common/texCloudStroke1.png").WaitForCompletion());
+            voidShieldOverlayMat.SetColor("_TintColor", new Color(144f / 255f, 0f, 125f / 255f, 1f));
+            voidShieldOverlayMat.SetFloat("_Boost", 6.5f);
+            voidShieldOverlayMat.SetFloat("_AlphaBoost", 4f);
+            voidShieldOverlayMat.SetFloat("_AlphaBias", 0.6f);
+
+            ravagerMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/DLC1/VoidMegaCrab/matVoidCrabMatterOverlay.mat").WaitForCompletion());
+            ravagerMat.SetTexture("_Cloud1Tex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Common/texHologramCloud.png").WaitForCompletion());
+            ravagerMat.SetColor("_TintColor", Color.red);
+            ravagerMat.SetFloat("_Boost", 20f);
+            ravagerMat.SetFloat("_AlphaBoost", 2f);
+            ravagerMat.SetFloat("_AlphaBias", 0.5f);
         }
 
         private static GameObject CreateTracer(string originalTracerName, string newTracerName)
