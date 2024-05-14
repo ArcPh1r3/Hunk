@@ -24,6 +24,7 @@ namespace HunkMod.Modules
         public static ConfigEntry<bool> fancyAmmoDisplay;
         public static ConfigEntry<float> baseAmmoPanelOpacity;
         public static ConfigEntry<bool> fancyShield;
+        public static ConfigEntry<bool> fancyShieldGlobal;
         public static ConfigEntry<bool> shieldBubble;
         public static ConfigEntry<bool> blacklistHunkItems;
         public static ConfigEntry<bool> overTheShoulderCamera;
@@ -106,6 +107,12 @@ true,
 "Fancy Shield",
 true,
 "Set to false to disable the custom shield overlay and use the ugly vanilla overlay. (Client-side)", true);
+
+            fancyShieldGlobal
+= Config.BindAndOptions("01 - General",
+"Fancy Shield (Global)",
+false,
+"Set to true to give this shield overlay to every survivor. (Client-side)", true);
 
             shieldBubble
 = Config.BindAndOptions("01 - General",

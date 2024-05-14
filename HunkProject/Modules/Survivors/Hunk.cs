@@ -2960,7 +2960,8 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             On.RoR2.SkillLocator.ApplyAmmoPack += SkillLocator_ApplyAmmoPack;
 
             // custom shield overlay
-            if (Modules.Config.fancyShield.Value) On.RoR2.CharacterModel.UpdateOverlays += CharacterModel_UpdateOverlays;
+            if (Modules.Config.fancyShieldGlobal.Value) On.RoR2.CharacterModel.UpdateOverlays += CharacterModel_UpdateOverlays2;
+            else if (Modules.Config.fancyShield.Value) On.RoR2.CharacterModel.UpdateOverlays += CharacterModel_UpdateOverlays;
 
             // knife ammo drop mechanic
             On.RoR2.HealthComponent.TakeDamage += HealthComponent_TakeDamage;
@@ -3040,6 +3041,13 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                 CharacterModel.energyShieldMaterial = cachedMat1;
                 CharacterModel.voidShieldMaterial = cachedMat2;
             }
+        }
+
+        private static void CharacterModel_UpdateOverlays2(On.RoR2.CharacterModel.orig_UpdateOverlays orig, CharacterModel self)
+        {
+            CharacterModel.energyShieldMaterial = Modules.Assets.shieldOverlayMat;
+            CharacterModel.voidShieldMaterial = Modules.Assets.voidShieldOverlayMat;
+            orig(self);
         }
 
         private static void EscapeSequenceController_OnDisable(On.RoR2.EscapeSequenceController.orig_OnDisable orig, EscapeSequenceController self)

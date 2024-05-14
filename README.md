@@ -130,7 +130,7 @@ ___
 ## Changelog
 
 `1.0.11`
-- Added a custom shield overlay (with config to disable)
+- Added a custom shield overlay (with config to disable), as well as a config to enable this overlay for ALL survivors
 - Added config to add a shield bubble as well, though this one is off by default
 - Added a custom ping icon for Umbrella Terminals
 - Fixed Goobo Jr. spawning terminals every time he spawned
