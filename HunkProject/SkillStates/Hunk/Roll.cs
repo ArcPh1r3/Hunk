@@ -52,7 +52,7 @@ namespace HunkMod.SkillStates.Hunk
 
             this.hunk.desiredYOffset = 0.6f;
             this.hunk.immobilized = true;
-            this.hunk.iFrames = 0.25f;
+            this.hunk.iFrames = 0.75f;
 
             this.ApplyBuff();
             this.CreateDashEffect();

@@ -92,6 +92,7 @@ namespace HunkMod
             NetworkingAPI.RegisterMessageType<Modules.Components.SyncCombatStopwatch>();
             NetworkingAPI.RegisterMessageType<Modules.Components.SyncWeaponCaseOpen>();
             NetworkingAPI.RegisterMessageType<Modules.Components.SyncHeadshot>();
+            NetworkingAPI.RegisterMessageType<Modules.Components.SyncCaseItem>();
 
             Hook();
 

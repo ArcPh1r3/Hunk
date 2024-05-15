@@ -61,7 +61,7 @@ namespace HunkMod.SkillStates.Hunk
             else
             {
                 base.PlayCrossfade("FullBody, Override", "AirDodgePerfect", 0.05f);
-                this.hunk.iFrames = 0.5f;
+                this.hunk.iFrames = 0.75f;
 
                 this.success = true;
                 this.hunk.lockOnTimer = 1.5f;
@@ -69,7 +69,7 @@ namespace HunkMod.SkillStates.Hunk
 
                 if (base.isAuthority)
                 {
-                    Util.PlaySound("sfx_hunk_dodge_success", this.gameObject);
+                    Util.PlaySound("sfx_hunk_dodge_perfect", this.gameObject);
                     base.characterBody.isSprinting = true;
 
                     direction.y = Mathf.Max(direction.y, 1.05f * EntityStates.Croco.Leap.minimumY);
@@ -102,7 +102,7 @@ namespace HunkMod.SkillStates.Hunk
                 HealthComponent hp = h.healthComponent;
                 if (hp)
                 {
-                    if (hp.body.outOfCombatStopwatch <= 1.4f)
+                    if (hp.body.outOfCombatStopwatch <= 1f)
                     {
                         return true;
                     }

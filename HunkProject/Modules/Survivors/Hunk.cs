@@ -3001,6 +3001,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             // make dodges more consistent
             On.EntityStates.Bison.Charge.FixedUpdate += Charge_FixedUpdate;
             On.EntityStates.ClayBruiser.Weapon.MinigunFire.FixedUpdate += MinigunFire_FixedUpdate;
+            On.EntityStates.BrotherMonster.WeaponSlam.FixedUpdate += WeaponSlam_FixedUpdate;
 
             // escape bgm
             On.RoR2.EscapeSequenceController.BeginEscapeSequence += EscapeSequenceController_BeginEscapeSequence;
@@ -3018,6 +3019,12 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             //On.EntityStates.GlobalSkills.LunarNeedle.ChargeLunarSecondary.PlayChargeAnimation += PlayChargeLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarNeedle.ThrowLunarSecondary.PlayThrowAnimation += PlayThrowLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += PlayRuinAnimation;
+        }
+
+        private static void WeaponSlam_FixedUpdate(On.EntityStates.BrotherMonster.WeaponSlam.orig_FixedUpdate orig, EntityStates.BrotherMonster.WeaponSlam self)
+        {
+            if (self.characterBody) self.characterBody.outOfCombatStopwatch = 0f;
+            orig(self);
         }
 
         private static void CharacterModel_UpdateOverlays(On.RoR2.CharacterModel.orig_UpdateOverlays orig, CharacterModel self)

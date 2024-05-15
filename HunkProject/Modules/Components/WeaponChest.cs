@@ -1,4 +1,6 @@
 ﻿using HunkMod.Modules.Weapons;
+using R2API.Networking;
+using R2API.Networking.Interfaces;
 using RoR2;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +20,8 @@ namespace HunkMod.Modules.Components
 
         private void InitPickup()
         {
+            if (!NetworkServer.active) return;
+
             this.weaponDef = Modules.Weapons.MUP.instance.weaponDef;
             string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 
@@ -36,6 +40,8 @@ namespace HunkMod.Modules.Components
                     {
                         // start giving the rest of the unowned weapons
                         List<HunkWeaponDef> weaponPool = new List<HunkWeaponDef>();
+                        weaponPool.Add(Modules.Weapons.SMG.instance.weaponDef);
+                        weaponPool.Add(Modules.Weapons.MUP.instance.weaponDef);
                         weaponPool.Add(Modules.Weapons.Shotgun.instance.weaponDef);
                         weaponPool.Add(Modules.Weapons.Slugger.instance.weaponDef);
                         weaponPool.Add(Modules.Weapons.Magnum.instance.weaponDef);
@@ -89,7 +95,17 @@ namespace HunkMod.Modules.Components
             if (sceneName == "mysteryspace") weaponDef = Modules.Weapons.BlueRose.instance.weaponDef;
             if (sceneName == "moon2") weaponDef = RocketLauncher.instance.weaponDef;
 
-            gunPickup.weaponDef = weaponDef;
+            NetworkIdentity identity = this.GetComponent<NetworkIdentity>();
+            if (!identity) return;
+
+            new SyncCaseItem(identity.netId, (int)weaponDef.itemDef.itemIndex).Send(NetworkDestination.Clients);
+        }
+
+        public void FinishInit(int index)
+        {
+            string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+
+            gunPickup.itemDef = weaponDef.itemDef;
 
             // offset the shotgun a little
             // i hate how horrible this is but it works

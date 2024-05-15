@@ -106,7 +106,7 @@ namespace HunkMod.SkillStates.Hunk
                 HealthComponent hp = h.healthComponent;
                 if (hp)
                 {
-                    if (hp.body.outOfCombatStopwatch <= 1.4f)
+                    if (hp.body.outOfCombatStopwatch <= 0.6f)
                     {
                         if (base.isAuthority)
                         {
