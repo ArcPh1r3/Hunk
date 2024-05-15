@@ -22,7 +22,7 @@ namespace HunkMod.SkillStates.Hunk
 
             base.PlayCrossfade("FullBody, Override", "DodgeRoll", "Dodge.playbackRate", this.duration * 1.4f, 0.05f);
 
-            Util.PlaySound("sfx_hunk_roll", this.gameObject);
+            Util.PlaySound("sfx_hunk_roll2", this.gameObject);
 
             EntityStateMachine.FindByCustomName(this.gameObject, "Aim").SetNextStateToMain();
             this.skillLocator.secondary.stock = 0;

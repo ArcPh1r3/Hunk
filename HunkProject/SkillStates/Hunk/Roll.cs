@@ -38,8 +38,8 @@ namespace HunkMod.SkillStates.Hunk
             //base.PlayAnimation("Gesture, Override", "BufferEmpty");
 
             //Util.PlaySound("sfx_driver_dash", this.gameObject);
-            Util.PlaySound("sfx_hunk_roll", this.gameObject);
-            if (base.isAuthority) Util.PlaySound("sfx_hunk_dodge_success", this.gameObject);
+            Util.PlaySound("sfx_hunk_roll2", this.gameObject);
+            if (base.isAuthority) Util.PlaySound("sfx_hunk_dodge_perfect", this.gameObject);
 
             EntityStateMachine.FindByCustomName(this.gameObject, "Aim").SetNextStateToMain();
             this.skillLocator.secondary.stock = 0;

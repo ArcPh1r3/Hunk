@@ -4601,6 +4601,78 @@
 										<ActiveSource Name="sfx_hunk_weapon_case_drop" ID="{6F995CE1-E3C5-46B4-93B6-9131A9639855}" Platform="Linked"/>
 									</ActiveSourceList>
 								</Sound>
+								<Folder Name="newroll" ID="{8DCB2E9F-B550-4F35-8B09-8B2EFBDB37E9}" ShortID="751111702">
+									<ChildrenList>
+										<RandomSequenceContainer Name="oops" ID="{E1BC37CD-CCF7-4E86-9B2F-17761B310F3E}" ShortID="908824271">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{92A1A0F3-7047-4165-95AE-D5CFCC30AE61}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<Sound Name="sfx_hunk_newroll_01" ID="{0DE467D1-3285-48CF-929B-32E25CE833DC}" ShortID="858806729">
+													<PropertyList>
+														<Property Name="3DSpatialization" Type="int16" Value="1"/>
+													</PropertyList>
+													<ReferenceList>
+														<Reference Name="Attenuation">
+															<ObjectRef Name="Default Attenuation" ID="{1C16C885-97A9-48B9-99CA-62239B098C14}" WorkUnitID="{E9A01ADD-D16C-4AEF-92DB-DCF89FC42AD2}"/>
+														</Reference>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{92A1A0F3-7047-4165-95AE-D5CFCC30AE61}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="sfx_hunk_newroll_01" ID="{DC062220-9100-4DFC-BCF9-4820CB7E68CA}">
+															<Language>SFX</Language>
+															<AudioFile>sfx_hunk_newroll_01.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="503923575"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="sfx_hunk_newroll_01" ID="{DC062220-9100-4DFC-BCF9-4820CB7E68CA}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="sfx_hunk_newroll_02" ID="{778F8780-0A26-4F47-AFC1-656D42FAA2C1}" ShortID="59711184">
+													<PropertyList>
+														<Property Name="3DSpatialization" Type="int16" Value="1"/>
+													</PropertyList>
+													<ReferenceList>
+														<Reference Name="Attenuation">
+															<ObjectRef Name="Default Attenuation" ID="{1C16C885-97A9-48B9-99CA-62239B098C14}" WorkUnitID="{E9A01ADD-D16C-4AEF-92DB-DCF89FC42AD2}"/>
+														</Reference>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{92A1A0F3-7047-4165-95AE-D5CFCC30AE61}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="sfx_hunk_newroll_02" ID="{9684A915-CF5B-49D6-9C92-5FA896CEC3F5}">
+															<Language>SFX</Language>
+															<AudioFile>sfx_hunk_newroll_02.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="872077146"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="sfx_hunk_newroll_02" ID="{9684A915-CF5B-49D6-9C92-5FA896CEC3F5}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+											</ChildrenList>
+										</RandomSequenceContainer>
+									</ChildrenList>
+								</Folder>
 							</ChildrenList>
 						</ActorMixer>
 						<Sound Name="sfx_driver_explosion" ID="{FD8D7F5F-8FF7-41A0-BC29-86BDA8782570}" ShortID="639982188">
@@ -5103,6 +5175,64 @@
 									</ChildrenList>
 									<ActiveSourceList>
 										<ActiveSource Name="sfx_hunk_weapon_get" ID="{8DFD5750-EA28-4247-8E41-6A7909BB5266}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="sfx_hunk_dodge_perfect" ID="{48D94A65-38CD-4CC1-B0F8-9F1AB5C9574E}" ShortID="610185926">
+									<PropertyList>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>5</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{92A1A0F3-7047-4165-95AE-D5CFCC30AE61}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="sfx_hunk_dodge_perfect" ID="{8F00F607-4785-4DCF-B2CD-F935D684DCB8}">
+											<Language>SFX</Language>
+											<AudioFile>sfx_hunk_dodge_perfect.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="521537481"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="sfx_hunk_dodge_perfect" ID="{8F00F607-4785-4DCF-B2CD-F935D684DCB8}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="sfx_hunk_dodge_perfect2" ID="{593862EF-8964-4C0B-85EB-34F6ABDD6F45}" ShortID="168818596">
+									<PropertyList>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>6</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{92A1A0F3-7047-4165-95AE-D5CFCC30AE61}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="sfx_hunk_dodge_perfect2" ID="{B54442BD-EA78-4053-AEC8-067ED7671389}">
+											<Language>SFX</Language>
+											<AudioFile>sfx_hunk_dodge_perfect2.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="746167312"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="sfx_hunk_dodge_perfect2" ID="{B54442BD-EA78-4053-AEC8-067ED7671389}" Platform="Linked"/>
 									</ActiveSourceList>
 								</Sound>
 							</ChildrenList>

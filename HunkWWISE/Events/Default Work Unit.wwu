@@ -883,6 +883,28 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="sfx_hunk_roll2" ID="{80AC6E79-10B4-4FA9-8816-7E9A4A72EC25}">
+					<ChildrenList>
+						<Action Name="" ID="{15EA675D-CF80-4F4D-8A3A-D88FCA66C60A}" ShortID="1026398947">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="oops" ID="{E1BC37CD-CCF7-4E86-9B2F-17761B310F3E}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_dodge_perfect" ID="{73B2A059-20C6-417C-B61A-A06E46CF2C27}">
+					<ChildrenList>
+						<Action Name="" ID="{2E06BC5C-6935-4A0C-9EFA-3ACF87995925}" ShortID="463146282">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_dodge_perfect2" ID="{593862EF-8964-4C0B-85EB-34F6ABDD6F45}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>
