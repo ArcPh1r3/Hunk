@@ -82,6 +82,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: mdlSMGPickup
       objectReference: {fileID: 0}
+    - target: {fileID: 3135037497510537720, guid: 25e6234ad95d7414790ee1ab37abdc40,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6317766155431654570, guid: 25e6234ad95d7414790ee1ab37abdc40,
         type: 3}
       propertyPath: m_LocalScale.x
