@@ -704,6 +704,12 @@ namespace HunkMod.Modules.Survivors
                 stockToConsume = 1
             });
 
+            dodgeSkillDef.keywordTokens = new string[]
+            {
+                MainPlugin.developerPrefix + "_HUNK_KEYWORD_PERFECTDODGE",
+                MainPlugin.developerPrefix + "_HUNK_KEYWORD_COUNTER"
+            };
+
             Modules.Skills.AddUtilitySkills(prefab, dodgeSkillDef);
             #endregion
 

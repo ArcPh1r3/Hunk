@@ -127,6 +127,16 @@ ___
 
 ## Changelog
 
+`1.1.2`
+- Added config option for a custom HUD built for HUNK
+- Added subtle camera interpolation, can be configured and even disabled
+- Added a slight camera zoom out when near huge enemies to help with combat visibility, also with config
+- Added a config option to adjust the distance the cursor has to be from the center to select a weapon, for those having issues
+- Added more pep to his step :-)
+- Added a custom (very strong) counterattack for Blind Vermin
+- Enemies who survive a neck snap will no longer be stunned indefinitely, instead they will be enraged for 10 seconds
+- Slightly extended the invulnerability window on neck snap- played correctly you can be indefinitely invulnerable now
+
 `1.1.1`
 - bugefix
 

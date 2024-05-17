@@ -149,7 +149,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
                 this.aimWeight = Mathf.Lerp(this.aimWeight, 0f, Time.fixedDeltaTime * 5f);
             }
 
-            if (!this.hasSnapped && base.fixedAge >= 0.25f * this.duration)
+            if (!this.hasSnapped && base.fixedAge >= 0.23f * this.duration)
             {
                 this.hasSnapped = true;
                 this.hunk.immobilized = false;
@@ -202,7 +202,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
                     if (base.isAuthority)
                     {
                         BlastAttack blastAttack = new BlastAttack();
-                        blastAttack.radius = 8f;
+                        blastAttack.radius = 5f;
                         blastAttack.procCoefficient = 1f;
                         blastAttack.position = this.target.body.corePosition;
                         blastAttack.attacker = this.gameObject;
@@ -214,8 +214,6 @@ namespace HunkMod.SkillStates.Hunk.Counter
                         blastAttack.teamIndex = TeamComponent.GetObjectTeam(blastAttack.attacker);
                         blastAttack.damageType = DamageType.Stun1s | DamageType.ClayGoo;
                         blastAttack.attackerFiltering = AttackerFiltering.NeverHitSelf;
-
-                        blastAttack.Fire();
 
                         // spawn hit effect on targets
                         BlastAttack.HitPoint[] hitPoints = blastAttack.CollectHits();
@@ -240,6 +238,8 @@ namespace HunkMod.SkillStates.Hunk.Counter
                                 }, true);
                             }
                         }
+
+                        blastAttack.Fire();
                     }
                 }
             }
@@ -264,7 +264,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            if (base.fixedAge >= 0.46f * this.duration) return InterruptPriority.Skill;
+            if (base.fixedAge >= 0.34f * this.duration) return InterruptPriority.Skill;
             return InterruptPriority.Frozen;
         }
 

@@ -156,6 +156,19 @@ namespace HunkMod.SkillStates.Hunk.Counter
                             return true;
                         }
 
+                        if (hurtBox.healthComponent.gameObject.name.Contains("MoffeinClay"))
+                        {
+                            if (base.isAuthority)
+                            {
+                                this.outer.SetNextState(new NeckSnap
+                                {
+                                    targetObject = hurtBox.healthComponent.gameObject
+                                });
+                            }
+
+                            return true;
+                        }
+
                         if (hurtBox.healthComponent.body.hullClassification == HullClassification.BeetleQueen || hurtBox.healthComponent.body.hullClassification == HullClassification.Golem)
                         {
                             if (base.isAuthority) this.outer.SetNextState(new Punch());
