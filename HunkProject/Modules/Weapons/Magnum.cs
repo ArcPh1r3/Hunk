@@ -50,7 +50,7 @@ false);
             longBarrel.loreToken = "ROB_HUNK_WEAPON_ADDON_" + weaponNameToken + "_DESC";
             longBarrel.canRemove = false;
             longBarrel.hidden = false;
-            longBarrel.pickupIconSprite = weaponDef.icon;
+            longBarrel.pickupIconSprite = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texLongBarrelIcon");
             longBarrel.requiredExpansion = null;
             longBarrel.tags = new ItemTag[]
             {
@@ -62,6 +62,9 @@ false);
                 ItemTag.WorldUnique
             };
             longBarrel.unlockableDef = null;
+
+            longBarrel.pickupModelPrefab = Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlLongBarrel");
+            Modules.Assets.ConvertAllRenderersToHopooShader(longBarrel.pickupModelPrefab);
 
             HunkWeaponCatalog.itemDefs.Add(longBarrel);
 

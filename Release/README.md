@@ -122,12 +122,30 @@ Big thanks to everyone in the community for all the valuable feedback and critic
 - Most item displays are missing
 - Emote buttons are there but he doesn't have any animations yet
 - Ally projectiles trigger perfect dodges; haven't decided if this is worth keeping as a mechanic yet
-- Goobo Jr. has no ammo and only shanks
-- Weapon cases are not fully synced; this is purely visual and has no actual gameplay impact
 
 ___
 
 ## Changelog
+
+`1.1.1`
+- bugefix
+
+`1.1.0`
+- Added gun attachments! These show up in gun cases scattered throughout the standard gun pool
+- Gun Stock (MUP): Allows you to fire 3 bullets in quick succession
+- Laser Sight (LE 5): Removes spread, recoil and bullet falloff
+- Long Barrel (Lightning Hawk): Increases damage from 2400% to 3200%
+- Speedloader (Quickdraw Army): When the chamber is empty, reload all bullets at once
+- LE 5 and MUP added to the post-loop weapon pool in case you dropped them and wanted to get them back later
+- M19 ammo pickup amount doubled as a temporary solution until ammo weight system is added
+- Gave M19 a laser sight because awesome or something
+- Flamethrower ammo pickup amount halved, reload speed lowered to match the GM-79
+- Flamethrower range reduced
+- Made Perfect Dodge window smaller, but gave it more i-frames when successful
+- Added incompatibility warning when playing the game with incompatible mods (ones i can't fix on my end)
+- Fixed Golden Gun having no model
+- Fixed MUP pickup model
+- Fixed weapon cases not being synced in multiplayer
 
 `1.0.11`
 - Added a custom shield overlay (with config to disable), as well as a config to enable this overlay for ALL survivors

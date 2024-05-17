@@ -23,9 +23,13 @@ namespace HunkMod.Modules
         public static ConfigEntry<bool> showWeaponIcon;
         public static ConfigEntry<bool> fancyAmmoDisplay;
         public static ConfigEntry<float> baseAmmoPanelOpacity;
+        public static ConfigEntry<float> weaponMenuSensitivity;
+        public static ConfigEntry<float> cameraSmoothSpeed;
+        public static ConfigEntry<float> cameraZoomInfluence;
         public static ConfigEntry<bool> fancyShield;
         public static ConfigEntry<bool> fancyShieldGlobal;
         public static ConfigEntry<bool> shieldBubble;
+        public static ConfigEntry<bool> customHUD;
         public static ConfigEntry<bool> blacklistHunkItems;
         public static ConfigEntry<bool> overTheShoulderCamera;
         public static ConfigEntry<bool> overTheShoulderCamera2;
@@ -102,6 +106,24 @@ true,
              80f,
              "Opacity of the black panel the ammo count is shown on", 0f, 100f);
 
+            weaponMenuSensitivity
+= Config.BindAndOptionsSlider("01 - General",
+ "Weapon Menu Sensitivity",
+ 172f,
+ "Controls how far the cursor needs to go to select a weapon from the weapon wheel. 172 is default", 0f, 400f);
+
+            cameraSmoothSpeed
+= Config.BindAndOptionsSlider("01 - General",
+"Camera Smoothing Speed",
+28f,
+"Controls the sensitivity of HUNK's custom camera interpolation - higher values are faster. Set to 0 to disable interpolation", 0f, 80f);
+
+            cameraZoomInfluence
+= Config.BindAndOptionsSlider("01 - General",
+"Camera Zoom Influence",
+1f,
+"Controls the distance the camera will zoom out around large enemies. Set to 0 to disable", 0f, 2f);
+
             fancyShield
 = Config.BindAndOptions("01 - General",
 "Fancy Shield",
@@ -119,6 +141,12 @@ false,
 "Shield Bubble",
 false,
 "Set to true to enable a custom shield bubble. Only works with Fancy Shield enabled! (Client-side)", true);
+
+            customHUD
+= Config.BindAndOptions("01 - General",
+"Custom HUD",
+false,
+"Set to true to enable a custom HUD tailored just for HUNK. (Client-side)");
 
             blacklistHunkItems
 = Config.BindAndOptions("01 - General",

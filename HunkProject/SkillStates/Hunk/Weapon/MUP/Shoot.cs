@@ -25,9 +25,16 @@ namespace HunkMod.SkillStates.Hunk.Weapon.MUP
         {
             base.OnEnter();
             this.duration = Shoot.baseDuration / this.attackSpeedStat;
-            this.characterBody.isSprinting = false;
 
-            base.characterBody.SetAimTimer(2f);
+            if (this.characterBody.inventory && this.characterBody.inventory.GetItemCount(Modules.Weapons.MUP.gunStock) > 0)
+            {
+                if (this.hunk.mupQueuedShots > 0)
+                {
+                    if (this.duration >= 0.2f) this.duration = 0.2f;
+                }
+                this.hunk.mupQueuedShots--;
+            }
+
             this.muzzleString = "MuzzlePistol";
 
             this.isCrit = base.RollCrit();
@@ -135,9 +142,17 @@ namespace HunkMod.SkillStates.Hunk.Weapon.MUP
 
             if (base.fixedAge >= this.duration && base.isAuthority)
             {
+                this.hunk.mupQueuedShots = 2;
                 this.outer.SetNextStateToMain();
                 return;
             }
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+
+            if (this.hunk.mupQueuedShots <= -1) this.hunk.mupQueuedShots = 2;
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

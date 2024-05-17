@@ -1,8 +1,8 @@
 {
     "name": "HUNK",
-    "version_number": "1.0.11",
+    "version_number": "1.1.1",
     "website_url": "https://github.com/ArcPh1r3/Hunk/tree/main",
-    "description": "Adds HUNK, a survivor with a focus on resource management and risky CQC. Fully multiplayer compatible!",
+    "description": "Adds HUNK, a survivor with a focus on resource management and risky CQC. Now with gun attachments!",
     "dependencies": [
         "bbepis-BepInExPack-5.4.1905",
         "tristanmcpherson-R2API-5.0.5"

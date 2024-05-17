@@ -130,6 +130,19 @@ namespace HunkMod.SkillStates.Hunk.Counter
 				{
 					if (hurtBox.healthComponent && hurtBox.healthComponent.body)
 					{
+                        if (hurtBox.healthComponent.gameObject.name == "VerminBody(Clone)")
+                        {
+                            if (base.isAuthority)
+                            {
+                                this.outer.SetNextState(new CounterKnee
+                                {
+                                    targetObject = hurtBox.healthComponent.gameObject
+                                });
+                            }
+
+                            return true;
+                        }
+
                         if (hurtBox.healthComponent.gameObject.name == "LemurianBody(Clone)")
                         {
                             if (base.isAuthority)

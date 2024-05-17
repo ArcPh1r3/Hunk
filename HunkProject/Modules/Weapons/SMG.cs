@@ -50,7 +50,7 @@ false);
             laserSight.loreToken = "ROB_HUNK_WEAPON_ADDON_" + weaponNameToken + "_DESC";
             laserSight.canRemove = false;
             laserSight.hidden = false;
-            laserSight.pickupIconSprite = weaponDef.icon;
+            laserSight.pickupIconSprite = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texLaserSightIcon");
             laserSight.requiredExpansion = null;
             laserSight.tags = new ItemTag[]
             {
@@ -62,6 +62,9 @@ false);
                 ItemTag.WorldUnique
             };
             laserSight.unlockableDef = null;
+
+            laserSight.pickupModelPrefab = Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlLaserSight");
+            Modules.Assets.ConvertAllRenderersToHopooShader(laserSight.pickupModelPrefab);
 
             HunkWeaponCatalog.itemDefs.Add(laserSight);
 

@@ -106,7 +106,7 @@ namespace HunkMod.Modules.Components
 
         public void SetHunk(HunkController i)
         {
-
+            this._hunk = i;
         }
 
         private void Inventory_onItemAddedClient(ItemIndex itemIndex)
@@ -188,6 +188,14 @@ namespace HunkMod.Modules.Components
                 this.AddWeaponItem(Modules.Weapons.Revolver.instance.weaponDef);
                 this.AddWeaponItem(Modules.Weapons.Flamethrower.instance.weaponDef);
                 this.AddWeaponItem(Modules.Weapons.GrenadeLauncher.instance.weaponDef);
+
+                if (NetworkServer.active)
+                {
+                    this.inventory.GiveItem(Modules.Weapons.SMG.laserSight);
+                    this.inventory.GiveItem(Modules.Weapons.MUP.gunStock);
+                    this.inventory.GiveItem(Modules.Weapons.Magnum.longBarrel);
+                    this.inventory.GiveItem(Modules.Weapons.Revolver.speedloader);
+                }
             }
             else
             {

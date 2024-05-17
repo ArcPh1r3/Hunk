@@ -11,7 +11,7 @@ namespace HunkMod.Modules.Weapons
         public override string iconName => "texM19Icon";
         public override GameObject crosshairPrefab => Modules.Assets.pistolCrosshairPrefab;
         public override int magSize => 7;
-        public override float magPickupMultiplier => 1f;
+        public override float magPickupMultiplier => 2f;
         public override float reloadDuration => 1.2f;
         public override string ammoName => "M19 Rounds";
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlM19");
@@ -30,5 +30,11 @@ new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Weapon.M19.
 "ROB_HUNK_BODY_SHOOT_M19_DESCRIPTION",
 Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texShootIcon"),
 false);
+
+        public override void Init()
+        {
+            base.Init();
+            this.modelPrefab.AddComponent<Modules.Components.M19Behavior>();
+        }
     }
 }

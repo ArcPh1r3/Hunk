@@ -50,7 +50,7 @@ false);
             gunStock.loreToken = "ROB_HUNK_WEAPON_ADDON_" + weaponNameToken + "_DESC";
             gunStock.canRemove = false;
             gunStock.hidden = false;
-            gunStock.pickupIconSprite = weaponDef.icon;
+            gunStock.pickupIconSprite = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texGunStockIcon");
             gunStock.requiredExpansion = null;
             gunStock.tags = new ItemTag[]
             {
@@ -62,6 +62,9 @@ false);
                 ItemTag.WorldUnique
             };
             gunStock.unlockableDef = null;
+
+            gunStock.pickupModelPrefab = Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlGunStock");
+            Modules.Assets.ConvertAllRenderersToHopooShader(gunStock.pickupModelPrefab);
 
             HunkWeaponCatalog.itemDefs.Add(gunStock);
 

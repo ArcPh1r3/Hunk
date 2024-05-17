@@ -10,21 +10,24 @@ namespace HunkMod.Modules.Components
     {
         private NetworkInstanceId netId;
         private int index;
+        private int chestType;
 
         public SyncCaseItem()
         {
         }
 
-        public SyncCaseItem(NetworkInstanceId netId, int index)
+        public SyncCaseItem(NetworkInstanceId netId, int index, int chestType)
         {
             this.netId = netId;
             this.index = index;
+            this.chestType = chestType;
         }
 
         public void Deserialize(NetworkReader reader)
         {
             this.netId = reader.ReadNetworkId();
             this.index = reader.ReadInt32();
+            this.chestType = reader.ReadInt32();
         }
 
         public void OnReceived()
@@ -35,8 +38,8 @@ namespace HunkMod.Modules.Components
             WeaponChest chest = bodyObject.GetComponent<WeaponChest>();
             if (chest)
             {
-                chest.FinishInit(this.index);
-                Chat.AddMessage("Case item was set to " + this.index.ToString());
+                chest.FinishInit(this.index, this.chestType);
+                //Chat.AddMessage("Case item was set to " + this.index.ToString());
             }
         }
 
@@ -44,6 +47,7 @@ namespace HunkMod.Modules.Components
         {
             writer.Write(this.netId);
             writer.Write(this.index);
+            writer.Write(this.chestType);
         }
     }
 }

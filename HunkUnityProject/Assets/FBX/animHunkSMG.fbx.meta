@@ -180,6 +180,12 @@ ModelImporter:
   - first:
       74: -1956715428336397187
     second: Armature|ReloadSingle
+  - first:
+      74: 4334404784746135214
+    second: Armature|SprintFastBAD
+  - first:
+      74: 8731673259921870988
+    second: Armature|CounterKnee
   externalObjects: {}
   materials:
     materialImportMode: 1

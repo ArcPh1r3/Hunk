@@ -24,6 +24,7 @@ namespace HunkMod
     [BepInDependency("Faust.QoLChests", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.Elysium.ECBG", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.xoxfaby.UnlockAll", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.evaisa.moreshrines", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("bubbet.riskui", BepInDependency.DependencyFlags.SoftDependency)]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
     [BepInPlugin(MODUID, MODNAME, MODVERSION)]
@@ -43,7 +44,7 @@ namespace HunkMod
     {
         public const string MODUID = "com.rob.Hunk";
         public const string MODNAME = "Hunk";
-        public const string MODVERSION = "1.0.11";
+        public const string MODVERSION = "1.1.1";
 
         public const string developerPrefix = "ROB";
 
@@ -58,6 +59,7 @@ namespace HunkMod
         public static bool qolChestsInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("Faust.QoLChests");
         public static bool emptyChestsInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.Elysium.ECBG");
         public static bool unlockAllInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.xoxfaby.UnlockAll");
+        public static bool moreShrinesInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.evaisa.moreshrines");
 
         public static List<HurtBox> hurtboxesList = new List<HurtBox>();
         public static List<Modules.Components.HunkProjectileTracker> projectileList = new List<Modules.Components.HunkProjectileTracker>();

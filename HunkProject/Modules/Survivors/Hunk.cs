@@ -65,9 +65,9 @@ namespace HunkMod.Modules.Survivors
         internal static Material miliMat;
 
         public static List<HunkWeaponDef> defaultWeaponPool = new List<HunkWeaponDef>();
-        public static List<HunkWeaponDef> spawnedWeaponList = new List<HunkWeaponDef>();
+        public static List<ItemDef> spawnedWeaponList = new List<ItemDef>();
         public static List<GameObject> virusObjectiveObjects = new List<GameObject>();
-
+        public static List<CostTypeDef> spawnedCostTypeList = new List<CostTypeDef>();
 
         public static string stageBlacklist = "arena,artifactworld,bazaar,limbo,moon,moon2,outro,voidoutro,voidraid,voidstage";
         public static List<string> blacklistedStageNames = new List<string>();
@@ -244,6 +244,7 @@ namespace HunkMod.Modules.Survivors
             newPrefab.GetComponent<CharacterDeathBehavior>().deathState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.FuckMyAss));
 
             newPrefab.AddComponent<Modules.Components.HunkController>();
+            if (Modules.Config.overTheShoulderCamera.Value) newPrefab.AddComponent<Modules.Components.HunkCameraAdjuster>();
             #endregion
 
             #region Model
@@ -3086,7 +3087,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                 if (self.pickupIndex.isValid)
                 {
                     string nameToken = PickupCatalog.GetPickupDef(self.pickupIndex).nameToken;
-                    if (nameToken.Contains("ROB_HUNK_WEAPON_"))
+                    if (nameToken.Contains("ROB_HUNK_WEAPON_") && !nameToken.Contains("ADDON"))
                     {
                         if (body.baseNameToken == Hunk.bodyNameToken)
                         {
@@ -3450,7 +3451,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     if (RoR2Application.isInMultiPlayer)
                     {
                         PickupDropletController.CreatePickupDroplet(
-                            PickupCatalog.FindPickupIndex(self.GetComponent<WeaponChest>().weaponDef.itemDef.itemIndex),
+                            PickupCatalog.FindPickupIndex(self.GetComponent<WeaponChest>().itemDef.itemIndex),
                             self.transform.position + Vector3.up,
                             Vector3.up * 25f);
 
@@ -3473,7 +3474,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     if (RoR2Application.isInMultiPlayer || MainPlugin.qolChestsInstalled || MainPlugin.emptyChestsInstalled)
                     {
                         PickupDropletController.CreatePickupDroplet(
-                            PickupCatalog.FindPickupIndex(self.GetComponent<WeaponChest>().weaponDef.itemDef.itemIndex),
+                            PickupCatalog.FindPickupIndex(self.GetComponent<WeaponChest>().itemDef.itemIndex),
                             self.transform.position + Vector3.up,
                             Vector3.up * 25f);
 
@@ -3639,7 +3640,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     skillsContainer.Find("SprintCluster").gameObject.name = "GTFO";
                     skillsContainer.Find("InventoryCluster").gameObject.SetActive(false);
 
-                    if (Modules.Config.showWeaponIcon.Value)
+                    if (Modules.Config.showWeaponIcon.Value && !Modules.Config.customHUD.Value)
                     {
                         GameObject weaponSlot = GameObject.Instantiate(skillsContainer.Find("EquipmentSlot").gameObject, skillsContainer);
                         weaponSlot.name = "WeaponSlot";
@@ -3760,6 +3761,70 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                         rect.anchoredPosition = new Vector2(50f, 0f);
                         rect.localPosition = new Vector3(0f, -350f, 0f);
                     }
+
+                    // custom hud
+                    if (Modules.Config.customHUD.Value)
+                    {
+                        // add component to display this only when active
+                        //hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/TopCenterCluster/ItemInventoryDisplayRoot").gameObject.SetActive(false);
+
+                        // hide skills
+                        hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/BottomRightCluster/Scaler/Skill1Root").gameObject.SetActive(false);
+                        hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/BottomRightCluster/Scaler/Skill2Root").gameObject.SetActive(false);
+                        hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/BottomRightCluster/Scaler/Skill3Root").gameObject.SetActive(false);
+                        hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/BottomRightCluster/Scaler/Skill4Root").gameObject.SetActive(false);
+                        hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/BottomRightCluster/Scaler/EquipmentSlot").GetComponent<RectTransform>().localPosition = new Vector3(-160f, 170f, 0f);
+
+                        hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/BottomRightCluster/Scaler/EquipmentSlot/DisplayRoot/BGPanel").gameObject.SetActive(false);
+                        hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/BottomRightCluster/Scaler/EquipmentSlot/DisplayRoot/EquipmentTextBackgroundPanel").gameObject.SetActive(false);
+
+                        // hide health bar
+                        hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/BottomLeftCluster/BarRoots").gameObject.SetActive(false);
+
+                        // hide money
+                        //hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/UpperLeftCluster").gameObject.SetActive(false);
+                        //GameObject.Destroy(hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/UpperLeftCluster/MoneyRoot").gameObject);
+                        //GameObject.Destroy(hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/UpperLeftCluster/LunarCoinRoot").gameObject);
+
+                        // dodge stamina bar
+                        GameObject staminaBar = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("StaminaBar"), healthbarContainer);
+                        staminaBar.name = "StaminaBar";
+                        staminaBar.transform.SetParent(hud.transform.Find("MainContainer/MainUIArea/CrosshairCanvas/CrosshairExtras"));
+                        staminaBar.AddComponent<StaminaBar>().targetHUD = hud;
+
+                        //HunkNotificationHandler notificationHandler = staminaBar.AddComponent<HunkNotificationHandler>();
+                        //notificationHandler.targetHUD = hud;
+
+                        RectTransform rect = staminaBar.GetComponent<RectTransform>();
+                        rect.localScale = new Vector3(1f, 1f, 1f);
+                        rect.anchorMin = new Vector2(0f, 0f);
+                        rect.anchorMax = new Vector2(0f, 0f);
+                        rect.offsetMin = new Vector2(-150f, 0f);
+                        rect.offsetMax = new Vector2(150f, 0f);
+                        rect.pivot = new Vector2(0f, 0f);
+                        rect.anchoredPosition = new Vector2(00f, 0f);
+                        rect.localPosition = new Vector3(-150f, -350f, 0f);
+                        rect.localRotation = Quaternion.identity;
+                        rect.sizeDelta = new Vector2(300f, 10f);
+
+                        // custom health bar
+                        GameObject newHealthBar = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("CustomHealthBar"), healthbarContainer);
+                        newHealthBar.name = "CustomHealthBar";
+                        newHealthBar.transform.SetParent(hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/BottomRightCluster"));
+                        newHealthBar.AddComponent<CustomHealthBar>().targetHUD = hud;
+
+                        //HunkNotificationHandler notificationHandler = staminaBar.AddComponent<HunkNotificationHandler>();
+                        //notificationHandler.targetHUD = hud;
+
+                        rect = newHealthBar.GetComponent<RectTransform>();
+                        rect.localScale = new Vector3(1f, 1f, 1f);
+                        rect.anchorMin = new Vector2(0f, 0f);
+                        rect.anchorMax = new Vector2(0f, 0f);
+                        rect.pivot = new Vector2(0f, 0f);
+                        rect.anchoredPosition = new Vector2(0f, 0f);
+                        rect.localPosition = new Vector3(-300f, -100f, 0f);
+                        rect.localRotation = Quaternion.identity;
+                    }
                 }
             }
         }
@@ -3845,7 +3910,6 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
 
                 // ammo display
-
                 Transform mainContainer = hud.transform.Find("MainContainer").Find("MainUIArea").Find("CrosshairCanvas").Find("CrosshairExtras");
 
                 if (!mainContainer.Find("AmmoDisplay"))
@@ -3869,7 +3933,6 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                 }
 
                 // generic notification
-
                 if (!mainContainer.Find("NotificationPanel"))
                 {
                     GameObject notificationObject = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("GenericTextPanel"), mainContainer);
@@ -3887,6 +3950,85 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     rect.anchoredPosition = new Vector2(50f, 0f);
                     rect.localPosition = new Vector3(0f, -350f, 0f);
                 }
+
+                // custom hud
+                if (Modules.Config.customHUD.Value)
+                {
+                    // add component to display this only when active
+                    //hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/TopCenterCluster/ItemInventoryDisplayRoot").gameObject.SetActive(false);
+
+                    // hide skills
+                    hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/BottomRightCluster/Scaler/SkillIconContainer").gameObject.SetActive(false);
+                    //hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/BottomRightCluster/Scaler/EquipmentSlot").GetComponent<RectTransform>().localPosition = new Vector3(-160f, 170f, 0f);
+
+                    GameObject equipmentIcon = hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/BottomRightCluster").GetComponentInChildren<EquipmentIcon>().gameObject;
+                    equipmentIcon.transform.Find("DisplayRoot/GameObject").gameObject.SetActive(false);
+                    equipmentIcon.transform.Find("DisplayRoot/Mask").gameObject.SetActive(false);
+                    equipmentIcon.transform.Find("DisplayRoot/BgImage").gameObject.GetComponent<UnityEngine.UI.Image>().enabled = false;
+                    equipmentIcon.transform.Find("DisplayRoot/BgImage/IconPanel/OnCooldown").gameObject.GetComponent<UnityEngine.UI.Image>().sprite = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texRadialInner");
+                    equipmentIcon.transform.Find("DisplayRoot/BgImage/IconPanel/OnCooldown").gameObject.GetComponent<RectTransform>().localScale = Vector3.one * 1.5f;
+
+                    //hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/BottomRightCluster/Scaler/EquipmentSlot/DisplayRoot/BGPanel").gameObject.SetActive(false);
+                    //hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/BottomRightCluster/Scaler/EquipmentSlot/DisplayRoot/EquipmentTextBackgroundPanel").gameObject.SetActive(false);
+
+                    // hide health bar
+                    HealthBar fuckMe = null;
+
+                    fuckMe = hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/BottomLeftCluster").gameObject.GetComponentInChildren<HealthBar>();
+                    if (fuckMe) fuckMe.transform.parent.gameObject.SetActive(false);
+
+                    fuckMe = hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/BottomCenterCluster").gameObject.GetComponentInChildren<HealthBar>();
+                    if (fuckMe) fuckMe.transform.parent.gameObject.SetActive(false);
+
+                    // hide money
+                    //hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/UpperLeftCluster").gameObject.SetActive(false);
+                    //GameObject.Destroy(hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/UpperLeftCluster/MoneyRoot").gameObject);
+                    //GameObject.Destroy(hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/UpperLeftCluster/LunarCoinRoot").gameObject);
+
+                    // dodge stamina bar
+                    GameObject staminaBar = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("StaminaBar"), mainContainer);
+                    staminaBar.name = "StaminaBar";
+                    staminaBar.transform.SetParent(hud.transform.Find("MainContainer/MainUIArea/CrosshairCanvas/CrosshairExtras"));
+                    staminaBar.AddComponent<StaminaBar>().targetHUD = hud;
+
+                    //HunkNotificationHandler notificationHandler = staminaBar.AddComponent<HunkNotificationHandler>();
+                    //notificationHandler.targetHUD = hud;
+
+                    RectTransform rect = staminaBar.GetComponent<RectTransform>();
+                    rect.localScale = new Vector3(1f, 1f, 1f);
+                    rect.anchorMin = new Vector2(0f, 0f);
+                    rect.anchorMax = new Vector2(0f, 0f);
+                    rect.offsetMin = new Vector2(-150f, 0f);
+                    rect.offsetMax = new Vector2(150f, 0f);
+                    rect.pivot = new Vector2(0f, 0f);
+                    rect.anchoredPosition = new Vector2(00f, 0f);
+                    rect.localPosition = new Vector3(-150f, -350f, 0f);
+                    rect.localRotation = Quaternion.identity;
+                    rect.sizeDelta = new Vector2(300f, 10f);
+
+                    // custom health bar
+                    GameObject newHealthBar = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("CustomHealthBar"), mainContainer);
+                    newHealthBar.name = "CustomHealthBar";
+                    newHealthBar.transform.SetParent(hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/BottomRightCluster"));
+                    newHealthBar.AddComponent<CustomHealthBar>().targetHUD = hud;
+
+                    //HunkNotificationHandler notificationHandler = staminaBar.AddComponent<HunkNotificationHandler>();
+                    //notificationHandler.targetHUD = hud;
+
+                    rect = newHealthBar.GetComponent<RectTransform>();
+                    rect.localScale = new Vector3(1f, 1f, 1f);
+                    rect.anchorMin = new Vector2(0f, 0f);
+                    rect.anchorMax = new Vector2(0f, 0f);
+                    rect.pivot = new Vector2(0f, 0f);
+                    rect.anchoredPosition = new Vector2(0f, 0f);
+                    rect.localPosition = new Vector3(-200f, 40f, 0f);
+                    rect.localRotation = Quaternion.identity;
+
+                    newHealthBar.transform.GetChild(0).gameObject.AddComponent<RectMover>().pos = new Vector3(-300f, 80f, 0f);
+
+                    equipmentIcon.transform.parent.SetParent(newHealthBar.transform);
+                    equipmentIcon.AddComponent<RectMover>().pos = new Vector3(-180f, 90f, 0f);
+                }
             }
         }
 
@@ -3900,7 +4042,8 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
         {
             orig(self);
 
-            spawnedWeaponList = new List<HunkWeaponDef>();
+            spawnedWeaponList = new List<ItemDef>();
+            spawnedCostTypeList = new List<CostTypeDef>();
 
             int hunkCount = Helpers.hunkCount;
 

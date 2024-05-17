@@ -151,9 +151,9 @@ namespace HunkMod.SkillStates.Hunk.Counter
             {
                 this.hasSnapped = true;
                 this.hunk.immobilized = false;
+                this.hunk.iFrames = 0.25f;
 
                 Util.PlaySound("sfx_hunk_snap", this.gameObject);
-
 
                 if (this.target)
                 {
@@ -162,8 +162,6 @@ namespace HunkMod.SkillStates.Hunk.Counter
                         float recoil = 16f;
                         base.AddRecoil2(-1f * recoil, -2f * recoil, -0.5f * recoil, 0.5f * recoil);
                     }
-
-                    this.hunk.iFrames = 0f;
 
                     this.hunk.TriggerCounter();
 

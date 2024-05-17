@@ -25,9 +25,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Magnum
         {
             base.OnEnter();
             this.duration = Shoot.baseDuration / this.attackSpeedStat;
-            this.characterBody.isSprinting = false;
 
-            base.characterBody.SetAimTimer(2f);
             this.muzzleString = "MuzzlePistol";
 
             this.isCrit = base.RollCrit();

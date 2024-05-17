@@ -31,6 +31,12 @@ namespace HunkMod.SkillStates.Hunk.Counter
 
                 this.modelLocator.modelTransform.gameObject.AddComponent<Modules.Components.Snapped>();
             }
+
+            if (base.fixedAge >= this.duration && this.healthComponent && this.healthComponent.alive)
+            {
+                if (NetworkServer.active) this.characterBody.AddTimedBuff(RoR2Content.Buffs.WarCryBuff, 10f);
+                if (base.isAuthority) this.outer.SetNextStateToMain();
+            }
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

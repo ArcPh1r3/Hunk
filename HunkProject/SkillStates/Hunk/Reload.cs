@@ -20,6 +20,16 @@ namespace HunkMod.SkillStates.Hunk
             this.duration = this.cachedWeaponDef.reloadDuration / this.attackSpeedStat;
             this.hunk.isReloading = true;
 
+            bool roundReload = this.cachedWeaponDef.roundReload;
+
+            if (this.hunk.weaponDef == Modules.Weapons.Revolver.instance.weaponDef)
+            {
+                if (this.characterBody.inventory && this.characterBody.inventory.GetItemCount(Modules.Weapons.Revolver.speedloader) > 0)
+                {
+                    if (this.hunk.ammo <= 0) roundReload = false;
+                }
+            }
+
             if (this.hunk.weaponTracker.weaponData[this.hunk.weaponTracker.equippedIndex].totalAmmo <= 0)
             {
                 this.duration = 0.3f;
@@ -28,7 +38,7 @@ namespace HunkMod.SkillStates.Hunk
             }
             else
             {
-                if (this.cachedWeaponDef.roundReload)
+                if (roundReload)
                 {
                     if (base.isAuthority)
                     {
@@ -41,7 +51,9 @@ namespace HunkMod.SkillStates.Hunk
                     return;
                 }
 
-                if (this.hunk.weaponDef.animationSet == HunkWeaponDef.AnimationSet.Pistol || this.hunk.weaponDef.animationSet == HunkWeaponDef.AnimationSet.PistolAlt)
+                if (this.hunk.weaponDef == Modules.Weapons.Revolver.instance.weaponDef) this.duration = Modules.Weapons.MUP.instance.weaponDef.reloadDuration / this.attackSpeedStat;
+
+                    if (this.hunk.weaponDef.animationSet == HunkWeaponDef.AnimationSet.Pistol || this.hunk.weaponDef.animationSet == HunkWeaponDef.AnimationSet.PistolAlt)
                 {
                     this.animString = "ReloadPistol";
                     base.PlayCrossfade("Gesture, Override", this.animString, "Reload.playbackRate", this.duration, 0.1f);
