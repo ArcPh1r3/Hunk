@@ -66,7 +66,7 @@ namespace HunkMod.Modules
             LanguageAPI.Add(prefix + "SHOOT_ROCKETLAUNCHER_DESCRIPTION", "Shoot for <style=cIsDamage>4800% damage</style>. <style=cIsDamage>Igniting.</style>");
 
             LanguageAPI.Add(prefix + "SHOOT_GRENADELAUNCHER_NAME", "Fire");
-            LanguageAPI.Add(prefix + "SHOOT_GRENADELAUNCHER_DESCRIPTION", "Shoot for <style=cIsDamage>4800% damage</style>. <style=cIsDamage>Igniting.</style>");
+            LanguageAPI.Add(prefix + "SHOOT_GRENADELAUNCHER_DESCRIPTION", "Shoot for <style=cIsDamage>3200% damage</style>. <style=cIsDamage>Igniting.</style>");
 
             LanguageAPI.Add(prefix + "SHOOT_FLAMETHROWER_NAME", "Fire");
             LanguageAPI.Add(prefix + "SHOOT_FLAMETHROWER_DESCRIPTION", "Shoot a stream of flame for <style=cIsDamage>500% damage</style>. <style=cIsUtility>Ignites.</style>");
@@ -106,7 +106,7 @@ namespace HunkMod.Modules
 
             #region Utility
             LanguageAPI.Add(prefix + "UTILITY_DODGE_NAME", "Quickstep");
-            LanguageAPI.Add(prefix + "UTILITY_DODGE_DESCRIPTION", "<style=cIsUtility>Dash</style> a short distance. If used to <style=cIsUtility>avoid an attack</style>, <style=cIsDamage>roll</style> instead, restoring all charges of this skill.");
+            LanguageAPI.Add(prefix + "UTILITY_DODGE_DESCRIPTION", "<style=cIsUtility>Dash</style> a short distance. If used preemptively to <style=cIsUtility>avoid an attack</style>, perform a <style=cIsDamage>Perfect Dodge</style>.");
             #endregion
 
             #region Special
@@ -188,6 +188,8 @@ namespace HunkMod.Modules
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_AMMO_CONTEXT", "Rummage for ammo");
 
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYWORD_LOOTING", "<style=cKeywordName>Looting</style><style=cSub>Enemies slain with this skill have a small chance to drop ammo.");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYWORD_PERFECTDODGE", "<style=cKeywordName>Perfect Dodge</style><style=cSub>Refund cooldown and become briefly invulnerable. Allows you to perform a Counterattack.");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYWORD_COUNTER", "<style=cKeywordName>Counterattack</style><style=cSub>Pressing primary performs a lethal counterattack on a nearby enemy.");
         }
     }
 }

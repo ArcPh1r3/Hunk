@@ -7,6 +7,7 @@ namespace HunkMod.SkillStates.Hunk
 {
     public class Roll : BaseHunkSkillState
     {
+        protected override bool turningAllowed => false;
         protected Vector3 slipVector = Vector3.zero;
         public float duration = 1.1f;
         //private Vector3 cachedForward;
@@ -38,8 +39,8 @@ namespace HunkMod.SkillStates.Hunk
             //base.PlayAnimation("Gesture, Override", "BufferEmpty");
 
             //Util.PlaySound("sfx_driver_dash", this.gameObject);
-            Util.PlaySound("sfx_hunk_roll", this.gameObject);
-            if (base.isAuthority) Util.PlaySound("sfx_hunk_dodge_success", this.gameObject);
+            Util.PlaySound("sfx_hunk_roll2", this.gameObject);
+            if (base.isAuthority) Util.PlaySound("sfx_hunk_dodge_perfect", this.gameObject);
 
             EntityStateMachine.FindByCustomName(this.gameObject, "Aim").SetNextStateToMain();
             this.skillLocator.secondary.stock = 0;
@@ -52,7 +53,7 @@ namespace HunkMod.SkillStates.Hunk
 
             this.hunk.desiredYOffset = 0.6f;
             this.hunk.immobilized = true;
-            this.hunk.iFrames = 0.25f;
+            this.hunk.iFrames = 0.75f;
 
             this.ApplyBuff();
             this.CreateDashEffect();

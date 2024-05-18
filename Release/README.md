@@ -62,10 +62,15 @@ ___
 # Unique Item Interactions
 Since cooldown items do almost nothing on HUNK, most of them have unique interactions that play around his ammo system instead
 
+
 Backup Magazine - +1 fake bullet every time you complete a reload
+
 Bandolier - Gives you half a mag of fake bullets on pickup
+
 Alien Head - Increased ammo on pickup, same scaling and nerfed if Green Alien Head is installed
+
 Brainstalks - Shots don't consume ammo while active
+
 
 FAKE BULLETS can be fired without consuming any actual ammo, but are all lost when you reload or swap weapons
 
@@ -90,6 +95,8 @@ rob - Code, animation, sfx, mostly everything
 
 swuff - Code, design help, entire interactable system, just an awesome co-dev overall
 
+RandomlyAwesome - Controller support for radial menu
+
 Thingw - Secondary and Special skill icons
 
 Bruh - Golden Gun gun model
@@ -113,19 +120,83 @@ Big thanks to everyone in the community for all the valuable feedback and critic
 
 ## Known Issues
 - Most item displays are missing
-- Weapon menu doesn't work on controller
-- Emote buttons are there but he doesn't have any animations yet
 - Ally projectiles trigger perfect dodges; haven't decided if this is worth keeping as a mechanic yet
-- Goobo Jr. has no ammo and only shanks
-- Weapon cases are not fully synced; this is purely visual and has no actual gameplay impact
 
 ___
 
 ## Changelog
 
+`1.1.4`
+- Networked the new counterattacks....
+
+`1.1.3`
+- Added rest emote
+- Added a custom counterattack for Imp
+- Added a custom counterattack for Clay Templar
+- Added keywords and rewrote description for Quickstep
+- Infected enemies can no longer be neck snapped- uses a different counter instead
+- Enemies below half hp will have a different, faster counter instead of the neck snap
+- Fixed model jittering while trying to move during certain animations
+- Fixed enemies moving their heads during the neck snap animation
+
+`1.1.2`
+- Added config option for a custom HUD built for HUNK
+- Added subtle camera interpolation, can be configured and even disabled
+- Added a slight camera zoom out when near huge enemies to help with combat visibility, also with config
+- Added a config option to adjust the distance the cursor has to be from the center to select a weapon, for those having issues
+- Added more pep to his step :-)
+- Added a custom (very strong) counterattack for Blind Vermin
+- Enemies who survive a neck snap will no longer be stunned indefinitely, instead they will be enraged for 10 seconds
+- Slightly extended the invulnerability window on neck snap- played correctly you can be indefinitely invulnerable now
+
+`1.1.1`
+- bugefix
+
+`1.1.0`
+- Added gun attachments! These show up in gun cases scattered throughout the standard gun pool
+- Gun Stock (MUP): Allows you to fire 3 bullets in quick succession
+- Laser Sight (LE 5): Removes spread, recoil and bullet falloff
+- Long Barrel (Lightning Hawk): Increases damage from 2400% to 3200%
+- Speedloader (Quickdraw Army): When the chamber is empty, reload all bullets at once
+- LE 5 and MUP added to the post-loop weapon pool in case you dropped them and wanted to get them back later
+- M19 ammo pickup amount doubled as a temporary solution until ammo weight system is added
+- Gave M19 a laser sight because awesome or something
+- Flamethrower ammo pickup amount halved, reload speed lowered to match the GM-79
+- Flamethrower range reduced
+- Made Perfect Dodge window smaller, but gave it more i-frames when successful
+- Added incompatibility warning when playing the game with incompatible mods (ones i can't fix on my end)
+- Fixed Golden Gun having no model
+- Fixed MUP pickup model
+- Fixed weapon cases not being synced in multiplayer
+
+`1.0.11`
+- Added a custom shield overlay (with config to disable), as well as a config to enable this overlay for ALL survivors
+- Added config to add a shield bubble as well, though this one is off by default
+- Added a custom ping icon for Umbrella Terminals
+- Fixed Goobo Jr. spawning terminals every time he spawned
+
+`1.0.10`
+- Added config to hide the gun icon from the HUD as it's kinda unnecessary and just clutter (unlike Driver who needs it)
+- Added the fancy ammo display from RiskUI to the normal UI, with a config to revert this
+- Added config to control the opacity of the background for this ammo display
+- Added config to let the infection event continue even after getting every keycard
+- GM-79 damage: 1600% > 3200%, it was simply way too weak for its very limited availability
+- Non-HUNK players can no longer pick up G-Virus Samples or U.C. Keycards, this can also be reverted via config
+- Fixed broken weapon icon again
+
+`1.0.9`
+- Fixed broken weapon icon and NRE spam
+
+`1.0.8`
+- Neck snap can now be cancelled early by simply moving, and the dodge cancel window has been moved to immediately after the snap
+- Stage 5 Infected monsters now swap to the neutral team, heavily nerfed their sustain as well
+- Reanimated SMG and Pistol reloads
+- Fixed weapon/item models not having any normal maps
+- Fixed weapon menu not working on controllers (fix by RandomlyAwesome!)
+
 `1.0.7`
 - Added a custom escape sequence with BGM and everything (can be disabled in config if you hate epicness)
-- Fixed possibility of Chemnical Flamethrower SFX playing infinitely if HUNK died while using it (unsure if this actually happened, but just in case)
+- Fixed possibility of Chemical Flamethrower SFX playing infinitely if HUNK died while using it (unsure if this actually happened, but just in case)
 
 `1.0.6`
 - Added custom portrait for Tofu

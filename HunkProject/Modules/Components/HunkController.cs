@@ -21,6 +21,8 @@ namespace HunkMod.Modules.Components
         public bool spawnedATM = false;
         public HunkPassive passive;
 
+        public float baseTurnSpeed;
+
         public bool isAiming;
         public HunkWeaponDef weaponDef;
         private HunkWeaponDef lastWeaponDef;
@@ -34,6 +36,7 @@ namespace HunkMod.Modules.Components
 
         public bool immobilized;
         private bool _wasImmobilized;
+        private GameObject shieldOverlay;
 
         private int counterCount;
 
@@ -66,6 +69,7 @@ namespace HunkMod.Modules.Components
         public GameObject crosshairPrefab;
         public ParticleSystem machineGunVFX;
         public float desiredYOffset;
+        public float desiredZOffset;
 
         private GameObject heldWeaponInstance;
         public float reloadTimer;
@@ -73,6 +77,8 @@ namespace HunkMod.Modules.Components
         private EntityStateMachine weaponStateMachine;
         public float defaultYOffset { get; private set; }
         private float yOffset;
+        public float defaultZOffset { get; private set; }
+        private float zOffset;
         public bool isRolling;
         public bool isReloading;
         private GameObject backWeaponInstance;
@@ -92,6 +98,11 @@ namespace HunkMod.Modules.Components
         private uint flamethrowerPlayID;
         private bool flameInit = false;
         private uint bgmPlayID;
+        private bool shieldIsVoid;
+        private bool _shieldIsVoid;
+        private bool fancyShield = true;
+
+        public int mupQueuedShots = 2;
 
         public float iFrames;
 
@@ -111,6 +122,10 @@ namespace HunkMod.Modules.Components
             this.defaultYOffset = 1.59f;
             this.desiredYOffset = this.defaultYOffset;
             this.yOffset = this.desiredYOffset;
+            this.defaultZOffset = 0f;
+            this.desiredZOffset = this.defaultZOffset;
+            this.zOffset = this.desiredZOffset;
+            this.baseTurnSpeed = this.GetComponent<CharacterDirection>().turnSpeed;
 
             this.flamethrowerEffectInstance = GameObject.Instantiate(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Drones/DroneFlamethrowerEffect.prefab").WaitForCompletion());
 
@@ -155,6 +170,13 @@ namespace HunkMod.Modules.Components
             this.flamethrowerEffectInstance.SetActive(false);
             this.flamethrowerEffectInstance2.SetActive(false);
 
+            this.fancyShield = Modules.Config.shieldBubble.Value;
+            this.shieldOverlay = this.childLocator.FindChild("ShieldOverlay").gameObject;
+            this.shieldOverlay.GetComponent<MeshRenderer>().material = Modules.Assets.shieldMat;
+            if (this.fancyShield) this.shieldOverlay.AddComponent<HunkShieldHandler>();
+
+            if (MainPlugin.moreShrinesInstalled) this.gameObject.AddComponent<IncompatWarning>();
+
             this.Invoke("SetInventoryHook", 0.5f);
         }
 
@@ -167,7 +189,10 @@ namespace HunkMod.Modules.Components
                 CameraTargetParams ctp = this.characterBody.GetComponent<CameraTargetParams>();
                 if (ctp)
                 {
-                    if (Modules.Config.overTheShoulderCamera.Value && !Modules.Config.overTheShoulderCamera2.Value) ctp.cameraPivotTransform = this.characterModel.transform.Find("Armature/ROOT/base");
+                    if (Modules.Config.overTheShoulderCamera.Value && !Modules.Config.overTheShoulderCamera2.Value)
+                    {
+                        ctp.cameraPivotTransform = this.childLocator.FindChild("CameraTracker");
+                    }
                 }
             }
 
@@ -259,6 +284,12 @@ namespace HunkMod.Modules.Components
         private void Inventory_onInventoryChanged()
         {
             this.CheckForNeedler();
+
+            if (this.characterBody.inventory.GetItemCount(DLC1Content.Items.MissileVoid) > 0)
+            {
+                this.shieldIsVoid = true;
+            }
+            else this.shieldIsVoid = false;
         }
 
         public void ConsumeAmmo(int amount = 1)
@@ -304,6 +335,8 @@ namespace HunkMod.Modules.Components
 
                 if (this._wasImmobilized && !this.immobilized) this.characterBody.RecalculateStats();
                 this._wasImmobilized = this.immobilized;
+
+                this.HandleShield();
             }
 
             if (NetworkServer.active)
@@ -469,8 +502,9 @@ namespace HunkMod.Modules.Components
                 //this.TryLockOn();
             }
 
-            this.yOffset = Mathf.Lerp(this.yOffset, this.desiredYOffset, 5f * Time.fixedDeltaTime);
-            this.cameraPivot.localPosition = new Vector3(0f, this.yOffset, 0f);
+            //this.yOffset = Mathf.Lerp(this.yOffset, this.desiredYOffset, 5f * Time.fixedDeltaTime);
+            //this.zOffset = Mathf.Lerp(this.zOffset, this.desiredZOffset, 5f * Time.fixedDeltaTime);
+            //this.cameraPivot.localPosition = new Vector3(0f, this.yOffset, this.zOffset);
         }
 
         public void TriggerDodge()
@@ -608,11 +642,20 @@ namespace HunkMod.Modules.Components
         public void FinishReload()
         {
             int diff = this.maxAmmo - this.ammo;
+            int magSize = this.weaponDef.magSize;
 
-            if (this.ammo + this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo >= this.weaponDef.magSize)
+            if (this.characterBody.master)
             {
-                this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo = this.weaponDef.magSize;
-                this.ammo = this.weaponDef.magSize;
+                if (this.characterBody.master.inventory)
+                {
+                    magSize *= 1 + this.characterBody.master.inventory.GetItemCount(RoR2Content.Items.LunarBadLuck);
+                }
+            }
+
+            if (this.ammo + this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo >= magSize)
+            {
+                this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo = magSize;
+                this.ammo = magSize;
             }
             else
             {
@@ -1033,6 +1076,7 @@ namespace HunkMod.Modules.Components
         private void SpawnTerminal()
         {
             if (!NetworkServer.active) return;
+            if (!this.characterBody.isPlayerControlled) return;
 
             Xoroshiro128Plus rng = new Xoroshiro128Plus(Run.instance.seed);
             DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(Survivors.Hunk.terminalInteractableCard, new DirectorPlacementRule { placementMode = DirectorPlacementRule.PlacementMode.Random }, rng));
@@ -1063,7 +1107,7 @@ namespace HunkMod.Modules.Components
                 if (weaponChest != null)
                 {
                     weaponChest.chestType = 0;
-                    weaponChest.weaponDef = Weapons.RocketLauncher.instance.weaponDef;
+                    weaponChest.itemDef = Weapons.RocketLauncher.instance.itemDef;
                 }
 
                 NetworkServer.Spawn(rocketLauncherChest);
@@ -1099,6 +1143,29 @@ namespace HunkMod.Modules.Components
             {
                 return this.knifeSkinSkillSlot.skillDef;
             }
+        }
+
+        private void HandleShield()
+        {
+            if (!this.characterBody) return;
+            if (!this.characterBody.healthComponent) return;
+
+            if (this.characterBody.healthComponent.shield > 0)
+            {
+                this.shieldOverlay.SetActive(this.fancyShield);
+            }
+            else
+            {
+                this.shieldOverlay.SetActive(false);
+            }
+
+            if (this._shieldIsVoid != this.shieldIsVoid)
+            {
+                if (this.shieldIsVoid) this.shieldOverlay.GetComponent<MeshRenderer>().material = Modules.Assets.voidShieldMat;
+                else this.shieldOverlay.GetComponent<MeshRenderer>().material = Modules.Assets.shieldMat;
+            }
+
+            this._shieldIsVoid = this.shieldIsVoid;
         }
     }
 }

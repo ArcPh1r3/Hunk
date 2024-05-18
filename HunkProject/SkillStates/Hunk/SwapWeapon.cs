@@ -42,6 +42,8 @@ namespace HunkMod.SkillStates.Hunk
                 this.currentTimeScale = 0.1f;
             }
 
+            this.hunk.mupQueuedShots = 2;
+
             this.skillLocator.primary.UnsetSkillOverride(this.gameObject, this.hunk.weaponDef.primarySkillDef, GenericSkill.SkillOverridePriority.Network);
             this.skillLocator.primary.UnsetSkillOverride(this.gameObject, Modules.Survivors.Hunk.reloadSkillDef, GenericSkill.SkillOverridePriority.Network);
             EntityStateMachine.FindByCustomName(this.gameObject, "Aim").SetNextStateToMain();
@@ -109,6 +111,14 @@ namespace HunkMod.SkillStates.Hunk
                         EntityStateMachine.FindByCustomName(this.gameObject, "Weapon").SetInterruptState(new Swap
                         {
                             index = this.radial.index
+                        }, InterruptPriority.Frozen);
+                    }
+                    else if (this.radial.ValidIndex(this.radial.controllerLatchIndex, false))
+                    {
+                        this.hunk.weaponTracker.nextWeapon = this.radial.controllerLatchIndex;
+                        EntityStateMachine.FindByCustomName(this.gameObject, "Weapon").SetInterruptState(new Swap
+                        {
+                            index = this.radial.controllerLatchIndex
                         }, InterruptPriority.Frozen);
                     }
                 }

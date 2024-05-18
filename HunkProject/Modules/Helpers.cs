@@ -107,6 +107,19 @@ namespace HunkMod.Modules
             return false;
         }
 
+        public static bool HunkHasWeapon(ItemDef itemDef)
+        {
+            foreach (HunkWeaponTracker hunk in GameObject.FindObjectsOfType<HunkWeaponTracker>())
+            {
+                if (!hunk.ignoreFlag)
+                {
+                    if (hunk.GetComponent<Inventory>().GetItemCount(itemDef) > 0) return true;
+                }
+            }
+
+            return false;
+        }
+
         public static bool HunkHasWeapon(HunkWeaponDef weaponDef, HunkController hunk)
         {
             return HunkHasWeapon(weaponDef, hunk.weaponTracker);

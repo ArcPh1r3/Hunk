@@ -1,4 +1,6 @@
 ﻿using HunkMod.Modules.Weapons;
+using R2API.Networking;
+using R2API.Networking.Interfaces;
 using RoR2;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,12 +15,14 @@ namespace HunkMod.Modules.Components
         public PurchaseInteraction purchaseInteraction;
         public PingInfoProvider pingInfoProvider;
         public GenericDisplayNameProvider genericDisplayNameProvider;
-        public HunkWeaponDef weaponDef;
+        public ItemDef itemDef;
         public int chestType;
 
         private void InitPickup()
         {
-            this.weaponDef = Modules.Weapons.MUP.instance.weaponDef;
+            if (!NetworkServer.active) return;
+
+            this.itemDef = Modules.Weapons.MUP.instance.itemDef;
             string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 
             bool fuck = false;
@@ -35,21 +39,27 @@ namespace HunkMod.Modules.Components
                     if (Modules.Helpers.HunkHasWeapon(Modules.Weapons.Flamethrower.instance.weaponDef))
                     {
                         // start giving the rest of the unowned weapons
-                        List<HunkWeaponDef> weaponPool = new List<HunkWeaponDef>();
-                        weaponPool.Add(Modules.Weapons.Shotgun.instance.weaponDef);
-                        weaponPool.Add(Modules.Weapons.Slugger.instance.weaponDef);
-                        weaponPool.Add(Modules.Weapons.Magnum.instance.weaponDef);
-                        weaponPool.Add(Modules.Weapons.Revolver.instance.weaponDef);
-                        weaponPool.Add(Modules.Weapons.Flamethrower.instance.weaponDef);
-                        weaponPool.Add(Modules.Weapons.GrenadeLauncher.instance.weaponDef);
+                        List<ItemDef> itemPool = new List<ItemDef>();
+                        itemPool.Add(Modules.Weapons.SMG.instance.itemDef);
+                        itemPool.Add(Modules.Weapons.MUP.instance.itemDef);
+                        itemPool.Add(Modules.Weapons.Shotgun.instance.itemDef);
+                        itemPool.Add(Modules.Weapons.Slugger.instance.itemDef);
+                        itemPool.Add(Modules.Weapons.Magnum.instance.itemDef);
+                        itemPool.Add(Modules.Weapons.Revolver.instance.itemDef);
+                        itemPool.Add(Modules.Weapons.Flamethrower.instance.itemDef);
+                        itemPool.Add(Modules.Weapons.GrenadeLauncher.instance.itemDef);
+                        itemPool.Add(Modules.Weapons.SMG.laserSight);
+                        itemPool.Add(Modules.Weapons.MUP.gunStock);
+                        itemPool.Add(Modules.Weapons.Magnum.longBarrel);
+                        itemPool.Add(Modules.Weapons.Revolver.speedloader);
 
                         bool foundWeapon = false;
-                        foreach (HunkWeaponDef i in weaponPool)
+                        foreach (ItemDef i in itemPool)
                         {
                             if (!Modules.Helpers.HunkHasWeapon(i) && !Modules.Survivors.Hunk.spawnedWeaponList.Contains(i))
                             {
                                 Modules.Survivors.Hunk.spawnedWeaponList.Add(i);
-                                weaponDef = i;
+                                this.itemDef = i;
                                 foundWeapon = true;
                                 break;
                             }
@@ -63,37 +73,58 @@ namespace HunkMod.Modules.Components
                     }
                     else
                     {
-                        if (MainPlugin.badaBingBadaBoom) weaponDef = Modules.Weapons.Flamethrower.instance.weaponDef;
-                        else weaponDef = Modules.Weapons.GrenadeLauncher.instance.weaponDef;
+                        if (MainPlugin.badaBingBadaBoom) this.itemDef = Modules.Weapons.Flamethrower.instance.itemDef;
+                        else itemDef = Modules.Weapons.GrenadeLauncher.instance.itemDef;
 
                         MainPlugin.badaBingBadaBoom = !MainPlugin.badaBingBadaBoom;
                     }
                 }
                 else
                 {
-                    if (MainPlugin.badaBingBadaBoom) weaponDef = Modules.Weapons.Magnum.instance.weaponDef;
-                    else weaponDef = Modules.Weapons.Revolver.instance.weaponDef;
+                    if (MainPlugin.badaBingBadaBoom) itemDef = Modules.Weapons.Magnum.instance.itemDef;
+                    else itemDef = Modules.Weapons.Revolver.instance.itemDef;
 
                     MainPlugin.badaBingBadaBoom = !MainPlugin.badaBingBadaBoom;
                 }
             }
             else
             {
-                if (MainPlugin.badaBingBadaBoom) weaponDef = Modules.Weapons.Shotgun.instance.weaponDef;
-                else weaponDef = Modules.Weapons.Slugger.instance.weaponDef;
+                if (MainPlugin.badaBingBadaBoom)
+                {
+                    if (UnityEngine.Random.value > 0.5f) itemDef = Modules.Weapons.Shotgun.instance.itemDef;
+                    else itemDef = Modules.Weapons.Slugger.instance.itemDef;
+                }
+                else itemDef = Modules.Weapons.MUP.gunStock;
 
                 MainPlugin.badaBingBadaBoom = !MainPlugin.badaBingBadaBoom;
             }
 
-            if (sceneName == "goldshores") weaponDef = Modules.Weapons.GoldenGun.instance.weaponDef;
-            if (sceneName == "mysteryspace") weaponDef = Modules.Weapons.BlueRose.instance.weaponDef;
-            if (sceneName == "moon2") weaponDef = RocketLauncher.instance.weaponDef;
+            if (sceneName == "goldshores") itemDef = Modules.Weapons.GoldenGun.instance.itemDef;
+            if (sceneName == "mysteryspace") itemDef = Modules.Weapons.BlueRose.instance.itemDef;
+            if (sceneName == "moon2") itemDef = RocketLauncher.instance.itemDef;
 
-            gunPickup.weaponDef = weaponDef;
+            NetworkIdentity identity = this.GetComponent<NetworkIdentity>();
+            if (!identity) return;
+
+            System.Random random = new System.Random();
+
+            int p = random.Next(1, 5);
+
+            if (Run.instance.stageClearCount <= 0 || UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "goldshores") p = 2;
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "moon2") p = 0;
+
+            new SyncCaseItem(identity.netId, (int)this.itemDef.itemIndex, p).Send(NetworkDestination.Clients);
+        }
+
+        public void FinishInit(int index, int chestType)
+        {
+            string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+
+            gunPickup.itemDef = this.itemDef;
 
             // offset the shotgun a little
             // i hate how horrible this is but it works
-            if (weaponDef.nameToken.Contains("SHOTGUN"))
+            if (this.itemDef == Modules.Weapons.Shotgun.instance.itemDef)
             {
                 var h = GetComponent<Highlight>();
                 Transform gunTransform = h.targetRenderer.transform.parent.parent.Find("WeaponHolder");
@@ -101,7 +132,7 @@ namespace HunkMod.Modules.Components
                 gunTransform.localScale = Vector3.one * 1.25f;
             }
 
-            if (weaponDef.nameToken.Contains("SLUGGER"))
+            if (this.itemDef == Modules.Weapons.Slugger.instance.itemDef)
             {
                 var h = GetComponent<Highlight>();
                 Transform gunTransform = h.targetRenderer.transform.parent.parent.Find("WeaponHolder");
@@ -110,43 +141,22 @@ namespace HunkMod.Modules.Components
 
             if (purchaseInteraction != null)
             {
-                purchaseInteraction.displayNameToken = string.Format("{0}{1}", Language.GetStringFormatted(MainPlugin.developerPrefix + "_HUNK_CHEST_NAME"), Language.GetStringFormatted(weaponDef.nameToken));
+                purchaseInteraction.displayNameToken = string.Format("{0}{1}", Language.GetStringFormatted(MainPlugin.developerPrefix + "_HUNK_CHEST_NAME"), Language.GetStringFormatted(this.itemDef.nameToken));
                 purchaseInteraction.contextToken = MainPlugin.developerPrefix + "_HUNK_CHEST_CONTEXT";
 
                 if (sceneName == "moon2") purchaseInteraction.costType = CostTypeIndex.None;
             }
 
             gunPickup.Init();
+
+            SetChestType(chestType);
         }
 
-        private void Awake()
+        public void SetChestType(int index)
         {
-            gunPickup = GetComponentInChildren<HunkGunPickup>();
-            gunPickup.GetComponent<GenericPickupController>().enabled = false;
-
-            // weapondef and shit
-            Invoke("InitPickup", 1f); // delay it to give time for the player to spawn in, just as a safety measure
-
-            System.Random random = new System.Random();
-            chestType = random.Next(1, 5);
-
-            /*chestBehavior = this.GetComponent<ChestBehavior>();
-            if (chestBehavior != null)
-            {
-                //chestBehavior.dropPickup = PickupCatalog.FindPickupIndex(M19.instance.itemDef.itemIndex);
-                //why not?
-            }*/
-
-            purchaseInteraction = this.GetComponent<PurchaseInteraction>();
-            genericDisplayNameProvider = this.GetComponent<GenericDisplayNameProvider>();
-            pingInfoProvider = this.GetComponent<PingInfoProvider>();
-
             var h = GetComponent<Highlight>();
-            if (h.targetRenderer.transform.parent.Find("Hinge")) h.targetRenderer.transform.parent.Find("Hinge/Lock/OnLight").gameObject.SetActive(false);
 
-            if (Run.instance.stageClearCount <= 0 || UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "goldshores") chestType = 2;
-            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "moon2") chestType = 0;
-
+            chestType = index;
 
             if (purchaseInteraction != null)
             {
@@ -229,6 +239,29 @@ namespace HunkMod.Modules.Components
                         break;
                 }
             }
+        }
+
+        private void Awake()
+        {
+            gunPickup = GetComponentInChildren<HunkGunPickup>();
+            gunPickup.GetComponent<GenericPickupController>().enabled = false;
+
+            // weapondef and shit
+            Invoke("InitPickup", 1f); // delay it to give time for the player to spawn in, just as a safety measure
+
+            /*chestBehavior = this.GetComponent<ChestBehavior>();
+            if (chestBehavior != null)
+            {
+                //chestBehavior.dropPickup = PickupCatalog.FindPickupIndex(M19.instance.itemDef.itemIndex);
+                //why not?
+            }*/
+
+            purchaseInteraction = this.GetComponent<PurchaseInteraction>();
+            genericDisplayNameProvider = this.GetComponent<GenericDisplayNameProvider>();
+            pingInfoProvider = this.GetComponent<PingInfoProvider>();
+
+            var h = GetComponent<Highlight>();
+            if (h.targetRenderer.transform.parent.Find("Hinge")) h.targetRenderer.transform.parent.Find("Hinge/Lock/OnLight").gameObject.SetActive(false);
         }
     }
 }

@@ -7,6 +7,7 @@ namespace HunkMod.SkillStates.Hunk
 {
     public class SlowRoll : BaseHunkSkillState
     {
+        protected override bool turningAllowed => false;
         protected Vector3 slipVector = Vector3.zero;
         public float duration = 1.3f;
         //private Vector3 cachedForward;
@@ -22,7 +23,7 @@ namespace HunkMod.SkillStates.Hunk
 
             base.PlayCrossfade("FullBody, Override", "DodgeRoll", "Dodge.playbackRate", this.duration * 1.4f, 0.05f);
 
-            Util.PlaySound("sfx_hunk_roll", this.gameObject);
+            Util.PlaySound("sfx_hunk_roll2", this.gameObject);
 
             EntityStateMachine.FindByCustomName(this.gameObject, "Aim").SetNextStateToMain();
             this.skillLocator.secondary.stock = 0;

@@ -25,9 +25,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Magnum
         {
             base.OnEnter();
             this.duration = Shoot.baseDuration / this.attackSpeedStat;
-            this.characterBody.isSprinting = false;
 
-            base.characterBody.SetAimTimer(2f);
             this.muzzleString = "MuzzlePistol";
 
             this.isCrit = base.RollCrit();
@@ -58,12 +56,19 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Magnum
 
                 base.AddRecoil2(-1f * recoilAmplitude, -2f * recoilAmplitude, -0.5f * recoilAmplitude, 0.5f * recoilAmplitude);
 
+                float dmg = Shoot.damageCoefficient;
+
+                if (this.characterBody.inventory && this.characterBody.inventory.GetItemCount(Modules.Weapons.Magnum.longBarrel) > 0)
+                {
+                    dmg = 32f;
+                }
+
                 BulletAttack bulletAttack = new BulletAttack
                 {
                     bulletCount = 1,
                     aimVector = aimRay.direction,
                     origin = aimRay.origin,
-                    damage = Shoot.damageCoefficient * this.damageStat,
+                    damage = dmg * this.damageStat,
                     damageColorIndex = DamageColorIndex.Default,
                     damageType = DamageType.Generic,
                     falloffModel = BulletAttack.FalloffModel.DefaultBullet,

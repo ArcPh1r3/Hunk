@@ -11,7 +11,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Flamethrower
         public static float baseDuration = 0.1f;
         public static float force = 5f;
         public static float recoil = 0.5f;
-        public static float range = 50f;
+        public static float range = 30f;
 
         private float duration;
         private string muzzleString;

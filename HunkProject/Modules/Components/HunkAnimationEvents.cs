@@ -28,5 +28,17 @@ namespace HunkMod.Modules.Components
             Util.PlaySound("sfx_hunk_shotgun_pump", this.gameObject);
             if (this.hunk) this.hunk.DropSlug(-this.transform.right * -Random.Range(4, 12));
         }
+
+        public void HideMag()
+        {
+            SMGBehavior smg = this.GetComponentInChildren<SMGBehavior>();
+            if (smg) smg.HideMag();
+        }
+
+        public void ShowMag()
+        {
+            SMGBehavior smg = this.GetComponentInChildren<SMGBehavior>();
+            if (smg) smg.ShowMag();
+        }
     }
 }

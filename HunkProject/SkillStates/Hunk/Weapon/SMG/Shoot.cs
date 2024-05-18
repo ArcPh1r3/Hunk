@@ -48,11 +48,23 @@ namespace HunkMod.SkillStates.Hunk.Weapon.SMG
             if (this.isCrit) Util.PlaySound("sfx_hunk_smg_shoot", base.gameObject);
             else Util.PlaySound("sfx_hunk_smg_shoot", base.gameObject);
 
+            float spreadBloom = 0.7f;
+
             if (base.isAuthority)
             {
                 Ray aimRay = base.GetAimRay2();
 
+                float spread = this.characterBody.spreadBloomAngle * 3f;
+                BulletAttack.FalloffModel falloff = BulletAttack.FalloffModel.DefaultBullet;
                 float recoilAmplitude = Shoot.recoil / this.attackSpeedStat;
+
+                if (this.characterBody.inventory && this.characterBody.inventory.GetItemCount(Modules.Weapons.SMG.laserSight) > 0)
+                {
+                    recoil *= 0.25f;
+                    spread = 0f;
+                    falloff = BulletAttack.FalloffModel.None;
+                    spreadBloom = 0.1f;
+                }
 
                 base.AddRecoil2(-1f * recoilAmplitude, -2f * recoilAmplitude, -0.5f * recoilAmplitude, 0.5f * recoilAmplitude);
 
@@ -64,12 +76,12 @@ namespace HunkMod.SkillStates.Hunk.Weapon.SMG
                     damage = Shoot.damageCoefficient * this.damageStat,
                     damageColorIndex = DamageColorIndex.Default,
                     damageType = DamageType.Generic,
-                    falloffModel = BulletAttack.FalloffModel.DefaultBullet,
+                    falloffModel = falloff,
                     maxDistance = Shoot.range,
                     force = Shoot.force,
                     hitMask = LayerIndex.CommonMasks.bullet,
                     minSpread = 0f,
-                    maxSpread = this.characterBody.spreadBloomAngle * 3f,
+                    maxSpread = spread,
                     isCrit = this.isCrit,
                     owner = this.gameObject,
                     muzzleName = muzzleString,
@@ -109,7 +121,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.SMG
                 bulletAttack.Fire();
             }
 
-            base.characterBody.AddSpreadBloom(0.7f);
+            base.characterBody.AddSpreadBloom(spreadBloom);
         }
 
         private GameObject tracerPrefab

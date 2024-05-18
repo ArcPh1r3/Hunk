@@ -24,6 +24,7 @@ namespace HunkMod
     [BepInDependency("Faust.QoLChests", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.Elysium.ECBG", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.xoxfaby.UnlockAll", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.evaisa.moreshrines", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("bubbet.riskui", BepInDependency.DependencyFlags.SoftDependency)]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
     [BepInPlugin(MODUID, MODNAME, MODVERSION)]
@@ -43,7 +44,7 @@ namespace HunkMod
     {
         public const string MODUID = "com.rob.Hunk";
         public const string MODNAME = "Hunk";
-        public const string MODVERSION = "1.0.6";
+        public const string MODVERSION = "1.1.4";
 
         public const string developerPrefix = "ROB";
 
@@ -58,6 +59,7 @@ namespace HunkMod
         public static bool qolChestsInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("Faust.QoLChests");
         public static bool emptyChestsInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.Elysium.ECBG");
         public static bool unlockAllInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.xoxfaby.UnlockAll");
+        public static bool moreShrinesInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.evaisa.moreshrines");
 
         public static List<HurtBox> hurtboxesList = new List<HurtBox>();
         public static List<Modules.Components.HunkProjectileTracker> projectileList = new List<Modules.Components.HunkProjectileTracker>();
@@ -92,6 +94,8 @@ namespace HunkMod
             NetworkingAPI.RegisterMessageType<Modules.Components.SyncCombatStopwatch>();
             NetworkingAPI.RegisterMessageType<Modules.Components.SyncWeaponCaseOpen>();
             NetworkingAPI.RegisterMessageType<Modules.Components.SyncHeadshot>();
+            NetworkingAPI.RegisterMessageType<Modules.Components.SyncCaseItem>();
+            NetworkingAPI.RegisterMessageType<Modules.Components.SyncTemplarExplosion>();
 
             Hook();
 
@@ -122,6 +126,7 @@ namespace HunkMod
             new Modules.Weapons.GrenadeLauncher().Init();
             new Modules.Weapons.GoldenGun().Init();
             new Modules.Weapons.BlueRose().Init();
+            new Modules.Weapons.Flashlight().Init();
         }
 
         private void Hook()
@@ -170,8 +175,9 @@ namespace HunkMod
                     if (virusCount > 0)
                     {
                         //self.maxHealth += 10f * self.levelMaxHealth * virusCount;
-                        self.armor += (virusCount - 4) * 2f;
-                        self.attackSpeed += virusCount * 0.15f;
+                        self.armor += (virusCount - 4) * 2.5f;
+                        self.attackSpeed += virusCount * 0.05f;
+                        self.damage += virusCount * 1.5f;
 
                         for (int i = 0; i < virusCount; i++)
                         {

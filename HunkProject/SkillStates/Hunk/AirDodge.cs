@@ -18,6 +18,8 @@ namespace HunkMod.SkillStates.Hunk
         private List<HurtBox> hits;
         private bool success;
 
+        protected virtual bool forcePerfect => false;
+
         public override void OnEnter()
         {
             base.OnEnter();
@@ -38,7 +40,10 @@ namespace HunkMod.SkillStates.Hunk
             search.mask = LayerIndex.entityPrecise.mask;
             search.radius = checkRadius;
 
-            if (!this.SearchAttacker())
+            bool foundAttacker = this.SearchAttacker();
+            if (this.forcePerfect) foundAttacker = true;
+
+            if (!foundAttacker)
             {
                 base.PlayCrossfade("FullBody, Override", "AirDodge", 0.05f);
 
@@ -61,7 +66,7 @@ namespace HunkMod.SkillStates.Hunk
             else
             {
                 base.PlayCrossfade("FullBody, Override", "AirDodgePerfect", 0.05f);
-                this.hunk.iFrames = 0.5f;
+                this.hunk.iFrames = 0.75f;
 
                 this.success = true;
                 this.hunk.lockOnTimer = 1.5f;
@@ -69,7 +74,7 @@ namespace HunkMod.SkillStates.Hunk
 
                 if (base.isAuthority)
                 {
-                    Util.PlaySound("sfx_hunk_dodge_success", this.gameObject);
+                    Util.PlaySound("sfx_hunk_dodge_perfect", this.gameObject);
                     base.characterBody.isSprinting = true;
 
                     direction.y = Mathf.Max(direction.y, 1.05f * EntityStates.Croco.Leap.minimumY);
@@ -102,7 +107,7 @@ namespace HunkMod.SkillStates.Hunk
                 HealthComponent hp = h.healthComponent;
                 if (hp)
                 {
-                    if (hp.body.outOfCombatStopwatch <= 1.4f)
+                    if (hp.body.outOfCombatStopwatch <= 1f)
                     {
                         return true;
                     }
@@ -168,14 +173,19 @@ namespace HunkMod.SkillStates.Hunk
 
             if (this.stopwatch >= 0.1f && base.isAuthority && base.characterMotor.isGrounded)
             {
-                if (this.success)
-                {
-                    this.outer.SetNextState(new PerfectLanding());
-                }
-                else
-                {
-                    this.outer.SetNextState(new SlowRoll());
-                }
+                this.SetNextState();
+            }
+        }
+
+        protected virtual void SetNextState()
+        {
+            if (this.success)
+            {
+                this.outer.SetNextState(new PerfectLanding());
+            }
+            else
+            {
+                this.outer.SetNextState(new SlowRoll());
             }
         }
 

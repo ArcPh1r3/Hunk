@@ -5,14 +5,14 @@ namespace HunkMod.Modules.Components
 {
     public class HunkGunPickup : MonoBehaviour
     {
-        public HunkWeaponDef weaponDef;
+        public ItemDef itemDef;
 
         private void Start()
         {
-            if (!this.weaponDef) this.weaponDef = Modules.Weapons.M19.instance.weaponDef;
+            if (!this.itemDef) this.itemDef = Modules.Weapons.M19.instance.itemDef;
 
             this.gameObject.name = "QuestVolatileBatteryWorldPickup(Clone)";
-            this.GetComponent<GenericPickupController>().SetPickupIndexFromString("ItemIndex." + this.weaponDef.itemDef.name);
+            this.GetComponent<GenericPickupController>().SetPickupIndexFromString("ItemIndex." + this.itemDef.name);
             this.GetComponent<GenericPickupController>().enabled = false;
 
             this.Invoke("KillYourself", 1f);
@@ -25,17 +25,17 @@ namespace HunkMod.Modules.Components
 
         public void Init()
         {
-            if (!this.weaponDef) this.weaponDef = Modules.Weapons.M19.instance.weaponDef;
+            if (!this.itemDef) this.itemDef = Modules.Weapons.M19.instance.itemDef;
 
-            this.GetComponent<GenericPickupController>().SetPickupIndexFromString("ItemIndex." + this.weaponDef.itemDef.name);
-            this.GetComponent<GenericPickupController>().pickupIndex = PickupCatalog.FindPickupIndex("ItemIndex." + this.weaponDef.itemDef.name);
-            this.GetComponent<GenericPickupController>().NetworkpickupIndex = PickupCatalog.FindPickupIndex("ItemIndex." + this.weaponDef.itemDef.name);
-            this.GetComponentInChildren<PickupDisplay>().SetPickupIndex(PickupCatalog.FindPickupIndex("ItemIndex." + this.weaponDef.itemDef.name));
+            this.GetComponent<GenericPickupController>().SetPickupIndexFromString("ItemIndex." + this.itemDef.name);
+            this.GetComponent<GenericPickupController>().pickupIndex = PickupCatalog.FindPickupIndex("ItemIndex." + this.itemDef.name);
+            this.GetComponent<GenericPickupController>().NetworkpickupIndex = PickupCatalog.FindPickupIndex("ItemIndex." + this.itemDef.name);
+            this.GetComponentInChildren<PickupDisplay>().SetPickupIndex(PickupCatalog.FindPickupIndex("ItemIndex." + this.itemDef.name));
         }
 
         private void KillYourself()
         {
-            if (this.weaponDef != Modules.Weapons.M19.instance.weaponDef) this.transform.Find("PickupDisplay").localScale = Vector3.one * 0.5f;
+            if (this.itemDef != Modules.Weapons.M19.instance.itemDef) this.transform.Find("PickupDisplay").localScale = Vector3.one * 0.5f;
             else this.transform.Find("PickupDisplay").localScale = Vector3.one;
         }
     }

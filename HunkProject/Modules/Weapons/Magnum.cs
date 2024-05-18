@@ -1,5 +1,8 @@
-﻿using RoR2.Skills;
+﻿using R2API;
+using RoR2;
+using RoR2.Skills;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace HunkMod.Modules.Weapons
 {
@@ -30,5 +33,43 @@ new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Weapon.Magn
 "ROB_HUNK_BODY_SHOOT_MAGNUM_DESCRIPTION",
 Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texShootIcon"),
 false);
+
+        public static ItemDef longBarrel;
+
+        public override void Init()
+        {
+            base.Init();
+
+            this.modelPrefab.AddComponent<Modules.Components.MagnumBehavior>();
+
+            longBarrel = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/DLC1/CloverVoid/CloverVoid.asset").WaitForCompletion());
+            longBarrel.name = "ROB_HUNK_WEAPON_ADDON_" + weaponNameToken + "_NAME";
+            longBarrel.nameToken = "ROB_HUNK_WEAPON_ADDON_" + weaponNameToken + "_NAME";
+            longBarrel.descriptionToken = "ROB_HUNK_WEAPON_ADDON_" + weaponNameToken + "_DESC";
+            longBarrel.pickupToken = "ROB_HUNK_WEAPON_ADDON_" + weaponNameToken + "_DESC";
+            longBarrel.loreToken = "ROB_HUNK_WEAPON_ADDON_" + weaponNameToken + "_DESC";
+            longBarrel.canRemove = false;
+            longBarrel.hidden = false;
+            longBarrel.pickupIconSprite = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texLongBarrelIcon");
+            longBarrel.requiredExpansion = null;
+            longBarrel.tags = new ItemTag[]
+            {
+                ItemTag.AIBlacklist,
+                ItemTag.BrotherBlacklist,
+                ItemTag.CannotCopy,
+                ItemTag.CannotDuplicate,
+                ItemTag.CannotSteal,
+                ItemTag.WorldUnique
+            };
+            longBarrel.unlockableDef = null;
+
+            longBarrel.pickupModelPrefab = Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlLongBarrel");
+            Modules.Assets.ConvertAllRenderersToHopooShader(longBarrel.pickupModelPrefab);
+
+            HunkWeaponCatalog.itemDefs.Add(longBarrel);
+
+            LanguageAPI.Add("ROB_HUNK_WEAPON_ADDON_" + weaponNameToken + "_NAME", "Long Barrel (Lightning Hawk)");
+            LanguageAPI.Add("ROB_HUNK_WEAPON_ADDON_" + weaponNameToken + "_DESC", "A custom part for the Lightning Hawk, this bull barrel reduces recoil and imparts extra speed to bullets, increasing damage.");
+        }
     }
 }

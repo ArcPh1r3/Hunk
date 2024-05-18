@@ -19,6 +19,18 @@ namespace HunkMod.Modules
         public static ConfigEntry<bool> capInfection;
         public static ConfigEntry<bool> globalInfectionSound;
         public static ConfigEntry<bool> customEscapeSequence;
+        public static ConfigEntry<bool> permanentInfectionEvent;
+        public static ConfigEntry<bool> showWeaponIcon;
+        public static ConfigEntry<bool> fancyAmmoDisplay;
+        public static ConfigEntry<float> baseAmmoPanelOpacity;
+        public static ConfigEntry<float> weaponMenuSensitivity;
+        public static ConfigEntry<float> cameraSmoothSpeed;
+        public static ConfigEntry<float> cameraZoomInfluence;
+        public static ConfigEntry<bool> fancyShield;
+        public static ConfigEntry<bool> fancyShieldGlobal;
+        public static ConfigEntry<bool> shieldBubble;
+        public static ConfigEntry<bool> customHUD;
+        public static ConfigEntry<bool> blacklistHunkItems;
         public static ConfigEntry<bool> overTheShoulderCamera;
         public static ConfigEntry<bool> overTheShoulderCamera2;
         public static ConfigEntry<bool> cursed;
@@ -69,6 +81,78 @@ true,
 "Custom Escape Sequence",
 true,
 "Set to false to disable the custom Moon escape sequence. (Client-side)");
+
+            permanentInfectionEvent
+= Config.BindAndOptions("01 - General",
+"Permanent Infection Event",
+false,
+"Set to true to cause an Infected enemy to spawn on every stage, regardless of how many Keycards you have.");
+
+            showWeaponIcon
+= Config.BindAndOptions("01 - General",
+"Show Gun Icon",
+true,
+"Set to false to disable the gun icon next to your skills. (Client-side)");
+
+            fancyAmmoDisplay
+= Config.BindAndOptions("01 - General",
+"Fancy Ammo Display",
+true,
+"Set to false to disable the fancy ammo display and use the old, simple one. (Client-side)");
+
+            baseAmmoPanelOpacity
+    = Config.BindAndOptionsSlider("01 - General",
+             "Base Ammo Panel Opacity",
+             80f,
+             "Opacity of the black panel the ammo count is shown on", 0f, 100f);
+
+            weaponMenuSensitivity
+= Config.BindAndOptionsSlider("01 - General",
+ "Weapon Menu Sensitivity",
+ 172f,
+ "Controls how far the cursor needs to go to select a weapon from the weapon wheel. 172 is default", 0f, 400f);
+
+            cameraSmoothSpeed
+= Config.BindAndOptionsSlider("01 - General",
+"Camera Smoothing Speed",
+28f,
+"Controls the sensitivity of HUNK's custom camera interpolation - higher values are faster. Set to 0 to disable interpolation", 0f, 80f);
+
+            cameraZoomInfluence
+= Config.BindAndOptionsSlider("01 - General",
+"Camera Zoom Influence",
+1f,
+"Controls the distance the camera will zoom out around large enemies. Set to 0 to disable", 0f, 2f);
+
+            fancyShield
+= Config.BindAndOptions("01 - General",
+"Fancy Shield",
+true,
+"Set to false to disable the custom shield overlay and use the ugly vanilla overlay. (Client-side)", true);
+
+            fancyShieldGlobal
+= Config.BindAndOptions("01 - General",
+"Fancy Shield (Global)",
+false,
+"Set to true to give this shield overlay to every survivor. (Client-side)", true);
+
+            shieldBubble
+= Config.BindAndOptions("01 - General",
+"Shield Bubble",
+false,
+"Set to true to enable a custom shield bubble. Only works with Fancy Shield enabled! (Client-side)", true);
+
+            customHUD
+= Config.BindAndOptions("01 - General",
+"Custom HUD",
+false,
+"Set to true to enable a custom HUD tailored just for HUNK. (Client-side)");
+
+            blacklistHunkItems
+= Config.BindAndOptions("01 - General",
+"Multiplayer Protection",
+true,
+"Prevents Non-HUNK players from grabbing HUNK's key items (G-Virus Sample and Keycards). Set to false if you have faith in your allies.");
 
             enableRecoil
 = Config.BindAndOptions("01 - General",

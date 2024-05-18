@@ -9,6 +9,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
     public class NeckSnap : BaseHunkSkillState
     {
         protected override bool hideGun => true;
+        protected override bool turningAllowed => false;
 
         public float duration = 3f;
         private HealthComponent target;
@@ -38,7 +39,10 @@ namespace HunkMod.SkillStates.Hunk.Counter
             {
                 foreach (EntityStateMachine i in this.target.GetComponents<EntityStateMachine>())
                 {
-                    if (i.customName == "Body") i.SetNextState(new NeckSnapped());
+                    if (i.customName == "Body") i.SetNextState(new NeckSnapped
+                    {
+                        duration = this.duration
+                    });
                     else i.SetNextStateToMain();
                 }
             }
@@ -63,6 +67,24 @@ namespace HunkMod.SkillStates.Hunk.Counter
             base.characterMotor.Motor.RebuildCollidableLayers();
 
             Util.PlaySound("sfx_hunk_snap_foley", this.gameObject);
+
+            Animator targetAnim = null;
+            if (this.target)
+            {
+                if (this.target.modelLocator)
+                {
+                    if (this.target.modelLocator.modelTransform)
+                    {
+                        targetAnim = this.target.modelLocator.modelTransform.GetComponent<Animator>();
+                    }
+                }
+            }
+
+            if (targetAnim)
+            {
+                this.animator.SetLayerWeight(this.animator.GetLayerIndex("AimYaw"), 0f);
+                this.animator.SetLayerWeight(this.animator.GetLayerIndex("AimPitch"), 0f);
+            }
         }
 
         public override void OnExit()
@@ -135,6 +157,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
                 {
                     if (this.inputBank.moveVector != Vector3.zero)
                     {
+                        this.skillLocator.secondary.rechargeStopwatch = 1f;
                         base.PlayAnimation("Body", "Sprint");
                         this.outer.SetNextStateToMain();
                         return;
@@ -150,9 +173,9 @@ namespace HunkMod.SkillStates.Hunk.Counter
             {
                 this.hasSnapped = true;
                 this.hunk.immobilized = false;
+                this.hunk.iFrames = 0.25f;
 
                 Util.PlaySound("sfx_hunk_snap", this.gameObject);
-
 
                 if (this.target)
                 {
@@ -161,8 +184,6 @@ namespace HunkMod.SkillStates.Hunk.Counter
                         float recoil = 16f;
                         base.AddRecoil2(-1f * recoil, -2f * recoil, -0.5f * recoil, 0.5f * recoil);
                     }
-
-                    this.hunk.iFrames = 0f;
 
                     this.hunk.TriggerCounter();
 

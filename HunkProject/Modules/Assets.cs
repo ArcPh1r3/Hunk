@@ -11,6 +11,7 @@ using RoR2.UI;
 using UnityEngine.UI;
 using HunkMod.Modules.Components;
 using UnityEngine.Rendering.PostProcessing;
+using ThreeEyedGames;
 
 namespace HunkMod.Modules
 {
@@ -32,6 +33,12 @@ namespace HunkMod.Modules
         public static GameObject virusPositionIndicator;
 
         public static Material dodgeOverlayMat;
+
+        public static Material shieldOverlayMat;
+        public static Material voidShieldOverlayMat;
+        public static Material shieldMat;
+        public static Material voidShieldMat;
+        public static Material ravagerMat;
 
         public static GameObject ammoPickupEffectPrefab;
         public static GameObject explosionEffect;
@@ -76,6 +83,11 @@ namespace HunkMod.Modules
         public static GameObject shotgunTracerCrit;
 
         public static GameObject weaponRadial;
+        public static GameObject cardboardBox;
+        public static GameObject fragGrenade;
+        public static GameObject impEye;
+
+        public static GameObject tarExplosion;
 
         internal static Material woundOverlayMat;
 
@@ -142,6 +154,7 @@ namespace HunkMod.Modules
             bool dynamicCrosshair = Modules.Config.dynamicCrosshair.Value;
 
             Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Golem/LaserGolem.prefab").WaitForCompletion().AddComponent<Modules.Components.GolemLaser>();
+            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Wisp/LaserWisp.prefab").WaitForCompletion().AddComponent<Modules.Components.GolemLaser>();
 
             #region Pistol Crosshair
             pistolCrosshairPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/StandardCrosshair.prefab").WaitForCompletion().InstantiateClone("HunkPistolCrosshair", false);
@@ -663,6 +676,110 @@ namespace HunkMod.Modules
             ConvertAllRenderersToHopooShader(ammoPickupModel);
 
             dodgeOverlayMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/moon2/matBloodSiphon.mat").WaitForCompletion());
+
+            shieldMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/DLC1/BearVoid/matBearVoidShield.mat").WaitForCompletion());
+            shieldMat.SetTexture("_RemapTex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Common/ColorRamps/texRampShield.png").WaitForCompletion());
+            shieldMat.SetTexture("_Cloud1Tex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Common/texHologramCloud.png").WaitForCompletion());
+            shieldMat.SetFloat("_Boost", 20f);
+            shieldMat.SetFloat("_AlphaBoost", 0.25f);
+            shieldMat.SetFloat("_AlphaBias", 0.125f);
+
+            voidShieldMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/DLC1/BearVoid/matBearVoidShield.mat").WaitForCompletion());
+            voidShieldMat.SetTexture("_RemapTex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Common/ColorRamps/texRampShield.png").WaitForCompletion());
+            voidShieldMat.SetTexture("_Cloud1Tex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Common/texCloudStroke1.png").WaitForCompletion());
+            voidShieldMat.SetColor("_TintColor", new Color(1f, 0f, 45f / 255f, 1f));
+            voidShieldMat.SetFloat("_Boost", 20f);
+            voidShieldMat.SetFloat("_AlphaBoost", 0.25f);
+            voidShieldMat.SetFloat("_AlphaBias", 0.125f);
+
+            shieldOverlayMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/DLC1/VoidMegaCrab/matVoidCrabMatterOverlay.mat").WaitForCompletion());
+            shieldOverlayMat.SetTexture("_Cloud1Tex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Common/texCloudStroke1.png").WaitForCompletion());
+            shieldOverlayMat.SetColor("_TintColor", new Color(0f, 88f / 255f, 144f / 255f, 1f));
+            shieldOverlayMat.SetFloat("_Boost", 6.5f);
+            shieldOverlayMat.SetFloat("_AlphaBoost", 4f);
+            shieldOverlayMat.SetFloat("_AlphaBias", 0.6f);
+
+            voidShieldOverlayMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/DLC1/VoidMegaCrab/matVoidCrabMatterOverlay.mat").WaitForCompletion());
+            voidShieldOverlayMat.SetTexture("_Cloud1Tex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Common/texCloudStroke1.png").WaitForCompletion());
+            voidShieldOverlayMat.SetColor("_TintColor", new Color(144f / 255f, 0f, 125f / 255f, 1f));
+            voidShieldOverlayMat.SetFloat("_Boost", 6.5f);
+            voidShieldOverlayMat.SetFloat("_AlphaBoost", 4f);
+            voidShieldOverlayMat.SetFloat("_AlphaBias", 0.6f);
+
+            ravagerMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/DLC1/VoidMegaCrab/matVoidCrabMatterOverlay.mat").WaitForCompletion());
+            ravagerMat.SetTexture("_Cloud1Tex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Common/texHologramCloud.png").WaitForCompletion());
+            ravagerMat.SetColor("_TintColor", Color.red);
+            ravagerMat.SetFloat("_Boost", 20f);
+            ravagerMat.SetFloat("_AlphaBoost", 2f);
+            ravagerMat.SetFloat("_AlphaBias", 0.5f);
+
+            cardboardBox = mainAssetBundle.LoadAsset<GameObject>("CardboardBox");
+            ConvertAllRenderersToHopooShader(cardboardBox);
+
+            fragGrenade = mainAssetBundle.LoadAsset<GameObject>("FragGrenade");
+            ConvertAllRenderersToHopooShader(fragGrenade);
+
+            Material eyeMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/Imp/matImpBoss.mat").WaitForCompletion());
+            eyeMat.SetFloat("_EmPower", 0f);
+
+            impEye = mainAssetBundle.LoadAsset<GameObject>("mdlImpEye");
+            impEye.GetComponentInChildren<SkinnedMeshRenderer>().material = eyeMat;
+
+            tarExplosion = CreateBloodExplosionEffect("HunkTarBloodExplosion", Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/VFX/matBloodClayLarge.mat").WaitForCompletion());
+        }
+
+        private static GameObject CreateBloodExplosionEffect(string effectName, Material bloodMat, float scale = 1f)
+        {
+            GameObject newEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Brother/BrotherSlamImpact.prefab").WaitForCompletion().InstantiateClone(effectName, true);
+
+            var huh = newEffect.GetComponent<DestroyOnTimer>();
+            if (huh) huh.duration = 80f;
+
+            newEffect.transform.Find("Spikes, Small").gameObject.SetActive(false);
+
+            newEffect.transform.Find("PP").gameObject.SetActive(false);//.GetComponent<PostProcessVolume>().sharedProfile = Addressables.LoadAssetAsync<PostProcessProfile>("RoR2/Base/title/ppLocalMagmaWorm.asset").WaitForCompletion();
+            newEffect.transform.Find("Point light").gameObject.SetActive(false);//.GetComponent<Light>().color = Color.yellow;
+            newEffect.transform.Find("Flash Lines").GetComponent<ParticleSystemRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/VFX/matOpaqueDustLargeDirectional.mat").WaitForCompletion();
+
+            newEffect.transform.GetChild(3).GetComponent<ParticleSystemRenderer>().material = bloodMat;
+            newEffect.transform.Find("Flash Lines, Fire").GetComponent<ParticleSystemRenderer>().material = bloodMat;
+            newEffect.transform.GetChild(6).GetComponent<ParticleSystemRenderer>().material = bloodMat;
+            newEffect.transform.Find("Fire").GetComponent<ParticleSystemRenderer>().material = bloodMat;
+
+            var sex = newEffect.transform.Find("Fire").GetComponent<ParticleSystem>().main;
+            sex.startLifetimeMultiplier = 1.85f;
+            sex = newEffect.transform.Find("Flash Lines, Fire").GetComponent<ParticleSystem>().main;
+            sex.startLifetimeMultiplier = 1.53f;
+            sex = newEffect.transform.GetChild(6).GetComponent<ParticleSystem>().main;
+            sex.startLifetimeMultiplier = 1.74f;
+
+            newEffect.transform.Find("Physics").GetComponent<ParticleSystemRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Base/MagmaWorm/matFracturedGround.mat").WaitForCompletion();
+
+            newEffect.transform.Find("Decal").GetComponent<Decal>().Material = Addressables.LoadAssetAsync<Material>("RoR2/Base/ClayBruiser/matClayGooDecalLong.mat").WaitForCompletion();
+            newEffect.transform.Find("Decal").GetComponent<AnimateShaderAlpha>().timeMax = 80f;
+            newEffect.transform.Find("Decal").transform.localPosition = Vector3.zero;
+            newEffect.transform.Find("Decal").transform.localScale = Vector3.one * 24f;
+
+            newEffect.transform.Find("FoamSplash").gameObject.SetActive(false);
+            newEffect.transform.Find("FoamBilllboard").gameObject.SetActive(false);
+            newEffect.transform.Find("Dust").gameObject.SetActive(false);
+            newEffect.transform.Find("Dust, Directional").gameObject.SetActive(false);
+
+            newEffect.transform.localScale = Vector3.one * scale;
+
+            AddNewEffectDef(newEffect);
+
+            ParticleSystemColorFromEffectData fuck = newEffect.AddComponent<ParticleSystemColorFromEffectData>();
+            fuck.particleSystems = new ParticleSystem[]
+            {
+                newEffect.transform.Find("Fire").GetComponent<ParticleSystem>(),
+                newEffect.transform.Find("Flash Lines, Fire").GetComponent<ParticleSystem>(),
+                newEffect.transform.GetChild(6).GetComponent<ParticleSystem>(),
+                newEffect.transform.GetChild(3).GetComponent<ParticleSystem>()
+            };
+            fuck.effectComponent = newEffect.GetComponent<EffectComponent>();
+
+            return newEffect;
         }
 
         private static GameObject CreateTracer(string originalTracerName, string newTracerName)
@@ -764,7 +881,24 @@ namespace HunkMod.Modules
                 {
                     if (i.material)
                     {
-                        i.material.shader = hotpoo;
+                        // exclude lines from this for obvious reasons
+                        if (!i.GetComponent<LineRenderer>())
+                        {
+                            Texture normalMap = null;
+                            if (i.material.HasProperty("_BumpMap"))
+                            {
+                                // transfer normal maps cuz im not gay
+                                normalMap = i.material.GetTexture("_BumpMap");
+                            }
+
+                            i.material.shader = hotpoo;
+
+                            if (normalMap != null)
+                            {
+                                i.material.SetTexture("_NormalTex", normalMap);
+                                i.material.SetFloat("_NormalStrength", 1f);
+                            }
+                        }
                     }
                 }
             }

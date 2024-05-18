@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using RoR2;
 using RoR2.UI;
-using UnityEngine.Networking;
 using UnityEngine.UI;
 using TMPro;
 
@@ -9,6 +8,7 @@ namespace HunkMod.Modules.Components
 {
     public class AmmoDisplay2 : MonoBehaviour
     {
+        public TMP_FontAsset fontOverride;
         public HUD targetHUD;
         public TextMeshProUGUI currentText;
         public TextMeshProUGUI totalText;
@@ -16,6 +16,7 @@ namespace HunkMod.Modules.Components
         private Image divider;
         private Image mainPanel;
         private HunkController hunk;
+        private float desiredAlpha;
         private float alpha;
 
         private int totalAmmo
@@ -26,10 +27,21 @@ namespace HunkMod.Modules.Components
             }
         }
 
+        private void OnEnable()
+        {
+            this.desiredAlpha = Modules.Config.baseAmmoPanelOpacity.Value * 0.01f;
+        }
+
         private void Start()
         {
             this.mainPanel = this.GetComponent<Image>();
             this.divider = this.transform.Find("Divider").gameObject.GetComponent<Image>();
+
+            if (this.fontOverride)
+            {
+                this.currentText.font = this.fontOverride;
+                this.totalText.font = this.fontOverride;
+            }
         }
 
         private void FixedUpdate()
@@ -104,7 +116,7 @@ namespace HunkMod.Modules.Components
 
                     col.a = this.alpha;
                     col2.a = this.alpha;
-                    col3.a = Util.Remap(this.alpha, 0f, 1f, 0f, 0.8f);
+                    col3.a = Util.Remap(this.alpha, 0f, 1f, 0f, this.desiredAlpha);
                     col4.a = Util.Remap(this.alpha, 0f, 1f, 0f, 0.5f);
 
                     this.currentText.color = col;

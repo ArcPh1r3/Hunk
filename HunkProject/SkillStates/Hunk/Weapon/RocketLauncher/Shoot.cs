@@ -38,7 +38,6 @@ namespace HunkMod.SkillStates.Hunk.Weapon.RocketLauncher
         public override void OnEnter()
         {
             base.OnEnter();
-            this.characterBody.SetAimTimer(5f);
             this.muzzleString = "MuzzleRocket";
             this.duration = this.baseDuration / this.attackSpeedStat;
             this.isCrit = base.RollCrit();

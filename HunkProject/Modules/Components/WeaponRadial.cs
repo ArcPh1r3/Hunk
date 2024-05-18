@@ -1,4 +1,5 @@
 ﻿using RoR2;
+using RoR2.UI;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -11,12 +12,14 @@ namespace HunkMod.Modules.Components
         public int index;
         public HunkWeaponTracker hunk;
         public CharacterBody body;
+        public int controllerLatchIndex = 99;
 
         private GameObject cursor;
         private RectTransform center;
         private Image[] icons;
         private float iconSize = 0.22738f;
         private LocalUser localUser;
+        private int controllerLatchTimer;
 
         private GameObject statsPanel;
         private TextMeshProUGUI label;
@@ -25,10 +28,11 @@ namespace HunkMod.Modules.Components
         private TextMeshProUGUI[] statText;
         private Image[] statFill;
 
-        internal RoR2.UI.MPInput input;
         internal RoR2.UI.MPEventSystem events;
+        internal RoR2.UI.MPInputModule inputModule;
 
         private float scaleSpeed = 14f;
+        private float selectDist;
 
         private void Awake()
         {
@@ -40,7 +44,10 @@ namespace HunkMod.Modules.Components
             this.ammoCount = this.transform.Find("Center/Inner/StatsPanel/Ammo").GetComponent<TextMeshProUGUI>();
             this.statsPanel = this.transform.Find("Center/Inner/StatsPanel").gameObject;
 
-            this.input = GameObject.Find("MPEventSystem Player0").GetComponent<RoR2.UI.MPInput>();
+            //inputModule.input should be the same as input but it does different things because Hopoo Games!! idk
+            var input = GameObject.Find("MPEventSystem Player0").GetComponent<RoR2.UI.MPInput>();
+            this.events = input.GetFieldValue<RoR2.UI.MPEventSystem>("eventSystem");
+            this.inputModule = events.currentInputModule as MPInputModule;
 
             this.statText = new TextMeshProUGUI[]
             {
@@ -68,13 +75,14 @@ namespace HunkMod.Modules.Components
             {
                 i.font = hgFont;
             }
+
+            this.selectDist = Modules.Config.weaponMenuSensitivity.Value;
         }
 
         private void Start()
         {
             Util.PlaySound("sfx_hunk_menu_open", this.gameObject);
 
-            this.events = input.GetFieldValue<RoR2.UI.MPEventSystem>("eventSystem");
             this.events.cursorOpenerForGamepadCount += 1;
             this.events.cursorOpenerCount += 1;
 
@@ -91,6 +99,15 @@ namespace HunkMod.Modules.Components
                         }
                     }
                 }
+            }
+        }
+
+        private void LateUpdate()
+        {
+            var vCursor = this.events.cursorIndicatorController;
+            if(this.controllerInput)
+            {
+                vCursor.SetCursor(vCursor.noneCursorSet,CursorIndicatorController.CursorImage.None,events.GetColor());
             }
         }
 
@@ -173,9 +190,22 @@ namespace HunkMod.Modules.Components
         {
             get
             {
-                Vector3 mousePosition = new Vector3(Input.mousePosition.x - (Screen.width / 2.0f), Input.mousePosition.y - (Screen.height / 2.0f), 0f);
+                Vector3 mousePosition =  new Vector3(this.inputModule.input.mousePosition.x - (Screen.width / 2.0f), this.inputModule.input.mousePosition.y - (Screen.height / 2.0f), 0f);
+                if (this.controllerInput)
+                {
+                    var player = (this.inputModule.input as MPInput).player;
+                    mousePosition = new Vector3(player.GetAxis(23), player.GetAxis(24), 0);
+                }
                 float dist = Vector3.Distance(mousePosition, this.center.localPosition);
-                return dist <= 172f;
+                return dist <= (controllerInput? 0.2f : this.selectDist);
+            }
+        }
+
+        public bool controllerInput
+        {
+            get
+            {
+                return events?.currentInputSource == MPEventSystem.InputSource.Gamepad;
             }
         }
 
@@ -191,7 +221,22 @@ namespace HunkMod.Modules.Components
 
             if (this.localUser != null) this.localUser.eventSystem.m_CurrentSelected = this.gameObject;
 
-            Vector3 mousePosition = new Vector3(Input.mousePosition.x - (Screen.width / 2.0f), Input.mousePosition.y - (Screen.height / 2.0f), 0f);
+            Vector3 mousePosition =  new Vector3(inputModule.input.mousePosition.x - (Screen.width / 2.0f), inputModule.input.mousePosition.y - (Screen.height / 2.0f), 0f);
+            if (this.controllerInput)
+            {
+                var player = (inputModule.input as MPInput).player;
+                mousePosition = new Vector3(player.GetAxis(23),player.GetAxis(24),0);
+            }
+
+            if (this.controllerLatchTimer <= 0)
+            {
+                this.controllerLatchIndex = 99;
+                this.controllerLatchTimer = 0;
+            }
+            else
+            {
+                this.controllerLatchTimer--;
+            }
 
             if (this.cursorInCenter)
             {
@@ -224,7 +269,15 @@ namespace HunkMod.Modules.Components
                 j++;
             }
 
-            if (_index != this.index && this.ValidIndex(_index)) Util.PlaySound("sfx_hunk_menu_cursor", this.gameObject);
+            if (this.ValidIndex(_index))
+            {
+                if(this.index != _index) Util.PlaySound("sfx_hunk_menu_cursor", this.gameObject);
+                if(this.controllerInput)
+                {
+                    this.controllerLatchIndex = _index;
+                    this.controllerLatchTimer = 40;
+                }
+            }
 
             this.index = _index;
 

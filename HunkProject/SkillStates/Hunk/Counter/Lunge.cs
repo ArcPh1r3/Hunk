@@ -10,6 +10,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
 {
     public class Lunge : BaseHunkSkillState
     {
+        protected override bool turningAllowed => false;
         protected Vector3 slipVector = Vector3.zero;
         public float duration = 0.8f;
 		public float checkRadius = 3f;
@@ -130,14 +131,86 @@ namespace HunkMod.SkillStates.Hunk.Counter
 				{
 					if (hurtBox.healthComponent && hurtBox.healthComponent.body)
 					{
+                        if (hurtBox.healthComponent.gameObject.name == "ImpBody(Clone)")
+                        {
+                            if (base.isAuthority)
+                            {
+                                this.outer.SetNextState(new CounterEyePluck
+                                {
+                                    targetObject = hurtBox.healthComponent.gameObject
+                                });
+                            }
+
+                            return true;
+                        }
+
+                        if (hurtBox.healthComponent.gameObject.name == "ClayBruiserBody(Clone)")
+                        {
+                            if (base.isAuthority)
+                            {
+                                this.outer.SetNextState(new TemplarGrenade
+                                {
+                                    targetObject = hurtBox.healthComponent.gameObject
+                                });
+                            }
+
+                            return true;
+                        }
+
+                        if (hurtBox.healthComponent.gameObject.name == "VerminBody(Clone)")
+                        {
+                            if (base.isAuthority)
+                            {
+                                this.outer.SetNextState(new CounterKnee
+                                {
+                                    targetObject = hurtBox.healthComponent.gameObject
+                                });
+                            }
+
+                            return true;
+                        }
+
                         if (hurtBox.healthComponent.gameObject.name == "LemurianBody(Clone)")
                         {
                             if (base.isAuthority)
                             {
-                                this.outer.SetNextState(new NeckSnap
+                                if (hurtBox.healthComponent.combinedHealthFraction <= 0.5f || hurtBox.healthComponent.gameObject.GetComponent<VirusHandler>())
                                 {
-                                    targetObject = hurtBox.healthComponent.gameObject
-                                });
+                                    this.outer.SetNextState(new CounterKnee
+                                    {
+                                        targetObject = hurtBox.healthComponent.gameObject
+                                    });
+                                }
+                                else
+                                {
+                                    this.outer.SetNextState(new NeckSnap
+                                    {
+                                        targetObject = hurtBox.healthComponent.gameObject
+                                    });
+                                }
+                            }
+
+                            return true;
+                        }
+
+                        if (hurtBox.healthComponent.gameObject.name.Contains("MoffeinClay"))
+                        {
+                            if (base.isAuthority)
+                            {
+                                if (hurtBox.healthComponent.combinedHealthFraction <= 0.5f || hurtBox.healthComponent.gameObject.GetComponent<VirusHandler>())
+                                {
+                                    this.outer.SetNextState(new CounterKnee
+                                    {
+                                        targetObject = hurtBox.healthComponent.gameObject
+                                    });
+                                }
+                                else
+                                {
+                                    this.outer.SetNextState(new NeckSnap
+                                    {
+                                        targetObject = hurtBox.healthComponent.gameObject
+                                    });
+                                }
                             }
 
                             return true;
