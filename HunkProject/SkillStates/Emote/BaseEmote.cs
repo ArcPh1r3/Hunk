@@ -24,7 +24,7 @@ namespace HunkMod.SkillStates.Emote
             this.childLocator = base.GetModelChildLocator();
             this.FindLocalUser();
 
-            this.characterBody.hideCrosshair = true;
+            //this.characterBody.hideCrosshair = true;
             this.camOverrideHandle = Modules.CameraParams.OverrideCameraParams(base.cameraTargetParams, HunkCameraParams.EMOTE, 0.5f);
         }
 
@@ -143,7 +143,7 @@ namespace HunkMod.SkillStates.Emote
         {
             base.OnExit();
 
-            this.characterBody.hideCrosshair = false;
+            //this.characterBody.hideCrosshair = false;
 
             base.PlayAnimation("FullBody, Override", "BufferEmpty");
             if (this.activePlayID != 0) AkSoundEngine.StopPlayingID(this.activePlayID);

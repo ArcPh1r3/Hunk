@@ -101,6 +101,10 @@ namespace HunkMod.Modules.Components
         private bool shieldIsVoid;
         private bool _shieldIsVoid;
         private bool fancyShield = true;
+        private float lastSprintMultiplier;
+        private float sprintMultiplier;
+        private float sprintStopwatch;
+        private float baseSprintValue;
 
         public int mupQueuedShots = 2;
 
@@ -126,6 +130,7 @@ namespace HunkMod.Modules.Components
             this.desiredZOffset = this.defaultZOffset;
             this.zOffset = this.desiredZOffset;
             this.baseTurnSpeed = this.GetComponent<CharacterDirection>().turnSpeed;
+            this.baseSprintValue = this.characterBody.sprintingSpeedMultiplier;
 
             this.flamethrowerEffectInstance = GameObject.Instantiate(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Drones/DroneFlamethrowerEffect.prefab").WaitForCompletion());
 
@@ -337,6 +342,7 @@ namespace HunkMod.Modules.Components
                 this._wasImmobilized = this.immobilized;
 
                 this.HandleShield();
+                this.HandleSprint();
             }
 
             if (NetworkServer.active)
@@ -1149,6 +1155,12 @@ namespace HunkMod.Modules.Components
         {
             if (!this.characterBody) return;
             if (!this.characterBody.healthComponent) return;
+            if (!this.shieldOverlay) return;
+            if (!this.fancyShield)
+            {
+                this.shieldOverlay.SetActive(false);
+                return;
+            }
 
             if (this.characterBody.healthComponent.shield > 0)
             {
@@ -1166,6 +1178,31 @@ namespace HunkMod.Modules.Components
             }
 
             this._shieldIsVoid = this.shieldIsVoid;
+        }
+
+        private void HandleSprint()
+        {
+            if (!this.characterBody) return;
+
+            if (this.characterBody.isSprinting)
+            {
+                this.sprintStopwatch += Time.fixedDeltaTime;
+
+                if (this.sprintStopwatch >= 1.5f)
+                {
+                    float value = Mathf.Clamp(this.sprintStopwatch, 0f, 5f);
+                    this.sprintMultiplier = Util.Remap(value, 1.5f, 5f, 1f, 1.25f);
+                }
+            }
+            else
+            {
+                this.sprintStopwatch = 0f;
+                this.sprintMultiplier = 1f;
+            }
+
+            this.characterBody.sprintingSpeedMultiplier = this.baseSprintValue * this.sprintMultiplier;
+            if (this.lastSprintMultiplier != this.sprintMultiplier) this.characterBody.RecalculateStats();
+            this.lastSprintMultiplier = this.sprintMultiplier;
         }
     }
 }

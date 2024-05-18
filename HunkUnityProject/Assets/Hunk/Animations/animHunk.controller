@@ -421,7 +421,7 @@ BlendTree:
   m_Name: Blend Tree
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 871d1aa4aec8c7847b008ed12e7fa1a3, type: 2}
+    m_Motion: {fileID: 7400000, guid: 446f88eedbf1bdc4d916d38b9d93d92b, type: 2}
     m_Threshold: 13
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -429,7 +429,7 @@ BlendTree:
     m_DirectBlendParameter: upSpeed
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: b0d4c7b92cfdda34eb9b5e098ab5de62, type: 2}
+    m_Motion: {fileID: 7400000, guid: e1545b2ea6e03514e9c29ebf5c6426fd, type: 2}
     m_Threshold: 32
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -2130,16 +2130,16 @@ BlendTree:
   m_Name: Blend Tree
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: c43bbdaccb2816b4a8fdf4748261d48b, type: 2}
-    m_Threshold: 9
+    m_Motion: {fileID: 7400000, guid: 92ee931ae4fb42843898a27a50f0387a, type: 2}
+    m_Threshold: 13
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: upSpeed
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: e0ffb237cdc8b8d4c9ae5ee9bce13612, type: 2}
-    m_Threshold: 14
+    m_Motion: {fileID: 7400000, guid: b2c48cc0620cae44b9d8d3ddc69f373d, type: 2}
+    m_Threshold: 32
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -2147,8 +2147,8 @@ BlendTree:
     m_Mirror: 0
   m_BlendParameter: walkSpeed
   m_BlendParameterY: upSpeed
-  m_MinThreshold: 9
-  m_MaxThreshold: 14
+  m_MinThreshold: 13
+  m_MaxThreshold: 32
   m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
   m_BlendType: 0
@@ -3673,7 +3673,7 @@ BlendTree:
   m_Name: Blend Tree
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: c67628a9efe2e394a9087f14c933af51, type: 2}
+    m_Motion: {fileID: 7400000, guid: b81e3ad116f8abd429d86e6cb6fcf77a, type: 2}
     m_Threshold: 13
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -3681,7 +3681,7 @@ BlendTree:
     m_DirectBlendParameter: upSpeed
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 8e3b90bc3c369654187a12f88b4204ac, type: 2}
+    m_Motion: {fileID: 7400000, guid: 6d80ee977c97a5f4f99f1fa3f8f4359b, type: 2}
     m_Threshold: 32
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -6853,7 +6853,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Sprint
-  m_Speed: 0.275
+  m_Speed: 0.212
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101326545033544464}

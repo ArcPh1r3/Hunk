@@ -34,6 +34,8 @@ namespace HunkMod.SkillStates.Hunk.Counter
         {
             base.OnEnter();
             this.animator = this.GetModelAnimator();
+            this.animator.SetBool("isMoving", false);
+            this.characterMotor.velocity = Vector3.zero;
             this.target = this.targetObject.GetComponent<HealthComponent>();
             this.targetPos = this.target.transform.position;
             this.lerpSpeed *= this.attackSpeedStat;

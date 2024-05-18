@@ -2,7 +2,6 @@
 using RoR2;
 using EntityStates;
 using UnityEngine.Networking;
-using static RoR2.CameraTargetParams;
 
 namespace HunkMod.SkillStates.Hunk.Counter
 {
@@ -28,6 +27,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
         {
             base.OnEnter();
             this.target = this.targetObject.GetComponent<HealthComponent>();
+            this.characterMotor.velocity = Vector3.zero;
             this.targetPos = this.target.transform.position;
             this.lerpSpeed *= this.attackSpeedStat;
             this.duration /= this.attackSpeedStat;

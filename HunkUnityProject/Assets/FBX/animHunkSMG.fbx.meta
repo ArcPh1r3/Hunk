@@ -195,6 +195,9 @@ ModelImporter:
   - first:
       74: -2160711534988118455
     second: Armature|CounterEyePluck
+  - first:
+      74: -854147973710459245
+    second: Armature|SprintFastOLD2
   externalObjects: {}
   materials:
     materialImportMode: 1

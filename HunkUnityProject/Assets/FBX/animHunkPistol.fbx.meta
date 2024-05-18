@@ -129,6 +129,12 @@ ModelImporter:
   - first:
       74: 8315819496742247387
     second: Armature|PerfectLanding
+  - first:
+      74: 4917118015682659702
+    second: Armature|SprintFastOLD
+  - first:
+      74: 5935037570651743186
+    second: Armature|SprintOLD
   externalObjects: {}
   materials:
     materialImportMode: 1
