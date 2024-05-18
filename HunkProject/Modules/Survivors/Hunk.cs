@@ -4125,8 +4125,8 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     case "wispgraveyard":
                         pos = new Vector3(-383.5073f, 6.731739f, -49.00582f);
                         rot = Quaternion.Euler(0, 265, 0);
-                        pos2 = new Vector3(179.5892f, 77.46913f, -10.06462f);
-                        rot2 = Quaternion.Euler(0, 335, 0);
+                        pos2 = new Vector3(195.0438f, 46.9f, 195.0438f);
+                        rot2 = Quaternion.Euler(0, 358, 0);
                         break;
                     case "dampcavesimple":
                         pos = new Vector3(66.61202f, -87.96278f, -202.6679f);
