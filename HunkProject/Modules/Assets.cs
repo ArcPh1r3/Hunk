@@ -11,6 +11,7 @@ using RoR2.UI;
 using UnityEngine.UI;
 using HunkMod.Modules.Components;
 using UnityEngine.Rendering.PostProcessing;
+using ThreeEyedGames;
 
 namespace HunkMod.Modules
 {
@@ -82,6 +83,11 @@ namespace HunkMod.Modules
         public static GameObject shotgunTracerCrit;
 
         public static GameObject weaponRadial;
+        public static GameObject cardboardBox;
+        public static GameObject fragGrenade;
+        public static GameObject impEye;
+
+        public static GameObject tarExplosion;
 
         internal static Material woundOverlayMat;
 
@@ -706,6 +712,74 @@ namespace HunkMod.Modules
             ravagerMat.SetFloat("_Boost", 20f);
             ravagerMat.SetFloat("_AlphaBoost", 2f);
             ravagerMat.SetFloat("_AlphaBias", 0.5f);
+
+            cardboardBox = mainAssetBundle.LoadAsset<GameObject>("CardboardBox");
+            ConvertAllRenderersToHopooShader(cardboardBox);
+
+            fragGrenade = mainAssetBundle.LoadAsset<GameObject>("FragGrenade");
+            ConvertAllRenderersToHopooShader(fragGrenade);
+
+            Material eyeMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/Imp/matImpBoss.mat").WaitForCompletion());
+            eyeMat.SetFloat("_EmPower", 0f);
+
+            impEye = mainAssetBundle.LoadAsset<GameObject>("mdlImpEye");
+            impEye.GetComponentInChildren<SkinnedMeshRenderer>().material = eyeMat;
+
+            tarExplosion = CreateBloodExplosionEffect("HunkTarBloodExplosion", Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/VFX/matBloodClayLarge.mat").WaitForCompletion());
+        }
+
+        private static GameObject CreateBloodExplosionEffect(string effectName, Material bloodMat, float scale = 1f)
+        {
+            GameObject newEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Brother/BrotherSlamImpact.prefab").WaitForCompletion().InstantiateClone(effectName, true);
+
+            var huh = newEffect.GetComponent<DestroyOnTimer>();
+            if (huh) huh.duration = 80f;
+
+            newEffect.transform.Find("Spikes, Small").gameObject.SetActive(false);
+
+            newEffect.transform.Find("PP").gameObject.SetActive(false);//.GetComponent<PostProcessVolume>().sharedProfile = Addressables.LoadAssetAsync<PostProcessProfile>("RoR2/Base/title/ppLocalMagmaWorm.asset").WaitForCompletion();
+            newEffect.transform.Find("Point light").gameObject.SetActive(false);//.GetComponent<Light>().color = Color.yellow;
+            newEffect.transform.Find("Flash Lines").GetComponent<ParticleSystemRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/VFX/matOpaqueDustLargeDirectional.mat").WaitForCompletion();
+
+            newEffect.transform.GetChild(3).GetComponent<ParticleSystemRenderer>().material = bloodMat;
+            newEffect.transform.Find("Flash Lines, Fire").GetComponent<ParticleSystemRenderer>().material = bloodMat;
+            newEffect.transform.GetChild(6).GetComponent<ParticleSystemRenderer>().material = bloodMat;
+            newEffect.transform.Find("Fire").GetComponent<ParticleSystemRenderer>().material = bloodMat;
+
+            var sex = newEffect.transform.Find("Fire").GetComponent<ParticleSystem>().main;
+            sex.startLifetimeMultiplier = 1.85f;
+            sex = newEffect.transform.Find("Flash Lines, Fire").GetComponent<ParticleSystem>().main;
+            sex.startLifetimeMultiplier = 1.53f;
+            sex = newEffect.transform.GetChild(6).GetComponent<ParticleSystem>().main;
+            sex.startLifetimeMultiplier = 1.74f;
+
+            newEffect.transform.Find("Physics").GetComponent<ParticleSystemRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Base/MagmaWorm/matFracturedGround.mat").WaitForCompletion();
+
+            newEffect.transform.Find("Decal").GetComponent<Decal>().Material = Addressables.LoadAssetAsync<Material>("RoR2/Base/ClayBruiser/matClayGooDecalLong.mat").WaitForCompletion();
+            newEffect.transform.Find("Decal").GetComponent<AnimateShaderAlpha>().timeMax = 80f;
+            newEffect.transform.Find("Decal").transform.localPosition = Vector3.zero;
+            newEffect.transform.Find("Decal").transform.localScale = Vector3.one * 24f;
+
+            newEffect.transform.Find("FoamSplash").gameObject.SetActive(false);
+            newEffect.transform.Find("FoamBilllboard").gameObject.SetActive(false);
+            newEffect.transform.Find("Dust").gameObject.SetActive(false);
+            newEffect.transform.Find("Dust, Directional").gameObject.SetActive(false);
+
+            newEffect.transform.localScale = Vector3.one * scale;
+
+            AddNewEffectDef(newEffect);
+
+            ParticleSystemColorFromEffectData fuck = newEffect.AddComponent<ParticleSystemColorFromEffectData>();
+            fuck.particleSystems = new ParticleSystem[]
+            {
+                newEffect.transform.Find("Fire").GetComponent<ParticleSystem>(),
+                newEffect.transform.Find("Flash Lines, Fire").GetComponent<ParticleSystem>(),
+                newEffect.transform.GetChild(6).GetComponent<ParticleSystem>(),
+                newEffect.transform.GetChild(3).GetComponent<ParticleSystem>()
+            };
+            fuck.effectComponent = newEffect.GetComponent<EffectComponent>();
+
+            return newEffect;
         }
 
         private static GameObject CreateTracer(string originalTracerName, string newTracerName)

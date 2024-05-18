@@ -120,12 +120,24 @@ Big thanks to everyone in the community for all the valuable feedback and critic
 
 ## Known Issues
 - Most item displays are missing
-- Emote buttons are there but he doesn't have any animations yet
 - Ally projectiles trigger perfect dodges; haven't decided if this is worth keeping as a mechanic yet
 
 ___
 
 ## Changelog
+
+`1.1.4`
+- Networked the new counterattacks....
+
+`1.1.3`
+- Added rest emote
+- Added a custom counterattack for Imp
+- Added a custom counterattack for Clay Templar
+- Added keywords and rewrote description for Quickstep
+- Infected enemies can no longer be neck snapped- uses a different counter instead
+- Enemies below half hp will have a different, faster counter instead of the neck snap
+- Fixed model jittering while trying to move during certain animations
+- Fixed enemies moving their heads during the neck snap animation
 
 `1.1.2`
 - Added config option for a custom HUD built for HUNK

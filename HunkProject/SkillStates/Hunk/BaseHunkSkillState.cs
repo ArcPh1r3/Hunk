@@ -9,6 +9,14 @@ namespace HunkMod.SkillStates.Hunk
     {
         private Animator _animator;
 
+        protected virtual bool turningAllowed
+        {
+            get
+            {
+                return true;
+            }
+        }
+
         public virtual void AddRecoil2(float x1, float x2, float y1, float y2)
         {
             //if (this.hunk.lockOnTimer > 0f) return;
@@ -47,6 +55,7 @@ namespace HunkMod.SkillStates.Hunk
             this._animator = this.GetModelAnimator();
             base.OnEnter();
 
+            if (!this.turningAllowed) this.characterDirection.turnSpeed = 0f;
             if (this.hideGun) this.GetModelChildLocator().FindChild("Weapon").gameObject.SetActive(false);
             if (!String.IsNullOrEmpty(this.prop)) this.GetModelChildLocator().FindChild(this.prop).gameObject.SetActive(true);
         }
@@ -66,6 +75,7 @@ namespace HunkMod.SkillStates.Hunk
         {
             base.OnExit();
 
+            if (!this.turningAllowed) this.characterDirection.turnSpeed = this.hunk.baseTurnSpeed;
             if (this.hideGun) this.GetModelChildLocator().FindChild("Weapon").gameObject.SetActive(true);
             if (!String.IsNullOrEmpty(this.prop)) this.GetModelChildLocator().FindChild(this.prop).gameObject.SetActive(false);
         }

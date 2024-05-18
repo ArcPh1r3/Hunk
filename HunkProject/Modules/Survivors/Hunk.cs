@@ -3561,6 +3561,15 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                             }
                         }
 
+                        if (damageReport.victim.GetComponent<TemplarExplosionTracker>())
+                        {
+                            NetworkIdentity identity = damageReport.victim.gameObject.GetComponent<NetworkIdentity>();
+                            if (identity)
+                            {
+                                new SyncTemplarExplosion(identity.netId, damageReport.victim.gameObject).Send(NetworkDestination.Clients);
+                            }
+                        }
+
                         if (damageReport.victim.GetComponent<HunkKnifeTracker>())
                         {
                             isKnifeKill = true;

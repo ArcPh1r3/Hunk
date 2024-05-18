@@ -25,7 +25,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
         {
             base.FixedUpdate();
 
-            if (!this.hasSnapped && base.fixedAge >= 0.455f * this.duration)
+            if (!this.hasSnapped && base.fixedAge >= 0.454f * this.duration)
             {
                 this.hasSnapped = true;
                 if (NetworkServer.active) this.characterBody.RemoveBuff(RoR2Content.Buffs.ArmorBoost);
@@ -45,7 +45,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.Frozen;
+            return InterruptPriority.Death;
         }
     }
 }

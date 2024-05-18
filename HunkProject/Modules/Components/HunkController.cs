@@ -21,6 +21,8 @@ namespace HunkMod.Modules.Components
         public bool spawnedATM = false;
         public HunkPassive passive;
 
+        public float baseTurnSpeed;
+
         public bool isAiming;
         public HunkWeaponDef weaponDef;
         private HunkWeaponDef lastWeaponDef;
@@ -123,6 +125,7 @@ namespace HunkMod.Modules.Components
             this.defaultZOffset = 0f;
             this.desiredZOffset = this.defaultZOffset;
             this.zOffset = this.desiredZOffset;
+            this.baseTurnSpeed = this.GetComponent<CharacterDirection>().turnSpeed;
 
             this.flamethrowerEffectInstance = GameObject.Instantiate(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Drones/DroneFlamethrowerEffect.prefab").WaitForCompletion());
 
@@ -1144,6 +1147,9 @@ namespace HunkMod.Modules.Components
 
         private void HandleShield()
         {
+            if (!this.characterBody) return;
+            if (!this.characterBody.healthComponent) return;
+
             if (this.characterBody.healthComponent.shield > 0)
             {
                 this.shieldOverlay.SetActive(this.fancyShield);

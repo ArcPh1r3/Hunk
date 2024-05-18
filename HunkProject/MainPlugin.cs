@@ -44,7 +44,7 @@ namespace HunkMod
     {
         public const string MODUID = "com.rob.Hunk";
         public const string MODNAME = "Hunk";
-        public const string MODVERSION = "1.1.2";
+        public const string MODVERSION = "1.1.4";
 
         public const string developerPrefix = "ROB";
 
@@ -95,6 +95,7 @@ namespace HunkMod
             NetworkingAPI.RegisterMessageType<Modules.Components.SyncWeaponCaseOpen>();
             NetworkingAPI.RegisterMessageType<Modules.Components.SyncHeadshot>();
             NetworkingAPI.RegisterMessageType<Modules.Components.SyncCaseItem>();
+            NetworkingAPI.RegisterMessageType<Modules.Components.SyncTemplarExplosion>();
 
             Hook();
 

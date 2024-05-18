@@ -11,6 +11,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
     public class CounterKnee : BaseHunkSkillState
     {
         protected override bool hideGun => true;
+        protected override bool turningAllowed => false;
 
         public float duration = 2.4f;
         private HealthComponent target;

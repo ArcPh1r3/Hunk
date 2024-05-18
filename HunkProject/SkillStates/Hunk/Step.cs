@@ -10,6 +10,7 @@ namespace HunkMod.SkillStates.Hunk
 {
     public class Step : BaseHunkSkillState
     {
+        protected override bool turningAllowed => false;
         protected Vector3 slipVector = Vector3.zero;
         public float duration = 0.9f;
         //private Vector3 cachedForward;

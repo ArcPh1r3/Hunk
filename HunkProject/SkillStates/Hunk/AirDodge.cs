@@ -18,6 +18,8 @@ namespace HunkMod.SkillStates.Hunk
         private List<HurtBox> hits;
         private bool success;
 
+        protected virtual bool forcePerfect => false;
+
         public override void OnEnter()
         {
             base.OnEnter();
@@ -38,7 +40,10 @@ namespace HunkMod.SkillStates.Hunk
             search.mask = LayerIndex.entityPrecise.mask;
             search.radius = checkRadius;
 
-            if (!this.SearchAttacker())
+            bool foundAttacker = this.SearchAttacker();
+            if (this.forcePerfect) foundAttacker = true;
+
+            if (!foundAttacker)
             {
                 base.PlayCrossfade("FullBody, Override", "AirDodge", 0.05f);
 
@@ -168,14 +173,19 @@ namespace HunkMod.SkillStates.Hunk
 
             if (this.stopwatch >= 0.1f && base.isAuthority && base.characterMotor.isGrounded)
             {
-                if (this.success)
-                {
-                    this.outer.SetNextState(new PerfectLanding());
-                }
-                else
-                {
-                    this.outer.SetNextState(new SlowRoll());
-                }
+                this.SetNextState();
+            }
+        }
+
+        protected virtual void SetNextState()
+        {
+            if (this.success)
+            {
+                this.outer.SetNextState(new PerfectLanding());
+            }
+            else
+            {
+                this.outer.SetNextState(new SlowRoll());
             }
         }
 

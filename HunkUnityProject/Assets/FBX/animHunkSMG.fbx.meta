@@ -186,6 +186,15 @@ ModelImporter:
   - first:
       74: 8731673259921870988
     second: Armature|CounterKnee
+  - first:
+      74: 8248210191543713298
+    second: Armature|RestEmote
+  - first:
+      74: -5799617623961082503
+    second: Armature|CounterTemplar
+  - first:
+      74: -2160711534988118455
+    second: Armature|CounterEyePluck
   externalObjects: {}
   materials:
     materialImportMode: 1

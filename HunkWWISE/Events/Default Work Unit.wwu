@@ -905,6 +905,17 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="sfx_hunk_grenade_roll" ID="{E507C90D-6D34-4E25-B1FE-6C5C9026B911}">
+					<ChildrenList>
+						<Action Name="" ID="{6744CE85-7930-4668-B419-E36A0BA0743A}" ShortID="921382641">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_grenade_roll" ID="{653D426D-0C92-4965-881A-CCE99368C947}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>
