@@ -1,7 +1,10 @@
 ManifestFileVersion: 0
-CRC: 3991145061
+CRC: 2091179985
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
       Name: robhunk
+      Dependencies: {}
+    Info_1:
+      Name: robbutton
       Dependencies: {}

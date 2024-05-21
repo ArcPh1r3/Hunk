@@ -70,7 +70,7 @@ false);
             HunkWeaponCatalog.itemDefs.Add(laserSight);
 
             LanguageAPI.Add("ROB_HUNK_WEAPON_ADDON_" + weaponNameToken + "_NAME", "Laser Sight (LE 5)");
-            LanguageAPI.Add("ROB_HUNK_WEAPON_ADDON_" + weaponNameToken + "_DESC", "A custom part for the LE 5 that allows for lightning-fast aiming.");
+            LanguageAPI.Add("ROB_HUNK_WEAPON_ADDON_" + weaponNameToken + "_DESC", "A custom part for the LE 5 that boosts its effectiveness at long range and when striking weak points.");
 
             extendedMag = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/DLC1/CloverVoid/CloverVoid.asset").WaitForCompletion());
             extendedMag.name = "ROB_HUNK_WEAPON_ADDON2_" + weaponNameToken + "_NAME";
@@ -98,7 +98,7 @@ false);
 
             HunkWeaponCatalog.itemDefs.Add(extendedMag);
 
-            LanguageAPI.Add("ROB_HUNK_WEAPON_ADDON2_" + weaponNameToken + "_NAME", "Extended Mazine (LE 5)");
+            LanguageAPI.Add("ROB_HUNK_WEAPON_ADDON2_" + weaponNameToken + "_NAME", "Extended Magazine (LE 5)");
             LanguageAPI.Add("ROB_HUNK_WEAPON_ADDON2_" + weaponNameToken + "_DESC", "A custom part for the LE 5 that greatly boosts its magazine capacity.");
         }
     }

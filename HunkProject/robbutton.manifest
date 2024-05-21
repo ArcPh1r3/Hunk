@@ -1,0 +1,35 @@
+ManifestFileVersion: 0
+CRC: 743114732
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: da5cc64dff86cdf4fa7360400528e102
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: bb28e223b524cc6b7637a7337cb8f8b5
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 65
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/RobButton/matDonationButton.mat
+- Assets/RobButton/texDonationButton.png
+- Assets/RobButton/mdlButton.prefab
+Dependencies: []

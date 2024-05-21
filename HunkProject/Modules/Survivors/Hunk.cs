@@ -51,6 +51,8 @@ namespace HunkMod.Modules.Survivors
         // skill overrides
         internal static SkillDef reloadSkillDef;
         internal static SkillDef counterSkillDef;
+        internal static SkillDef scepterDodgeSkillDef;
+        internal static SkillDef scepterCounterSkillDef;
 
         internal static SkillDef confirmSkillDef;
         internal static SkillDef cancelSkillDef;
@@ -647,6 +649,13 @@ namespace HunkMod.Modules.Survivors
     Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
             counterSkillDef.interruptPriority = EntityStates.InterruptPriority.PrioritySkill;
 
+            scepterCounterSkillDef = Modules.Skills.CreatePrimarySkillDef(new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Counter.UroLunge)),
+"Weapon",
+prefix + "_HUNK_BODY_PRIMARY_KNIFE_NAME",
+prefix + "_HUNK_BODY_PRIMARY_KNIFE_DESCRIPTION",
+Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
+            counterSkillDef.interruptPriority = EntityStates.InterruptPriority.PrioritySkill;
+
             Modules.Skills.AddPrimarySkills(prefab,
                 knife);
             #endregion
@@ -710,7 +719,31 @@ namespace HunkMod.Modules.Survivors
                 MainPlugin.developerPrefix + "_HUNK_KEYWORD_COUNTER"
             };
 
-            Modules.Skills.AddUtilitySkills(prefab, dodgeSkillDef);
+            SkillDef uroDodgeSkillDef = Modules.Skills.CreateAwesomeSkillDef(new SkillDefInfo
+            {
+                skillName = prefix + "_HUNK_BODY_UTILITY_DODGE_SCEPTER_NAME",
+                skillNameToken = prefix + "_HUNK_BODY_UTILITY_DODGE_SCEPTER_NAME",
+                skillDescriptionToken = prefix + "_HUNK_BODY_UTILITY_DODGE_SCEPTER_DESCRIPTION",
+                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texDodgeIcon"),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Urostep)),
+                activationStateMachineName = "Weapon",
+                baseMaxStock = 3, //1
+                baseRechargeInterval = 5f, //4
+                beginSkillCooldownOnSkillEnd = true, //false
+                canceledFromSprinting = false,
+                forceSprintDuringState = true,
+                fullRestockOnAssign = true,
+                interruptPriority = EntityStates.InterruptPriority.PrioritySkill,
+                resetCooldownTimerOnUse = true, //false
+                isCombatSkill = false,
+                mustKeyPress = true,
+                cancelSprintingOnActivation = false,
+                rechargeStock = 99, //1
+                requiredStock = 1,
+                stockToConsume = 1
+            });
+
+            Modules.Skills.AddUtilitySkills(prefab, dodgeSkillDef, uroDodgeSkillDef);
             #endregion
 
             #region Special
@@ -1006,6 +1039,68 @@ namespace HunkMod.Modules.Survivors
             };
 
             skins.Add(commandoSkin);
+            #endregion
+
+            #region WeskerSkin
+            SkinDef weskerSkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_WESKER_SKIN_NAME",
+                Assets.mainAssetBundle.LoadAsset<Sprite>("texLightweightSkin"),
+                defaultRenderers,
+                mainRenderer,
+                model);
+
+            weskerSkin.meshReplacements = new SkinDef.MeshReplacement[]
+            {
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model01").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("Albert.001_mesh.001")
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model02").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("Albert.001_mesh.002")
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model03").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("Albert.001_mesh.003")
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model04").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("Albert.001_mesh.004")
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model05").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("Albert.001_mesh.005")
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model06").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("Albert.001_mesh")
+                }
+            };
+
+            CharacterModel.RendererInfo[] weskerInfos = new CharacterModel.RendererInfo[defaultRenderers.Length];
+            defaultRenderers.CopyTo(weskerInfos, 0);
+
+            Material hairMat = Modules.Assets.CreateMaterial("matWesker04", 0f, Color.black, 1f);
+            hairMat.EnableKeyword("_EnableCutout");
+            hairMat.EnableKeyword("CUTOUT");
+            hairMat.SetShaderPassEnabled("Cutout", true);
+            hairMat.SetShaderPassEnabled("CUTOUT", true);
+            hairMat.SetShaderPassEnabled("_EnableCutout", true);
+
+            weskerSkin.rendererInfos = weskerInfos;
+            weskerSkin.rendererInfos[0].defaultMaterial = Modules.Assets.CreateMaterial("matWesker05", 0f, Color.black, 1f);
+            weskerSkin.rendererInfos[1].defaultMaterial = Modules.Assets.CreateMaterial("matWesker02", 0f, Color.black, 1f);
+            weskerSkin.rendererInfos[2].defaultMaterial = Modules.Assets.CreateMaterial("matWesker06", 0f, Color.black, 1f);
+            weskerSkin.rendererInfos[3].defaultMaterial = Modules.Assets.CreateMaterial("matWesker01", 0f, Color.black, 1f);
+            weskerSkin.rendererInfos[4].defaultMaterial = hairMat;
+            weskerSkin.rendererInfos[5].defaultMaterial = Modules.Assets.CreateMaterial("matWesker03", 0f, Color.black, 1f);
+
+            skins.Add(weskerSkin);
             #endregion
 
             #region SuperSkin
@@ -2983,6 +3078,9 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             CostTypeCatalog.modHelper.getAdditionalEntries += AddClubCostType;
             CostTypeCatalog.modHelper.getAdditionalEntries += AddSampleCostType;
 
+            // spawn g-young
+            On.RoR2.CharacterBody.OnDeathStart += CharacterBody_OnDeathStart;
+
             // place chests
             On.RoR2.SceneDirector.Start += SceneDirector_Start;
 
@@ -3009,6 +3107,8 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             On.EntityStates.Bison.Charge.FixedUpdate += Charge_FixedUpdate;
             On.EntityStates.ClayBruiser.Weapon.MinigunFire.FixedUpdate += MinigunFire_FixedUpdate;
             On.EntityStates.BrotherMonster.WeaponSlam.FixedUpdate += WeaponSlam_FixedUpdate;
+            On.EntityStates.ParentMonster.GroundSlam.FixedUpdate += GroundSlam_FixedUpdate;
+            On.EntityStates.BeetleGuardMonster.GroundSlam.FixedUpdate += GroundSlam_FixedUpdate1;
 
             // escape bgm
             On.RoR2.EscapeSequenceController.BeginEscapeSequence += EscapeSequenceController_BeginEscapeSequence;
@@ -3026,6 +3126,29 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             //On.EntityStates.GlobalSkills.LunarNeedle.ChargeLunarSecondary.PlayChargeAnimation += PlayChargeLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarNeedle.ThrowLunarSecondary.PlayThrowAnimation += PlayThrowLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += PlayRuinAnimation;
+        }
+
+        private static void CharacterBody_OnDeathStart(On.RoR2.CharacterBody.orig_OnDeathStart orig, CharacterBody self)
+        {
+            if (self)
+            {
+                VirusHandler virusHandler = self.GetComponent<VirusHandler>();
+                if (virusHandler) virusHandler.TrySpawn();
+            }
+
+            orig(self);
+        }
+
+        private static void GroundSlam_FixedUpdate1(On.EntityStates.BeetleGuardMonster.GroundSlam.orig_FixedUpdate orig, EntityStates.BeetleGuardMonster.GroundSlam self)
+        {
+            if (self.characterBody) self.characterBody.outOfCombatStopwatch = 0f;
+            orig(self);
+        }
+
+        private static void GroundSlam_FixedUpdate(On.EntityStates.ParentMonster.GroundSlam.orig_FixedUpdate orig, EntityStates.ParentMonster.GroundSlam self)
+        {
+            if (self.characterBody) self.characterBody.outOfCombatStopwatch = 0f;
+            orig(self);
         }
 
         private static void WeaponSlam_FixedUpdate(On.EntityStates.BrotherMonster.WeaponSlam.orig_FixedUpdate orig, EntityStates.BrotherMonster.WeaponSlam self)
@@ -3588,6 +3711,9 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
                     // halved on swarms, fuck You
                     if (Run.instance && RoR2.RunArtifactManager.instance.IsArtifactEnabled(RoR2Content.Artifacts.Swarms)) chance *= 0.5f;
+
+                    // double drop rate on sacrifice
+                    if (Run.instance && RoR2.RunArtifactManager.instance.IsArtifactEnabled(RoR2Content.Artifacts.Sacrifice) && isKnifeKill) chance *= 2f;
 
                     chance *= Hunk.instance.pityMultiplier;
 

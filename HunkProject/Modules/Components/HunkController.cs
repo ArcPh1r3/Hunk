@@ -288,6 +288,14 @@ namespace HunkMod.Modules.Components
 
         private void Inventory_onInventoryChanged()
         {
+            if (this.weaponDef = Modules.Weapons.SMG.instance.weaponDef)
+            {
+                if (this.characterBody.inventory && this.characterBody.inventory.GetItemCount(Modules.Weapons.SMG.extendedMag) > 0)
+                {
+                    this.maxAmmo = 60;
+                }
+            }
+
             this.CheckForNeedler();
 
             if (this.characterBody.inventory.GetItemCount(DLC1Content.Items.MissileVoid) > 0)
@@ -336,6 +344,7 @@ namespace HunkMod.Modules.Components
                 if (this.immobilized)
                 {
                     this.characterBody.moveSpeed = 0f;
+                    this.animator.SetBool("isMoving", false);
                 }
 
                 if (this._wasImmobilized && !this.immobilized) this.characterBody.RecalculateStats();
@@ -650,11 +659,19 @@ namespace HunkMod.Modules.Components
             int diff = this.maxAmmo - this.ammo;
             int magSize = this.weaponDef.magSize;
 
-            if (this.characterBody.master)
+            /*if (this.characterBody.master)
             {
                 if (this.characterBody.master.inventory)
                 {
                     magSize *= 1 + this.characterBody.master.inventory.GetItemCount(RoR2Content.Items.LunarBadLuck);
+                }
+            }*/
+
+            if (this.weaponDef = Modules.Weapons.SMG.instance.weaponDef)
+            {
+                if (this.characterBody.inventory && this.characterBody.inventory.GetItemCount(Modules.Weapons.SMG.extendedMag) > 0)
+                {
+                    magSize = 60;
                 }
             }
 
@@ -753,6 +770,17 @@ namespace HunkMod.Modules.Components
             // ammo
             this.maxAmmo = this.weaponDef.magSize;
             this.ammo = this.weaponTracker.weaponData[index].currentAmmo;
+
+            if (this.weaponDef == Modules.Weapons.SMG.instance.weaponDef)
+            {
+                if (this.weaponTracker.weaponData[index].weaponDef = Modules.Weapons.SMG.instance.weaponDef)
+                {
+                    if (this.characterBody.inventory && this.characterBody.inventory.GetItemCount(Modules.Weapons.SMG.extendedMag) > 0)
+                    {
+                        this.maxAmmo = 60;
+                    }
+                }
+            }
 
             // model swap
             if (this.weaponDef.modelPrefab)
@@ -1044,6 +1072,9 @@ namespace HunkMod.Modules.Components
             // alien head
             if (this.characterBody && this.characterBody.inventory)
             {
+                float baseMult = 1.25f;
+                if (MainPlugin.greenAlienHeadInstalled) baseMult = 1.1f;
+
                 int alienHeadCount = this.characterBody.inventory.GetItemCount(RoR2Content.Items.AlienHead);
                 if (alienHeadCount > 0)
                 {
@@ -1051,17 +1082,29 @@ namespace HunkMod.Modules.Components
                     {
                         if (MainPlugin.greenAlienHeadInstalled)
                         {
-                            multiplier *= 1.15f;
+                            multiplier *= baseMult;
+                            baseMult *= 1.1f - 1f;
                         }
                         else
                         {
-                            multiplier *= 1.25f;
+                            multiplier *= baseMult;
+                            baseMult *= 1.25f - 1f;
                         }
                     }
                 }
             }
 
-            int amount = Mathf.CeilToInt(this.weaponTracker.weaponData[index].weaponDef.magSize * multiplier * this.weaponTracker.weaponData[index].weaponDef.magPickupMultiplier);
+            int magSize = this.weaponTracker.weaponData[index].weaponDef.magSize;
+
+            if (this.weaponTracker.weaponData[index].weaponDef == Modules.Weapons.SMG.instance.weaponDef)
+            {
+                if (this.characterBody.inventory && this.characterBody.inventory.GetItemCount(Modules.Weapons.SMG.extendedMag) > 0)
+                {
+                    magSize = 90;
+                }
+            }
+
+            int amount = Mathf.CeilToInt(magSize * multiplier * this.weaponTracker.weaponData[index].weaponDef.magPickupMultiplier);
 
             this.weaponTracker.weaponData[index].totalAmmo += amount;
 
@@ -1132,7 +1175,9 @@ namespace HunkMod.Modules.Components
         public void StartDialogue1()
         {
             if (!this.characterBody.hasAuthority || !this.characterBody.isPlayerControlled) return;
+            if (this.weaponTracker.wtfTheFuck) return;
 
+            this.weaponTracker.wtfTheFuck = true;
             this.gameObject.AddComponent<HunkDialogue>();
         }
 

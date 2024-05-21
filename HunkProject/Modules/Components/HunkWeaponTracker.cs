@@ -33,6 +33,7 @@ namespace HunkMod.Modules.Components
         public int lastEquippedIndex = 1;
         public int nextWeapon;
 
+        public bool wtfTheFuck = false;
         public bool ignoreFlag = false;
 
         private HunkController hunk
@@ -126,7 +127,7 @@ namespace HunkMod.Modules.Components
         {
             if (this.hunk.GetComponent<HunkPassive>().isFullArsenal)
             {
-                this.ignoreFlag = true;
+                if (RoR2Application.isInMultiPlayer) this.ignoreFlag = true;
 
                 this.weaponData = new HunkWeaponData[]
                 {

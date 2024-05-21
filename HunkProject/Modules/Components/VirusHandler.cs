@@ -59,7 +59,7 @@ namespace HunkMod.Modules.Components
             AkSoundEngine.StopPlayingID(this.soundPlayID);
         }
 
-        private void TrySpawn()
+        public void TrySpawn()
         {
             if (this.hasSpawnedCarrier) return;
             if (!NetworkServer.active) return;
@@ -72,20 +72,6 @@ namespace HunkMod.Modules.Components
             this.hasSpawnedCarrier = true;
         }
 
-        private void Update()
-        {
-            if (this.characterBody)
-            {
-                if (this.characterBody.healthComponent && !this.characterBody.healthComponent.alive)
-                {
-                    this.TrySpawn();
-
-                    Destroy(this);
-                    return;
-                }
-            }
-        }
-
         private void FixedUpdate()
         {
             this.mutationStopwatch -= Time.fixedDeltaTime;
@@ -94,9 +80,6 @@ namespace HunkMod.Modules.Components
             {
                 if (this.characterBody.healthComponent && !this.characterBody.healthComponent.alive)
                 {
-                    this.TrySpawn();
-
-                    Destroy(this);
                     return;
                 }
 
@@ -114,7 +97,7 @@ namespace HunkMod.Modules.Components
                 {
                     if (this.characterModel.baseRendererInfos[i].renderer)
                     {
-                        if (this.characterModel.baseRendererInfos[i].renderer.gameObject.GetComponent<ParticleSystemRenderer>()) this.characterModel.baseRendererInfos[i].defaultMaterial = this.overrideParticleMat;
+                        if (this.characterModel.baseRendererInfos[i].renderer.gameObject.GetComponent<ParticleSystemRenderer>() || this.characterModel.baseRendererInfos[i].renderer.gameObject.GetComponent<LineRenderer>()) this.characterModel.baseRendererInfos[i].defaultMaterial = this.overrideParticleMat;
                         else this.characterModel.baseRendererInfos[i].defaultMaterial = this.overrideMat;
                     }
                 }

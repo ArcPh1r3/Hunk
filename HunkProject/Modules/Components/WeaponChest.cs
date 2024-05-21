@@ -89,12 +89,20 @@ namespace HunkMod.Modules.Components
             }
             else
             {
-                if (MainPlugin.badaBingBadaBoom)
+                if (Modules.Helpers.HunkHasWeapon(Modules.Weapons.MUP.gunStock))
                 {
-                    if (UnityEngine.Random.value > 0.5f) itemDef = Modules.Weapons.Shotgun.instance.itemDef;
+                    if (MainPlugin.badaBingBadaBoom) itemDef = Modules.Weapons.Shotgun.instance.itemDef;
                     else itemDef = Modules.Weapons.Slugger.instance.itemDef;
                 }
-                else itemDef = Modules.Weapons.MUP.gunStock;
+                else
+                {
+                    if (MainPlugin.badaBingBadaBoom)
+                    {
+                        if (UnityEngine.Random.value > 0.5f) itemDef = Modules.Weapons.Shotgun.instance.itemDef;
+                        else itemDef = Modules.Weapons.Slugger.instance.itemDef;
+                    }
+                    else itemDef = Modules.Weapons.MUP.gunStock;
+                }
 
                 MainPlugin.badaBingBadaBoom = !MainPlugin.badaBingBadaBoom;
             }

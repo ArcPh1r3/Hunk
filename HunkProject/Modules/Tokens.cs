@@ -35,6 +35,7 @@ namespace HunkMod.Modules
             LanguageAPI.Add(prefix + "TOFU_SKIN_NAME", "Tofu");
             LanguageAPI.Add(prefix + "SUPER_SKIN_NAME", "<color=#" + Helpers.yellowItemHex + ">Early Supporter" + Helpers.colorSuffix);
             LanguageAPI.Add(prefix + "LIGHTWEIGHT_SKIN_NAME", "Lightweight");
+            LanguageAPI.Add(prefix + "WESKER_SKIN_NAME", "Mastermind");
             LanguageAPI.Add(prefix + "COMMANDO_SKIN_NAME", "Commando");
             #endregion
 
@@ -107,6 +108,10 @@ namespace HunkMod.Modules
             #region Utility
             LanguageAPI.Add(prefix + "UTILITY_DODGE_NAME", "Quickstep");
             LanguageAPI.Add(prefix + "UTILITY_DODGE_DESCRIPTION", "<style=cIsUtility>Dash</style> a short distance. If used preemptively to <style=cIsUtility>avoid an attack</style>, perform a <style=cIsDamage>Perfect Dodge</style>.");
+
+            LanguageAPI.Add(prefix + "UTILITY_DODGE_SCEPTER_NAME", "Urostep");
+            LanguageAPI.Add(prefix + "UTILITY_DODGE_SCEPTER_DESCRIPTION", "<style=cIsUtility>Dash</style> a short distance. If used preemptively to <style=cIsUtility>avoid an attack</style>, perform a <style=cIsDamage>Perfect Dodge</style>."
+                + Helpers.ScepterDescription("The power of Uroboros flows through you."));
             #endregion
 
             #region Special

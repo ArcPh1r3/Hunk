@@ -126,6 +126,10 @@ ___
 
 ## Changelog
 
+`1.1.6`
+- Added new skin: Mastermind
+- Fixed Gun Stock being able to spawn more than once
+
 `1.1.5`
 - Added new passive: Hustle - HUNK's sprint now increases in speed over time up to a cap (it's not listed in the loadout yet)
 - ^Overwhelming amounts of feedback regarding how slow he is, which is true, 0 traversal skills and a side objective that forces him to scour the whole map. this should subtly help his map traversal without impacting the rest of his gameplay

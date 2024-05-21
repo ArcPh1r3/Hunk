@@ -33,6 +33,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
             base.OnEnter();
             this.animator = this.GetModelAnimator();
             this.animator.SetBool("isMoving", false);
+            this.animator.SetBool("canCancel", false);
             this.characterMotor.velocity = Vector3.zero;
             this.target = this.targetObject.GetComponent<HealthComponent>();
             this.targetPos = this.target.transform.position;
@@ -107,6 +108,8 @@ namespace HunkMod.SkillStates.Hunk.Counter
             this.hunk.reloadTimer = 1f;
             this.characterMotor.jumpCount = this.characterBody.maxJumpCount;
             this.characterBody.isSprinting = false;
+
+            if (base.fixedAge >= 0.2f * this.duration) this.animator.SetBool("canCancel", true);
 
             if (base.isAuthority)
             {

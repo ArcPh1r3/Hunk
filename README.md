@@ -126,6 +126,22 @@ ___
 
 ## Changelog
 
+`1.1.7`
+- Made Perfect Dodges more consistent against Beetle Guards and Parents
+- Melee ammo drop rate is now doubled on Sacrifice
+- Laser Sight (LE 5) now boosts the headshot bonus from 25% to 50%
+- Added gun attachment: Extended Magazine (LE 5) - Boosts mag size to 60 and increases ammo on pickup from 32 to 90
+- Fixed more counter animation issues
+- Fixed Gun Stock no longer appearing at all due to the previous fix; all works as intended now
+- Fixed rare issue where an infected enemy could die without spawning the bug
+- Fixed Commencement intro dialogue replaying if HUNK died and respawned
+- Fixed redundant weapon cases spawning while running Looming Dread in singleplayer
+
+`1.1.6`
+- Added new skin: Mastermind
+- Fixed Gun Stock being able to spawn more than once
+- Fixed neck snap animation bug for real
+
 `1.1.5`
 - Added new passive: Hustle - HUNK's sprint now increases in speed over time up to a cap (it's not listed in the loadout yet)
 - ^Overwhelming amounts of feedback regarding how slow he is, which is true, 0 traversal skills and a side objective that forces him to scour the whole map. this should subtly help his map traversal without impacting the rest of his gameplay

@@ -86,6 +86,7 @@ namespace HunkMod.Modules
         public static GameObject cardboardBox;
         public static GameObject fragGrenade;
         public static GameObject impEye;
+        public static GameObject uroborosEffect;
 
         public static GameObject tarExplosion;
 
@@ -111,6 +112,7 @@ namespace HunkMod.Modules
             }
 
             ammoPickupEffectPrefab = CreateTextPopupEffect("HunkAmmoPickupEffect", "");
+            //MainPlugin.Destroy(ammoPickup.GetComponent<EffectComponent>());
 
             weaponRadial = mainAssetBundle.LoadAsset<GameObject>("WeaponRadial");
             weaponRadial.AddComponent<WeaponRadial>();
@@ -724,6 +726,16 @@ namespace HunkMod.Modules
 
             impEye = mainAssetBundle.LoadAsset<GameObject>("mdlImpEye");
             impEye.GetComponentInChildren<SkinnedMeshRenderer>().material = eyeMat;
+
+            uroborosEffect = mainAssetBundle.LoadAsset<GameObject>("UroborosEffect");
+            uroborosEffect.AddComponent<EffectComponent>();
+            uroborosEffect.AddComponent<VFXAttributes>();
+            uroborosEffect.AddComponent<DestroyOnTimer>().duration = 10f;
+
+            uroborosEffect.transform.Find("Smoke").GetComponent<ParticleSystemRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/VFX/matOpaqueDustSpeckledLarge.mat").WaitForCompletion();
+            uroborosEffect.transform.Find("Smoke/Embers").GetComponent<ParticleSystemRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Base/Titan/matTitanLaserGlob.mat").WaitForCompletion();
+
+            AddNewEffectDef(uroborosEffect);
 
             tarExplosion = CreateBloodExplosionEffect("HunkTarBloodExplosion", Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/VFX/matBloodClayLarge.mat").WaitForCompletion());
         }

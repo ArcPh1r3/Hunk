@@ -103,7 +103,13 @@ namespace HunkMod.SkillStates.Hunk.Weapon.SMG
                 {
                     if (BulletAttack.IsSniperTargetHit(hitInfo))
                     {
-                        damageInfo.damage *= 1.25f;
+                        float mult = 1.25f;
+                        if (this.characterBody.inventory && this.characterBody.inventory.GetItemCount(Modules.Weapons.SMG.laserSight) > 0)
+                        {
+                            mult = 1.5f;
+                        }
+
+                        damageInfo.damage *= mult;
                         damageInfo.damageColorIndex = DamageColorIndex.Sniper;
                         EffectData effectData = new EffectData
                         {
