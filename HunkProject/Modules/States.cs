@@ -29,6 +29,8 @@ namespace HunkMod.Modules
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Roll));
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.SteadyAim));
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Step));
+            entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Urostep));
+            entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Counter.UroLunge));
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.AirDodge));
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Roll));
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.SlowRoll));

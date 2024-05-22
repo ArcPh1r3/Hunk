@@ -732,8 +732,15 @@ namespace HunkMod.Modules
             uroborosEffect.AddComponent<VFXAttributes>();
             uroborosEffect.AddComponent<DestroyOnTimer>().duration = 10f;
 
-            uroborosEffect.transform.Find("Smoke").GetComponent<ParticleSystemRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/VFX/matOpaqueDustSpeckledLarge.mat").WaitForCompletion();
+            Material smokeMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/VFX/matDustDirectional.mat").WaitForCompletion());
+            smokeMat.SetColor("_TintColor", new Color(1f, 0f, 0f, 80f / 255f));
+            smokeMat.SetTexture("_RemapTex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Common/ColorRamps/texRampShadowClone.png").WaitForCompletion());
+            smokeMat.SetFloat("_AlphaBoost", 3.75f);
+            smokeMat.SetFloat("_AlphaBias", 0.1f);
+
+            uroborosEffect.transform.Find("Smoke").GetComponent<ParticleSystemRenderer>().material = smokeMat;
             uroborosEffect.transform.Find("Smoke/Embers").GetComponent<ParticleSystemRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Base/Titan/matTitanLaserGlob.mat").WaitForCompletion();
+            uroborosEffect.transform.Find("Smoke/Embers (1)").GetComponent<ParticleSystemRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Base/Titan/matTitanLaserGlob.mat").WaitForCompletion();
 
             AddNewEffectDef(uroborosEffect);
 

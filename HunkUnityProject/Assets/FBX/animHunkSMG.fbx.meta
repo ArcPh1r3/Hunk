@@ -198,6 +198,12 @@ ModelImporter:
   - first:
       74: -854147973710459245
     second: Armature|SprintFastOLD2
+  - first:
+      74: -8116521874946280104
+    second: Armature|Urostep
+  - first:
+      74: 6001336024352348071
+    second: Armature|UrostepEnd
   externalObjects: {}
   materials:
     materialImportMode: 1

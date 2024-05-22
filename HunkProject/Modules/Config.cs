@@ -30,6 +30,7 @@ namespace HunkMod.Modules
         public static ConfigEntry<bool> fancyShieldGlobal;
         public static ConfigEntry<bool> shieldBubble;
         public static ConfigEntry<bool> customHUD;
+        public static ConfigEntry<bool> loreAccurateWeskah;
         public static ConfigEntry<bool> blacklistHunkItems;
         public static ConfigEntry<bool> overTheShoulderCamera;
         public static ConfigEntry<bool> overTheShoulderCamera2;
@@ -147,6 +148,12 @@ false,
 "Custom HUD",
 false,
 "Set to true to enable a custom HUD tailored just for HUNK. (Client-side)");
+
+            loreAccurateWeskah
+= Config.BindAndOptions("01 - General",
+"Lore Accurate Wesker",
+false,
+"Set to true to spawn with an Ancient Scepter while using the Mastermind skin.");
 
             blacklistHunkItems
 = Config.BindAndOptions("01 - General",

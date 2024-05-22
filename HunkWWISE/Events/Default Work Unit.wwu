@@ -916,6 +916,28 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="sfx_hunk_retheme" ID="{F3ABFF22-C23A-40D9-846F-5D665903CDF0}">
+					<ChildrenList>
+						<Action Name="" ID="{304CD1BC-F1FD-4C3B-B00E-B32B8FF2933D}" ShortID="564560033">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_retheme" ID="{82376D7F-29E6-4681-87E9-4A8D18079357}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_urostep" ID="{08B2FE39-5EAB-4864-90CA-988BA47176A1}">
+					<ChildrenList>
+						<Action Name="" ID="{746D27C9-14C8-4B3A-926C-20D9F8833388}" ShortID="1051851475">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_urostep" ID="{3E74686E-0A9E-499D-8372-21BAC1C0A236}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

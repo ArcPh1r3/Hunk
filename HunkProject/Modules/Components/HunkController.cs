@@ -288,7 +288,7 @@ namespace HunkMod.Modules.Components
 
         private void Inventory_onInventoryChanged()
         {
-            if (this.weaponDef = Modules.Weapons.SMG.instance.weaponDef)
+            if (this.weaponDef == Modules.Weapons.SMG.instance.weaponDef)
             {
                 if (this.characterBody.inventory && this.characterBody.inventory.GetItemCount(Modules.Weapons.SMG.extendedMag) > 0)
                 {
@@ -667,7 +667,7 @@ namespace HunkMod.Modules.Components
                 }
             }*/
 
-            if (this.weaponDef = Modules.Weapons.SMG.instance.weaponDef)
+            if (this.weaponDef == Modules.Weapons.SMG.instance.weaponDef)
             {
                 if (this.characterBody.inventory && this.characterBody.inventory.GetItemCount(Modules.Weapons.SMG.extendedMag) > 0)
                 {
@@ -773,7 +773,7 @@ namespace HunkMod.Modules.Components
 
             if (this.weaponDef == Modules.Weapons.SMG.instance.weaponDef)
             {
-                if (this.weaponTracker.weaponData[index].weaponDef = Modules.Weapons.SMG.instance.weaponDef)
+                if (this.weaponTracker.weaponData[index].weaponDef == Modules.Weapons.SMG.instance.weaponDef)
                 {
                     if (this.characterBody.inventory && this.characterBody.inventory.GetItemCount(Modules.Weapons.SMG.extendedMag) > 0)
                     {

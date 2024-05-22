@@ -51,8 +51,32 @@ namespace HunkMod.SkillStates.Hunk
 				{
 					this.characterBody.portraitIcon = Modules.Assets.LoadCharacterIcon("Tofu");
 				}
+				else if (msc.skins[msc.currentSkinIndex].nameToken.Contains("WESKER"))
+				{
+					if (Modules.Config.loreAccurateWeskah.Value)
+                    {
+						if (MainPlugin.scepterInstalled)
+						{
+							this.TryGiveScepter();
+						}
+					}
+				}
 			}
 		}
+
+		private void TryGiveScepter()
+        {
+			if (this.characterBody.inventory)
+            {
+				if (this.characterBody.inventory.GetItemCount(ItemCatalog.GetItemDef(AncientScepter.AncientScepterItem.Index)) <= 0)
+                {
+					if (NetworkServer.active)
+                    {
+						this.characterBody.inventory.GiveItem(ItemCatalog.GetItemDef(AncientScepter.AncientScepterItem.Index));
+                    }
+                }
+            }
+        }
 
 		public override void FixedUpdate()
         {

@@ -31,6 +31,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
             base.PlayCrossfade("FullBody, Override", "CounterLunge", "Dodge.playbackRate", this.duration, 0.05f);
 
             //Util.PlaySound("sfx_hunk_step_foley", this.gameObject);
+            Util.PlaySound("sfx_hunk_urostep", this.gameObject);
 
             this.characterModel.invisibilityCount++;
             this.hunk.iFrames = this.duration;
@@ -42,7 +43,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
             this.hunk.immobilized = true;
 
             this.ApplyBuff();
-            this.CreateDashEffect();
+            //this.CreateDashEffect();
         }
 
         public virtual void ApplyBuff()
@@ -55,7 +56,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
             EffectManager.SpawnEffect(Modules.Assets.uroborosEffect, new EffectData
             {
                 origin = this.characterBody.corePosition,
-                rotation = Quaternion.identity,
+                rotation = Util.QuaternionSafeLookRotation(this.slipVector, Vector3.up),
                 scale = 1f
             }, false);
         }
@@ -94,12 +95,11 @@ namespace HunkMod.SkillStates.Hunk.Counter
                 }
             }
 
-            if (!this.removedInvis && base.fixedAge >= this.duration * 0.45f)
+            /*if (!this.removedInvis && base.fixedAge >= this.duration * 0.45f)
             {
                 this.removedInvis = true;
-                this.characterModel.invisibilityCount--;
-                this.CreateDashEffect();
-            }
+
+            }*/
 
             if (base.isAuthority)
             {
@@ -256,12 +256,15 @@ namespace HunkMod.SkillStates.Hunk.Counter
 
             base.OnExit();
 
-            if (!this.removedInvis)
+            this.characterModel.invisibilityCount--;
+            this.CreateDashEffect();
+
+            /*if (!this.removedInvis)
             {
                 this.removedInvis = true;
                 this.characterModel.invisibilityCount--;
                 this.CreateDashEffect();
-            }
+            }*/
 
             if (base.isAuthority && this.inputBank.moveVector != Vector3.zero) this.characterBody.isSprinting = true;
         }

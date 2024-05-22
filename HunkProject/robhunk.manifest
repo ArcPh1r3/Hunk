@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2692620378
+CRC: 3419775942
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1c6975716da9aaa0c73a2101244c8cb6
+    Hash: 30afe10af260e124bba2a4e69fbd509d
   TypeTreeHash:
     serializedVersion: 2
     Hash: c0613469c5f5f41ecc95af7ab71e2d70
@@ -309,6 +309,7 @@ Assets:
 - Assets/Hunk/HUD/WeaponChargeBar.prefab
 - Assets/Hunk/Animations/Default/Reload.anim
 - Assets/Hunk/Materials/matShotgunSlug.mat
+- Assets/Hunk/Mesh/meshMinecraftBase.mesh
 - Assets/Hunk/HUD/Textures/texRadialSelectionOuter.png
 - Assets/Hunk/mdlWeaponCase.prefab
 - Assets/Hunk/VFX/GunLight.prefab
@@ -320,16 +321,19 @@ Assets:
 - Assets/Hunk/Animations/Default/Idle.anim
 - Assets/Hunk/Mesh/Albert.001_mesh.001.mesh
 - Assets/Hunk/Materials/matHunk05.mat
+- Assets/Hunk/Mesh/meshMinecraftOuter.mesh
 - Assets/Hunk/Icons/Item/texLaserSightIcon.png
 - Assets/Hunk/Items/mdlKeycardDiamond.prefab
 - Assets/Hunk/Textures/Matilda/Leon_VP70Custom_S.png
 - Assets/Hunk/Icons/Weapon/texGoldenGunIcon.png
 - Assets/Hunk/Weapons/mdlGoldenGun.prefab
 - Assets/Hunk/Icons/texTofuSkin.png
+- Assets/Hunk/Icons/Skill/texDodgeScepterIcon.png
 - Assets/Hunk/HUD/Animations/DodgeOverlay.controller
 - Assets/Hunk/Animations/GrenadeLauncher/animGrenadeLauncher.controller
 - Assets/Hunk/Mesh/0004_Resident Evil 7_ 1.mesh
 - Assets/Hunk/Icons/texIconSpade.png
+- Assets/Hunk/Icons/texMinecraftSkin.png
 - Assets/Hunk/Textures/RocketLauncher/Leon_ATM-4_D.png
 - Assets/Hunk/Icons/Item/texSpeedloaderIcon.png
 - Assets/Hunk/Mesh/0000_Resident Evil 7_ 1.mesh
@@ -469,6 +473,7 @@ Assets:
 - Assets/Hunk/Materials/matWesker06.mat
 - Assets/Hunk/Icons/Weapon/texPistolIcon.png
 - Assets/Hunk/VFX/FlamethrowerEffect.prefab
+- Assets/Hunk/Materials/matHunkMinecraft.mat
 - Assets/Hunk/Weapons/mdlMUP.prefab
 - Assets/Hunk/Icons/Skill/texSlideIcon.png
 - Assets/Hunk/Materials/matGVirusSample2.mat
@@ -523,6 +528,7 @@ Assets:
 - Assets/Hunk/Textures/Misc/texShell.png
 - Assets/Hunk/Textures/Wesker/T_K29Torso006_BC.png
 - Assets/Hunk/Animations/WeaponCase/animWeaponCase.controller
+- Assets/Hunk/Textures/Minecraft/texMinecraftHunk.png
 - Assets/Hunk/Materials/matKeyCardHeart.mat
 - Assets/Hunk/HUD/Textures/texWhite.png
 - Assets/Hunk/Textures/Shotgun/Leon_RemingtonM1100_N.png

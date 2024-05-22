@@ -719,12 +719,12 @@ Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
                 MainPlugin.developerPrefix + "_HUNK_KEYWORD_COUNTER"
             };
 
-            SkillDef uroDodgeSkillDef = Modules.Skills.CreateAwesomeSkillDef(new SkillDefInfo
+            scepterDodgeSkillDef = Modules.Skills.CreateAwesomeSkillDef(new SkillDefInfo
             {
                 skillName = prefix + "_HUNK_BODY_UTILITY_DODGE_SCEPTER_NAME",
                 skillNameToken = prefix + "_HUNK_BODY_UTILITY_DODGE_SCEPTER_NAME",
                 skillDescriptionToken = prefix + "_HUNK_BODY_UTILITY_DODGE_SCEPTER_DESCRIPTION",
-                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texDodgeIcon"),
+                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texDodgeScepterIcon"),
                 activationState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Urostep)),
                 activationStateMachineName = "Weapon",
                 baseMaxStock = 3, //1
@@ -743,7 +743,7 @@ Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
                 stockToConsume = 1
             });
 
-            Modules.Skills.AddUtilitySkills(prefab, dodgeSkillDef, uroDodgeSkillDef);
+            Modules.Skills.AddUtilitySkills(prefab, dodgeSkillDef);
             #endregion
 
             #region Special
@@ -838,21 +838,7 @@ Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
 
         private static void InitializeScepterSkills()
         {
-            /*AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(scepterGrenadeSkillDef, bodyName, SkillSlot.Special, 0);
-            AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(scepterSupplyDropSkillDef, bodyName, SkillSlot.Special, 1);
-
-            if (Modules.Config.cursed.Value)
-            {
-                AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(scepterSupplyDropLegacySkillDef, bodyName, SkillSlot.Special, 2);
-                AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(scepterKnifeSkillDef, bodyName, SkillSlot.Special, 3);
-                AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(scepterSyringeSkillDef, bodyName, SkillSlot.Special, 4);
-                AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(scepterSyringeLegacySkillDef, bodyName, SkillSlot.Special, 5);
-            }
-            else
-            {
-                AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(scepterKnifeSkillDef, bodyName, SkillSlot.Special, 2);
-                AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(scepterSyringeSkillDef, bodyName, SkillSlot.Special, 3);
-            }*/
+            AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(scepterDodgeSkillDef, bodyName, SkillSlot.Utility, 0);
         }
 
         private static void CreateSkins(GameObject prefab)
@@ -1101,6 +1087,64 @@ Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
             weskerSkin.rendererInfos[5].defaultMaterial = Modules.Assets.CreateMaterial("matWesker03", 0f, Color.black, 1f);
 
             skins.Add(weskerSkin);
+            #endregion
+
+            #region MinecraftSkin
+            SkinDef minecraftSkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_MINECRAFT_SKIN_NAME",
+                Assets.mainAssetBundle.LoadAsset<Sprite>("texLightweightSkin"),
+                defaultRenderers,
+                mainRenderer,
+                model);
+
+            minecraftSkin.meshReplacements = new SkinDef.MeshReplacement[]
+            {
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model01").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("meshMinecraftBase")
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model02").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("meshMinecraftOuter")
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model03").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = null
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model04").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = null
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model05").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = null
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model06").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = null
+                }
+            };
+
+            CharacterModel.RendererInfo[] minecraftInfos = new CharacterModel.RendererInfo[defaultRenderers.Length];
+            defaultRenderers.CopyTo(minecraftInfos, 0);
+
+            Material minecraftMat = Modules.Assets.CreateMaterial("matHunkMinecraft");
+            minecraftMat.EnableKeyword("_EnableCutout");
+            minecraftMat.EnableKeyword("CUTOUT");
+            minecraftMat.SetShaderPassEnabled("Cutout", true);
+            minecraftMat.SetShaderPassEnabled("CUTOUT", true);
+            minecraftMat.SetShaderPassEnabled("_EnableCutout", true);
+
+            minecraftSkin.rendererInfos = minecraftInfos;
+            minecraftSkin.rendererInfos[0].defaultMaterial = minecraftMat;
+            minecraftSkin.rendererInfos[1].defaultMaterial = minecraftMat;
+
+            skins.Add(minecraftSkin);
             #endregion
 
             #region SuperSkin
