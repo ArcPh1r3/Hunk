@@ -62,6 +62,8 @@ namespace HunkMod.Modules
         public static GameObject ammoPickupModel;
         public static GameObject bloodExplosionEffect;
         public static GameObject bloodSpurtEffect;
+        public static GameObject ammoPickupSparkle;
+        public static GameObject ammoSpawnEffect;
 
         public static GameObject shotgunShell;
         public static GameObject shotgunSlug;
@@ -120,6 +122,26 @@ namespace HunkMod.Modules
             GameObject iLovePenis = mainAssetBundle.LoadAsset<GameObject>("AmmoInteraction");
             iLovePenis.transform.Find("Ring/Pillar").GetComponent<ParticleSystemRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/VFX/matTracerBright.mat").WaitForCompletion();
             iLovePenis.transform.Find("Ring/Spark").GetComponent<ParticleSystemRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/VFX/matWideGlow.mat").WaitForCompletion();
+
+            Material intersectionMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/Engi/matEngiMineZoneIntersection.mat").WaitForCompletion());
+            intersectionMat.SetTexture("_RemapTex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Common/ColorRamps/texRampGolem.png").WaitForCompletion());
+            intersectionMat.SetTexture("_Cloud1Tex", null);
+
+            /*Material ammoPillarMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/moon2/matMoonElevatorPillarSubtle.mat").WaitForCompletion());
+            ammoPillarMat.SetTexture("_RemapTex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Common/ColorRamps/texRampParent.png").WaitForCompletion());
+            ammoPillarMat.SetColor("_TintColor", new Color(1f, 235f / 255f, 0.5f, 1f));
+            ammoPillarMat.SetFloat("_Boost", 10f);
+            ammoPillarMat.SetFloat("_AlphaBoost", 3f);
+            ammoPillarMat.SetFloat("_AlphaBias", 0.35f);*/
+
+            iLovePenis.transform.Find("Ring/SphereBorder").GetComponent<ParticleSystemRenderer>().material = intersectionMat;
+            /*iLovePenis.transform.Find("Ring/CylinderBorder").GetComponent<ParticleSystemRenderer>().material = ammoPillarMat;
+
+            iLovePenis.transform.Find("Ring/CylinderBorder").localPosition = new Vector3(0f, 3f, 0f);
+            iLovePenis.transform.Find("Ring/CylinderBorder").localRotation = Quaternion.Euler(new Vector3(0f, 0f, 180f));
+            iLovePenis.transform.Find("Ring/CylinderBorder").localScale = new Vector3(0.5f, 1f, 0.5f);*/
+            iLovePenis.transform.Find("Ring/CylinderBorder").gameObject.SetActive(false);
+            // this ended up looking bad
 
             hgFont = Addressables.LoadAssetAsync<TMP_FontAsset>("RoR2/Base/Common/Fonts/Bombardier/tmpBombDropshadow.asset").WaitForCompletion();
 
@@ -745,6 +767,22 @@ namespace HunkMod.Modules
             AddNewEffectDef(uroborosEffect);
 
             tarExplosion = CreateBloodExplosionEffect("HunkTarBloodExplosion", Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/VFX/matBloodClayLarge.mat").WaitForCompletion());
+
+            Material sparkleMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/Firework/matFireworkSparkle.mat").WaitForCompletion());
+            sparkleMat.SetColor("_TintColor", new Color(1f, 47f / 255f, 0f, 1f));
+
+            ammoPickupSparkle = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Infusion/InfusionOrbFlash.prefab").WaitForCompletion().InstantiateClone("HunkAmmoFlash", false);
+            ammoPickupSparkle.transform.Find("Blood").GetComponent<ParticleSystemRenderer>().material = sparkleMat;
+            AddNewEffectDef(ammoPickupSparkle);
+
+            ammoSpawnEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/StunChanceOnHit/ImpactStunGrenade.prefab").WaitForCompletion().InstantiateClone("HunkAmmoSpawnEffect", false);
+
+            ammoSpawnEffect.transform.Find("Sparks, Long Life").gameObject.SetActive(false);
+            ammoSpawnEffect.transform.Find("Sparks, Short Life").transform.localScale = Vector3.one * 0.2f;
+            ammoSpawnEffect.transform.Find("Flash").gameObject.SetActive(false);
+            ammoSpawnEffect.transform.Find("SoftGlow").gameObject.SetActive(false);
+
+            AddNewEffectDef(ammoSpawnEffect);
         }
 
         private static GameObject CreateBloodExplosionEffect(string effectName, Material bloodMat, float scale = 1f)
@@ -1009,10 +1047,17 @@ namespace HunkMod.Modules
         internal static void AddNewEffectDef(GameObject effectPrefab, string soundName)
         {
             EffectDef newEffectDef = new EffectDef();
+
+            EffectComponent effectComponent = effectPrefab.GetComponent<EffectComponent>();
+            if (!effectComponent) effectComponent = effectPrefab.AddComponent<EffectComponent>();
+
+            VFXAttributes vfxAttributes = effectPrefab.GetComponent<VFXAttributes>();
+            if (!vfxAttributes) vfxAttributes = effectPrefab.AddComponent<VFXAttributes>();
+
             newEffectDef.prefab = effectPrefab;
-            newEffectDef.prefabEffectComponent = effectPrefab.GetComponent<EffectComponent>();
+            newEffectDef.prefabEffectComponent = effectComponent;
             newEffectDef.prefabName = effectPrefab.name;
-            newEffectDef.prefabVfxAttributes = effectPrefab.GetComponent<VFXAttributes>();
+            newEffectDef.prefabVfxAttributes = vfxAttributes;
             newEffectDef.spawnSoundEventName = soundName;
 
             effectDefs.Add(newEffectDef);

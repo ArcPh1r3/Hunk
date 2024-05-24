@@ -49,6 +49,7 @@ namespace HunkMod.Modules.Components
                         itemPool.Add(Modules.Weapons.Flamethrower.instance.itemDef);
                         itemPool.Add(Modules.Weapons.GrenadeLauncher.instance.itemDef);
                         itemPool.Add(Modules.Weapons.SMG.laserSight);
+                        itemPool.Add(Modules.Weapons.SMG.extendedMag);
                         itemPool.Add(Modules.Weapons.MUP.gunStock);
                         itemPool.Add(Modules.Weapons.Magnum.longBarrel);
                         itemPool.Add(Modules.Weapons.Revolver.speedloader);

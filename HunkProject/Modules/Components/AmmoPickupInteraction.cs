@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using EntityStates.Barrel;
 using RoR2;
 using RoR2.Networking;
+using RoR2.Orbs;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -62,11 +63,16 @@ namespace HunkMod.Modules.Components
 				this.Networkopened = true;
 				//EntityStateMachine esm = base.GetComponent<EntityStateMachine>();
 				//if (esm) esm.SetNextState(new Opening());
-				HunkController hunk = activator.GetComponent<HunkController>();
+				/*HunkController hunk = activator.GetComponent<HunkController>();
 				if (hunk)
 				{
 					hunk.ServerGetAmmo(this.multiplier);
-				}
+				}*/
+
+				AmmoOrb ammoOrb = new AmmoOrb();
+				ammoOrb.origin = this.transform.position;
+				ammoOrb.target = Util.FindBodyMainHurtBox(activator.GetComponent<CharacterBody>());
+				OrbManager.instance.AddOrb(ammoOrb);
 
 				if (this.destroyOnOpen) Destroy(this.destroyOnOpen);
 				NetworkServer.Destroy(this.gameObject);
@@ -162,6 +168,39 @@ namespace HunkMod.Modules.Components
 
 		public override void PreStartClient()
 		{
+		}
+	}
+
+	public class AmmoOrb : Orb
+	{
+		private HunkController hunk;
+		public override void Begin()
+		{
+			base.duration = UnityEngine.Random.Range(0.2f, 0.3f);
+
+			EffectData effectData = new EffectData
+			{
+				origin = this.origin,
+				genericFloat = base.duration
+			};
+
+			effectData.SetHurtBoxReference(this.target);
+
+			EffectManager.SpawnEffect(Modules.Survivors.Hunk.ammoOrb, effectData, true);
+
+			HurtBox hurtBox = this.target.GetComponent<HurtBox>();
+			if (hurtBox)
+			{
+				this.hunk = hurtBox.healthComponent.GetComponent<HunkController>();
+			}
+		}
+
+		public override void OnArrival()
+		{
+			if (this.hunk)
+			{
+				this.hunk.ServerGetAmmo();
+			}
 		}
 	}
 }

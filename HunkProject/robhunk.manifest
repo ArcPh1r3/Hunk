@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3419775942
+CRC: 3544316111
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 30afe10af260e124bba2a4e69fbd509d
+    Hash: 185dceafb538e9a9366b688864483db3
   TypeTreeHash:
     serializedVersion: 2
     Hash: c0613469c5f5f41ecc95af7ab71e2d70
@@ -126,7 +126,6 @@ Assets:
 - Assets/Hunk/HUD/Textures/texBlankFill.png
 - Assets/Hunk/VFX/matSpeedLine.mat
 - Assets/Hunk/VFX/matSpike.mat
-- Assets/Hunk/Animations/Default/Sprint.anim
 - Assets/Hunk/Animations/WeaponCase/Idle.anim
 - Assets/Hunk/Textures/Grenade/Leon_Grenade_N.png
 - Assets/Hunk/Animations/Rocket/Descend.anim
@@ -431,6 +430,7 @@ Assets:
 - Assets/Hunk/Textures/GrenadeLauncher/T_M79_Normal.png
 - Assets/Hunk/Animations/DisplayCase/animDisplayCase.controller
 - Assets/Hunk/VFX/texSpeedLine.png
+- Assets/Hunk/Animations/Default/Sprint.anim
 - Assets/Hunk/Textures/Wesker/T_K29Legs006_BC.png
 - Assets/Hunk/Icons/Weapon/texSluggerIcon.png
 - Assets/Hunk/Textures/Wesker/T_K29ACC006_N.png

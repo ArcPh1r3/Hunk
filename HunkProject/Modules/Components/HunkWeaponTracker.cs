@@ -272,7 +272,7 @@ namespace HunkMod.Modules.Components
                 this.weaponData[this.weaponData.Length - 1] = new HunkWeaponData
                 {
                     weaponDef = weaponDef,
-                    totalAmmo = 0,
+                    totalAmmo = weaponDef.magSize * weaponDef.startingMags,
                     currentAmmo = weaponDef.magSize
                 };
             }

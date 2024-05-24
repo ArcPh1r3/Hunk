@@ -12,6 +12,7 @@ namespace HunkMod.Modules.Weapons
         public override GameObject crosshairPrefab => Modules.Assets.rocketLauncherCrosshairPrefab2;
         public override int magSize => 999;
         public override float magPickupMultiplier => 1f;
+        public override int startingMags => 0;
         public override float reloadDuration => 3f;
         public override string ammoName => "84mm Rockets";
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlATM");

@@ -22,6 +22,7 @@ public class HunkWeaponDef : ScriptableObject
     public GameObject crosshairPrefab = null;
     public int magSize = 8;
     public float magPickupMultiplier = 1f;
+    public int startingMags = 1;
     public float reloadDuration = 2.4f;
     public string ammoName = "";
     public bool allowAutoReload = true;
@@ -60,6 +61,7 @@ public class HunkWeaponDef : ScriptableObject
         weaponDef.crosshairPrefab = weaponDefInfo.crosshairPrefab;
         weaponDef.magSize = weaponDefInfo.magSize;
         weaponDef.magPickupMultiplier = weaponDefInfo.magPickupMultiplier;
+        weaponDef.startingMags = weaponDefInfo.startingMags;
         weaponDef.reloadDuration = weaponDefInfo.reloadDuration;
         weaponDef.ammoName = weaponDefInfo.ammoName;
 
@@ -88,6 +90,7 @@ public struct HunkWeaponDefInfo
     public GameObject crosshairPrefab;
     public int magSize;
     public float magPickupMultiplier;
+    public int startingMags;
     public float reloadDuration;
     public string ammoName;
 

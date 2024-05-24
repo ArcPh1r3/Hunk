@@ -12,6 +12,7 @@ namespace HunkMod.Modules.Weapons
         public override GameObject crosshairPrefab => Modules.Assets.rocketLauncherCrosshairPrefab2;
         public override int magSize => 4;
         public override float magPickupMultiplier => 0.5f;
+        public override int startingMags => 0;
         public override float reloadDuration => 3f;
         public override string ammoName => "66mm Rockets";
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlRocketLauncher");

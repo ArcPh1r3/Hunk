@@ -13,6 +13,7 @@ using HunkMod.Modules.Components;
 using R2API.Networking;
 using R2API.Networking.Interfaces;
 using UnityEngine.SceneManagement;
+using RoR2.Orbs;
 
 namespace HunkMod.Modules.Survivors
 {
@@ -111,6 +112,10 @@ namespace HunkMod.Modules.Survivors
         internal static ItemDef gVirus;
         internal static ItemDef gVirus2;
         internal static ItemDef gVirusFinal;
+        internal static ItemDef ammoItem;
+
+        // orb
+        internal static GameObject ammoOrb;
 
         internal static BuffDef immobilizedBuff;
         internal static BuffDef infectedBuff;
@@ -142,6 +147,7 @@ namespace HunkMod.Modules.Survivors
                 CreateTerminal();
                 CreatePod();
                 CreateHealthBarStyle();
+                CreateOrb();
 
                 characterPrefab = CreateBodyPrefab(true);
 
@@ -191,7 +197,7 @@ namespace HunkMod.Modules.Survivors
                 jumpPower = 15f,
                 attackSpeed = 1f,
                 crit = Config.baseCrit.Value
-            });;;
+            });
 
             ChildLocator childLocator = newPrefab.GetComponentInChildren<ChildLocator>();
 
@@ -203,8 +209,7 @@ namespace HunkMod.Modules.Survivors
             //body.bodyFlags |= CharacterBody.BodyFlags.SprintAnyDirection;
             //body.sprintingSpeedMultiplier = 1.75f;
             body.hideCrosshair = true;
-
-            //newPrefab.AddComponent<NinjaMod.Modules.Components.NinjaController>();
+            body.overrideCoreTransform = childLocator.FindChild("Chest");
 
             SfxLocator sfx = newPrefab.GetComponent<SfxLocator>();
             //sfx.barkSound = "";
@@ -488,6 +493,7 @@ namespace HunkMod.Modules.Survivors
             skillLocator.passiveSkill.skillNameToken = prefix + "_HUNK_BODY_PPASSIVE_NAME";
             skillLocator.passiveSkill.skillDescriptionToken = prefix + "_HUNK_BODY_PPASSIVE_DESCRIPTION";
             skillLocator.passiveSkill.icon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texOSPIcon");
+            skillLocator.passiveSkill.keywordToken = MainPlugin.developerPrefix + "_HUNK_KEYWORD_VIRUS";
 
             Hunk.reloadSkillDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
             {
@@ -2840,6 +2846,33 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             infectedHealthBarStyle.trailingUnderHealthBarStyle.baseColor = new Color(1f, 1f, 0f);
         }
 
+        private static void CreateOrb()
+        {
+            ammoOrb = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/Effects/OrbEffects/InfusionOrbEffect"), "HunkAmmoOrbEffect", true);
+            if (!ammoOrb.GetComponent<NetworkIdentity>()) ammoOrb.AddComponent<NetworkIdentity>();
+
+            TrailRenderer trail = ammoOrb.transform.Find("TrailParent").Find("Trail").GetComponent<TrailRenderer>();
+            trail.widthMultiplier = 0.25f;
+            trail.material = Addressables.LoadAssetAsync<Material>("RoR2/Base/Grandparent/matGrandparentTeleportOutBoom.mat").WaitForCompletion();
+
+            ammoOrb.transform.Find("VFX").Find("Core").GetComponent<ParticleSystemRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Base/Loader/matOmniRing2Loader.mat").WaitForCompletion();
+            ammoOrb.transform.Find("VFX").localScale = Vector3.one * 0.8f;
+
+            ammoOrb.transform.Find("VFX").Find("Core").localScale = Vector3.one * 2.5f;
+
+            ammoOrb.transform.Find("VFX").Find("PulseGlow").GetComponent<ParticleSystemRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Base/Grandparent/matGrandParentSunGlow.mat").WaitForCompletion();
+
+            OrbEffect orb = ammoOrb.GetComponent<OrbEffect>();
+            orb.startVelocity1 = new Vector3(0f, 0f, 0f);
+            orb.startVelocity2 = new Vector3(1f, 1f, 1f);
+
+            orb.startEffect = Modules.Assets.ammoSpawnEffect;
+            orb.endEffect = Modules.Assets.ammoPickupSparkle;
+            orb.onArrival = new UnityEngine.Events.UnityEvent();
+
+            Modules.Assets.AddNewEffectDef(ammoOrb);
+        }
+
         private void CreateKeycards()
         {
             spadeKeycard = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/Base/ArtifactKey/ArtifactKey.asset").WaitForCompletion());
@@ -3028,6 +3061,27 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             };
             gVirusFinal.unlockableDef = null;
 
+            ammoItem = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/Base/ArtifactKey/ArtifactKey.asset").WaitForCompletion());
+            ammoItem.name = "HunkAmmo";
+            ammoItem.nameToken = "ROB_HUNK_AMMOITEM_NAME";
+            ammoItem.descriptionToken = "ROB_HUNK_AMMOITEM_DESC";
+            ammoItem.pickupToken = "ROB_HUNK_AMMOITEM_DESC";
+            ammoItem.loreToken = "ROB_HUNK_AMMOITEM_DESC";
+            ammoItem.canRemove = false;
+            ammoItem.hidden = true;
+            ammoItem.pickupIconSprite = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKeycardDiamondIcon");
+            ammoItem.requiredExpansion = null;
+            ammoItem.tags = new ItemTag[]
+            {
+                ItemTag.AIBlacklist,
+                ItemTag.BrotherBlacklist,
+                ItemTag.CannotCopy,
+                ItemTag.CannotDuplicate,
+                ItemTag.CannotSteal,
+                ItemTag.WorldUnique
+            };
+            ammoItem.unlockableDef = null;
+
             HunkWeaponCatalog.itemDefs.Add(spadeKeycard);
             HunkWeaponCatalog.itemDefs.Add(clubKeycard);
             HunkWeaponCatalog.itemDefs.Add(heartKeycard);
@@ -3036,6 +3090,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             HunkWeaponCatalog.itemDefs.Add(gVirus);
             HunkWeaponCatalog.itemDefs.Add(gVirus2);
             HunkWeaponCatalog.itemDefs.Add(gVirusFinal);
+            HunkWeaponCatalog.itemDefs.Add(ammoItem);
         }
 
         private void CreateAmmoInteractable()
@@ -3101,6 +3156,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             On.RoR2.ShopTerminalBehavior.DropPickup += ShopTerminalBehavior_DropPickup;
             On.RoR2.RouletteChestController.EjectPickupServer += RouletteChestController_EjectPickupServer;
             On.RoR2.PurchaseInteraction.OnInteractionBegin += PurchaseInteraction_OnInteractionBegin;
+            On.RoR2.PickupDropletController.OnCollisionEnter += PickupDropletController_OnCollisionEnter;
 
             // bandolier
             On.RoR2.SkillLocator.ApplyAmmoPack += SkillLocator_ApplyAmmoPack;
@@ -3170,6 +3226,25 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             //On.EntityStates.GlobalSkills.LunarNeedle.ChargeLunarSecondary.PlayChargeAnimation += PlayChargeLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarNeedle.ThrowLunarSecondary.PlayThrowAnimation += PlayThrowLunarAnimation;
             //On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += PlayRuinAnimation;
+        }
+
+        private static void PickupDropletController_OnCollisionEnter(On.RoR2.PickupDropletController.orig_OnCollisionEnter orig, PickupDropletController self, Collision collision)
+        {
+            if (self)
+            {
+                if (self.pickupIndex == PickupCatalog.FindPickupIndex(Hunk.ammoItem.itemIndex))
+                {
+                    if (NetworkServer.active && self.alive)
+                    {
+                        self.alive = false;
+                        NetworkServer.Spawn(GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, Quaternion.identity));
+                        UnityEngine.Object.Destroy(self.gameObject);
+                    }
+                    return;
+                }
+            }
+
+            orig(self, collision);
         }
 
         private static void CharacterBody_OnDeathStart(On.RoR2.CharacterBody.orig_OnDeathStart orig, CharacterBody self)
@@ -3538,7 +3613,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
         {
             if (Modules.Helpers.isHunkInPlay && !self.gameObject.name.Contains("uplica"))
             {
-                GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, self.transform.rotation);
+                Helpers.CreateAmmoPickup(self.transform.position, self.transform.rotation);
             }
 
             orig(self);
@@ -3660,16 +3735,16 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
                 if (!self.gameObject.name.Contains("Hunk") && !self.gameObject.name.Contains("uplica"))
                 {
-                    NetworkServer.Spawn(GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, self.transform.rotation));
+                    Helpers.CreateAmmoPickup(self.transform.position, self.transform.rotation);
 
                     if (self.tier3Chance >= 0.2f)
                     {
-                        NetworkServer.Spawn(GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, self.transform.rotation));
+                        Helpers.CreateAmmoPickup(self.transform.position, self.transform.rotation);
                     }
 
                     if (self.tier3Chance >= 1f)
                     {
-                        NetworkServer.Spawn(GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, self.transform.position, self.transform.rotation));
+                        Helpers.CreateAmmoPickup(self.transform.position, self.transform.rotation);
                     }
                 }
 
@@ -3887,6 +3962,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                             ammoTrackerComponent.targetHUD = hud;
                             ammoTrackerComponent.currentText = ammoTracker.transform.Find("Current").gameObject.GetComponent<TMPro.TextMeshProUGUI>();
                             ammoTrackerComponent.totalText = ammoTracker.transform.Find("Total").gameObject.GetComponent<TMPro.TextMeshProUGUI>();
+                            ammoTrackerComponent.bonusText = ammoTracker.transform.Find("Bonus").gameObject.GetComponent<TMPro.TextMeshProUGUI>();
                             ammoTrackerComponent.fontOverride = Modules.Assets.hgFont;
 
                             RectTransform rect = ammoTracker.GetComponent<RectTransform>();
@@ -4020,7 +4096,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
             if (!skillsContainer.Find("WeaponSlot"))
             {
-                if (Modules.Config.showWeaponIcon.Value)
+                if (Modules.Config.showWeaponIcon.Value && !Modules.Config.customHUD.Value)
                 {
                     GameObject weaponSlot = GameObject.Instantiate(skillsContainer.Find("EquipmentSlotPos1").Find("EquipIcon").gameObject, skillsContainer);
                     weaponSlot.name = "WeaponSlot";
@@ -4107,6 +4183,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     ammoTrackerComponent.targetHUD = hud;
                     ammoTrackerComponent.currentText = ammoTracker.transform.Find("Current").gameObject.GetComponent<TMPro.TextMeshProUGUI>();
                     ammoTrackerComponent.totalText = ammoTracker.transform.Find("Total").gameObject.GetComponent<TMPro.TextMeshProUGUI>();
+                    ammoTrackerComponent.bonusText = ammoTracker.transform.Find("Bonus").gameObject.GetComponent<TMPro.TextMeshProUGUI>();
 
                     RectTransform rect = ammoTracker.GetComponent<RectTransform>();
                     rect.localScale = new Vector3(1f, 1f, 1f);

@@ -29,6 +29,7 @@ namespace HunkMod.Modules.Weapons
         public abstract GameObject crosshairPrefab { get; }
         public abstract int magSize { get; }
         public abstract float magPickupMultiplier { get; }
+        public abstract int startingMags { get; }
         public abstract float reloadDuration { get; }
         public abstract string ammoName { get; }
         public abstract SkillDef primarySkillDef { get; }
@@ -66,6 +67,7 @@ namespace HunkMod.Modules.Weapons
                 crosshairPrefab = crosshairPrefab,
                 magSize = magSize,
                 magPickupMultiplier = magPickupMultiplier,
+                startingMags = startingMags,
                 reloadDuration = reloadDuration,
                 ammoName = ammoName,
                 primarySkillDef = primarySkillDef,

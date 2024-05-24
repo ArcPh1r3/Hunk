@@ -327,7 +327,7 @@ namespace HunkMod.Modules.Components
             if (this.ammo > this.maxAmmo) return;
             if (this.ammo - this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo >= this.maxAmmo && this.ammo != this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo) return;
 
-            this.ammo += Mathf.CeilToInt(this.maxAmmo * 0.5f);
+            this.ammo += Mathf.CeilToInt(this.maxAmmo * 1f);
             if (this.ammo > this.maxAmmo) this.ammo = this.maxAmmo;
         }
 

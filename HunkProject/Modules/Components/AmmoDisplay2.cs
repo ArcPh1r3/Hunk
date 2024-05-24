@@ -12,6 +12,7 @@ namespace HunkMod.Modules.Components
         public HUD targetHUD;
         public TextMeshProUGUI currentText;
         public TextMeshProUGUI totalText;
+        public TextMeshProUGUI bonusText;
 
         private Image divider;
         private Image mainPanel;
@@ -62,6 +63,7 @@ namespace HunkMod.Modules.Components
                     {
                         this.totalText.text = "";
                         this.currentText.text = "";
+                        this.bonusText.text = "";
                         this.mainPanel.enabled = false;
                         this.divider.enabled = false;
                         return;
@@ -71,6 +73,7 @@ namespace HunkMod.Modules.Components
                     {
                         this.totalText.text = "";
                         this.currentText.text = "";
+                        this.bonusText.text = "";
                         this.mainPanel.enabled = false;
                         this.divider.enabled = false;
                         return;
@@ -82,16 +85,21 @@ namespace HunkMod.Modules.Components
                     if (this.hunk.ammo <= 0f)
                     {
                         this.currentText.text = "<color=#C80000>0" + Helpers.colorSuffix;
+                        this.bonusText.text = "";
                     }
                     else
                     {
                         if (this.hunk.ammo > this.hunk.weaponTracker.weaponData[hunk.weaponTracker.equippedIndex].currentAmmo)
                         {
-                            this.currentText.text = "<color=#00FF66>" + Mathf.CeilToInt(this.hunk.ammo).ToString() + Helpers.colorSuffix;
+                            //this.currentText.text = "<color=#00FF66>" + Mathf.CeilToInt(this.hunk.ammo).ToString() + Helpers.colorSuffix;
+                            int diff = this.hunk.ammo - this.hunk.weaponTracker.weaponData[hunk.weaponTracker.equippedIndex].currentAmmo;
+                            this.currentText.text = Mathf.CeilToInt(this.hunk.ammo - diff).ToString();
+                            this.bonusText.text = "+" + Mathf.CeilToInt(diff).ToString();
                         }
                         else
                         {
                             this.currentText.text = Mathf.CeilToInt(this.hunk.ammo).ToString();
+                            this.bonusText.text = "";
                         }
                     }
 
@@ -104,10 +112,13 @@ namespace HunkMod.Modules.Components
                         this.totalText.text = "<color=#C80000>0" + Helpers.colorSuffix;
                     }
 
+                    
+                    // fading
                     Color col = this.currentText.color;
                     Color col2 = this.totalText.color;
                     Color col3 = this.mainPanel.color;
                     Color col4 = this.divider.color;
+                    Color col5 = this.bonusText.color;
 
                     if (this.hunk.ammoKillTimer <= 0f) this.alpha -= 4f * Time.fixedDeltaTime;
                     else this.alpha += 4f * Time.fixedDeltaTime;
@@ -118,11 +129,14 @@ namespace HunkMod.Modules.Components
                     col2.a = this.alpha;
                     col3.a = Util.Remap(this.alpha, 0f, 1f, 0f, this.desiredAlpha);
                     col4.a = Util.Remap(this.alpha, 0f, 1f, 0f, 0.5f);
+                    col5.a = this.alpha;
 
                     this.currentText.color = col;
                     this.totalText.color = col2;
+                    this.bonusText.color = col2;
                     this.mainPanel.color = col3;
                     this.divider.color = col4;
+                    this.bonusText.color = col5;
                 }
             }
         }

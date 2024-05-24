@@ -31,6 +31,7 @@ namespace HunkMod.Modules
         public static ConfigEntry<bool> shieldBubble;
         public static ConfigEntry<bool> customHUD;
         public static ConfigEntry<bool> loreAccurateWeskah;
+        public static ConfigEntry<bool> originalAmmoPickups;
         public static ConfigEntry<bool> blacklistHunkItems;
         public static ConfigEntry<bool> overTheShoulderCamera;
         public static ConfigEntry<bool> overTheShoulderCamera2;
@@ -154,6 +155,12 @@ false,
 "Lore Accurate Wesker",
 false,
 "Set to true to spawn with an Ancient Scepter while using the Mastermind skin.");
+
+            originalAmmoPickups
+= Config.BindAndOptions("01 - General",
+"Original Ammo Pickup Behavior",
+false,
+"Reverts ammo pickups to static objects in chests.");
 
             blacklistHunkItems
 = Config.BindAndOptions("01 - General",

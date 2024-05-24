@@ -1,4 +1,5 @@
 ﻿using HunkMod.Modules.Components;
+using HunkMod.Modules.Survivors;
 using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -31,6 +32,36 @@ namespace HunkMod.Modules
             return "\n<color=#d299ff>SCEPTER: " + desc + "</color>";
         }
 
+        public static void CreateAmmoPickup(Vector3 origin)
+        {
+            CreateAmmoPickup(origin, Quaternion.identity);
+        }
+
+        public static void CreateAmmoPickup(Vector3 origin, Quaternion rotation)
+        {
+            if (!Helpers.isHunkInPlay) return;
+
+            if (RoR2Application.isInSinglePlayer)
+            {
+                if (Helpers.isLoomingDreadActive) return;
+            }
+
+            if (Modules.Config.originalAmmoPickups.Value)
+            {
+                NetworkServer.Spawn(GameObject.Instantiate(Hunk.instance.ammoPickupInteractable, origin, rotation));
+            }
+            else
+            {
+                float xSpread = Random.Range(-1.4f, 1.4f);
+                float ySpread = Random.Range(-1.4f, 1.4f);
+
+                PickupDropletController.CreatePickupDroplet(
+                    PickupCatalog.FindPickupIndex(Hunk.ammoItem.itemIndex),
+                    origin + Vector3.up,
+                    Vector3.up * Random.Range(15f, 35f) + new Vector3(xSpread, 0f, ySpread));
+            }
+        }
+
         [Server]
         public static void CreateItemTakenOrb(Vector3 effectOrigin, GameObject targetObject, ItemIndex itemIndex)
         {
@@ -56,6 +87,31 @@ namespace HunkMod.Modules
                     if (player.networkUser.bodyIndexPreference == BodyCatalog.FindBodyIndex(Modules.Survivors.Hunk.bodyName))
                     {
                         return true;
+                    }
+                }
+                return false;
+            }
+        }
+
+        public static bool isLoomingDreadActive
+        {
+            get
+            {
+                foreach (var player in PlayerCharacterMasterController.instances)
+                {
+                    if (player.networkUser.bodyIndexPreference == BodyCatalog.FindBodyIndex(Modules.Survivors.Hunk.bodyName))
+                    {
+                        if (player.body)
+                        {
+                            HunkController hunk = player.body.GetComponent<HunkController>();
+                            if (hunk)
+                            {
+                                if (hunk.passive)
+                                {
+                                    if (hunk.passive.isFullArsenal) return true;
+                                }
+                            }
+                        }
                     }
                 }
                 return false;

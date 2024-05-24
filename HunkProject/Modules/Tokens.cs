@@ -184,7 +184,7 @@ namespace HunkMod.Modules
 
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_TERMINAL_NAME", "Terminal");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_TERMINAL_CONTEXT", "Insert Sample");
-            LanguageAPI.Add(MainPlugin.developerPrefix + "_SAMPLECOST", "G-Virus Sample");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_SAMPLECOST", "Insert Sample");
 
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_CHEST_NAME", "Weapon Case: ");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_CHEST_CONTEXT", "Open Weapon Case");
@@ -195,6 +195,8 @@ namespace HunkMod.Modules
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYWORD_LOOTING", "<style=cKeywordName>Looting</style><style=cSub>Enemies slain with this skill have a small chance to drop ammo.");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYWORD_PERFECTDODGE", "<style=cKeywordName>Perfect Dodge</style><style=cSub>Refund cooldown and become briefly invulnerable. Allows you to perform a Counterattack.");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYWORD_COUNTER", "<style=cKeywordName>Counterattack</style><style=cSub>Pressing primary performs a lethal counterattack on a nearby enemy.");
+
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYWORD_VIRUS", "<style=cKeywordName>G-Virus</style><style=cSub>Every stage, a random monster becomes <color=#" + Helpers.voidItemHex + ">Infected" + Helpers.colorSuffix + ". It mutates, <style=cIsHealth>growing stronger over time</style>, and killing it drops a <color=#" + Helpers.yellowItemHex + ">G-Virus Sample" + Helpers.colorSuffix + ".");
         }
     }
 }

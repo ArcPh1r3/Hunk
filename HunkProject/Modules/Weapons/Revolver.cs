@@ -15,6 +15,7 @@ namespace HunkMod.Modules.Weapons
         public override GameObject crosshairPrefab => Modules.Assets.magnumCrosshairPrefab;
         public override int magSize => 6;
         public override float magPickupMultiplier => 1f;
+        public override int startingMags => 1;
         public override float reloadDuration => 0.9f;
         public override string ammoName => ".45 ACP Rounds";
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlRevolver");

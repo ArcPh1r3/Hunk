@@ -128,6 +128,16 @@ ___
 
 ## Changelog
 
+`1.2.1`
+- Added keyword to passive explaining a little bit about the G-Virus
+- Ammo pickups from chests now spawn from a pickup droplet to help visibility- can be reverted in config
+- ^this is mostly to address new players missing all the ammo pickups, old behavior is faster so turn it off if you prefer that
+- Picking up new guns now starts them with reserve ammo based on the gun, giving wiggle room to try out new weapons
+- Bandolier pickups now fully refill the mag instead of only half (still fake ammo though)
+- Adjusted fake ammo to be an extra display directly under your current mag, making it more immediately obvious what fake ammo is
+- Fixed misplaced core position
+- Fixed ammo pickups spawning while running Looming Dread in singleplayer, this was both confusing and disappointing
+
 `1.2.0`
 - Added Ancient Scepter upgrade!!
 - Utility upgrade: Uroboros - Dodges now give full iframes, quicker movement, allow counterattacks without a Perfect Dodge and gain an extra charge

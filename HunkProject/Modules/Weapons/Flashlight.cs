@@ -15,6 +15,7 @@ namespace HunkMod.Modules.Weapons
         public override GameObject crosshairPrefab => Modules.Assets.pistolCrosshairPrefab;
         public override int magSize => 0;
         public override float magPickupMultiplier => 0f;
+        public override int startingMags => 0;
         public override float reloadDuration => 0f;
         public override string ammoName => "";
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlFlashlight");
