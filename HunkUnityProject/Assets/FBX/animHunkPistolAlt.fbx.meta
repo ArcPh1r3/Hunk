@@ -141,6 +141,9 @@ ModelImporter:
   - first:
       74: 5935037570651743186
     second: Armature|SprintOLD
+  - first:
+      74: -2468836616550233650
+    second: Armature|Sprint.001
   externalObjects: {}
   materials:
     materialImportMode: 1

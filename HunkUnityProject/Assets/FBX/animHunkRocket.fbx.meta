@@ -129,6 +129,9 @@ ModelImporter:
   - first:
       74: -8576782569239416384
     second: Armature|SwingKnife3
+  - first:
+      74: 5935037570651743186
+    second: Armature|SprintOLD
   externalObjects: {}
   materials:
     materialImportMode: 1

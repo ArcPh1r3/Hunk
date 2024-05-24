@@ -135,6 +135,9 @@ ModelImporter:
   - first:
       74: 5935037570651743186
     second: Armature|SprintOLD
+  - first:
+      74: 8494500648619067496
+    second: Armature|Sprintresafgasweg
   externalObjects: {}
   materials:
     materialImportMode: 1
