@@ -204,6 +204,18 @@ ModelImporter:
   - first:
       74: 6001336024352348071
     second: Armature|UrostepEnd
+  - first:
+      74: 5748670938330650034
+    second: Armature|CastRuin
+  - first:
+      74: -567338641262654150
+    second: Armature|ChargeHooks
+  - first:
+      74: -4381401699723545301
+    second: Armature|FireVisions
+  - first:
+      74: 3777134522311256217
+    second: Armature|ThrowHooks
   externalObjects: {}
   materials:
     materialImportMode: 1

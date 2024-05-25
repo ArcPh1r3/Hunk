@@ -81,7 +81,7 @@ false);
             extendedMag.loreToken = "ROB_HUNK_WEAPON_ADDON2_" + weaponNameToken + "_DESC";
             extendedMag.canRemove = false;
             extendedMag.hidden = false;
-            extendedMag.pickupIconSprite = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texLaserSightIcon");
+            extendedMag.pickupIconSprite = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texExtendedMagIcon");
             extendedMag.requiredExpansion = null;
             extendedMag.tags = new ItemTag[]
             {
@@ -94,7 +94,7 @@ false);
             };
             extendedMag.unlockableDef = null;
 
-            extendedMag.pickupModelPrefab = Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlLaserSight");
+            extendedMag.pickupModelPrefab = Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlExtendedMag");
             Modules.Assets.ConvertAllRenderersToHopooShader(extendedMag.pickupModelPrefab);
 
             HunkWeaponCatalog.itemDefs.Add(extendedMag);

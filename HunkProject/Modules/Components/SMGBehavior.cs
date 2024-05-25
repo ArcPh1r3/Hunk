@@ -8,15 +8,21 @@ namespace HunkMod.Modules.Components
         private GameObject laserSight;
         private GameObject laser;
         private GameObject magazine;
+        private GameObject extendedMag;
+        private MeshRenderer magRenderer;
 
         private void Start()
         {
             this.laserSight = this.childLocator.FindChild("LaserSight").gameObject;
             this.laser = this.childLocator.FindChild("Laser").gameObject;
             this.magazine = this.childLocator.FindChild("Magazine").gameObject;
+            this.extendedMag = this.childLocator.FindChild("ExtendedMag").gameObject;
+            this.magRenderer = this.magazine.GetComponent<MeshRenderer>();
 
             this.laserSight.SetActive(false);
             this.laser.SetActive(false);
+            this.extendedMag.SetActive(false);
+            this.magRenderer.enabled = true;
         }
 
         protected override void RunFixedUpdate()
@@ -45,20 +51,37 @@ namespace HunkMod.Modules.Components
                         {
                             this.laserSight.SetActive(false);
                         }
+
+                        if (this.hunk.characterBody.inventory.GetItemCount(Modules.Weapons.SMG.extendedMag) > 0)
+                        {
+                            this.extendedMag.SetActive(true);
+                            this.magRenderer.enabled = false;
+                        }
+                        else
+                        {
+                            this.extendedMag.SetActive(false);
+                            this.magRenderer.enabled = true;
+                        }
                     }
                     else
                     {
                         this.laserSight.SetActive(false);
+                        this.extendedMag.SetActive(false);
+                        this.magRenderer.enabled = true;
                     }
                 }
                 else
                 {
                     this.laserSight.SetActive(false);
+                    this.extendedMag.SetActive(false);
+                    this.magRenderer.enabled = true;
                 }
             }
             else
             {
                 this.laserSight.SetActive(false);
+                this.extendedMag.SetActive(false);
+                this.magRenderer.enabled = true;
             }
         }
 

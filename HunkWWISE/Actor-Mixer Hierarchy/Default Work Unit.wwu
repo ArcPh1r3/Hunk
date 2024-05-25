@@ -5640,7 +5640,7 @@
 								<RTPC Name="" ID="{F2B0E050-31D2-4016-97A4-18F5AC783DAF}" ShortID="28669932">
 									<ReferenceList>
 										<Reference Name="ControlInput">
-											<ObjectRef Name="Volume_BGM" ID="{50D1A6F5-C932-4B2B-8A42-73CD13DA7D17}" WorkUnitID="{86A48E9A-08D2-42C8-A690-503176424BE7}"/>
+											<ObjectRef Name="Volume_SFX" ID="{4FF50BF4-04DE-43F4-BCE1-1243931798A7}" WorkUnitID="{86A48E9A-08D2-42C8-A690-503176424BE7}"/>
 										</Reference>
 									</ReferenceList>
 									<Curve Name="" ID="{5DB0843B-6AB0-44B7-8C69-58AAE84DD3C0}">

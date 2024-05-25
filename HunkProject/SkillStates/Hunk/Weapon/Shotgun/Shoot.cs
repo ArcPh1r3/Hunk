@@ -12,7 +12,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Shotgun
         public const float RAD2 = 1.414f;
 
         public static float damageCoefficient = 1.4f;
-        public static float procCoefficient = 0.75f;
+        public static float procCoefficient = 1f;
         public float baseDuration = 1.2f;
         public static int bulletCount = 14;
         public static float bulletSpread = 2f;

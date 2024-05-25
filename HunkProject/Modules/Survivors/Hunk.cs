@@ -1095,6 +1095,59 @@ Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
             skins.Add(weskerSkin);
             #endregion
 
+            #region DoomSkin
+            SkinDef doomSkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_DOOM_SKIN_NAME",
+                Assets.mainAssetBundle.LoadAsset<Sprite>("texLightweightSkin"),
+                defaultRenderers,
+                mainRenderer,
+                model);
+
+            doomSkin.meshReplacements = new SkinDef.MeshReplacement[]
+            {
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model01").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("meshSlayerAccessories")
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model02").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("meshSlayerHelmet")
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model03").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("meshSlayerLegs")
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model04").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("meshSlayerTorso")
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model05").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = null
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model06").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = null
+                }
+            };
+
+            CharacterModel.RendererInfo[] doomInfos = new CharacterModel.RendererInfo[defaultRenderers.Length];
+            defaultRenderers.CopyTo(doomInfos, 0);
+
+            doomSkin.rendererInfos = doomInfos;
+            doomSkin.rendererInfos[0].defaultMaterial = Modules.Assets.CreateMaterial("matDoom03");
+            doomSkin.rendererInfos[1].defaultMaterial = Modules.Assets.CreateMaterial("matDoom04", 0f, Color.black, 1f);
+            doomSkin.rendererInfos[2].defaultMaterial = Modules.Assets.CreateMaterial("matDoom02", 0f, Color.black, 1f);
+            doomSkin.rendererInfos[3].defaultMaterial = Modules.Assets.CreateMaterial("matDoom01", 0f, Color.black, 1f);
+
+            skins.Add(doomSkin);
+            #endregion
+
             #region MinecraftSkin
             SkinDef minecraftSkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_MINECRAFT_SKIN_NAME",
                 Assets.mainAssetBundle.LoadAsset<Sprite>("texLightweightSkin"),
@@ -3222,10 +3275,10 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             // 🙈 🙉 🙊
 
             // heresy anims
-            //On.EntityStates.GlobalSkills.LunarNeedle.FireLunarNeedle.OnEnter += PlayVisionsAnimation;
-            //On.EntityStates.GlobalSkills.LunarNeedle.ChargeLunarSecondary.PlayChargeAnimation += PlayChargeLunarAnimation;
-            //On.EntityStates.GlobalSkills.LunarNeedle.ThrowLunarSecondary.PlayThrowAnimation += PlayThrowLunarAnimation;
-            //On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += PlayRuinAnimation;
+            On.EntityStates.GlobalSkills.LunarNeedle.FireLunarNeedle.OnEnter += PlayVisionsAnimation;
+            On.EntityStates.GlobalSkills.LunarNeedle.ChargeLunarSecondary.PlayChargeAnimation += PlayChargeLunarAnimation;
+            On.EntityStates.GlobalSkills.LunarNeedle.ThrowLunarSecondary.PlayThrowAnimation += PlayThrowLunarAnimation;
+            On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += PlayRuinAnimation;
         }
 
         private static void PickupDropletController_OnCollisionEnter(On.RoR2.PickupDropletController.orig_OnCollisionEnter orig, PickupDropletController self, Collision collision)
@@ -3303,11 +3356,6 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
         {
             CharacterModel.energyShieldMaterial = Modules.Assets.shieldOverlayMat;
             CharacterModel.voidShieldMaterial = Modules.Assets.voidShieldOverlayMat;
-            orig(self);
-        }
-
-        private static void EscapeSequenceController_OnDisable(On.RoR2.EscapeSequenceController.orig_OnDisable orig, EscapeSequenceController self)
-        {
             orig(self);
         }
 
@@ -3752,7 +3800,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                 {
                     self.GetComponent<PurchaseInteraction>().SetAvailable(true);
 
-                    PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(self.GetComponent<Terminal>().itemDef.itemIndex), self.transform.position + (Vector3.up * 0.5f), (self.transform.forward * 3f) + Vector3.up * 10f);
+                    PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(self.GetComponent<Terminal>().itemDef.itemIndex), self.transform.position + (Vector3.up * 0.85f), (self.transform.forward * 3f) + Vector3.up * 10f);
 
                     return;
                 }
@@ -4372,8 +4420,8 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     case "wispgraveyard":
                         pos = new Vector3(-383.5073f, 6.731739f, -49.00582f);
                         rot = Quaternion.Euler(0, 265, 0);
-                        pos2 = new Vector3(195.0438f, 46.9f, 195.0438f);
-                        rot2 = Quaternion.Euler(0, 358, 0);
+                        pos2 = new Vector3(131.7281f, 46.5f, 198.5f);
+                        rot2 = Quaternion.Euler(0, 180f, 0);
                         break;
                     case "dampcavesimple":
                         pos = new Vector3(66.61202f, -87.96278f, -202.6679f);
@@ -4521,12 +4569,16 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
         private static void PlayVisionsAnimation(On.EntityStates.GlobalSkills.LunarNeedle.FireLunarNeedle.orig_OnEnter orig, EntityStates.GlobalSkills.LunarNeedle.FireLunarNeedle self)
         {
+            GameObject i = EntityStates.GlobalSkills.LunarNeedle.FireLunarNeedle.muzzleFlashEffectPrefab;
+            if (self.characterBody.baseNameToken == bodyNameToken) EntityStates.GlobalSkills.LunarNeedle.FireLunarNeedle.muzzleFlashEffectPrefab = null;
+
             orig(self);
 
+            EntityStates.GlobalSkills.LunarNeedle.FireLunarNeedle.muzzleFlashEffectPrefab = i;
             if (self.characterBody.baseNameToken == bodyNameToken)
             {
-                self.PlayAnimation("Gesture, Override", "Shoot", "Shoot.playbackRate", self.duration * 12f);
-                EffectManager.SimpleMuzzleFlash(EntityStates.GlobalSkills.LunarNeedle.FireLunarNeedle.muzzleFlashEffectPrefab, self.gameObject, "PistolMuzzle", false);
+                self.PlayAnimation("Gesture, Override", "FireVisions");
+                //EffectManager.SimpleMuzzleFlash(EntityStates.GlobalSkills.LunarNeedle.FireLunarNeedle.muzzleFlashEffectPrefab, self.gameObject, "HandL", false);
             }
         }
 
@@ -4536,7 +4588,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
             if (self.characterBody.baseNameToken == bodyNameToken)
             {
-                self.PlayAnimation("Gesture, Override", "ChargeHooks", "Hooks.playbackRate", self.duration * 0.5f);
+                self.PlayAnimation("Gesture, Override", "ChargeHooks", "Hooks.playbackRate", self.duration * 2.5f);
             }
         }
 
@@ -4556,9 +4608,8 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
             if (self.characterBody.baseNameToken == bodyNameToken)
             {
-                //self.PlayAnimation("Gesture, Override", "CastRuin", "Ruin.playbackRate", self.duration * 0.5f);
+                self.PlayAnimation("Gesture, Override", "CastRuin", "Ruin.playbackRate", self.duration * 0.5f);
                 //Util.PlaySound("PaladinFingerSnap", self.gameObject);
-                self.PlayAnimation("Gesture, Override", "PressVoidButton", "Action.playbackRate", 0.5f * self.duration);
                 self.StartAimMode(self.duration + 0.5f);
 
                 EffectManager.SpawnEffect(Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/VoidSurvivor/VoidSurvivorMegaBlasterExplosion.prefab").WaitForCompletion(),

@@ -101,6 +101,8 @@ Thingw - Secondary and Special skill icons
 
 Bruh - Golden Gun gun model
 
+tsuyoikenko - Slayer skin
+
 Capcom - Models
 
 
@@ -115,7 +117,6 @@ Big thanks to everyone in the community for all the valuable feedback and critic
 - More unique counterattacks
 - Item displays
 - Translation support
-- Ancient Scepter support
 - Emotes
 
 ## Known Issues
@@ -128,7 +129,17 @@ ___
 
 ## Changelog
 
+`1.2.2`
+- Added Slayer skin, courtesy of tsuyoikenko!
+- Added animations for heresy skills
+- Tweaked sprints again
+- Made ammo pickups slightly more conspicuous
+- Fixed custom escape sequence BGM
+- Fixed LE 5 not playing its SFX for other players in multiplayer
+- Fixed LE 5 Extended Mag not being in the drop pool
+
 `1.2.1`
+- Big thanks to Ghor for playing HUNK on stream for this update! Very insightful and helped to identify areas where gameplay clarity could be improved
 - Added keyword to passive explaining a little bit about the G-Virus
 - Ammo pickups from chests now spawn from a pickup droplet to help visibility- can be reverted in config
 - ^this is mostly to address new players missing all the ammo pickups, old behavior is faster so turn it off if you prefer that

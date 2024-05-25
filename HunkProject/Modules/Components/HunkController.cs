@@ -225,6 +225,7 @@ namespace HunkMod.Modules.Components
             }
 
             this.CheckForNeedler();
+            this.CheckForHooks();
         }
 
         public HunkWeaponTracker weaponTracker
@@ -268,6 +269,14 @@ namespace HunkMod.Modules.Components
             }*/
         }
 
+        private void CheckForHooks()
+        {
+            if (this.characterBody && this.characterBody.inventory && this.characterBody.inventory.GetItemCount(RoR2Content.Items.LunarSecondaryReplacement) > 0)
+            {
+                this.EquipWeapon(this.weaponTracker.equippedIndex);
+            }
+        }
+
         public void SwapToLastWeapon()
         {
             this.weaponTracker.SwapToLastWeapon();
@@ -297,6 +306,7 @@ namespace HunkMod.Modules.Components
             }
 
             this.CheckForNeedler();
+            this.CheckForHooks();
 
             if (this.characterBody.inventory.GetItemCount(DLC1Content.Items.MissileVoid) > 0)
             {
@@ -791,11 +801,18 @@ namespace HunkMod.Modules.Components
                 GameObject modelPrefab = this.weaponDef.modelPrefab;
                 // #swuff
                 // if your current skin has an override just swap the prefab out here and done
-                this.heldWeaponInstance = GameObject.Instantiate(modelPrefab);
-                this.heldWeaponInstance.transform.parent = this.childLocator.FindChild("Weapon");
-                this.heldWeaponInstance.transform.localPosition = Vector3.zero;
-                this.heldWeaponInstance.transform.localRotation = Quaternion.identity;
-                this.heldWeaponInstance.transform.localScale = Vector3.one;
+                if (this.characterBody && this.characterBody.inventory && this.characterBody.inventory.GetItemCount(RoR2Content.Items.LunarSecondaryReplacement) > 0)
+                {
+                    // heheheha
+                }
+                else
+                {
+                    this.heldWeaponInstance = GameObject.Instantiate(modelPrefab);
+                    this.heldWeaponInstance.transform.parent = this.childLocator.FindChild("Weapon");
+                    this.heldWeaponInstance.transform.localPosition = Vector3.zero;
+                    this.heldWeaponInstance.transform.localRotation = Quaternion.identity;
+                    this.heldWeaponInstance.transform.localScale = Vector3.one;
+                }
             }
             else
             {
@@ -821,23 +838,46 @@ namespace HunkMod.Modules.Components
             this.ToggleLayer("Gesture (Rocket)", false);
             this.ToggleLayer("FullBody (Rocket)", false);
 
-            switch (this.weaponDef.animationSet)
+            this.ToggleLayer("Body (Railgun)", false);
+            this.ToggleLayer("Gesture (Railgun)", false);
+            this.ToggleLayer("FullBody (Railgun)", false);
+
+            if (this.characterBody && this.characterBody.inventory && this.characterBody.inventory.GetItemCount(RoR2Content.Items.LunarSecondaryReplacement) > 0)
             {
-                case HunkWeaponDef.AnimationSet.Pistol:
-                    this.ToggleLayer("Body (Pistol)", true);
-                    this.ToggleLayer("Gesture (Pistol)", true);
-                    this.ToggleLayer("FullBody (Pistol)", true);
-                    break;
-                case HunkWeaponDef.AnimationSet.PistolAlt:
-                    this.ToggleLayer("Body (Pistol2)", true);
-                    this.ToggleLayer("Gesture (Pistol2)", true);
-                    this.ToggleLayer("FullBody (Pistol2)", true);
-                    break;
-                case HunkWeaponDef.AnimationSet.Rocket:
-                    this.ToggleLayer("Body (Rocket)", true);
-                    this.ToggleLayer("Gesture (Rocket)", true);
-                    this.ToggleLayer("FullBody (Rocket)", true);
-                    break;
+                this.ToggleLayer("Body (Pistol2)", true);
+                this.ToggleLayer("Gesture (Pistol2)", true);
+                this.ToggleLayer("FullBody (Pistol2)", true);
+            }
+            else
+            {
+                switch (this.weaponDef.animationSet)
+                {
+                    case HunkWeaponDef.AnimationSet.Pistol:
+                        this.ToggleLayer("Body (Pistol)", true);
+                        this.ToggleLayer("Gesture (Pistol)", true);
+                        this.ToggleLayer("FullBody (Pistol)", true);
+                        break;
+                    case HunkWeaponDef.AnimationSet.PistolAlt:
+                        this.ToggleLayer("Body (Pistol2)", true);
+                        this.ToggleLayer("Gesture (Pistol2)", true);
+                        this.ToggleLayer("FullBody (Pistol2)", true);
+                        break;
+                    case HunkWeaponDef.AnimationSet.Rocket:
+                        this.ToggleLayer("Body (Rocket)", true);
+                        this.ToggleLayer("Gesture (Rocket)", true);
+                        this.ToggleLayer("FullBody (Rocket)", true);
+                        break;
+                    case HunkWeaponDef.AnimationSet.Throwable:
+                        this.ToggleLayer("Body (Pistol2)", true);
+                        this.ToggleLayer("Gesture (Pistol2)", true);
+                        this.ToggleLayer("FullBody (Pistol2)", true);
+                        break;
+                    case HunkWeaponDef.AnimationSet.Railgun:
+                        this.ToggleLayer("Body (Railgun)", true);
+                        this.ToggleLayer("Gesture (Railgun)", true);
+                        this.ToggleLayer("FullBody (Railgun)", true);
+                        break;
+                }
             }
 
             this.HandleBackWeapon();

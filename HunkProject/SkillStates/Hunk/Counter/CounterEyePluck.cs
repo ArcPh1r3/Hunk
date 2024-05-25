@@ -13,7 +13,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
         protected override bool hideGun => true;
         protected override bool turningAllowed => false;
 
-        public float duration = 2.4f;
+        public float duration = 2.8f;
         private HealthComponent target;
         public GameObject targetObject;
 
@@ -179,11 +179,11 @@ namespace HunkMod.SkillStates.Hunk.Counter
                 this.aimWeight = Mathf.Lerp(this.aimWeight, 0f, Time.fixedDeltaTime * 5f);
             }
 
-            if (!this.hasSnapped && base.fixedAge >= 0.42f * this.duration)
+            if (!this.hasSnapped && base.fixedAge >= 0.28f * this.duration)
             {
                 this.hasSnapped = true;
                 this.hunk.immobilized = false;
-                this.hunk.iFrames = 0.25f;
+                this.hunk.iFrames = 0.75f;
 
                 //Util.PlaySound("sfx_hunk_snap", this.gameObject);
 
@@ -283,6 +283,18 @@ namespace HunkMod.SkillStates.Hunk.Counter
                         blastAttack.Fire();
                     }
                 }
+            }
+
+            if (base.fixedAge >= 0.595f * this.duration && this.eyeInstance)
+            {
+                EffectManager.SpawnEffect(Modules.Assets.headshotEffect, new EffectData
+                {
+                    origin = this.eyeInstance.transform.position,
+                    scale = 0.5f,
+                    rotation = Quaternion.identity
+                }, false);
+
+                Destroy(this.eyeInstance);
             }
 
             if (base.fixedAge >= 0.75f * this.duration)

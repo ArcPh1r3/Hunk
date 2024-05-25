@@ -12,7 +12,8 @@ public class HunkWeaponDef : ScriptableObject
         Rocket,
         Unarmed,
         Throwable,
-        PistolAlt
+        PistolAlt,
+        Railgun
     }
 
     [Header("General")]

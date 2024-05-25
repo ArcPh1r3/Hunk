@@ -101,6 +101,8 @@ Thingw - Secondary and Special skill icons
 
 Bruh - Golden Gun gun model
 
+tsuyoikenko - Slayer skin
+
 Capcom - Models
 
 
@@ -115,18 +117,30 @@ Big thanks to everyone in the community for all the valuable feedback and critic
 - More unique counterattacks
 - Item displays
 - Translation support
-- Ancient Scepter support
 - Emotes
 
 ## Known Issues
 - Most item displays are missing
 - Ally projectiles trigger perfect dodges; haven't decided if this is worth keeping as a mechanic yet
-- Extended Magazine (LE 5) does not have an icon or model yet
 - Lore accurate Weskah config does not seem to be working
 
 ___
 
 ## Changelog
+
+`1.2.3`
+- Added gun: CQBR Assault Rifle
+- Added gun: Ferromagnetic Infantry-use Next Generation Railgun
+- Extended Magazine (LE 5) now has a model and icon
+
+`1.2.2`
+- Added Slayer skin, courtesy of tsuyoikenko!
+- Added animations for heresy skills
+- Tweaked sprints again
+- Made ammo pickups slightly more conspicuous
+- Fixed custom escape sequence BGM
+- Fixed LE 5 not playing its SFX for other players in multiplayer
+- Fixed LE 5 Extended Mag not being in the drop pool
 
 `1.2.1`
 - Big thanks to Ghor for playing HUNK on stream for this update! Very insightful and helped to identify areas where gameplay clarity could be improved

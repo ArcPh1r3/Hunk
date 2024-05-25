@@ -36,6 +36,7 @@ namespace HunkMod.Modules
             LanguageAPI.Add(prefix + "SUPER_SKIN_NAME", "<color=#" + Helpers.yellowItemHex + ">Early Supporter" + Helpers.colorSuffix);
             LanguageAPI.Add(prefix + "LIGHTWEIGHT_SKIN_NAME", "Lightweight");
             LanguageAPI.Add(prefix + "WESKER_SKIN_NAME", "Mastermind");
+            LanguageAPI.Add(prefix + "DOOM_SKIN_NAME", "Slayer");
             LanguageAPI.Add(prefix + "COMMANDO_SKIN_NAME", "Commando");
             #endregion
 
@@ -98,6 +99,9 @@ namespace HunkMod.Modules
 
             LanguageAPI.Add(prefix + "SHOOT_SMG_NAME", "Fire");
             LanguageAPI.Add(prefix + "SHOOT_SMG_DESCRIPTION", "Shoot for <style=cIsDamage>280% damage</style>. <style=cIsUtility>25% headshot bonus.</style>");
+
+            LanguageAPI.Add(prefix + "SHOOT_AR_NAME", "Fire");
+            LanguageAPI.Add(prefix + "SHOOT_AR_DESCRIPTION", "Shoot for <style=cIsDamage>385% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
             #endregion
 
             #region Secondary
@@ -126,6 +130,10 @@ namespace HunkMod.Modules
             LanguageAPI.Add(prefix + "KNIFE_INFINITE_DESCRIPTION", "A specially-treated military-grade knife that's been hardened to an unbelievable degree. They say it's been made to really last.");
             LanguageAPI.Add(prefix + "KNIFE_HIDDEN_NAME", "Hidden Blade");
             LanguageAPI.Add(prefix + "KNIFE_HIDDEN_DESCRIPTION", "A low profile retractable blade hidden in the sleeve. Ideal for stealth operations.");
+            LanguageAPI.Add(prefix + "KNIFE_WESKER_NAME", "Customized Knife");
+            LanguageAPI.Add(prefix + "KNIFE_WESKER_DESCRIPTION", "A vicious blade with a serrated edge to aid in tearing up your opponents. ");
+            LanguageAPI.Add(prefix + "KNIFE_MACHETE_NAME", "Hidden Blade");
+            LanguageAPI.Add(prefix + "KNIFE_MACHETE_DESCRIPTION", "A low profile retractable blade hidden in the sleeve. Ideal for stealth operations.");
             #endregion
 
             #region Achievements

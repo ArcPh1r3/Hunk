@@ -97,6 +97,22 @@ namespace HunkMod.SkillStates.Hunk
 				else this.animator.SetFloat("aimBlend", 0f);
 			}
 
+			if (this.hunk)
+            {
+				if (this.hunk.weaponDef)
+                {
+					if (this.hunk.weaponDef == Modules.Weapons.Railgun.instance.weaponDef)
+					{
+						this.characterBody.isSprinting = false;
+						this.characterMotor.jumpCount = this.characterBody.maxJumpCount;
+						this.characterMotor.moveDirection *= 0.5f;
+						this.skillLocator.primary.stock = 0;
+						this.skillLocator.utility.stock = 0;
+						this.skillLocator.utility.rechargeStopwatch = 0f;
+					}
+				}
+            }
+
 			//emotes
 			if (base.isAuthority && base.characterMotor.isGrounded)
 			{
