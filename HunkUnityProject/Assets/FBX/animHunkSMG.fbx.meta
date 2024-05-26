@@ -216,6 +216,9 @@ ModelImporter:
   - first:
       74: 3777134522311256217
     second: Armature|ThrowHooks
+  - first:
+      74: 6504932581183508873
+    second: Armature|CounterSuplex
   externalObjects: {}
   materials:
     materialImportMode: 1

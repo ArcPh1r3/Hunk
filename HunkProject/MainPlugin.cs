@@ -127,6 +127,8 @@ namespace HunkMod
             new Modules.Weapons.GoldenGun().Init();
             new Modules.Weapons.BlueRose().Init();
             new Modules.Weapons.AssaultRifle().Init();
+            new Modules.Weapons.Railgun().Init();
+
             new Modules.Weapons.Flashlight().Init();
         }
 

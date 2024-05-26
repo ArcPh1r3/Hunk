@@ -5,9 +5,12 @@ namespace HunkMod.Modules.Components
 {
     public class Decapitation : MonoBehaviour
     {
+        public bool muted = false;
+
         private Transform headTransform;
         private Transform[] bastard = new Transform[0];
         private Transform[] fuckYou = new Transform[0];
+        private bool imp;
 
         private void Awake()
         {
@@ -38,7 +41,13 @@ namespace HunkMod.Modules.Components
                             this.ThisIsALittleWorse(modelTransform);
                         }
 
-                        if (modelTransform.gameObject.name == "mdlImp" || modelTransform.gameObject.name == "mdlImpBoss")
+                        if (modelTransform.gameObject.name == "mdlImp")
+                        {
+                            this.ThisSucks(modelTransform);
+                            this.headTransform = childLocator.FindChild("Chest");
+                        }
+
+                        if (modelTransform.gameObject.name == "mdlImpBoss")
                         {
                             this.headTransform = childLocator.FindChild("Chest");
                         }
@@ -58,15 +67,18 @@ namespace HunkMod.Modules.Components
 
             if (this.headTransform)
             {
-                EffectManager.SpawnEffect(Modules.Assets.bloodExplosionEffect, new EffectData
+                if (!this.muted)
                 {
-                    origin = this.headTransform.position,
-                    rotation = Quaternion.identity,
-                    scale = 1f
-                }, false);
+                    EffectManager.SpawnEffect(Modules.Assets.bloodExplosionEffect, new EffectData
+                    {
+                        origin = this.headTransform.position,
+                        rotation = Quaternion.identity,
+                        scale = 1f
+                    }, false);
+                    Util.PlaySound("sfx_hunk_blood_gurgle", this.headTransform.gameObject);
+                }
 
                 GameObject.Instantiate(Modules.Assets.bloodSpurtEffect, this.headTransform);
-                Util.PlaySound("sfx_hunk_blood_gurgle", this.headTransform.gameObject);
             }
         }
 
@@ -102,8 +114,32 @@ namespace HunkMod.Modules.Components
             };
         }
 
+        private void ThisSucks(Transform modelTransform)
+        {
+            this.imp = true;
+            this.bastard = new Transform[]
+            {
+                modelTransform.Find("ImpArmature/ROOT/base/stomach/chest/Eyeball"),
+                modelTransform.Find("ImpArmature/ROOT/base/stomach/chest/Eyelid.l"),
+                modelTransform.Find("ImpArmature/ROOT/base/stomach/chest/Eyelid.u"),
+            };
+        }
+
         private void LateUpdate()
         {
+            if (this.imp)
+            {
+                if (this.bastard.Length > 0)
+                {
+                    for (int i = 0; i < this.bastard.Length; i++)
+                    {
+                        this.bastard[i].localScale = Vector3.zero;
+                    }
+                }
+
+                return;
+            }
+
             if (this.headTransform) this.headTransform.localScale = Vector3.zero;
             if (this.bastard.Length > 0)
             {

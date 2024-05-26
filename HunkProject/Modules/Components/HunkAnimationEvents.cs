@@ -31,14 +31,26 @@ namespace HunkMod.Modules.Components
 
         public void HideMag()
         {
-            SMGBehavior smg = this.GetComponentInChildren<SMGBehavior>();
-            if (smg) smg.HideMag();
+            WeaponBehavior weaponBehavior = this.GetComponentInChildren<WeaponBehavior>();
+            if (weaponBehavior) weaponBehavior.HideMag();
+
+            SMGBehavior smgBehavior = this.GetComponentInChildren<SMGBehavior>();
+            if (smgBehavior) smgBehavior.HideMag();
+
+            ARBehavior arBehavior = this.GetComponentInChildren<ARBehavior>();
+            if (arBehavior) arBehavior.HideMag();
         }
 
         public void ShowMag()
         {
-            SMGBehavior smg = this.GetComponentInChildren<SMGBehavior>();
-            if (smg) smg.ShowMag();
+            WeaponBehavior weaponBehavior = this.GetComponentInChildren<WeaponBehavior>();
+            if (weaponBehavior) weaponBehavior.ShowMag();
+
+            SMGBehavior smgBehavior = this.GetComponentInChildren<SMGBehavior>();
+            if (smgBehavior) smgBehavior.ShowMag();
+
+            ARBehavior arBehavior = this.GetComponentInChildren<ARBehavior>();
+            if (arBehavior) arBehavior.ShowMag();
         }
     }
 }

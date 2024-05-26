@@ -10,10 +10,9 @@ namespace HunkMod.SkillStates.Hunk.Counter
 {
     public class CounterEyePluck : BaseHunkSkillState
     {
-        protected override bool hideGun => true;
         protected override bool turningAllowed => false;
 
-        public float duration = 2.8f;
+        public float duration = 3f;
         private HealthComponent target;
         public GameObject targetObject;
 
@@ -196,9 +195,9 @@ namespace HunkMod.SkillStates.Hunk.Counter
 
                     this.eyeInstance = GameObject.Instantiate(Modules.Assets.impEye);
                     this.eyeInstance.transform.parent = this.FindModelChild("HandL");
-                    this.eyeInstance.transform.localPosition = new Vector3(-6f, -4f, 5f);
+                    this.eyeInstance.transform.localPosition = new Vector3(-12f, -8f, 5f);
                     this.eyeInstance.transform.localRotation = Quaternion.Euler(new Vector3(-8.5f, -4f, 225f));
-                    this.eyeInstance.transform.localScale = Vector3.one * 1500f;
+                    this.eyeInstance.transform.localScale = Vector3.one * 2000f;
 
                     if (base.isAuthority)
                     {
@@ -262,7 +261,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
                         {
                             foreach (BlastAttack.HitPoint i in hitPoints)
                             {
-                                if (i.hurtBox)
+                                /*if (i.hurtBox)
                                 {
                                     if (i.hurtBox.healthComponent)
                                     {
@@ -271,7 +270,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
 
                                         i.hurtBox.healthComponent.gameObject.AddComponent<Modules.Components.HunkHeadshotTracker>();
                                     }
-                                }
+                                }*/
                                 EffectManager.SpawnEffect(Modules.Assets.kickImpactEffect, new EffectData
                                 {
                                     origin = i.hitPosition,
@@ -282,17 +281,22 @@ namespace HunkMod.SkillStates.Hunk.Counter
 
                         blastAttack.Fire();
                     }
+
+                    this.target.gameObject.AddComponent<Modules.Components.Decapitation>().muted = true;
+                    if (NetworkServer.active) this.target.Suicide();
                 }
             }
 
             if (base.fixedAge >= 0.595f * this.duration && this.eyeInstance)
             {
-                EffectManager.SpawnEffect(Modules.Assets.headshotEffect, new EffectData
+                EffectManager.SpawnEffect(Modules.Assets.bloodExplosionEffect, new EffectData
                 {
                     origin = this.eyeInstance.transform.position,
-                    scale = 0.5f,
+                    scale = 0.25f,
                     rotation = Quaternion.identity
                 }, false);
+
+                Util.PlaySound("sfx_hunk_blood_gurgle", this.gameObject);
 
                 Destroy(this.eyeInstance);
             }

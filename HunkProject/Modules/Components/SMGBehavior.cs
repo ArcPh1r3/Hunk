@@ -85,12 +85,12 @@ namespace HunkMod.Modules.Components
             }
         }
 
-        public void HideMag()
+        public override void HideMag()
         {
             this.magazine.SetActive(false);
         }
 
-        public void ShowMag()
+        public override void ShowMag()
         {
             this.magazine.SetActive(true);
         }

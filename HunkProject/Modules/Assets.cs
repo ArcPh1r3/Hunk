@@ -29,10 +29,15 @@ namespace HunkMod.Modules
         internal static NetworkSoundEventDef kickImpactSoundDef;
         internal static NetworkSoundEventDef punchImpactSoundDef;
 
+        public static GameObject railgunTracer;
+        public static GameObject railgunImpact;
+        public static GameObject railgunMuzzleFlash;
+
         public static GameObject headshotEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Junk/Common/VFX/WeakPointProcEffect.prefab").WaitForCompletion();
         public static GameObject virusPositionIndicator;
 
         public static Material dodgeOverlayMat;
+        public static Material targetOverlayMat;
 
         public static Material shieldOverlayMat;
         public static Material voidShieldOverlayMat;
@@ -486,7 +491,7 @@ namespace HunkMod.Modules
             GameObject radiusIndicator = nadeEffect.transform.Find("Nova Sphere").gameObject.InstantiateClone("HunkFuckShit", false);
             radiusIndicator.transform.parent = pp.transform.parent;
             radiusIndicator.transform.localPosition = Vector3.zero;
-            radiusIndicator.transform.localScale = Vector3.one * 15f;
+            radiusIndicator.transform.localScale = Vector3.one * 3.75f;
             radiusIndicator.transform.localRotation = Quaternion.identity;
 
             smallExplosionEffect = LoadEffect("SmallExplosion", "sfx_hunk_grenade_explosion", false);
@@ -672,6 +677,42 @@ namespace HunkMod.Modules
             AddNewEffectDef(kickImpactEffect);
             #endregion
 
+            Material lightningMat2 = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/ShockNearby/matLightningTeslaSlow.mat").WaitForCompletion());
+            lightningMat2.SetTexture("_RemapTex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Common/ColorRamps/texRampLightning2.png").WaitForCompletion());
+
+            railgunTracer = CreateTracer("TracerHuntressSnipe", "TracerHunkRailgun");
+
+            Tracer tracer = railgunTracer.GetComponent<Tracer>();
+            GameObject railgunBeam = tracer.beamObject;
+            railgunBeam.GetComponent<ParticleSystemRenderer>().trailMaterial = lightningMat2;
+            railgunBeam.transform.localScale *= 1.5f;
+            //tracer.beamObject = railgunBeam;
+
+            //Material lightningMat = Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/VFX/matLightningArm.mat").WaitForCompletion();
+
+            //LineRenderer line = railgunTracer.transform.Find("TracerHead").GetComponent<LineRenderer>();
+            //line.material = lightningMat;
+            //line.startWidth *= 0.25f;
+            //line.endWidth *= 0.25f;
+            // this did not work.
+            //line.material = Addressables.LoadAssetAsync<Material>("RoR2/Base/MagmaWorm/matMagmaWormFireballTrail.mat").WaitForCompletion();
+
+            railgunMuzzleFlash = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Lightning/LightningStrikeImpact.prefab").WaitForCompletion().InstantiateClone("HunkRailgunMuzzleFlash");
+
+            railgunMuzzleFlash.transform.Find("LightningRibbon").gameObject.SetActive(false);
+            railgunMuzzleFlash.transform.Find("Flash Lines").gameObject.SetActive(false);
+            railgunMuzzleFlash.transform.Find("Flash").gameObject.SetActive(false);
+            railgunMuzzleFlash.transform.Find("Distortion").gameObject.SetActive(false);
+            railgunMuzzleFlash.GetComponent<ShakeEmitter>().wave.amplitude *= 0.25f;
+
+            AddNewEffectDef(railgunMuzzleFlash);
+
+            railgunImpact = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Lightning/LightningStrikeImpact.prefab").WaitForCompletion().InstantiateClone("HunkRailgunImpactEffect");
+
+            railgunImpact.transform.Find("LightningRibbon").gameObject.SetActive(false);
+            railgunImpact.transform.Find("Sphere").gameObject.SetActive(false);
+
+            AddNewEffectDef(railgunImpact, "sfx_hunk_railgun_impact");
 
             bloodExplosionEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/ImpBoss/ImpBossBlink.prefab").WaitForCompletion().InstantiateClone("HunkBloodExplosion", false);
 
@@ -700,6 +741,9 @@ namespace HunkMod.Modules
             ConvertAllRenderersToHopooShader(ammoPickupModel);
 
             dodgeOverlayMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/moon2/matBloodSiphon.mat").WaitForCompletion());
+
+            targetOverlayMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/matEnergyShield.mat").WaitForCompletion());
+            targetOverlayMat.SetColor("_TintColor", Color.red);
 
             shieldMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/DLC1/BearVoid/matBearVoidShield.mat").WaitForCompletion());
             shieldMat.SetTexture("_RemapTex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Common/ColorRamps/texRampShield.png").WaitForCompletion());

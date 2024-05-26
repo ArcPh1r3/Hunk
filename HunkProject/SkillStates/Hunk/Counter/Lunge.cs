@@ -24,6 +24,8 @@ namespace HunkMod.SkillStates.Hunk.Counter
             this.slipVector = this.inputBank.aimDirection;
             this.slipVector.y = 0f;
             this.slipVector = this.slipVector.normalized;
+            this.hunk.speedLineTimer = this.duration;
+            this.hunk.lockOnTimer = 0f;
 
             base.PlayCrossfade("FullBody, Override", "CounterLunge", "Dodge.playbackRate", this.duration, 0.05f);
 
@@ -183,10 +185,20 @@ namespace HunkMod.SkillStates.Hunk.Counter
                                 }
                                 else
                                 {
-                                    this.outer.SetNextState(new NeckSnap
+                                    if (this.CounterIsBehind(hurtBox.healthComponent.body.characterDirection.forward))
                                     {
-                                        targetObject = hurtBox.healthComponent.gameObject
-                                    });
+                                        this.outer.SetNextState(new Suplex
+                                        {
+                                            targetObject = hurtBox.healthComponent.gameObject
+                                        });
+                                    }
+                                    else
+                                    {
+                                        this.outer.SetNextState(new NeckSnap
+                                        {
+                                            targetObject = hurtBox.healthComponent.gameObject
+                                        });
+                                    }
                                 }
                             }
 
@@ -234,10 +246,23 @@ namespace HunkMod.SkillStates.Hunk.Counter
         public override void OnExit()
         {
             this.hunk.immobilized = false;
+            this.hunk.speedLineTimer = this.duration;
 
             base.OnExit();
 
             if (base.isAuthority && this.inputBank.moveVector != Vector3.zero) this.characterBody.isSprinting = true;
+        }
+
+
+        public bool CounterIsBehind(Vector3 targetRotation, float angle = 140f)
+        {
+            bool isBehind = false;
+
+            float _angle = Vector3.Angle(this.characterDirection.forward, targetRotation);
+            if (_angle <= angle) isBehind = true;
+            //Chat.AddMessage(_angle.ToString() + ", behind returned " + isBehind);
+
+            return isBehind;
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

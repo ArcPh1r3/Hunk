@@ -8,7 +8,7 @@ namespace HunkMod.Modules.Weapons
         public override string weaponNameToken => "RAILGUN";
         public override string weaponName => "Ferromagnetic Infantry-use Next Generation Railgun";
         public override string weaponDesc => "A portable rail cannon developed by Cornell Garner and the U.S. military in order to eliminate bioweapons in case of an outbreak.";
-        public override string iconName => "texRocketLauncherIcon";
+        public override string iconName => "texRailgunIcon";
         public override GameObject crosshairPrefab => Modules.Assets.grenadeLauncherCrosshairPrefab2;
         public override int magSize => 1000;
         public override float magPickupMultiplier => 0.01f;

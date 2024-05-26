@@ -72,6 +72,7 @@ namespace HunkMod.Modules.Components
 				AmmoOrb ammoOrb = new AmmoOrb();
 				ammoOrb.origin = this.transform.position;
 				ammoOrb.target = Util.FindBodyMainHurtBox(activator.GetComponent<CharacterBody>());
+				ammoOrb.multiplier = this.multiplier;
 				OrbManager.instance.AddOrb(ammoOrb);
 
 				if (this.destroyOnOpen) Destroy(this.destroyOnOpen);
@@ -173,6 +174,8 @@ namespace HunkMod.Modules.Components
 
 	public class AmmoOrb : Orb
 	{
+		public float multiplier = 1f;
+
 		private HunkController hunk;
 		public override void Begin()
 		{
@@ -199,7 +202,7 @@ namespace HunkMod.Modules.Components
 		{
 			if (this.hunk)
 			{
-				this.hunk.ServerGetAmmo();
+				this.hunk.ServerGetAmmo(this.multiplier);
 			}
 		}
 	}

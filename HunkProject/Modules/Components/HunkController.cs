@@ -40,6 +40,7 @@ namespace HunkMod.Modules.Components
 
         private int counterCount;
 
+        public Vector3 suplexOffset = new Vector3(0f, 0f, 0f);
         public HunkNotificationHandler notificationHandler;
         public CharacterBody characterBody { get; private set; }
         private ChildLocator childLocator;
@@ -75,6 +76,11 @@ namespace HunkMod.Modules.Components
         public float reloadTimer;
         private WeaponNotificationQueue notificationQueue;
         private EntityStateMachine weaponStateMachine;
+        public float speedLineTimer;
+
+        private Vector3 lastVector = Vector3.zero;
+        public float railgunCharge;
+        public float railgunMaxCharge;
         public float defaultYOffset { get; private set; }
         private float yOffset;
         public float defaultZOffset { get; private set; }
@@ -95,6 +101,7 @@ namespace HunkMod.Modules.Components
         private GameObject flamethrowerEffectInstance2;
         private bool flameIsPlaying = true;
         private GameObject flamethrowerLight;
+        private ParticleSystem railgunChargeEffect;
         private uint flamethrowerPlayID;
         private bool flameInit = false;
         private uint bgmPlayID;
@@ -131,6 +138,10 @@ namespace HunkMod.Modules.Components
             this.zOffset = this.desiredZOffset;
             this.baseTurnSpeed = this.GetComponent<CharacterDirection>().turnSpeed;
             this.baseSprintValue = this.characterBody.sprintingSpeedMultiplier;
+            this.railgunChargeEffect = this.childLocator.FindChild("RailgunChargeEffect").gameObject.GetComponent<ParticleSystem>();
+
+            this.railgunChargeEffect.GetComponent<ParticleSystemRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Junk/Mage/matMageLightningLaser.mat").WaitForCompletion();
+            this.railgunChargeEffect.transform.Find("Electricity").GetComponent<ParticleSystemRenderer>().trailMaterial = Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/VFX/matLightningArm.mat").WaitForCompletion();
 
             this.flamethrowerEffectInstance = GameObject.Instantiate(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Drones/DroneFlamethrowerEffect.prefab").WaitForCompletion());
 
@@ -345,6 +356,7 @@ namespace HunkMod.Modules.Components
         {
             this.reloadTimer -= Time.fixedDeltaTime;
             this.lockOnTimer -= Time.fixedDeltaTime;
+            this.speedLineTimer -= Time.fixedDeltaTime;
             this.ammoKillTimer -= Time.fixedDeltaTime;
             this.iFrames -= Time.fixedDeltaTime;
             this.flamethrowerLifetime -= Time.fixedDeltaTime;
@@ -427,6 +439,15 @@ namespace HunkMod.Modules.Components
                 }
             }
 
+            if (this.railgunCharge > 0f)
+            {
+                if (this.railgunChargeEffect && !this.railgunChargeEffect.isPlaying) this.railgunChargeEffect.Play();
+            }
+            else
+            {
+                if (this.railgunChargeEffect && this.railgunChargeEffect.isPlaying) this.railgunChargeEffect.Stop();
+            }
+
             if (this.animator)
             {
                 this.animator.SetBool("isRolling", this.isRolling);
@@ -494,7 +515,7 @@ namespace HunkMod.Modules.Components
                 }
                 else
                 {
-                    if (this.lockOnTimer > 1.2f)
+                    if (this.speedLineTimer > 0f)
                     {
                         if (!this.speedLines.isPlaying) this.speedLines.Play();
                     }
@@ -524,8 +545,9 @@ namespace HunkMod.Modules.Components
 
             if (this.lockOnTimer > 0f)
             {
-                //this.TryLockOn();
+                this.TryLockOn();
             }
+            else this.lastVector = Vector3.zero;
 
             //this.yOffset = Mathf.Lerp(this.yOffset, this.desiredYOffset, 5f * Time.fixedDeltaTime);
             //this.zOffset = Mathf.Lerp(this.zOffset, this.desiredZOffset, 5f * Time.fixedDeltaTime);
@@ -573,10 +595,15 @@ namespace HunkMod.Modules.Components
             {
                 if (this.targetHurtbox)
                 {
-                    Vector3 targetVector = (this.targetHurtbox.healthComponent.transform.position - this.cameraPivot.position).normalized;
-                    Vector3 lookVector = Vector3.Lerp(this.characterBody.inputBank.aimDirection, targetVector, 12f * Time.fixedDeltaTime);
+                    if (this.lastVector == Vector3.zero) this.lastVector = this.characterBody.inputBank.aimDirection;
+                    Vector3 targetVector = (this.targetHurtbox.healthComponent.body.corePosition - this.cameraPivot.position).normalized;
+                    Vector3 lookVector = Vector3.Lerp(this.lastVector, targetVector, 12f * Time.fixedDeltaTime);
+
+                    //if (Input.mouse)
+                    //if ()
 
                     ((RoR2.CameraModes.CameraModePlayerBasic.InstanceData)this.cameraController.cameraMode.camToRawInstanceData[this.cameraController]).SetPitchYawFromLookVector(lookVector);
+                    this.lastVector = lookVector;
                 }
                 else
                 {

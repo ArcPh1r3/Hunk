@@ -42,8 +42,8 @@ namespace HunkMod.SkillStates.Hunk.Weapon.AssaultRifle
         {
             EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab, base.gameObject, this.muzzleString, false);
 
-            if (this.isCrit) Util.PlaySound("sfx_hunk_smg_shoot", base.gameObject);
-            else Util.PlaySound("sfx_hunk_smg_shoot", base.gameObject);
+            if (this.isCrit) Util.PlaySound("sfx_hunk_assaultrifle_shoot", base.gameObject);
+            else Util.PlaySound("sfx_hunk_assaultrifle_shoot", base.gameObject);
 
             float spreadBloom = 0.27f;
 

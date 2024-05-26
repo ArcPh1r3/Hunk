@@ -3,7 +3,8 @@
 	<UserProjectSettingsInfo>
 		<UserProjectSettings Name="" ID="{AEA28DDF-34CD-44AD-83C4-8719CE6C038A}">
 			<PropertyList>
-				<Property Name="AudioFilesImporter\Path" Type="string" Value="C:\Users\rseid\OneDrive\Desktop\sfx\hunk\16\"/>
+				<Property Name="AudioFilesImporter\Path" Type="string" Value="C:\Users\rseid\OneDrive\Desktop\sfx\hunk\17\"/>
+				<Property Name="Event Action List\{01BDF916-2FA5-4ECB-BE8A-7C34B6EDFBD7}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{05B474D0-0D6C-4430-849B-E0F418D46FD4}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{08B2FE39-5EAB-4864-90CA-988BA47176A1}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{095781C8-D988-4E49-B810-A699C74020E3}\x64_Expand States" Type="string" Value=""/>
@@ -22,6 +23,7 @@
 				<Property Name="Event Action List\{1947D3D5-B034-4ED5-AFED-3A6FCA301419}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{1A7BCA36-D445-43E6-A9CB-7CED6482C07F}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{21E2EF05-5A24-4F4A-B5DD-2C9C3C553372}\x64_Expand States" Type="string" Value=""/>
+				<Property Name="Event Action List\{2356FEA1-45CA-4F51-9E17-030DFE9BFF59}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{24A22068-A125-49E9-AB64-C21DAE1B37C6}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{2A7DBAC8-7BD0-410B-92F8-BCD9145E05CB}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{2B3D4B72-2212-458F-A92A-22464D4E617C}\x64_Expand States" Type="string" Value=""/>
@@ -130,6 +132,7 @@
 				<Property Name="Event Action List\{C9CCBE4D-EF73-4EDD-8B74-7C285867495D}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{CB4EB4B9-3D6E-42EA-9B0F-FC5362DFC086}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{D26E74D4-FBEA-4ECC-B57D-BC87AF70C756}\x64_Expand States" Type="string" Value=""/>
+				<Property Name="Event Action List\{D5024BD2-59ED-4943-8C4D-93ADBAD92170}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{D597ABB8-5B03-45E7-B276-F15C699D4B87}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{D7B9BDD7-3B3F-445B-98F2-5C71E090FE7C}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{DB8E72F6-9EEF-49EC-99A8-BA2F88E0E64A}\x64_Expand States" Type="string" Value=""/>
@@ -154,6 +157,7 @@
 				<Property Name="Event Action List\{F99DCF79-9B1A-4DDD-9020-FEAC3879BC12}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{F9E6E99E-E220-487D-BA6A-4FAD7426F7B2}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{FB0790CA-8C20-454C-8846-FE586F129AC8}\x64_Expand States" Type="string" Value=""/>
+				<Property Name="Event Action List\{FDB2D3FE-FF5B-4572-994E-16E2CAB9C622}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{FEBB0A3C-00F2-41D3-900C-FB8277A0DE3F}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{FFDA843D-05C4-4BFC-BAD3-432946D3A3B5}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="EventView\FilterMode1" Type="int32" Value="2"/>
@@ -187,8 +191,8 @@
 				<Property Name="PluginUserAcknowledge\SoundSeedImpact" Type="bool" Value="True"/>
 				<Property Name="ProjectExplorer\FirstVisible_10_1" Type="string" Value="{4C96B38B-3DB4-40C7-91C9-665510E38993}"/>
 				<Property Name="ProjectExplorer\FirstVisible_11_1" Type="string" Value="{23EC2DE3-3ED8-4B82-AC99-92E25F2E4C6B}"/>
-				<Property Name="ProjectExplorer\FirstVisible_1_1" Type="string" Value="{2388DAEA-9775-46C6-A2ED-C5222A397756}"/>
-				<Property Name="ProjectExplorer\FirstVisible_3_1" Type="string" Value="{A69BF0FC-D84A-487C-ABDD-56F71CB2A126}"/>
+				<Property Name="ProjectExplorer\FirstVisible_1_1" Type="string" Value="{8FFB0018-B86F-441D-8E4C-DE0ABDB44B34}"/>
+				<Property Name="ProjectExplorer\FirstVisible_3_1" Type="string" Value="{1495B2CB-7F18-4004-AA00-357A2FE9A3E2}"/>
 				<Property Name="ProjectExplorer\FirstVisible_4_1" Type="string" Value="{CB6175F1-6080-4A23-92EF-0807E304D0C1}"/>
 				<Property Name="ProjectExplorer\FirstVisible_6_1" Type="string" Value="{C98E673F-A24C-48A8-960F-10565FFE70A0}"/>
 				<Property Name="ProjectExplorer\FirstVisible_8_1" Type="string" Value="{41093F77-829F-4D88-8601-E8B25F3D4781}"/>
@@ -214,7 +218,7 @@
 				<Property Name="ProjectExplorer\x64_Expanded_8_1" Type="string" Value=""/>
 				<Property Name="RTPC\GameParameterSimValue\{4FF50BF4-04DE-43F4-BCE1-1243931798A7}" Type="Real64" Value="50"/>
 				<Property Name="RTPC\GameParameterSimValue\{50D1A6F5-C932-4B2B-8A42-73CD13DA7D17}" Type="Real64" Value="50"/>
-				<Property Name="RTPC\GameParameterSimValue\{DF1ADB74-2BB5-4085-9CCA-1C807F71C2BB}" Type="Real64" Value="100"/>
+				<Property Name="RTPC\GameParameterSimValue\{9D9E974B-92B4-4C2D-8C05-D7B253818C62}" Type="Real64" Value="1"/>
 				<Property Name="SoundBank Manager\x64_Expand States" Type="string" Value=""/>
 				<Property Name="SoundBankHeaderFilePath" Type="string" Value="GeneratedSoundBanks\"/>
 				<Property Name="SoundBankPaths" Type="string">

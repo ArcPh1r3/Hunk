@@ -2702,7 +2702,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             Modules.Assets.ConvertAllRenderersToHopooShader(displayCaseModel.transform.Find("Pivot/Model/Hinge/Lock").gameObject);
             displayCaseModel.transform.Find("Pivot/Model/Hinge/SM_Weapon_Case_low").gameObject.GetComponent<MeshRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/VendingMachine/matVendingMachineGlass.mat").WaitForCompletion();
 
-            weaponChestPrefab.GetComponent<Highlight>().targetRenderer = displayCaseModel.transform.Find("Pivot/Model/SM_Weapon_Case_low.001").gameObject.GetComponent<MeshRenderer>();
+            weaponChestPrefab.GetComponent<Highlight>().targetRenderer = displayCaseModel.transform.Find("Pivot/Model/Hinge/SM_Weapon_Case_low.002").gameObject.GetComponent<MeshRenderer>();
 
             weaponChestPrefab.transform.Find("HologramPivot").gameObject.SetActive(false);
 
@@ -3764,7 +3764,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
                     self.GetComponent<WeaponChest>().gunPickup.enabled = true;
                     self.GetComponent<WeaponChest>().gunPickup.GetComponent<GenericPickupController>().enabled = true;
-                    self.GetComponent<Highlight>().targetRenderer.transform.parent.parent.parent.GetComponent<Animator>().Play("Open");
+                    self.GetComponent<Highlight>().targetRenderer.transform.parent.parent.parent.parent.GetComponent<Animator>().Play("Open");
                     Util.PlaySound("sfx_hunk_weapon_case_open", self.gameObject);
 
                     if (RoR2Application.isInMultiPlayer || MainPlugin.qolChestsInstalled || MainPlugin.emptyChestsInstalled)
@@ -3775,7 +3775,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                             Vector3.up * 25f);
 
                         NetworkIdentity identity = self.GetComponent<NetworkIdentity>();
-                        if (identity) new SyncWeaponCaseOpen(identity.netId, self.GetComponent<Highlight>().targetRenderer.transform.parent.parent.gameObject).Send(NetworkDestination.Clients);
+                        if (identity) new SyncWeaponCaseOpen(identity.netId, self.GetComponent<Highlight>().targetRenderer.transform.parent.parent.parent.gameObject).Send(NetworkDestination.Clients);
                     }
 
                     return;
@@ -4071,6 +4071,24 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                         rect.localPosition = new Vector3(0f, -350f, 0f);
                     }
 
+                    // railgun charge bar
+                    GameObject railgunChargeBar = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("StaminaBar"), healthbarContainer);
+                    railgunChargeBar.name = "RailgunChargeBar";
+                    railgunChargeBar.transform.SetParent(hud.transform.Find("MainContainer/MainUIArea/CrosshairCanvas/CrosshairExtras"));
+                    railgunChargeBar.AddComponent<RailgunChargeBar>().targetHUD = hud;
+
+                    RectTransform rrect = railgunChargeBar.GetComponent<RectTransform>();
+                    rrect.localScale = new Vector3(1f, 1f, 1f);
+                    rrect.anchorMin = new Vector2(0f, 0f);
+                    rrect.anchorMax = new Vector2(0f, 0f);
+                    rrect.offsetMin = new Vector2(-150f, 0f);
+                    rrect.offsetMax = new Vector2(150f, 0f);
+                    rrect.pivot = new Vector2(0f, 0f);
+                    rrect.anchoredPosition = new Vector2(00f, 0f);
+                    rrect.localPosition = new Vector3(-50f, -50f, 0f);
+                    rrect.localRotation = Quaternion.identity;
+                    rrect.sizeDelta = new Vector2(100f, 10f);
+
                     // custom hud
                     if (Modules.Config.customHUD.Value)
                     {
@@ -4294,6 +4312,24 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     //hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/UpperLeftCluster").gameObject.SetActive(false);
                     //GameObject.Destroy(hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/UpperLeftCluster/MoneyRoot").gameObject);
                     //GameObject.Destroy(hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/UpperLeftCluster/LunarCoinRoot").gameObject);
+
+                    // railgun charge bar
+                    GameObject railgunChargeBar = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("StaminaBar"), mainContainer);
+                    railgunChargeBar.name = "RailgunChargeBar";
+                    railgunChargeBar.transform.SetParent(hud.transform.Find("MainContainer/MainUIArea/CrosshairCanvas/CrosshairExtras"));
+                    railgunChargeBar.AddComponent<RailgunChargeBar>().targetHUD = hud;
+
+                    RectTransform rrect = railgunChargeBar.GetComponent<RectTransform>();
+                    rrect.localScale = new Vector3(1f, 1f, 1f);
+                    rrect.anchorMin = new Vector2(0f, 0f);
+                    rrect.anchorMax = new Vector2(0f, 0f);
+                    rrect.offsetMin = new Vector2(-150f, 0f);
+                    rrect.offsetMax = new Vector2(150f, 0f);
+                    rrect.pivot = new Vector2(0f, 0f);
+                    rrect.anchoredPosition = new Vector2(00f, 0f);
+                    rrect.localPosition = new Vector3(-50f, -50f, 0f);
+                    rrect.localRotation = Quaternion.identity;
+                    rrect.sizeDelta = new Vector2(100f, 10f);
 
                     // dodge stamina bar
                     GameObject staminaBar = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("StaminaBar"), mainContainer);
@@ -4519,10 +4555,13 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                         pos2 = new Vector3(0f, 8000f, 0f);
                         rot2 = Quaternion.Euler(0f, 10f, 3f);
                         break;
-                    /*case "voidraid":
-                        doSpawns = false;
+                    case "voidraid":
+                        pos = new Vector3(-136.5067f, 12.4f, -193.3536f);
+                        rot = Quaternion.Euler(0f, 50f, 0f);
+                        pos2 = new Vector3(0f, 8000f, 0f);
+                        rot2 = Quaternion.Euler(0f, 10f, 3f);
                         break;
-                    case "voidstage":
+                    /*case "voidstage":
                         doSpawns = false;
                         break;*/
                 }

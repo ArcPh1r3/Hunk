@@ -938,6 +938,50 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="sfx_hunk_railgun_charge" ID="{D5024BD2-59ED-4943-8C4D-93ADBAD92170}">
+					<ChildrenList>
+						<Action Name="" ID="{80CC1C18-D250-4F93-93E9-35D9277C7C30}" ShortID="370797935">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_railgun_charge" ID="{2EF6B1E8-D4C1-4F78-9CF8-F235CF30F441}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_railgun_shoot" ID="{FDB2D3FE-FF5B-4572-994E-16E2CAB9C622}">
+					<ChildrenList>
+						<Action Name="" ID="{DC267942-1865-4B7B-A208-AE4419ACDA6A}" ShortID="390618590">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_railgun_shoot" ID="{30B25FBE-CF7A-461C-8537-3EA6C4EBAA47}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_railgun_impact" ID="{01BDF916-2FA5-4ECB-BE8A-7C34B6EDFBD7}">
+					<ChildrenList>
+						<Action Name="" ID="{6D44CEA0-2E1A-471E-AB2B-B47F32118B27}" ShortID="232097761">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_railgun_impact" ID="{34BDBA5F-FD54-48D5-AB10-11BC494AE79E}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_assaultrifle_shoot" ID="{2356FEA1-45CA-4F51-9E17-030DFE9BFF59}">
+					<ChildrenList>
+						<Action Name="" ID="{063E9008-EB7A-4310-AC74-0B4905F44639}" ShortID="604580289">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="assaultrifle_shoot" ID="{CF456D54-04F4-4E2E-B1BC-D502B949A30A}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

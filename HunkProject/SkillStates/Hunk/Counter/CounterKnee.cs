@@ -182,29 +182,6 @@ namespace HunkMod.SkillStates.Hunk.Counter
 
                     Util.PlaySound("sfx_hunk_kick_impact", this.gameObject);
 
-                    if (NetworkServer.active)
-                    {
-                        /*this.target.gameObject.AddComponent<Modules.Components.HunkKnifeTracker>();
-                        this.target.gameObject.AddComponent<Modules.Components.HunkHeadshotTracker>();
-
-                        this.target.TakeDamage(new DamageInfo
-                        {
-                            attacker = this.gameObject,
-                            canRejectForce = false,
-                            crit = false,
-                            damage = this.target.fullCombinedHealth,
-                            damageColorIndex = DamageColorIndex.DeathMark,
-                            damageType = DamageType.BypassArmor,
-                            force = Vector3.zero,
-                            inflictor = this.gameObject,
-                            position = this.target.transform.position,
-                            procChainMask = default(ProcChainMask),
-                            procCoefficient = 1f
-                        });
-
-                        this.characterBody.AddBuff(RoR2Content.Buffs.ArmorBoost);*/
-                    }
-
                     if (base.isAuthority)
                     {
                         BlastAttack blastAttack = new BlastAttack();

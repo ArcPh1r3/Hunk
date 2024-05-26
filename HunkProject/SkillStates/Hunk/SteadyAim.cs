@@ -19,6 +19,7 @@ namespace HunkMod.SkillStates.Hunk
             base.OnEnter();
             this.characterBody.hideCrosshair = false;
             this.hunk.isAiming = true;
+            this.hunk.lockOnTimer = 0f;
             //this.animator = this.GetModelAnimator();
             if (!this.camParamsOverrideHandle.isValid) this.camParamsOverrideHandle = Modules.CameraParams.OverrideCameraParams(base.cameraTargetParams, HunkCameraParams.AIM, 0.5f);
 

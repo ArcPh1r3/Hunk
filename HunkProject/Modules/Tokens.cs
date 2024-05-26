@@ -62,13 +62,16 @@ namespace HunkMod.Modules
             LanguageAPI.Add(prefix + "PRIMARY_KNIFE_DESCRIPTION", $"<style=cIsUtility>Looting.</style> <style=cIsDamage>Slash</style> close-range combatants for <style=cIsDamage>{100f * 3.5}% damage</style>.");
 
             LanguageAPI.Add(prefix + "SHOOT_ATM_NAME", "Fire");
-            LanguageAPI.Add(prefix + "SHOOT_ATM_DESCRIPTION", "Shoot for <style=cIsDamage>6400% damage</style>. <style=cIsUtility>Deals most damage on direct hits.</style>");
+            LanguageAPI.Add(prefix + "SHOOT_ATM_DESCRIPTION", "Shoot for <style=cIsDamage>8000% damage</style>. <style=cIsUtility>Deals most damage on direct hits.</style>");
 
             LanguageAPI.Add(prefix + "SHOOT_ROCKETLAUNCHER_NAME", "Fire");
-            LanguageAPI.Add(prefix + "SHOOT_ROCKETLAUNCHER_DESCRIPTION", "Shoot for <style=cIsDamage>4800% damage</style>. <style=cIsDamage>Igniting.</style>");
+            LanguageAPI.Add(prefix + "SHOOT_ROCKETLAUNCHER_DESCRIPTION", "Shoot for <style=cIsDamage>6400% damage</style>. <style=cIsDamage>Igniting.</style>");
 
             LanguageAPI.Add(prefix + "SHOOT_GRENADELAUNCHER_NAME", "Fire");
             LanguageAPI.Add(prefix + "SHOOT_GRENADELAUNCHER_DESCRIPTION", "Shoot for <style=cIsDamage>3200% damage</style>. <style=cIsDamage>Igniting.</style>");
+
+            LanguageAPI.Add(prefix + "SHOOT_RAILGUN_NAME", "Fire");
+            LanguageAPI.Add(prefix + "SHOOT_RAILGUN_DESCRIPTION", "Shoot for <style=cIsDamage>20000% damage</style>.");
 
             LanguageAPI.Add(prefix + "SHOOT_FLAMETHROWER_NAME", "Fire");
             LanguageAPI.Add(prefix + "SHOOT_FLAMETHROWER_DESCRIPTION", "Shoot a stream of flame for <style=cIsDamage>500% damage</style>. <style=cIsUtility>Ignites.</style>");

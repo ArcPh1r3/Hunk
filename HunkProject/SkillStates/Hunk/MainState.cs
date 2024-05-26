@@ -104,11 +104,7 @@ namespace HunkMod.SkillStates.Hunk
 					if (this.hunk.weaponDef == Modules.Weapons.Railgun.instance.weaponDef)
 					{
 						this.characterBody.isSprinting = false;
-						this.characterMotor.jumpCount = this.characterBody.maxJumpCount;
 						this.characterMotor.moveDirection *= 0.5f;
-						this.skillLocator.primary.stock = 0;
-						this.skillLocator.utility.stock = 0;
-						this.skillLocator.utility.rechargeStopwatch = 0f;
 					}
 				}
             }
@@ -164,8 +160,36 @@ namespace HunkMod.SkillStates.Hunk
 			}
 		}
 
-		public override void ProcessJump()
+        public override bool CanExecuteSkill(GenericSkill skillSlot)
         {
+			if (this.hunk)
+			{
+				if (this.hunk.weaponDef)
+				{
+					if (this.hunk.weaponDef == Modules.Weapons.Railgun.instance.weaponDef)
+					{
+						if (skillSlot.skillFamily == this.skillLocator.primary.skillFamily && !this.hunk.isAiming) return false;
+						if (skillSlot.skillFamily == this.skillLocator.utility.skillFamily) return false;
+					}
+				}
+			}
+
+			return base.CanExecuteSkill(skillSlot);
+        }
+
+        public override void ProcessJump()
+        {
+			if (this.hunk)
+			{
+				if (this.hunk.weaponDef)
+				{
+					if (this.hunk.weaponDef == Modules.Weapons.Railgun.instance.weaponDef)
+					{
+						return;
+					}
+				}
+			}
+
 			if (this.hasCharacterMotor)
 			{
 				bool hopooFeather = false;

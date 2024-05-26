@@ -20,10 +20,14 @@ namespace HunkMod.SkillStates.Hunk
         public override void OnEnter()
         {
             base.OnEnter();
-            this.hunk.lockOnTimer = 1.5f;
+            if (Modules.Config.enableRollSnap.Value) this.hunk.lockOnTimer = 0.55f;
+            this.hunk.speedLineTimer = 0.25f;
             this.hunk.TriggerDodge();
             this.hunk.isRolling = true;
             this.slipVector = ((base.inputBank.moveVector == Vector3.zero) ? base.characterDirection.forward : base.inputBank.moveVector).normalized;
+
+            base.gameObject.layer = LayerIndex.fakeActor.intVal;
+            base.characterMotor.Motor.RebuildCollidableLayers();
             //this.cachedForward = this.characterDirection.forward;
 
             /*Animator anim = this.GetModelAnimator();
@@ -57,6 +61,26 @@ namespace HunkMod.SkillStates.Hunk
 
             this.ApplyBuff();
             this.CreateDashEffect();
+            this.CreateTargetedEffect();
+        }
+
+        private void CreateTargetedEffect()
+        {
+            if (this.hunk.targetHurtbox && base.isAuthority)
+            {
+                if (this.hunk.targetHurtbox.healthComponent && this.hunk.targetHurtbox.healthComponent.modelLocator && this.hunk.targetHurtbox.healthComponent.modelLocator.modelTransform)
+                {
+                    Transform modelTransform = this.hunk.targetHurtbox.healthComponent.modelLocator.modelTransform;
+
+                    TemporaryOverlay temporaryOverlay = modelTransform.gameObject.AddComponent<TemporaryOverlay>();
+                    temporaryOverlay.duration = 1f;
+                    temporaryOverlay.destroyComponentOnEnd = true;
+                    temporaryOverlay.originalMaterial = Modules.Assets.targetOverlayMat;
+                    temporaryOverlay.inspectorCharacterModel = modelTransform.GetComponent<CharacterModel>();
+                    temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 2f, 1f, 0f);
+                    temporaryOverlay.animateShaderAlpha = true;
+                }
+            }
         }
 
         public virtual void ApplyBuff()
@@ -111,6 +135,9 @@ namespace HunkMod.SkillStates.Hunk
             {
                 this.peepee = true;
                 this.coeff = 4f;
+
+                base.gameObject.layer = LayerIndex.defaultLayer.intVal;
+                base.characterMotor.Motor.RebuildCollidableLayers();
 
                 // ended up feeling bad
                 /*if (RoR2Application.isInSinglePlayer && this.inputBank.skill2.down)

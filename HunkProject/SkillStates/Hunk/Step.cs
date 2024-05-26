@@ -113,13 +113,13 @@ namespace HunkMod.SkillStates.Hunk
                         {
                             Roll nextState = new Roll();
 
-                            /*foreach (HurtBox i in h.hurtBoxGroup.hurtBoxes)
+                            foreach (HurtBox i in h.hurtBoxGroup.hurtBoxes)
                             {
                                 if (i.isSniperTarget)
                                 {
                                     this.hunk.targetHurtbox = i;
                                 }
-                            }*/
+                            }
 
                             outer.SetNextState(nextState);
                         }
@@ -128,7 +128,7 @@ namespace HunkMod.SkillStates.Hunk
                 }
             }
 
-            Collider[] array = Physics.OverlapSphere(characterBody.corePosition, checkRadius * 0.5f, LayerIndex.projectile.mask);
+            Collider[] array = Physics.OverlapSphere(characterBody.corePosition, checkRadius * 0.75f, LayerIndex.projectile.mask);
             
             for (int i = 0; i < array.Length; i++)
             {
@@ -140,6 +140,13 @@ namespace HunkMod.SkillStates.Hunk
                         if (base.isAuthority)
                         {
                             Roll nextState = new Roll();
+
+                            if (pc.owner)
+                            {
+                                HealthComponent hc = pc.owner.GetComponent<HealthComponent>();
+                                if (hc) this.hunk.targetHurtbox = hc.body.mainHurtBox;
+                            }
+
                             outer.SetNextState(nextState);
                         }
                         return true;
@@ -149,11 +156,21 @@ namespace HunkMod.SkillStates.Hunk
 
             foreach (Modules.Components.HunkProjectileTracker i in MainPlugin.projectileList)
             {
-                if (i && Vector3.Distance(i.transform.position, this.transform.position) <= this.checkRadius)
+                if (i && Vector3.Distance(i.transform.position, this.transform.position) <= this.checkRadius * 0.75f)
                 {
                     if (base.isAuthority)
                     {
                         Roll nextState = new Roll();
+
+                        /*ProjectileGhostController ghost = i.GetComponent<ProjectileGhostController>();
+                        if (ghost)
+                        {
+                            if (ghost.predictionTransform)
+
+                        }*/
+                        // apparently ghosts don't even have a reference to the actual projectile controller
+                        // i can't be bothered man
+
                         outer.SetNextState(nextState);
                     }
                     return true;

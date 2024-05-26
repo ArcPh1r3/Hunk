@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 483987882
+CRC: 1598594568
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 6e4ad7f1ef4f08495b58ded0e5f38680
+    Hash: 6be57f9213a7bea055c17bc34eed1a65
   TypeTreeHash:
     serializedVersion: 2
     Hash: c0613469c5f5f41ecc95af7ab71e2d70
@@ -98,7 +98,7 @@ Assets:
 - Assets/Hunk/Icons/Skill/texPassive2Icon.png
 - Assets/Hunk/VFX/BloodSpurtEffect.prefab
 - Assets/Hunk/Mesh/Albert.001_mesh.004.mesh
-- Assets/Hunk/Textures/New folder/Railgun_Main_N.png
+- Assets/Hunk/Textures/Railgun/Railgun_Main_N.png
 - Assets/Hunk/Animations/Default/AirDodgeLoop.anim
 - Assets/Hunk/HUD/ChargeBar.prefab
 - Assets/Hunk/Mesh/meshSMG.mesh
@@ -262,7 +262,7 @@ Assets:
 - Assets/Hunk/HUD/Textures/texRadialInner.png
 - Assets/Hunk/Textures/Keycard/texKeycardDiamond.png
 - Assets/Hunk/Textures/Revolver/Pistol_D.jpg
-- Assets/Hunk/Textures/New folder/Railgun_Main_D.png
+- Assets/Hunk/Textures/Railgun/Railgun_Main_D.png
 - Assets/Hunk/Animations/Default/Descend.anim
 - Assets/Hunk/Textures/Keycard/texKeycardHeart.png
 - Assets/Hunk/Items/mdlVirusEye.prefab
@@ -456,6 +456,7 @@ Assets:
 - Assets/Hunk/Weapons/mdlMagnum.prefab
 - Assets/Hunk/HUD/Textures/texBarrierFill.png
 - Assets/Hunk/Textures/GrenadeLauncher/T_M79_Normal.png
+- Assets/Hunk/Icons/Weapon/texRailgunIcon.png
 - Assets/Hunk/Animations/DisplayCase/animDisplayCase.controller
 - Assets/Hunk/VFX/texSpeedLine.png
 - Assets/Hunk/Animations/Default/Sprint.anim

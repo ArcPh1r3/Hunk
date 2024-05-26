@@ -73,13 +73,37 @@ namespace HunkMod.SkillStates.Hunk
                 this.skillLocator.utility.AddOneStock();
                 this.skillLocator.utility.stock = this.skillLocator.utility.maxStock;
                 this.hunk.TriggerDodge();
+                this.hunk.lockOnTimer = 0.55f;
                 base.fixedAge = this.duration * 0.25f;
-                if (base.isAuthority) Util.PlaySound("sfx_hunk_dodge_perfect", this.gameObject);
+                if (base.isAuthority)
+                {
+                    Util.PlaySound("sfx_hunk_dodge_perfect", this.gameObject);
+                    this.CreateTargetedEffect();
+                }
             }
             else
             {
                 base.PlayCrossfade("FullBody, Override", "Urostep", "Dodge.playbackRate", this.duration * 0.2f, 0.05f);
                 Util.PlaySound("sfx_hunk_step_foley", this.gameObject);
+            }
+        }
+
+        private void CreateTargetedEffect()
+        {
+            if (this.hunk.targetHurtbox)
+            {
+                if (this.hunk.targetHurtbox.healthComponent && this.hunk.targetHurtbox.healthComponent.modelLocator && this.hunk.targetHurtbox.healthComponent.modelLocator.modelTransform)
+                {
+                    Transform modelTransform = this.hunk.targetHurtbox.healthComponent.modelLocator.modelTransform;
+
+                    TemporaryOverlay temporaryOverlay = modelTransform.gameObject.AddComponent<TemporaryOverlay>();
+                    temporaryOverlay.duration = 1f;
+                    temporaryOverlay.destroyComponentOnEnd = true;
+                    temporaryOverlay.originalMaterial = Modules.Assets.targetOverlayMat;
+                    temporaryOverlay.inspectorCharacterModel = modelTransform.GetComponent<CharacterModel>();
+                    temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 2f, 1f, 0f);
+                    temporaryOverlay.animateShaderAlpha = true;
+                }
             }
         }
 
@@ -105,13 +129,13 @@ namespace HunkMod.SkillStates.Hunk
                         {
                             //Roll nextState = new Roll();
 
-                            /*foreach (HurtBox i in h.hurtBoxGroup.hurtBoxes)
+                            foreach (HurtBox i in h.hurtBoxGroup.hurtBoxes)
                             {
                                 if (i.isSniperTarget)
                                 {
                                     this.hunk.targetHurtbox = i;
                                 }
-                            }*/
+                            }
 
                             //outer.SetNextState(nextState);
                         }
@@ -120,7 +144,7 @@ namespace HunkMod.SkillStates.Hunk
                 }
             }
 
-            Collider[] array = Physics.OverlapSphere(characterBody.corePosition, checkRadius * 0.5f, LayerIndex.projectile.mask);
+            Collider[] array = Physics.OverlapSphere(characterBody.corePosition, checkRadius * 0.75f, LayerIndex.projectile.mask);
 
             for (int i = 0; i < array.Length; i++)
             {
@@ -131,6 +155,11 @@ namespace HunkMod.SkillStates.Hunk
                     {
                         if (base.isAuthority)
                         {
+                            if (pc.owner)
+                            {
+                                HealthComponent hc = pc.owner.GetComponent<HealthComponent>();
+                                if (hc) this.hunk.targetHurtbox = hc.body.mainHurtBox;
+                            }
                             //Roll nextState = new Roll();
                             //outer.SetNextState(nextState);
                         }
@@ -141,7 +170,7 @@ namespace HunkMod.SkillStates.Hunk
 
             foreach (Modules.Components.HunkProjectileTracker i in MainPlugin.projectileList)
             {
-                if (i && Vector3.Distance(i.transform.position, this.transform.position) <= this.checkRadius)
+                if (i && Vector3.Distance(i.transform.position, this.transform.position) <= this.checkRadius * 0.75f)
                 {
                     if (base.isAuthority)
                     {

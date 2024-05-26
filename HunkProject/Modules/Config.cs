@@ -32,6 +32,7 @@ namespace HunkMod.Modules
         public static ConfigEntry<bool> customHUD;
         public static ConfigEntry<bool> loreAccurateWeskah;
         public static ConfigEntry<bool> originalAmmoPickups;
+        public static ConfigEntry<bool> enableRollSnap;
         public static ConfigEntry<bool> blacklistHunkItems;
         public static ConfigEntry<bool> overTheShoulderCamera;
         public static ConfigEntry<bool> overTheShoulderCamera2;
@@ -161,6 +162,12 @@ false,
 "Original Ammo Pickup Behavior",
 false,
 "Reverts ammo pickups to static objects in chests.");
+
+            enableRollSnap
+= Config.BindAndOptions("01 - General",
+"Perfect Dodge Camera Snap",
+true,
+"Set to false to disable the camera snap when performing a Perfect Dodge.");
 
             blacklistHunkItems
 = Config.BindAndOptions("01 - General",

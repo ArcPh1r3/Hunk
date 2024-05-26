@@ -39,5 +39,13 @@ namespace HunkMod.Modules.Components
         {
 
         }
+
+        public virtual void HideMag()
+        {
+        }
+
+        public virtual void ShowMag()
+        {
+        }
     }
 }

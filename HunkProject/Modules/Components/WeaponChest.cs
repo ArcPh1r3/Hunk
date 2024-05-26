@@ -28,10 +28,12 @@ namespace HunkMod.Modules.Components
             bool fuck = false;
             if (sceneName == "goldshores") fuck = true;
             if (sceneName == "mysteryspace") fuck = true;
+            if (sceneName == "moon") fuck = true;
             if (sceneName == "moon2") fuck = true;
+            if (sceneName == "voidraid") fuck = true;
 
-                // im just gonna hard code this rn okay.
-                // just get it working and move on. it can be cleaned up later.
+            // im just gonna hard code this rn okay.
+            // just get it working and move on. it can be cleaned up later.
             if (Modules.Helpers.HunkHasWeapon(Modules.Weapons.Shotgun.instance.weaponDef) || Modules.Helpers.HunkHasWeapon(Modules.Weapons.Slugger.instance.weaponDef))
             {
                 if (Modules.Helpers.HunkHasWeapon(Modules.Weapons.Magnum.instance.weaponDef) || Modules.Helpers.HunkHasWeapon(Modules.Weapons.Revolver.instance.weaponDef))
@@ -111,7 +113,9 @@ namespace HunkMod.Modules.Components
 
             if (sceneName == "goldshores") itemDef = Modules.Weapons.GoldenGun.instance.itemDef;
             if (sceneName == "mysteryspace") itemDef = Modules.Weapons.BlueRose.instance.itemDef;
+            if (sceneName == "moon") itemDef = RocketLauncher.instance.itemDef;
             if (sceneName == "moon2") itemDef = RocketLauncher.instance.itemDef;
+            if (sceneName == "voidraid") itemDef = Railgun.instance.itemDef;
 
             NetworkIdentity identity = this.GetComponent<NetworkIdentity>();
             if (!identity) return;
@@ -121,7 +125,9 @@ namespace HunkMod.Modules.Components
             int p = random.Next(1, 5);
 
             if (Run.instance.stageClearCount <= 0 || UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "goldshores") p = 2;
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "moon") p = 0;
             if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "moon2") p = 0;
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "voidraid") p = 0;
 
             new SyncCaseItem(identity.netId, (int)this.itemDef.itemIndex, p).Send(NetworkDestination.Clients);
         }
@@ -137,7 +143,7 @@ namespace HunkMod.Modules.Components
             if (this.itemDef == Modules.Weapons.Shotgun.instance.itemDef)
             {
                 var h = GetComponent<Highlight>();
-                Transform gunTransform = h.targetRenderer.transform.parent.parent.Find("WeaponHolder");
+                Transform gunTransform = h.targetRenderer.transform.parent.parent.parent.Find("WeaponHolder");
                 gunTransform.localPosition = new Vector3(-0.5f, 2.98f, 0.87f);
                 gunTransform.localScale = Vector3.one * 1.25f;
             }
@@ -145,7 +151,7 @@ namespace HunkMod.Modules.Components
             if (this.itemDef == Modules.Weapons.Slugger.instance.itemDef)
             {
                 var h = GetComponent<Highlight>();
-                Transform gunTransform = h.targetRenderer.transform.parent.parent.Find("WeaponHolder");
+                Transform gunTransform = h.targetRenderer.transform.parent.parent.parent.Find("WeaponHolder");
                 gunTransform.localPosition = new Vector3(0.6f, 2.98f, -0.16f);
             }
 
@@ -154,7 +160,9 @@ namespace HunkMod.Modules.Components
                 purchaseInteraction.displayNameToken = string.Format("{0}{1}", Language.GetStringFormatted(MainPlugin.developerPrefix + "_HUNK_CHEST_NAME"), Language.GetStringFormatted(this.itemDef.nameToken));
                 purchaseInteraction.contextToken = MainPlugin.developerPrefix + "_HUNK_CHEST_CONTEXT";
 
+                if (sceneName == "moon") purchaseInteraction.costType = CostTypeIndex.None;
                 if (sceneName == "moon2") purchaseInteraction.costType = CostTypeIndex.None;
+                if (sceneName == "voidraid") purchaseInteraction.costType = CostTypeIndex.None;
             }
 
             gunPickup.Init();
@@ -181,10 +189,10 @@ namespace HunkMod.Modules.Components
                         {
                             genericDisplayNameProvider.displayToken = MainPlugin.developerPrefix + "_HUNK_HEARTCHEST_NAME";
                         }
-                        h.targetRenderer.transform.parent.Find("Hinge/Lock/Spade").gameObject.SetActive(false);
-                        h.targetRenderer.transform.parent.Find("Hinge/Lock/Club").gameObject.SetActive(false);
-                        h.targetRenderer.transform.parent.Find("Hinge/Lock/Heart").gameObject.SetActive(true);
-                        h.targetRenderer.transform.parent.Find("Hinge/Lock/Diamond").gameObject.SetActive(false);
+                        h.targetRenderer.transform.parent.Find("Lock/Spade").gameObject.SetActive(false);
+                        h.targetRenderer.transform.parent.Find("Lock/Club").gameObject.SetActive(false);
+                        h.targetRenderer.transform.parent.Find("Lock/Heart").gameObject.SetActive(true);
+                        h.targetRenderer.transform.parent.Find("Lock/Diamond").gameObject.SetActive(false);
                         if (pingInfoProvider != null)
                             pingInfoProvider.pingIconOverride = Assets.mainAssetBundle.LoadAsset<Sprite>("texIconHeart");
                         break;
@@ -197,10 +205,10 @@ namespace HunkMod.Modules.Components
                         {
                             genericDisplayNameProvider.displayToken = MainPlugin.developerPrefix + "_HUNK_SPADECHEST_NAME";
                         }
-                        h.targetRenderer.transform.parent.Find("Hinge/Lock/Spade").gameObject.SetActive(true);
-                        h.targetRenderer.transform.parent.Find("Hinge/Lock/Club").gameObject.SetActive(false);
-                        h.targetRenderer.transform.parent.Find("Hinge/Lock/Heart").gameObject.SetActive(false);
-                        h.targetRenderer.transform.parent.Find("Hinge/Lock/Diamond").gameObject.SetActive(false);
+                        h.targetRenderer.transform.parent.Find("Lock/Spade").gameObject.SetActive(true);
+                        h.targetRenderer.transform.parent.Find("Lock/Club").gameObject.SetActive(false);
+                        h.targetRenderer.transform.parent.Find("Lock/Heart").gameObject.SetActive(false);
+                        h.targetRenderer.transform.parent.Find("Lock/Diamond").gameObject.SetActive(false);
                         if (pingInfoProvider != null)
                             pingInfoProvider.pingIconOverride = Assets.mainAssetBundle.LoadAsset<Sprite>("texIconSpade");
                         break;
@@ -213,10 +221,10 @@ namespace HunkMod.Modules.Components
                         {
                             genericDisplayNameProvider.displayToken = MainPlugin.developerPrefix + "_HUNK_DIAMONDCHEST_NAME";
                         }
-                        h.targetRenderer.transform.parent.Find("Hinge/Lock/Spade").gameObject.SetActive(false);
-                        h.targetRenderer.transform.parent.Find("Hinge/Lock/Club").gameObject.SetActive(false);
-                        h.targetRenderer.transform.parent.Find("Hinge/Lock/Heart").gameObject.SetActive(false);
-                        h.targetRenderer.transform.parent.Find("Hinge/Lock/Diamond").gameObject.SetActive(true);
+                        h.targetRenderer.transform.parent.Find("Lock/Spade").gameObject.SetActive(false);
+                        h.targetRenderer.transform.parent.Find("Lock/Club").gameObject.SetActive(false);
+                        h.targetRenderer.transform.parent.Find("Lock/Heart").gameObject.SetActive(false);
+                        h.targetRenderer.transform.parent.Find("Lock/Diamond").gameObject.SetActive(true);
                         if (pingInfoProvider != null)
                             pingInfoProvider.pingIconOverride = Assets.mainAssetBundle.LoadAsset<Sprite>("texIconDiamond");
                         break;
@@ -229,10 +237,10 @@ namespace HunkMod.Modules.Components
                         {
                             genericDisplayNameProvider.displayToken = MainPlugin.developerPrefix + "_HUNK_CLUBCHEST_NAME";
                         }
-                        h.targetRenderer.transform.parent.Find("Hinge/Lock/Spade").gameObject.SetActive(false);
-                        h.targetRenderer.transform.parent.Find("Hinge/Lock/Club").gameObject.SetActive(true);
-                        h.targetRenderer.transform.parent.Find("Hinge/Lock/Heart").gameObject.SetActive(false);
-                        h.targetRenderer.transform.parent.Find("Hinge/Lock/Diamond").gameObject.SetActive(false);
+                        h.targetRenderer.transform.parent.Find("Lock/Spade").gameObject.SetActive(false);
+                        h.targetRenderer.transform.parent.Find("Lock/Club").gameObject.SetActive(true);
+                        h.targetRenderer.transform.parent.Find("Lock/Heart").gameObject.SetActive(false);
+                        h.targetRenderer.transform.parent.Find("Lock/Diamond").gameObject.SetActive(false);
                         if (pingInfoProvider != null)
                             pingInfoProvider.pingIconOverride = Assets.mainAssetBundle.LoadAsset<Sprite>("texIconClub");
                         break;
@@ -245,7 +253,7 @@ namespace HunkMod.Modules.Components
                         {
                             genericDisplayNameProvider.displayToken = MainPlugin.developerPrefix + "_HUNK_CHEST_NAME";
                         }
-                        h.targetRenderer.transform.parent.Find("Hinge/Lock").gameObject.SetActive(false);
+                        h.targetRenderer.transform.parent.Find("Lock").gameObject.SetActive(false);
                         break;
                 }
             }
@@ -271,7 +279,7 @@ namespace HunkMod.Modules.Components
             pingInfoProvider = this.GetComponent<PingInfoProvider>();
 
             var h = GetComponent<Highlight>();
-            if (h.targetRenderer.transform.parent.Find("Hinge")) h.targetRenderer.transform.parent.Find("Hinge/Lock/OnLight").gameObject.SetActive(false);
+            if (h.targetRenderer.transform.parent.parent.Find("Hinge")) h.targetRenderer.transform.parent.Find("Lock/OnLight").gameObject.SetActive(false);
         }
     }
 }
