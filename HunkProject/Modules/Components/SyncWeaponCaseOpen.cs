@@ -32,9 +32,9 @@ namespace HunkMod.Modules.Components
             //target.GetComponent<WeaponChest>().gunPickup.GetComponent<GenericPickupController>().enabled = true;
 
             if (target.name.Contains("2")) target.GetComponent<Highlight>().targetRenderer.transform.parent.parent.GetComponent<Animator>().Play("Open");
-            else target.GetComponent<Highlight>().targetRenderer.transform.parent.parent.parent.GetComponent<Animator>().Play("Open");
+            else target.GetComponent<Highlight>().targetRenderer.transform.parent.parent.parent.parent.GetComponent<Animator>().Play("Open");
 
-            GameObject.Destroy(target.GetComponent<WeaponChest>().gunPickup.gameObject);
+            if (RoR2Application.isInMultiPlayer || MainPlugin.qolChestsInstalled || MainPlugin.emptyChestsInstalled) GameObject.Destroy(target.GetComponent<WeaponChest>().gunPickup.gameObject);
 
             Util.PlaySound("sfx_hunk_weapon_case_open", target.gameObject);
         }

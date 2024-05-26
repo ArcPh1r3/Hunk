@@ -95,6 +95,9 @@ namespace HunkMod.Modules.Survivors
         public static CostTypeDef diamondCostDef;
         public static int diamondCostTypeIndex;
 
+        public static CostTypeDef wristbandCostDef;
+        public static int wristbandCostTypeIndex;
+
         public static InteractableSpawnCard terminalInteractableCard;
         internal static GameObject terminalPrefab;
 
@@ -108,6 +111,7 @@ namespace HunkMod.Modules.Survivors
         internal static ItemDef clubKeycard;
         internal static ItemDef heartKeycard;
         internal static ItemDef diamondKeycard;
+        internal static ItemDef wristband;
         internal static ItemDef gVirusSample;
         internal static ItemDef gVirus;
         internal static ItemDef gVirus2;
@@ -2654,6 +2658,19 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             list.Add(diamondCostDef);
         }
 
+        private static void AddWristbandCostType(List<CostTypeDef> list)
+        {
+            wristbandCostDef = new CostTypeDef();
+            wristbandCostDef.costStringFormatToken = MainPlugin.developerPrefix + "_WRISTBANDCOST";
+            wristbandCostDef.isAffordable = new CostTypeDef.IsAffordableDelegate(Misc.ItemCostTypeHelperWristband.IsAffordable);
+            wristbandCostDef.payCost = new CostTypeDef.PayCostDelegate(Misc.ItemCostTypeHelperWristband.PayCost);
+            wristbandCostDef.colorIndex = ColorCatalog.ColorIndex.Blood;
+            wristbandCostDef.saturateWorldStyledCostString = true;
+            wristbandCostDef.darkenWorldStyledCostString = false;
+            wristbandCostTypeIndex = CostTypeCatalog.costTypeDefs.Length + list.Count;
+            list.Add(wristbandCostDef);
+        }
+
         private static void AddSampleCostType(List<CostTypeDef> list)
         {
             sampleCostDef = new CostTypeDef();
@@ -3024,6 +3041,30 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             diamondKeycard.pickupModelPrefab = Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlKeycardDiamond");
             Modules.Assets.ConvertAllRenderersToHopooShader(diamondKeycard.pickupModelPrefab);
 
+            wristband = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/Base/ArtifactKey/ArtifactKey.asset").WaitForCompletion());
+            wristband.name = "IDWristband";
+            wristband.nameToken = "ROB_HUNK_WRISTBAND_NAME";
+            wristband.descriptionToken = "ROB_HUNK_WRISTBAND_DESC";
+            wristband.pickupToken = "ROB_HUNK_WRISTBAND_DESC";
+            wristband.loreToken = "ROB_HUNK_WRISTBAND_DESC";
+            wristband.canRemove = false;
+            wristband.hidden = false;
+            wristband.pickupIconSprite = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texWristbandIcon");
+            wristband.requiredExpansion = null;
+            wristband.tags = new ItemTag[]
+            {
+                ItemTag.AIBlacklist,
+                ItemTag.BrotherBlacklist,
+                ItemTag.CannotCopy,
+                ItemTag.CannotDuplicate,
+                ItemTag.CannotSteal,
+                ItemTag.WorldUnique
+            };
+            wristband.unlockableDef = null;
+
+            wristband.pickupModelPrefab = Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlWristband");
+            Modules.Assets.ConvertAllRenderersToHopooShader(wristband.pickupModelPrefab);
+
             gVirusSample = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/Base/ArtifactKey/ArtifactKey.asset").WaitForCompletion());
             gVirusSample.name = "GVirusSample";
             gVirusSample.nameToken = "ROB_HUNK_G_VIRUS_SAMPLE_NAME";
@@ -3139,6 +3180,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             HunkWeaponCatalog.itemDefs.Add(clubKeycard);
             HunkWeaponCatalog.itemDefs.Add(heartKeycard);
             HunkWeaponCatalog.itemDefs.Add(diamondKeycard);
+            HunkWeaponCatalog.itemDefs.Add(wristband);
             HunkWeaponCatalog.itemDefs.Add(gVirusSample);
             HunkWeaponCatalog.itemDefs.Add(gVirus);
             HunkWeaponCatalog.itemDefs.Add(gVirus2);
@@ -3229,6 +3271,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             CostTypeCatalog.modHelper.getAdditionalEntries += AddSpadeCostType;
             CostTypeCatalog.modHelper.getAdditionalEntries += AddDiamondCostType;
             CostTypeCatalog.modHelper.getAdditionalEntries += AddClubCostType;
+            CostTypeCatalog.modHelper.getAdditionalEntries += AddWristbandCostType;
             CostTypeCatalog.modHelper.getAdditionalEntries += AddSampleCostType;
 
             // spawn g-young
@@ -3597,7 +3640,8 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                                 if (tries >= 50)
                                 {
                                     valid = true;
-                                    self.GetComponent<Terminal>().itemDef = RoR2Content.Items.Pearl;
+                                    if (characterBody.inventory.GetItemCount(Hunk.wristband) <= 0) self.GetComponent<Terminal>().itemDef = RoR2Content.Items.Pearl;
+                                    else self.GetComponent<Terminal>().itemDef = Hunk.wristband;
                                 }
                             }
                         }
@@ -3739,33 +3783,14 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                 {
                     // this is the worst place to put this btw
 
+                    self.GetComponent<WeaponChest>().alive = false;
                     self.GetComponent<WeaponChest>().gunPickup.enabled = true;
                     self.GetComponent<WeaponChest>().gunPickup.GetComponent<GenericPickupController>().enabled = true;
-                    self.GetComponent<Highlight>().targetRenderer.transform.parent.parent.GetComponent<Animator>().Play("Open");
+                    //self.GetComponent<Highlight>().targetRenderer.transform.parent.parent.GetComponent<Animator>().Play("Open");
                     Util.PlaySound("sfx_hunk_weapon_case_open", self.gameObject);
 
-                    if (RoR2Application.isInMultiPlayer)
-                    {
-                        PickupDropletController.CreatePickupDroplet(
-                            PickupCatalog.FindPickupIndex(self.GetComponent<WeaponChest>().itemDef.itemIndex),
-                            self.transform.position + Vector3.up,
-                            Vector3.up * 25f);
-
-                        NetworkIdentity identity = self.GetComponent<NetworkIdentity>();
-                        if (identity) new SyncWeaponCaseOpen(identity.netId, self.GetComponent<Highlight>().targetRenderer.transform.parent.parent.gameObject).Send(NetworkDestination.Clients);
-                    }
-
-                    return;
-                }
-
-                if (self.gameObject.name.Contains("HunkChest"))
-                {
-                    // this is the worst place to put this btw
-
-                    self.GetComponent<WeaponChest>().gunPickup.enabled = true;
-                    self.GetComponent<WeaponChest>().gunPickup.GetComponent<GenericPickupController>().enabled = true;
-                    self.GetComponent<Highlight>().targetRenderer.transform.parent.parent.parent.parent.GetComponent<Animator>().Play("Open");
-                    Util.PlaySound("sfx_hunk_weapon_case_open", self.gameObject);
+                    NetworkIdentity identity = self.GetComponent<NetworkIdentity>();
+                    if (identity) new SyncWeaponCaseOpen(identity.netId, self.gameObject).Send(NetworkDestination.Clients);
 
                     if (RoR2Application.isInMultiPlayer || MainPlugin.qolChestsInstalled || MainPlugin.emptyChestsInstalled)
                     {
@@ -3773,9 +3798,28 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                             PickupCatalog.FindPickupIndex(self.GetComponent<WeaponChest>().itemDef.itemIndex),
                             self.transform.position + Vector3.up,
                             Vector3.up * 25f);
+                    }
 
-                        NetworkIdentity identity = self.GetComponent<NetworkIdentity>();
-                        if (identity) new SyncWeaponCaseOpen(identity.netId, self.GetComponent<Highlight>().targetRenderer.transform.parent.parent.parent.gameObject).Send(NetworkDestination.Clients);
+                    return;
+                }
+
+                if (self.gameObject.name.Contains("HunkChest"))
+                {
+                    self.GetComponent<WeaponChest>().alive = false;
+                    self.GetComponent<WeaponChest>().gunPickup.enabled = true;
+                    self.GetComponent<WeaponChest>().gunPickup.GetComponent<GenericPickupController>().enabled = true;
+                    //self.GetComponent<Highlight>().targetRenderer.transform.parent.parent.parent.parent.GetComponent<Animator>().Play("Open");
+                    Util.PlaySound("sfx_hunk_weapon_case_open", self.gameObject);
+
+                    NetworkIdentity identity = self.GetComponent<NetworkIdentity>();
+                    if (identity) new SyncWeaponCaseOpen(identity.netId, self.gameObject).Send(NetworkDestination.Clients);
+
+                    if (RoR2Application.isInMultiPlayer || MainPlugin.qolChestsInstalled || MainPlugin.emptyChestsInstalled)
+                    {
+                        PickupDropletController.CreatePickupDroplet(
+                            PickupCatalog.FindPickupIndex(self.GetComponent<WeaponChest>().itemDef.itemIndex),
+                            self.transform.position + Vector3.up,
+                            Vector3.up * 25f);
                     }
 
                     return;

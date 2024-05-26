@@ -86,5 +86,16 @@ namespace HunkMod.Modules.Components
             this.stopwatch = duration;
             this.subState = SubState.Starting;
         }
+
+        public void SoftInit(string newText, Color color, float duration = 3f)
+        {
+            if (this.opacity > 0f) return;
+
+            this.text.text = newText;
+            this.opacity = 0f;
+            this.baseColor = color;
+            this.stopwatch = duration;
+            this.subState = SubState.Starting;
+        }
     }
 }

@@ -982,6 +982,17 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="sfx_hunk_scanner_beep" ID="{626C16FF-8F4C-4BE3-AEE6-C304D5D6B0B8}">
+					<ChildrenList>
+						<Action Name="" ID="{AF4D89BD-F6A1-4377-86A3-31A9B6004634}" ShortID="982227081">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_scanner_beep" ID="{9B1226C2-17A6-4B23-BC61-8169FFF78984}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1598594568
+CRC: 3442858142
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 6be57f9213a7bea055c17bc34eed1a65
+    Hash: e5de462b4cf9c83c74d96e49b14e67d7
   TypeTreeHash:
     serializedVersion: 2
     Hash: c0613469c5f5f41ecc95af7ab71e2d70
@@ -111,6 +111,7 @@ Assets:
 - Assets/Hunk/VFX/matSpark.mat
 - Assets/Hunk/Textures/Tofu/texBeret.png
 - Assets/Hunk/Materials/matRailgunScreen.mat
+- Assets/Hunk/Weapons/mdlEMFVisualizerPickup.prefab
 - Assets/Hunk/Textures/SMG/texExtendedMag.png
 - Assets/Hunk/Animations/Rocket/Sprint.anim
 - Assets/Hunk/Materials/matInfiniteKnife.mat
@@ -165,6 +166,7 @@ Assets:
 - Assets/Hunk/Materials/matBlueRose.mat
 - Assets/Hunk/Textures/Tofu/texBeretNormal.png
 - Assets/Hunk/Textures/Flamethrower/Leon_FlameThrower_N.png
+- Assets/Hunk/Materials/matWristband01.mat
 - Assets/Hunk/Materials/matWesker04.mat
 - Assets/Hunk/Icons/texTofuIcon.png
 - Assets/Hunk/Weapons/mdlGoldenGunPickup.prefab
@@ -176,7 +178,9 @@ Assets:
 - Assets/Hunk/Textures/MUP/USP_29_USP_29_Normal.png
 - Assets/Hunk/Icons/Item/texKeycardSpadeIcon.png
 - Assets/Hunk/VFX/matChargeRing.mat
+- Assets/Hunk/Textures/Wristband/Ada_Wristband_D.tga
 - Assets/Hunk/Textures/Doom/doomslayer_launcher.jpg
+- Assets/Hunk/Materials/matEMF.mat
 - Assets/Hunk/Textures/Doom/equipmentlauncher_mods_base.jpg
 - Assets/Hunk/Items/mdlSpeedloader.prefab
 - Assets/Hunk/HunkDisplay.prefab
@@ -187,7 +191,9 @@ Assets:
 - Assets/Hunk/Materials/matHunk02.mat
 - Assets/Hunk/Materials/matRocketLauncher.mat
 - Assets/Hunk/Animations/maskHunkImpact.mask
+- Assets/Hunk/Textures/Wristband/Ada_WristbandLevel_N.TGA
 - Assets/Hunk/VFX/SpeedLines.prefab
+- Assets/Hunk/Icons/Weapon/texEMFIcon.png
 - Assets/Hunk/Weapons/mdlShotgunPickup.prefab
 - Assets/Hunk/Icons/Weapon/texMUPIcon.png
 - Assets/Hunk/Animations/WeaponCase/Open.anim
@@ -195,6 +201,7 @@ Assets:
 - Assets/Hunk/Animations/Default/DefaultPose.anim
 - Assets/Hunk/Textures/Flamethrower/Leon_FlameThrowerExt_D.png
 - Assets/Hunk/Animations/Default/AimPitch.anim
+- Assets/Hunk/Weapons/mdlBroomHC.prefab
 - Assets/Hunk/Animations/Rocket/Idle.anim
 - Assets/Hunk/Weapons/mdlFlamethrower.prefab
 - Assets/Hunk/Animations/Default/Ascend.anim
@@ -206,6 +213,7 @@ Assets:
 - Assets/Hunk/Textures/jacket_n.png
 - Assets/Hunk/Materials/matSpeedloader.mat
 - Assets/Hunk/Materials/matKnife.mat
+- Assets/Hunk/Textures/Transceiver/Ada_Transceiver_N.TGA
 - Assets/Hunk/Textures/Magnum/Leon_LightningHawkLongBarrel_D.png
 - Assets/Hunk/Textures/DisplayCase/M_Weapon_Case_albedo.jpeg
 - Assets/Hunk/Animations/animHunk.controller
@@ -245,6 +253,7 @@ Assets:
 - Assets/Hunk/Animations/Pistol/ReloadP.anim
 - Assets/Hunk/HUD/Animations/Flash.anim
 - Assets/Hunk/Animations/Default/RunL.anim
+- Assets/Hunk/Textures/Transceiver/Ada_Transceiver_D.TGA
 - Assets/Hunk/Icons/Weapon/texShotgunIcon.png
 - Assets/Hunk/Materials/matWesker05.mat
 - Assets/Hunk/Textures/M19/Leon_M1911_N.png
@@ -256,6 +265,7 @@ Assets:
 - Assets/Hunk/Animations/Pistol/RunR.anim
 - Assets/Hunk/VFX/texMoonsThin.png
 - Assets/Hunk/Icons/texHunkAchievement.png
+- Assets/Hunk/Weapons/mdlBroomHCPickup.prefab
 - Assets/Hunk/Mesh/meshSlayerHelmet.mesh
 - Assets/Hunk/Weapons/mdlSluggerOld.prefab
 - Assets/Hunk/Mesh/Albert.001_mesh.005.mesh
@@ -272,6 +282,7 @@ Assets:
 - Assets/Hunk/Textures/Attachments/01_-_Default_Base_Color.png
 - Assets/Hunk/Textures/InfiniteKnife/Leon_InfiniteKnife_D.png
 - Assets/Hunk/Weapons/mdlRevolver.prefab
+- Assets/Hunk/Materials/matWristband02.mat
 - Assets/Hunk/Icons/texMainSkin.png
 - Assets/Hunk/Animations/PistolAlt/Idle.anim
 - Assets/Hunk/Materials/matM19.mat
@@ -319,7 +330,9 @@ Assets:
 - Assets/Hunk/Animations/PistolAlt/SprintFast.anim
 - Assets/Hunk/Textures/Doom/doomslayer_helmet.jpg
 - Assets/Hunk/Textures/body_n.png
+- Assets/Hunk/Textures/EMF/Ada_EMF_D.TGA
 - Assets/Hunk/Animations/VirusEye/Idle.anim
+- Assets/Hunk/Textures/EMF/Ada_EMF_N.TGA
 - Assets/Hunk/Materials/matWeaponCase.mat
 - Assets/Hunk/Animations/Default/FreefallB.anim
 - Assets/Hunk/VFX/HunkMissileGhost.prefab
@@ -348,6 +361,7 @@ Assets:
 - Assets/Hunk/Weapons/mdlGoldenGun.prefab
 - Assets/Hunk/Icons/texTofuSkin.png
 - Assets/Hunk/Icons/Skill/texDodgeScepterIcon.png
+- Assets/Hunk/Icons/Item/texWristbandIcon.png
 - Assets/Hunk/HUD/Animations/DodgeOverlay.controller
 - Assets/Hunk/Animations/GrenadeLauncher/animGrenadeLauncher.controller
 - Assets/Hunk/Mesh/0004_Resident Evil 7_ 1.mesh
@@ -369,8 +383,10 @@ Assets:
 - Assets/Hunk/Items/DisplayKeycardClub.prefab
 - Assets/Hunk/Items/mdlLaserSight.prefab
 - Assets/Hunk/Animations/Pistol/AimIdle.anim
+- Assets/Hunk/Items/DisplayWristband.prefab
 - Assets/Hunk/Materials/matRevolver.mat
 - Assets/Hunk/Animations/Pistol/SprintFast.anim
+- Assets/Hunk/Items/mdlWristband.prefab
 - Assets/Hunk/Icons/Skill/texPassiveIcon.png
 - Assets/Hunk/Weapons/mdlRevolverPickup.prefab
 - Assets/Hunk/Textures/Magnum/Leon_LightningHawkSight_D.png
@@ -392,6 +408,7 @@ Assets:
 - Assets/Hunk/Materials/matKeyCardDiamondOld.mat
 - Assets/Hunk/VFX/Badass/TinyExplosion.prefab
 - Assets/Hunk/Materials/matATM.mat
+- Assets/Hunk/Textures/BroomHC/Ada_BroomHc_N.TGA
 - Assets/Hunk/VFX/Badass/SandHitEffect.prefab
 - Assets/Hunk/Textures/usp_albm.png
 - Assets/Hunk/HUD/ChargeRing.prefab
@@ -404,6 +421,7 @@ Assets:
 - Assets/Hunk/Animations/DisplayCase/Open.anim
 - Assets/Hunk/Textures/Shotgun/matShotgun.mat
 - Assets/Hunk/Weapons/mdlBlueRose.prefab
+- Assets/Hunk/Materials/matBroomHC.mat
 - Assets/Hunk/Icons/texIconDiamond.png
 - Assets/Hunk/Mesh/0003_Resident Evil 7_ 4.mesh
 - Assets/Hunk/Textures/BlueRose/BlueRose_Alb.png
@@ -447,6 +465,7 @@ Assets:
 - Assets/Hunk/mdlImpEye.prefab
 - Assets/Hunk/Textures/Knife/Leon_Knife_N.png
 - Assets/Hunk/Items/DisplayKeycardHeart.prefab
+- Assets/Hunk/Textures/BroomHC/Ada_BroomHc_D.TGA
 - Assets/Hunk/Weapons/mdlSlugger.prefab
 - Assets/Hunk/Textures/Magnum/Leon_LightningHawkNormBarrel_D.png
 - Assets/Hunk/Textures/Keycard/texKeycardClub.png
@@ -466,6 +485,7 @@ Assets:
 - Assets/Hunk/Weapons/mdlFlashlightPickup.prefab
 - Assets/Hunk/Textures/GrenadeLauncher/T_M79_Albedo.png
 - Assets/Hunk/Animations/Default/RoundReloadLoop.anim
+- Assets/Hunk/Materials/matTransceiver.mat
 - Assets/Hunk/Animations/Rocket/MenuIdle.anim
 - Assets/Hunk/Icons/Weapon/texFlamethrowerIcon.png
 - Assets/Hunk/Textures/CardboardBox/Cbox.png
@@ -473,6 +493,8 @@ Assets:
 - Assets/Hunk/VFX/HunkBigRocketGhost.prefab
 - Assets/Hunk/Animations/Pistol/RunF.anim
 - Assets/Hunk/Mesh/Albert.001_mesh.003.mesh
+- Assets/Hunk/Items/DisplayTransceiver.prefab
+- Assets/Hunk/Weapons/mdlEMFVisualizer.prefab
 - Assets/Hunk/Materials/matExtendedMag.mat
 - Assets/Hunk/Animations/PistolAlt/AimIdle.anim
 - Assets/Hunk/Textures/Unsorted/texDiamond.png
@@ -548,13 +570,16 @@ Assets:
 - Assets/Hunk/Animations/CardboardBox/animCardboardBox.controller
 - Assets/Hunk/Textures/Wesker/T_K29Legs006_N.png
 - Assets/Hunk/Materials/matDiamond.mat
+- Assets/Hunk/Textures/Wristband/Ada_Wristband_N.tga
 - Assets/Hunk/VFX/HunkGrenadeGhost.prefab
 - Assets/Hunk/Textures/Doom/doomslayer_legs_n.jpg
 - Assets/Hunk/Icons/Skill/texSwapIcon.png
 - Assets/Hunk/HUD/CounterFlash.prefab
 - Assets/Hunk/Icons/Weapon/texAssaultRifleIcon.png
+- Assets/Hunk/Textures/Wristband/Ada_WristbandLevel_D.TGA
 - Assets/Hunk/Icons/Weapon/texMagnumIcon.png
 - Assets/Hunk/Icons/Weapon/texATMIcon.png
+- Assets/Hunk/Items/mdlTransceiver.prefab
 - Assets/Hunk/Textures/WeaponCase/Hardcase_BaseColor.png
 - Assets/Hunk/Textures/Tofu/texTofuNormal.png
 - Assets/Hunk/Icons/texTofuAchievement.png

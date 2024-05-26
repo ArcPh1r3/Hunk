@@ -17,6 +17,7 @@ namespace HunkMod.Modules
         internal const string yellowItemHex = "FFFF00";
         internal const string lunarItemHex = "0066FF";
         internal const string voidItemHex = "C678B4";
+        internal const string umbrellaHex = "C80202";
         internal const string colorSuffix = "</color>";
 
         internal static Color whiteItemColor = new Color(1f, 1f, 1f);

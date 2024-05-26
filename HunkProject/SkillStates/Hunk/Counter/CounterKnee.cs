@@ -109,7 +109,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
             this.characterMotor.jumpCount = this.characterBody.maxJumpCount;
             this.characterBody.isSprinting = false;
 
-            if (base.fixedAge >= 0.2f * this.duration) this.animator.SetBool("canCancel", true);
+            if (base.fixedAge >= 0.5f * this.duration) this.animator.SetBool("canCancel", true);
 
             if (base.isAuthority)
             {

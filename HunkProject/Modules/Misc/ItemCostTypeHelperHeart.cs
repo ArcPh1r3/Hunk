@@ -20,7 +20,14 @@ namespace HunkMod.Modules.Misc
             if (itemCount >= cost)
                 return true;
             else
+            {
+                Modules.Components.HunkController hunk = cb.GetComponent<Modules.Components.HunkController>();
+                if (hunk)
+                {
+                    hunk.notificationHandler.SoftInit("You need a U.C. Keycard (Heart) to open this", UnityEngine.Color.red, 2f);
+                }
                 return false;
+            }
         }
 
         public static void PayCost(CostTypeDef costTypeDef, CostTypeDef.PayCostContext context)

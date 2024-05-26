@@ -10,13 +10,25 @@ namespace HunkMod.Modules.Components
 {
     internal class WeaponChest : NetworkBehaviour
     {
+        public bool alive;
         public HunkGunPickup gunPickup;
         //public ChestBehavior chestBehavior;
         public PurchaseInteraction purchaseInteraction;
         public PingInfoProvider pingInfoProvider;
         public GenericDisplayNameProvider genericDisplayNameProvider;
         public ItemDef itemDef;
-        public int chestType;
+        public int chestTypeIndex;
+
+        private enum ChestType
+        {
+            Free,
+            Spade,
+            Club,
+            Heart,
+            Diamond,
+            Wristband
+        }
+        private ChestType chestType;
 
         private void InitPickup()
         {
@@ -127,7 +139,7 @@ namespace HunkMod.Modules.Components
             if (Run.instance.stageClearCount <= 0 || UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "goldshores") p = 2;
             if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "moon") p = 0;
             if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "moon2") p = 0;
-            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "voidraid") p = 0;
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "voidraid") p = 5;
 
             new SyncCaseItem(identity.netId, (int)this.itemDef.itemIndex, p).Send(NetworkDestination.Clients);
         }
@@ -173,18 +185,41 @@ namespace HunkMod.Modules.Components
         public void SetChestType(int index)
         {
             var h = GetComponent<Highlight>();
+            #region Just making this more readable
+            chestTypeIndex = index;
 
-            chestType = index;
+            switch (chestTypeIndex)
+            {
+                case 0:
+                    chestType = ChestType.Free;
+                    break;
+                case 1:
+                    chestType = ChestType.Heart;
+                    break;
+                case 2:
+                    chestType = ChestType.Spade;
+                    break;
+                case 3:
+                    chestType = ChestType.Diamond;
+                    break;
+                case 4:
+                    chestType = ChestType.Club;
+                    break;
+                case 5:
+                    chestType = ChestType.Wristband;
+                    break;
+            }
+            #endregion
 
             if (purchaseInteraction != null)
             {
                 switch (chestType)
                 {
-                    case 1:
+                    case ChestType.Heart:
                         purchaseInteraction.costType = (CostTypeIndex)Survivors.Hunk.heartCostTypeIndex;
                         purchaseInteraction.cost = 1;
-                        purchaseInteraction.displayNameToken = MainPlugin.developerPrefix + "_HUNK_HEARTCHEST_NAME";
-                        purchaseInteraction.contextToken = MainPlugin.developerPrefix + "_HUNK_HEARTCHEST_CONTEXT";
+                        //purchaseInteraction.displayNameToken = MainPlugin.developerPrefix + "_HUNK_HEARTCHEST_NAME";
+                        //purchaseInteraction.contextToken = MainPlugin.developerPrefix + "_HUNK_HEARTCHEST_CONTEXT";
                         if (genericDisplayNameProvider != null)
                         {
                             genericDisplayNameProvider.displayToken = MainPlugin.developerPrefix + "_HUNK_HEARTCHEST_NAME";
@@ -196,11 +231,11 @@ namespace HunkMod.Modules.Components
                         if (pingInfoProvider != null)
                             pingInfoProvider.pingIconOverride = Assets.mainAssetBundle.LoadAsset<Sprite>("texIconHeart");
                         break;
-                    case 2:
+                    case ChestType.Spade:
                         purchaseInteraction.costType = (CostTypeIndex)Survivors.Hunk.spadeCostTypeIndex;
                         purchaseInteraction.cost = 1;
-                        purchaseInteraction.displayNameToken = MainPlugin.developerPrefix + "_HUNK_SPADECHEST_NAME";
-                        purchaseInteraction.contextToken = MainPlugin.developerPrefix + "_HUNK_SPADECHEST_CONTEXT";
+                        //purchaseInteraction.displayNameToken = MainPlugin.developerPrefix + "_HUNK_SPADECHEST_NAME";
+                        //purchaseInteraction.contextToken = MainPlugin.developerPrefix + "_HUNK_SPADECHEST_CONTEXT";
                         if (genericDisplayNameProvider != null)
                         {
                             genericDisplayNameProvider.displayToken = MainPlugin.developerPrefix + "_HUNK_SPADECHEST_NAME";
@@ -212,11 +247,11 @@ namespace HunkMod.Modules.Components
                         if (pingInfoProvider != null)
                             pingInfoProvider.pingIconOverride = Assets.mainAssetBundle.LoadAsset<Sprite>("texIconSpade");
                         break;
-                    case 3:
+                    case ChestType.Diamond:
                         purchaseInteraction.costType = (CostTypeIndex)Survivors.Hunk.diamondCostTypeIndex;
                         purchaseInteraction.cost = 1;
-                        purchaseInteraction.displayNameToken = MainPlugin.developerPrefix + "_HUNK_DIAMONDCHEST_NAME";
-                        purchaseInteraction.contextToken = MainPlugin.developerPrefix + "_HUNK_DIAMONDCHEST_CONTEXT";
+                        //purchaseInteraction.displayNameToken = MainPlugin.developerPrefix + "_HUNK_DIAMONDCHEST_NAME";
+                        //purchaseInteraction.contextToken = MainPlugin.developerPrefix + "_HUNK_DIAMONDCHEST_CONTEXT";
                         if (genericDisplayNameProvider != null)
                         {
                             genericDisplayNameProvider.displayToken = MainPlugin.developerPrefix + "_HUNK_DIAMONDCHEST_NAME";
@@ -228,11 +263,11 @@ namespace HunkMod.Modules.Components
                         if (pingInfoProvider != null)
                             pingInfoProvider.pingIconOverride = Assets.mainAssetBundle.LoadAsset<Sprite>("texIconDiamond");
                         break;
-                    case 4:
+                    case ChestType.Club:
                         purchaseInteraction.costType = (CostTypeIndex)Survivors.Hunk.clubCostTypeIndex;
                         purchaseInteraction.cost = 1;
-                        purchaseInteraction.displayNameToken = MainPlugin.developerPrefix + "_HUNK_CLUBCHEST_NAME";
-                        purchaseInteraction.contextToken = MainPlugin.developerPrefix + "_HUNK_CLUBCHEST_CONTEXT";
+                        //purchaseInteraction.displayNameToken = MainPlugin.developerPrefix + "_HUNK_CLUBCHEST_NAME";
+                        //purchaseInteraction.contextToken = MainPlugin.developerPrefix + "_HUNK_CLUBCHEST_CONTEXT";
                         if (genericDisplayNameProvider != null)
                         {
                             genericDisplayNameProvider.displayToken = MainPlugin.developerPrefix + "_HUNK_CLUBCHEST_NAME";
@@ -244,16 +279,32 @@ namespace HunkMod.Modules.Components
                         if (pingInfoProvider != null)
                             pingInfoProvider.pingIconOverride = Assets.mainAssetBundle.LoadAsset<Sprite>("texIconClub");
                         break;
+                    case ChestType.Wristband:
+                        purchaseInteraction.costType = (CostTypeIndex)Survivors.Hunk.wristbandCostTypeIndex;
+                        purchaseInteraction.cost = 1;
+                        //purchaseInteraction.displayNameToken = MainPlugin.developerPrefix + "_HUNK_WRISTBANDCHEST_NAME";
+                        //purchaseInteraction.contextToken = MainPlugin.developerPrefix + "_HUNK_WRISTBANDCHEST_CONTEXT";
+                        if (genericDisplayNameProvider != null)
+                        {
+                            genericDisplayNameProvider.displayToken = MainPlugin.developerPrefix + "_HUNK_WRISTBANDCHEST_NAME";
+                        }
+                        h.targetRenderer.transform.parent.Find("Lock/Spade").gameObject.SetActive(false);
+                        h.targetRenderer.transform.parent.Find("Lock/Club").gameObject.SetActive(false);
+                        h.targetRenderer.transform.parent.Find("Lock/Heart").gameObject.SetActive(false);
+                        h.targetRenderer.transform.parent.Find("Lock/Diamond").gameObject.SetActive(false);
+                        if (pingInfoProvider != null)
+                            pingInfoProvider.pingIconOverride = Assets.mainAssetBundle.LoadAsset<Sprite>("texIconTerminal");
+                        break;
                     default:
                         purchaseInteraction.costType = CostTypeIndex.Money;
                         purchaseInteraction.cost = 0;
-                        purchaseInteraction.displayNameToken = MainPlugin.developerPrefix + "_HUNK_CHEST_NAME";
-                        purchaseInteraction.contextToken = MainPlugin.developerPrefix + "_HUNK_CHEST_CONTEXT";
+                        //purchaseInteraction.displayNameToken = MainPlugin.developerPrefix + "_HUNK_CHEST_NAME";
+                        //purchaseInteraction.contextToken = MainPlugin.developerPrefix + "_HUNK_CHEST_CONTEXT";
                         if (genericDisplayNameProvider != null)
                         {
                             genericDisplayNameProvider.displayToken = MainPlugin.developerPrefix + "_HUNK_CHEST_NAME";
                         }
-                        h.targetRenderer.transform.parent.Find("Lock").gameObject.SetActive(false);
+                        if (h.targetRenderer.transform.parent.Find("Lock")) h.targetRenderer.transform.parent.Find("Lock").gameObject.SetActive(false);
                         break;
                 }
             }
@@ -280,6 +331,7 @@ namespace HunkMod.Modules.Components
 
             var h = GetComponent<Highlight>();
             if (h.targetRenderer.transform.parent.parent.Find("Hinge")) h.targetRenderer.transform.parent.Find("Lock/OnLight").gameObject.SetActive(false);
+            this.alive = true;
         }
     }
 }

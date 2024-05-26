@@ -13,9 +13,10 @@ namespace HunkMod.Modules
 
             string desc = "HUNK is an elite infiltrator who carries a large arsenal of weapons claimed via OSP (on-site procurement).<color=#CCD3E0>" + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > Use your Combat Knife against weaker foes to conserve ammo." + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > Find UES Keycards to unlock Weapon Cases to add to your armaments on each stage." + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > Use Quickstep carefully to Roll between enemy attacks while taking them down at the same time." + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > Scrounge around in opened chests for a chance to find ammo for your current weapons." + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > Securing the G-Virus will net you a keycard, allowing you to access weapon cases on each stage." + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > Quickstep near an attacking enemy or projectile to Dodge, then perform a counter with Primary." + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > Ammo is scarce, but can be found in opened chests. Secondary stocks and cooldown reduction also affect ammo." + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > Find the extraction point. ASAP." + Environment.NewLine + Environment.NewLine;
 
             string outro = "..and so he left, fine.";
             string outroFailure = "..and so he vanished, human unit now killed.";
@@ -172,7 +173,10 @@ namespace HunkMod.Modules
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_CLUB_KEYCARD_NAME", "U.C. Keycard (Club)");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_HEART_KEYCARD_NAME", "U.C. Keycard (Heart)");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_DIAMOND_KEYCARD_NAME", "U.C. Keycard (Diamond)");
-            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYCARD_DESC", "Used to open Umbrella Corp <style=cIsUtility>weapon cases</style>.");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYCARD_DESC", "Used to open <color=#" + Helpers.umbrellaHex + ">Umbrella Corporation" + Helpers.colorSuffix + " <style=cIsUtility>weapon cases</style>.");
+
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_WRISTBAND_NAME", "I.D. Wristband");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_WRISTBAND_DESC", "An electronic key for use in <color=#" + Helpers.umbrellaHex + ">Umbrella Corporation" + Helpers.colorSuffix + " facilities.");
 
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_G_VIRUS_SAMPLE_NAME", "G-Virus Sample");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_G_VIRUS_SAMPLE_DESC", "Volatile sample of the <color=#" + Helpers.voidItemHex + ">Golgotha Virus" + Helpers.colorSuffix + ". <style=cIsHealth>Handle with care.</style>");
@@ -192,6 +196,10 @@ namespace HunkMod.Modules
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_DIAMONDCHEST_NAME", "Diamond-Key Weapon Case");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_DIAMONDCHEST_CONTEXT", "Open Diamond-Key Weapon Case");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_DIAMONDCOST", "Diamond Key Card");
+
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_WRISTBANDCHEST_NAME", "Special Weapon Case");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_WRISTBANDCHEST_CONTEXT", "Open Special Weapon Case");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_WRISTBANDCOST", "I.D. Wristband");
 
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_TERMINAL_NAME", "Terminal");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_TERMINAL_CONTEXT", "Insert Sample");

@@ -70,6 +70,7 @@ namespace HunkMod.Modules.Components
                 if (this.inventory.GetItemCount(Modules.Survivors.Hunk.clubKeycard) <= 0) return false;
                 if (this.inventory.GetItemCount(Modules.Survivors.Hunk.heartKeycard) <= 0) return false;
                 if (this.inventory.GetItemCount(Modules.Survivors.Hunk.diamondKeycard) <= 0) return false;
+                if (this.inventory.GetItemCount(Modules.Survivors.Hunk.wristband) <= 0) return false;
 
                 return true;
             }
@@ -193,6 +194,7 @@ namespace HunkMod.Modules.Components
                 if (NetworkServer.active)
                 {
                     this.inventory.GiveItem(Modules.Weapons.SMG.laserSight);
+                    this.inventory.GiveItem(Modules.Weapons.SMG.extendedMag);
                     this.inventory.GiveItem(Modules.Weapons.MUP.gunStock);
                     this.inventory.GiveItem(Modules.Weapons.Magnum.longBarrel);
                     this.inventory.GiveItem(Modules.Weapons.Revolver.speedloader);
@@ -213,11 +215,18 @@ namespace HunkMod.Modules.Components
                         weaponDef = Modules.Weapons.MUP.instance.weaponDef,
                         totalAmmo = Modules.Weapons.MUP.instance.magSize * 2,
                         currentAmmo = Modules.Weapons.MUP.instance.magSize
+                    },
+                    new HunkWeaponData
+                    {
+                        weaponDef = Modules.Weapons.ScanGun.instance.weaponDef,
+                        totalAmmo = 999,
+                        currentAmmo = 999
                     }
                 };
 
                 this.AddWeaponItem(Modules.Weapons.SMG.instance.weaponDef);
                 this.AddWeaponItem(Modules.Weapons.MUP.instance.weaponDef);
+                this.AddWeaponItem(Modules.Weapons.ScanGun.instance.weaponDef);
             }
         }
 

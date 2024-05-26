@@ -130,6 +130,7 @@ namespace HunkMod
             new Modules.Weapons.Railgun().Init();
 
             new Modules.Weapons.Flashlight().Init();
+            new Modules.Weapons.ScanGun().Init();
         }
 
         private void Hook()

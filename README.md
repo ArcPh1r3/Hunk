@@ -129,6 +129,7 @@ ___
 ## Changelog
 
 `1.2.3`
+- Added tool: EMF Scanner - acts as a weapon case detector to make finding them less of a struggle
 - Added a lock-on effect to Perfect Dodges, intended to make counterattacks much more reliable- understandably can be disorienting so there is config to disable this behavior
 - Perfect Dodges now ignore character collision
 - Added a new counterattack when hitting Lemurians from behind that's faster and has AoE, necksnap haters rejoice
