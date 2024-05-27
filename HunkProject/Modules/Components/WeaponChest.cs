@@ -69,6 +69,10 @@ namespace HunkMod.Modules.Components
                         itemPool.Add(Modules.Weapons.Magnum.longBarrel);
                         itemPool.Add(Modules.Weapons.Revolver.speedloader);
 
+                        // heheheha
+                        if (UnityEngine.Random.value < 0.05f) itemPool.Add(Modules.Weapons.RocketLauncher.instance.itemDef);
+                        if (UnityEngine.Random.value < 0.05f) itemPool.Add(Modules.Weapons.Railgun.instance.itemDef);
+
                         bool foundWeapon = false;
                         foreach (ItemDef i in itemPool)
                         {
@@ -148,6 +152,16 @@ namespace HunkMod.Modules.Components
         {
             string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 
+            this.itemDef = ItemCatalog.GetItemDef((ItemIndex)index);
+
+            if (!this.gunPickup)
+            {
+                gunPickup = this.GetComponent<ModelLocator>().modelTransform.GetComponentInChildren<HunkGunPickup>();
+                if (!this.gunPickup)
+                {
+                    return;
+                }
+            }
             gunPickup.itemDef = this.itemDef;
 
             // offset the shotgun a little
@@ -155,16 +169,30 @@ namespace HunkMod.Modules.Components
             if (this.itemDef == Modules.Weapons.Shotgun.instance.itemDef)
             {
                 var h = GetComponent<Highlight>();
-                Transform gunTransform = h.targetRenderer.transform.parent.parent.parent.Find("WeaponHolder");
-                gunTransform.localPosition = new Vector3(-0.5f, 2.98f, 0.87f);
-                gunTransform.localScale = Vector3.one * 1.25f;
+                if (h)
+                {
+                    Transform gunTransform = h.targetRenderer.transform.parent.parent.parent.Find("WeaponHolder");
+                    gunTransform.localPosition = new Vector3(-0.5f, 2.98f, 0.87f);
+                    gunTransform.localScale = Vector3.one * 1.25f;
+                }
+                else
+                {
+                    Chat.AddMessage("Highlight is null!");
+                }
             }
 
             if (this.itemDef == Modules.Weapons.Slugger.instance.itemDef)
             {
                 var h = GetComponent<Highlight>();
-                Transform gunTransform = h.targetRenderer.transform.parent.parent.parent.Find("WeaponHolder");
-                gunTransform.localPosition = new Vector3(0.6f, 2.98f, -0.16f);
+                if (h)
+                {
+                    Transform gunTransform = h.targetRenderer.transform.parent.parent.parent.Find("WeaponHolder");
+                    gunTransform.localPosition = new Vector3(0.6f, 2.98f, -0.16f);
+                }
+                else
+                {
+                    Chat.AddMessage("Highlight is null!");
+                }
             }
 
             if (purchaseInteraction != null)

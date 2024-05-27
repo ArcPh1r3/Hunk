@@ -121,6 +121,23 @@ namespace HunkMod.Modules.Survivors
         // orb
         internal static GameObject ammoOrb;
 
+        // knife skins
+        public static Dictionary<SkillDef, GameObject> knifeSkins = new Dictionary<SkillDef, GameObject>();
+
+        // knife skilldefs
+        public static SkillDef defaultKnifeDef;
+        public static SkillDef hiddenKnifeDef;
+        public static SkillDef infiniteKnifeDef;
+        internal static UnlockableDef infiniteKnifeUnlockableDef;
+        public static SkillDef bloodyKnifeDef;
+        //internal static UnlockableDef bloodyKnifeUnlockableDef;
+        public static SkillDef weskerKnifeDef;
+        internal static UnlockableDef weskerKnifeUnlockableDef;
+        public static SkillDef macheteKnifeDef;
+        internal static UnlockableDef macheteKnifeUnlockableDef;
+        public static SkillDef re4KnifeDef;
+        internal static UnlockableDef re4KnifeUnlockableDef;
+
         internal static BuffDef immobilizedBuff;
         internal static BuffDef infectedBuff;
 
@@ -142,6 +159,11 @@ namespace HunkMod.Modules.Survivors
                 lightweightUnlockableDef = R2API.UnlockableAPI.AddUnlockable<Achievements.HunkLightweightAchievement>();
                 earlySupporterUnlockableDef = R2API.UnlockableAPI.AddUnlockable<Achievements.HunkSupporterAchievement>();
                 completionUnlockableDef = R2API.UnlockableAPI.AddUnlockable<Achievements.HunkCompletionAchievement>();
+                infiniteKnifeUnlockableDef = R2API.UnlockableAPI.AddUnlockable<Achievements.HunkInfiniteKnifeAchievement>();
+                //bloodyKnifeUnlockableDef = R2API.UnlockableAPI.AddUnlockable<Achievements.HunkCompletionAchievement>();
+                weskerKnifeUnlockableDef = R2API.UnlockableAPI.AddUnlockable<Achievements.HunkWeskerKnifeAchievement>();
+                macheteKnifeUnlockableDef = R2API.UnlockableAPI.AddUnlockable<Achievements.HunkMacheteAchievement>();
+                re4KnifeUnlockableDef = R2API.UnlockableAPI.AddUnlockable<Achievements.HunkLeonKnifeAchievement>();
 
                 CreateKeycards();
                 CreateAmmoInteractable();
@@ -170,6 +192,7 @@ namespace HunkMod.Modules.Survivors
                 infectedBuff = Modules.Buffs.AddNewBuff("buffHunkInfected", null, Color.yellow, false, false, true);
 
                 AddVirusDisplayRules();
+                CreateKnifeSkins();
             }
 
             Hook();
@@ -785,14 +808,14 @@ Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
             #endregion
 
             #region KnifeSkins
-            SkillDef defaultKnifeSkillDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
+            defaultKnifeDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = prefix + "_HUNK_BODY_KNIFE_DEFAULT_NAME",
                 skillNameToken = prefix + "_HUNK_BODY_KNIFE_DEFAULT_NAME",
                 skillDescriptionToken = prefix + "_HUNK_BODY_KNIFE_DEFAULT_DESCRIPTION",
                 skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeDefault"),
                 activationState = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Idle)),
-                activationStateMachineName = "Default",
+                activationStateMachineName = "",
                 baseMaxStock = 0,
                 baseRechargeInterval = 0f,
                 beginSkillCooldownOnSkillEnd = false,
@@ -809,14 +832,134 @@ Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
                 stockToConsume = 0
             });
 
-            SkillDef hiddenKnifeSkillDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
+            hiddenKnifeDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
             {
                 skillName = prefix + "_HUNK_BODY_KNIFE_HIDDEN_NAME",
                 skillNameToken = prefix + "_HUNK_BODY_KNIFE_HIDDEN_NAME",
                 skillDescriptionToken = prefix + "_HUNK_BODY_KNIFE_HIDDEN_DESCRIPTION",
                 skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeHidden"),
                 activationState = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Idle)),
-                activationStateMachineName = "Hidden",
+                activationStateMachineName = "",
+                baseMaxStock = 0,
+                baseRechargeInterval = 0f,
+                beginSkillCooldownOnSkillEnd = false,
+                canceledFromSprinting = false,
+                forceSprintDuringState = false,
+                fullRestockOnAssign = true,
+                interruptPriority = EntityStates.InterruptPriority.Any,
+                resetCooldownTimerOnUse = false,
+                isCombatSkill = false,
+                mustKeyPress = false,
+                cancelSprintingOnActivation = false,
+                rechargeStock = 0,
+                requiredStock = 0,
+                stockToConsume = 0
+            });
+
+            bloodyKnifeDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = prefix + "_HUNK_BODY_KNIFE_BLOODY_NAME",
+                skillNameToken = prefix + "_HUNK_BODY_KNIFE_BLOODY_NAME",
+                skillDescriptionToken = prefix + "_HUNK_BODY_KNIFE_BLOODY_DESCRIPTION",
+                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeBloody"),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Idle)),
+                activationStateMachineName = "",
+                baseMaxStock = 0,
+                baseRechargeInterval = 0f,
+                beginSkillCooldownOnSkillEnd = false,
+                canceledFromSprinting = false,
+                forceSprintDuringState = false,
+                fullRestockOnAssign = true,
+                interruptPriority = EntityStates.InterruptPriority.Any,
+                resetCooldownTimerOnUse = false,
+                isCombatSkill = false,
+                mustKeyPress = false,
+                cancelSprintingOnActivation = false,
+                rechargeStock = 0,
+                requiredStock = 0,
+                stockToConsume = 0
+            });
+
+            infiniteKnifeDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = prefix + "_HUNK_BODY_KNIFE_INFINITE_NAME",
+                skillNameToken = prefix + "_HUNK_BODY_KNIFE_INFINITE_NAME",
+                skillDescriptionToken = prefix + "_HUNK_BODY_KNIFE_INFINITE_DESCRIPTION",
+                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeInfinite"),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Idle)),
+                activationStateMachineName = "",
+                baseMaxStock = 0,
+                baseRechargeInterval = 0f,
+                beginSkillCooldownOnSkillEnd = false,
+                canceledFromSprinting = false,
+                forceSprintDuringState = false,
+                fullRestockOnAssign = true,
+                interruptPriority = EntityStates.InterruptPriority.Any,
+                resetCooldownTimerOnUse = false,
+                isCombatSkill = false,
+                mustKeyPress = false,
+                cancelSprintingOnActivation = false,
+                rechargeStock = 0,
+                requiredStock = 0,
+                stockToConsume = 0
+            });
+
+            weskerKnifeDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = prefix + "_HUNK_BODY_KNIFE_WESKER_NAME",
+                skillNameToken = prefix + "_HUNK_BODY_KNIFE_WESKER_NAME",
+                skillDescriptionToken = prefix + "_HUNK_BODY_KNIFE_WESKER_DESCRIPTION",
+                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeWesker"),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Idle)),
+                activationStateMachineName = "",
+                baseMaxStock = 0,
+                baseRechargeInterval = 0f,
+                beginSkillCooldownOnSkillEnd = false,
+                canceledFromSprinting = false,
+                forceSprintDuringState = false,
+                fullRestockOnAssign = true,
+                interruptPriority = EntityStates.InterruptPriority.Any,
+                resetCooldownTimerOnUse = false,
+                isCombatSkill = false,
+                mustKeyPress = false,
+                cancelSprintingOnActivation = false,
+                rechargeStock = 0,
+                requiredStock = 0,
+                stockToConsume = 0
+            });
+
+            macheteKnifeDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = prefix + "_HUNK_BODY_KNIFE_MACHETE_NAME",
+                skillNameToken = prefix + "_HUNK_BODY_KNIFE_MACHETE_NAME",
+                skillDescriptionToken = prefix + "_HUNK_BODY_KNIFE_MACHETE_DESCRIPTION",
+                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeMachete"),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Idle)),
+                activationStateMachineName = "",
+                baseMaxStock = 0,
+                baseRechargeInterval = 0f,
+                beginSkillCooldownOnSkillEnd = false,
+                canceledFromSprinting = false,
+                forceSprintDuringState = false,
+                fullRestockOnAssign = true,
+                interruptPriority = EntityStates.InterruptPriority.Any,
+                resetCooldownTimerOnUse = false,
+                isCombatSkill = false,
+                mustKeyPress = false,
+                cancelSprintingOnActivation = false,
+                rechargeStock = 0,
+                requiredStock = 0,
+                stockToConsume = 0
+            });
+
+            re4KnifeDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = prefix + "_HUNK_BODY_KNIFE_RE4_NAME",
+                skillNameToken = prefix + "_HUNK_BODY_KNIFE_RE4_NAME",
+                skillDescriptionToken = prefix + "_HUNK_BODY_KNIFE_RE4_DESCRIPTION",
+                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeLeon"),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Idle)),
+                activationStateMachineName = "",
                 baseMaxStock = 0,
                 baseRechargeInterval = 0f,
                 beginSkillCooldownOnSkillEnd = false,
@@ -834,12 +977,23 @@ Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
             });
 
             Modules.Skills.AddKnifeSkins(hunk.knifeSkinSkillSlot.skillFamily, new SkillDef[]{
-                    defaultKnifeSkillDef,
-                    hiddenKnifeSkillDef
+                    defaultKnifeDef,
+                    bloodyKnifeDef,
+                    hiddenKnifeDef,
+                    infiniteKnifeDef,
+                    weskerKnifeDef,
+                    macheteKnifeDef,
+                    re4KnifeDef
                 });
 
             Modules.Skills.AddUnlockablesToFamily(hunk.knifeSkinSkillSlot.skillFamily,
-            null, cqcUnlockableDef);
+            null, 
+            masteryUnlockableDef,
+            cqcUnlockableDef,
+            infiniteKnifeUnlockableDef,
+            weskerKnifeUnlockableDef,
+            macheteKnifeUnlockableDef,
+            re4KnifeUnlockableDef);
             #endregion
 
 
@@ -1034,12 +1188,12 @@ Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
                 }
             };
 
-            skins.Add(commandoSkin);
+            if (Modules.Config.cursed.Value) skins.Add(commandoSkin);
             #endregion
 
             #region WeskerSkin
             SkinDef weskerSkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_WESKER_SKIN_NAME",
-                Assets.mainAssetBundle.LoadAsset<Sprite>("texLightweightSkin"),
+                Assets.mainAssetBundle.LoadAsset<Sprite>("texWeskerSkin"),
                 defaultRenderers,
                 mainRenderer,
                 model);
@@ -1096,12 +1250,12 @@ Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
             weskerSkin.rendererInfos[4].defaultMaterial = hairMat;
             weskerSkin.rendererInfos[5].defaultMaterial = Modules.Assets.CreateMaterial("matWesker03", 0f, Color.black, 1f);
 
-            skins.Add(weskerSkin);
+            if (Modules.Config.cursed.Value) skins.Add(weskerSkin);
             #endregion
 
             #region DoomSkin
             SkinDef doomSkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_DOOM_SKIN_NAME",
-                Assets.mainAssetBundle.LoadAsset<Sprite>("texLightweightSkin"),
+                Assets.mainAssetBundle.LoadAsset<Sprite>("texDoomSkin"),
                 defaultRenderers,
                 mainRenderer,
                 model);
@@ -1149,12 +1303,12 @@ Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
             doomSkin.rendererInfos[2].defaultMaterial = Modules.Assets.CreateMaterial("matDoom02", 0f, Color.black, 1f);
             doomSkin.rendererInfos[3].defaultMaterial = Modules.Assets.CreateMaterial("matDoom01", 0f, Color.black, 1f);
 
-            skins.Add(doomSkin);
+            if (Modules.Config.cursed.Value) skins.Add(doomSkin);
             #endregion
 
             #region MinecraftSkin
             SkinDef minecraftSkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_MINECRAFT_SKIN_NAME",
-                Assets.mainAssetBundle.LoadAsset<Sprite>("texLightweightSkin"),
+                Assets.mainAssetBundle.LoadAsset<Sprite>("texMinecraftSkin"),
                 defaultRenderers,
                 mainRenderer,
                 model);
@@ -1207,7 +1361,7 @@ Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
             minecraftSkin.rendererInfos[0].defaultMaterial = minecraftMat;
             minecraftSkin.rendererInfos[1].defaultMaterial = minecraftMat;
 
-            skins.Add(minecraftSkin);
+            if (Modules.Config.cursed.Value) skins.Add(minecraftSkin);
             #endregion
 
             #region SuperSkin
@@ -1230,6 +1384,17 @@ Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
             #endregion
 
             skinController.skins = skins.ToArray();
+        }
+
+        private static void CreateKnifeSkins()
+        {
+            Hunk.knifeSkins.Add(defaultKnifeDef, Modules.Assets.LoadKnife("CombatKnife"));
+            //Hunk.knifeSkins.Add(hiddenKnifeDef, null);
+            Hunk.knifeSkins.Add(infiniteKnifeDef, Modules.Assets.LoadKnife("InfiniteKnife"));
+            Hunk.knifeSkins.Add(bloodyKnifeDef, Modules.Assets.LoadKnife("BloodyKnife"));
+            Hunk.knifeSkins.Add(weskerKnifeDef, Modules.Assets.LoadKnife("WeskerKnife"));
+            Hunk.knifeSkins.Add(macheteKnifeDef, Modules.Assets.LoadKnife("Machete"));
+            Hunk.knifeSkins.Add(re4KnifeDef, Modules.Assets.LoadKnife("LeonKnife"));
         }
 
         private static void InitializeItemDisplays(GameObject prefab)
@@ -3640,7 +3805,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                                 if (tries >= 50)
                                 {
                                     valid = true;
-                                    if (characterBody.inventory.GetItemCount(Hunk.wristband) <= 0) self.GetComponent<Terminal>().itemDef = RoR2Content.Items.Pearl;
+                                    if (characterBody.inventory.GetItemCount(Hunk.wristband) > 0) self.GetComponent<Terminal>().itemDef = RoR2Content.Items.Pearl;
                                     else self.GetComponent<Terminal>().itemDef = Hunk.wristband;
                                 }
                             }
@@ -3783,7 +3948,6 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                 {
                     // this is the worst place to put this btw
 
-                    self.GetComponent<WeaponChest>().alive = false;
                     self.GetComponent<WeaponChest>().gunPickup.enabled = true;
                     self.GetComponent<WeaponChest>().gunPickup.GetComponent<GenericPickupController>().enabled = true;
                     //self.GetComponent<Highlight>().targetRenderer.transform.parent.parent.GetComponent<Animator>().Play("Open");
@@ -3805,7 +3969,6 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
                 if (self.gameObject.name.Contains("HunkChest"))
                 {
-                    self.GetComponent<WeaponChest>().alive = false;
                     self.GetComponent<WeaponChest>().gunPickup.enabled = true;
                     self.GetComponent<WeaponChest>().gunPickup.GetComponent<GenericPickupController>().enabled = true;
                     //self.GetComponent<Highlight>().targetRenderer.transform.parent.parent.parent.parent.GetComponent<Animator>().Play("Open");

@@ -9,6 +9,7 @@ namespace HunkMod.SkillStates.Hunk
     public class SwingKnife : BaseMeleeAttack
     {
         private GameObject swingEffectInstance;
+        private GameObject knifeInstance;
         private bool knifeHidden;
 
         public override void OnEnter()
@@ -18,14 +19,15 @@ namespace HunkMod.SkillStates.Hunk
             SkillDef knifeSkinDef = this.hunk.knifeSkin;
             if (knifeSkinDef)
             {
-                switch (knifeSkinDef.activationStateMachineName)
+                if (Modules.Survivors.Hunk.knifeSkins.ContainsKey(knifeSkinDef))
                 {
-                    case "Default":
-                        this.prop = "KnifeModel";
-                        break;
-                    case "Hidden":
-                        this.prop = "HiddenKnifeModel";
-                        break;
+                    this.prop = "";
+                    this.knifeInstance = this.CreateKnife(Modules.Survivors.Hunk.knifeSkins[knifeSkinDef]);
+                }
+                else
+                {
+                    // hidden blade is the only case for now.
+                    this.prop = "HiddenKnifeModel";
                 }
             }
 
@@ -88,6 +90,18 @@ namespace HunkMod.SkillStates.Hunk
             }
         }
 
+        private GameObject CreateKnife(GameObject modelPrefab)
+        {
+            GameObject newKnife = GameObject.Instantiate(modelPrefab);
+
+            newKnife.transform.parent = this.FindModelChild("KnifeBase");
+            newKnife.transform.localPosition = Vector3.zero;
+            newKnife.transform.localRotation = Quaternion.identity;
+            newKnife.transform.localScale = Vector3.one;
+
+            return newKnife;
+        }
+
         public override void FixedUpdate()
         {
             base.FixedUpdate();
@@ -101,8 +115,21 @@ namespace HunkMod.SkillStates.Hunk
             if (!this.knifeHidden && this.stopwatch >= (0.85f * this.duration))
             {
                 this.knifeHidden = true;
-                this.FindModelChild(this.prop).gameObject.SetActive(false);
+                if (this.prop != "") this.FindModelChild(this.prop).gameObject.SetActive(false);
+                if (this.knifeInstance) Destroy(this.knifeInstance);
             }
+        }
+
+        public override void OnExit()
+        {
+            if (!this.knifeHidden)
+            {
+                this.knifeHidden = true;
+                if (this.prop != "") this.FindModelChild(this.prop).gameObject.SetActive(false);
+                if (this.knifeInstance) Destroy(this.knifeInstance);
+            }
+
+            base.OnExit();
         }
 
         protected override void FireAttack()

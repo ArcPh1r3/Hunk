@@ -1044,6 +1044,13 @@ namespace HunkMod.Modules
             return mainAssetBundle.LoadAsset<Mesh>(meshName);
         }
 
+        internal static GameObject LoadKnife(string modelName)
+        {
+            GameObject knife = mainAssetBundle.LoadAsset<GameObject>("mdl" + modelName);
+            ConvertAllRenderersToHopooShader(knife);
+            return knife;
+        }
+
         internal static GameObject LoadCrosshair(string crosshairName)
         {
             return Resources.Load<GameObject>("Prefabs/Crosshair/" + crosshairName + "Crosshair");

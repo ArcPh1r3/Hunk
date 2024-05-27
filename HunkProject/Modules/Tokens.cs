@@ -61,6 +61,9 @@ namespace HunkMod.Modules
             #region Primary
             LanguageAPI.Add(prefix + "PRIMARY_KNIFE_NAME", "Combat Knife");
             LanguageAPI.Add(prefix + "PRIMARY_KNIFE_DESCRIPTION", $"<style=cIsUtility>Looting.</style> <style=cIsDamage>Slash</style> close-range combatants for <style=cIsDamage>{100f * 3.5}% damage</style>.");
+            
+            LanguageAPI.Add(prefix + "SHOOT_SCANNER_NAME", "Scan");
+            LanguageAPI.Add(prefix + "SHOOT_SCANNER_DESCRIPTION", "Scan for <style=cIsUtility>unopened weapon cases</style>.");
 
             LanguageAPI.Add(prefix + "SHOOT_ATM_NAME", "Fire");
             LanguageAPI.Add(prefix + "SHOOT_ATM_DESCRIPTION", "Shoot for <style=cIsDamage>8000% damage</style>. <style=cIsUtility>Deals most damage on direct hits.</style>");
@@ -136,8 +139,12 @@ namespace HunkMod.Modules
             LanguageAPI.Add(prefix + "KNIFE_HIDDEN_DESCRIPTION", "A low profile retractable blade hidden in the sleeve. Ideal for stealth operations.");
             LanguageAPI.Add(prefix + "KNIFE_WESKER_NAME", "Customized Knife");
             LanguageAPI.Add(prefix + "KNIFE_WESKER_DESCRIPTION", "A vicious blade with a serrated edge to aid in tearing up your opponents. ");
-            LanguageAPI.Add(prefix + "KNIFE_MACHETE_NAME", "Hidden Blade");
-            LanguageAPI.Add(prefix + "KNIFE_MACHETE_DESCRIPTION", "A low profile retractable blade hidden in the sleeve. Ideal for stealth operations.");
+            LanguageAPI.Add(prefix + "KNIFE_MACHETE_NAME", "Machete");
+            LanguageAPI.Add(prefix + "KNIFE_MACHETE_DESCRIPTION", "A huge blade meant primarily for guerrilla tactics.");
+            LanguageAPI.Add(prefix + "KNIFE_RE4_NAME", "Primal Knife");
+            LanguageAPI.Add(prefix + "KNIFE_RE4_DESCRIPTION", "A knife forged with infinite possibilities.");
+            LanguageAPI.Add(prefix + "KNIFE_BLOODY_NAME", "Soiled Blade");
+            LanguageAPI.Add(prefix + "KNIFE_BLOODY_DESCRIPTION", "A bloodied blade with a serrated edge that has torn up many opponents. ");
             #endregion
 
             #region Achievements
@@ -165,6 +172,22 @@ namespace HunkMod.Modules
             LanguageAPI.Add(prefix + "CQC_UNLOCKABLE_NAME", "HUNK: CQC (Close-Quarters Combat)");
             LanguageAPI.Add(prefix + "CQC_ACHIEVEMENT_NAME", "HUNK: CQC (Close-Quarters Combat)");
             LanguageAPI.Add(prefix + "CQC_ACHIEVEMENT_DESC", "As HUNK, perform 10 successful counterattacks on one stage.");
+
+            LanguageAPI.Add(prefix + "INFINITEKNIFE_UNLOCKABLE_NAME", "HUNK: Ace of Spades");
+            LanguageAPI.Add(prefix + "INFINITEKNIFE_ACHIEVEMENT_NAME", "HUNK: Ace of Spades");
+            LanguageAPI.Add(prefix + "INFINITEKNIFE_ACHIEVEMENT_DESC", "As HUNK, carry two Spade Keycards at once.");
+
+            LanguageAPI.Add(prefix + "WESKERKNIFE_UNLOCKABLE_NAME", "HUNK: Firearms Enthusiast");
+            LanguageAPI.Add(prefix + "WESKERKNIFE_ACHIEVEMENT_NAME", "HUNK: Firearms Enthusiast");
+            LanguageAPI.Add(prefix + "WESKERKNIFE_ACHIEVEMENT_DESC", "As HUNK, upgrade a weapon with a new attachment.");
+
+            LanguageAPI.Add(prefix + "MACHETE_UNLOCKABLE_NAME", "HUNK: Don't Need No Stinkin' Gun");
+            LanguageAPI.Add(prefix + "MACHETE_ACHIEVEMENT_NAME", "HUNK: Don't Need No Stinkin' Gun");
+            LanguageAPI.Add(prefix + "MACHETE_ACHIEVEMENT_DESC", "As HUNK, complete a stage without firing any guns.");
+
+            LanguageAPI.Add(prefix + "RE4KNIFE_UNLOCKABLE_NAME", "HUNK: The Road Ahead");
+            LanguageAPI.Add(prefix + "RE4KNIFE_ACHIEVEMENT_NAME", "HUNK: The Road Ahead");
+            LanguageAPI.Add(prefix + "RE4KNIFE_ACHIEVEMENT_DESC", "As HUNK, reach stage 6.");
             #endregion
 
 

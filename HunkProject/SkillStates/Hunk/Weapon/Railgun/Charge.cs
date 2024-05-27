@@ -33,11 +33,10 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Railgun
             base.FixedUpdate();
 
             AkSoundEngine.SetRTPCValue("Hunk_RailgunCharge", Util.Remap(base.fixedAge, 0f, this.duration, 0f, 1f));
+            this.hunk.railgunCharge = base.fixedAge;
 
             if (base.isAuthority)
             {
-                this.hunk.railgunCharge = base.fixedAge;
-
                 if (base.fixedAge >= this.duration)
                 {
                     this.outer.SetNextState(new Shoot());

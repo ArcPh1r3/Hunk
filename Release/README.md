@@ -112,22 +112,40 @@ Big thanks to everyone in the community for all the valuable feedback and critic
 ## Future Plans
 - More weapons
 - Other things 100% decided on pure whimsy
-- Proper skill icons
 - More mod crosscompat
 - More unique counterattacks
 - Item displays
 - Translation support
 - Emotes
+- More virus types
 
 ## Known Issues
 - Most item displays are missing
 - Ally projectiles trigger perfect dodges; haven't decided if this is worth keeping as a mechanic yet
-- Extended Magazine (LE 5) does not have an icon or model yet
 - Lore accurate Weskah config does not seem to be working
 
 ___
 
 ## Changelog
+
+`1.3.0`
+- Added tool: EMF Scanner - acts as a weapon case detector to make finding them less of a struggle
+- Added gun: CQBR Assault Rifle
+- Added a special weapon to Voidling's fight to match the one given for Mithrix
+- Added item: I.D. Wristband
+- Added a handful of new unlockable knife skins!!
+- Added a lock-on effect to Perfect Dodges, intended to make counterattacks much more reliable- understandably can be disorienting so there is config to disable this behavior
+- Perfect Dodges now ignore character collision
+- Added a new counterattack when hitting Lemurians from behind that's faster and has AoE, necksnap haters rejoice
+- Extended Magazine (LE 5) now has a model and icon
+- Updated Imp counterattack animation
+- Made Perfect Dodges a little less forgiving on projectiles
+- Moved joke skins to cursed config and gave them proper icons
+- Anti-tank Missile and Railgun now have a 1% chance of showing up in post-loop weapon cases
+- Fixed barrels giving too much ammo
+- Fixed weapon case pings not telling you what was inside the case anymore
+- Fixed the contents of weapon cases being desynced on multiplayer again, not sure when this bug came back
+- Fixed more virus terminals spawning every time you respawned
 
 `1.2.2`
 - Added Slayer skin, courtesy of tsuyoikenko!

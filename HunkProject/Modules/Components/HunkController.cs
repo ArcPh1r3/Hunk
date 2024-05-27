@@ -59,6 +59,8 @@ namespace HunkMod.Modules.Components
 
         public Action<HunkController> onWeaponUpdate;
         public static Action<int> onCounter;
+        public static Action<Inventory> onInventoryUpdate;
+        public static event Action<bool> onStageCompleted;
 
         public int maxAmmo;
         public int ammo;
@@ -194,6 +196,15 @@ namespace HunkMod.Modules.Components
             if (MainPlugin.moreShrinesInstalled) this.gameObject.AddComponent<IncompatWarning>();
 
             this.Invoke("SetInventoryHook", 0.5f);
+
+            RoR2.TeleporterInteraction.onTeleporterFinishGlobal += TeleporterInteraction_onTeleporterFinishGlobal;
+        }
+
+        private void TeleporterInteraction_onTeleporterFinishGlobal(TeleporterInteraction obj)
+        {
+            Action<bool> action = onStageCompleted;
+            if (action == null) return;
+            action(this.weaponTracker.usedAmmoThisStage);
         }
 
         private void Start()
@@ -316,6 +327,11 @@ namespace HunkMod.Modules.Components
                 }
             }
 
+            if (onInventoryUpdate != null)
+            {
+                onInventoryUpdate(this.characterBody.inventory);
+            }
+
             this.CheckForNeedler();
             this.CheckForHooks();
 
@@ -329,6 +345,7 @@ namespace HunkMod.Modules.Components
         public void ConsumeAmmo(int amount = 1)
         {
             this.reloadTimer = 2f;
+            this.weaponTracker.usedAmmoThisStage = true;
 
             if (this.characterBody.HasBuff(RoR2Content.Buffs.NoCooldowns)) return;
 
@@ -1183,10 +1200,10 @@ namespace HunkMod.Modules.Components
 
         private void SpawnChests()
         {
-            if (!NetworkServer.active) return;
+            //if (!NetworkServer.active) return;
 
-            Xoroshiro128Plus rng = new Xoroshiro128Plus(Run.instance.seed);
-            DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(Survivors.Hunk.chestInteractableCard, new DirectorPlacementRule { placementMode = DirectorPlacementRule.PlacementMode.Random }, rng));
+            //Xoroshiro128Plus rng = new Xoroshiro128Plus(Run.instance.seed);
+            //DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(Survivors.Hunk.chestInteractableCard, new DirectorPlacementRule { placementMode = DirectorPlacementRule.PlacementMode.Random }, rng));
         }
 
         private void SpawnTerminal()
@@ -1194,6 +1211,9 @@ namespace HunkMod.Modules.Components
             if (!NetworkServer.active) return;
             if (!this.characterBody.isPlayerControlled) return;
 
+            if (this.weaponTracker.spawnedTerminalThisStage) return;
+
+            this.weaponTracker.spawnedTerminalThisStage = true;
             Xoroshiro128Plus rng = new Xoroshiro128Plus(Run.instance.seed);
             DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(Survivors.Hunk.terminalInteractableCard, new DirectorPlacementRule { placementMode = DirectorPlacementRule.PlacementMode.Random }, rng));
         }

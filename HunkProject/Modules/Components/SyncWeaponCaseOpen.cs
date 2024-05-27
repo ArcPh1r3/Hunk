@@ -30,6 +30,7 @@ namespace HunkMod.Modules.Components
 
             //target.GetComponent<WeaponChest>().gunPickup.enabled = true;
             //target.GetComponent<WeaponChest>().gunPickup.GetComponent<GenericPickupController>().enabled = true;
+            target.GetComponent<WeaponChest>().alive = false;
 
             if (target.name.Contains("2")) target.GetComponent<Highlight>().targetRenderer.transform.parent.parent.GetComponent<Animator>().Play("Open");
             else target.GetComponent<Highlight>().targetRenderer.transform.parent.parent.parent.parent.GetComponent<Animator>().Play("Open");

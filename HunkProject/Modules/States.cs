@@ -44,6 +44,7 @@ namespace HunkMod.Modules
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Weapon.Shotgun.Shoot));
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Weapon.Slugger.Shoot));
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Weapon.SMG.Shoot));
+            entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Weapon.AssaultRifle.Shoot));
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Weapon.ATM.Shoot));
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Weapon.BlueRose.Shoot));
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Weapon.Flamethrower.Shoot));
@@ -51,6 +52,9 @@ namespace HunkMod.Modules
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Weapon.GrenadeLauncher.Shoot));
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Weapon.Revolver.Shoot));
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Weapon.MUP.Shoot));
+            entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Weapon.ScanGun.Scan));
+            entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Weapon.Railgun.Charge));
+            entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Weapon.Railgun.Shoot));
 
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.KnifeCounter));
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Counter.Kick));
@@ -62,6 +66,7 @@ namespace HunkMod.Modules
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Counter.CounterEyePluck));
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Counter.TemplarGrenade));
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Counter.TemplarAirDodge));
+            entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Counter.Suplex));
 
             entityStates.Add(typeof(HunkMod.SkillStates.Parasite.Infest));
             entityStates.Add(typeof(HunkMod.SkillStates.Parasite.Death));

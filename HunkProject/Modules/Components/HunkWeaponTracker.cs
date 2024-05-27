@@ -56,6 +56,8 @@ namespace HunkMod.Modules.Components
         }
 
         public bool spawnedKeycardThisStage = false;
+        public bool spawnedTerminalThisStage = false;
+        public bool usedAmmoThisStage = false;
 
         private Inventory inventory;
         private HunkController _hunk;
@@ -96,6 +98,8 @@ namespace HunkMod.Modules.Components
         private void SceneManager_sceneLoaded(UnityEngine.SceneManagement.Scene arg0, UnityEngine.SceneManagement.LoadSceneMode arg1)
         {
             this.spawnedKeycardThisStage = false;
+            this.spawnedTerminalThisStage = false;
+            this.usedAmmoThisStage = false;
 
             this.CancelInvoke();
             if (NetworkServer.active) this.Invoke("SpawnKeycard", UnityEngine.Random.Range(5f, 30f));
