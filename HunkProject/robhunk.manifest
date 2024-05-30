@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 4232109697
+CRC: 2684306042
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 4c6904eeb8610654b90e958835d46f55
+    Hash: f8d76df8d8ebdf894bbc8eb4b7dbebf9
   TypeTreeHash:
     serializedVersion: 2
     Hash: c0613469c5f5f41ecc95af7ab71e2d70
@@ -134,6 +134,7 @@ Assets:
 - Assets/Hunk/VFX/matShockwave.mat
 - Assets/Hunk/HUD/Textures/texHudBar.png
 - Assets/Hunk/VFX/matSpeedLineVertical.mat
+- Assets/Hunk/Items/DisplayTVirusSample.prefab
 - Assets/Hunk/Icons/texSuperSkin.png
 - Assets/Hunk/HUD/Textures/texBlankFill.png
 - Assets/Hunk/VFX/matSpeedLine.mat
@@ -177,6 +178,7 @@ Assets:
 - Assets/Hunk/Materials/matWristband01.mat
 - Assets/Hunk/Materials/matWesker04.mat
 - Assets/Hunk/Icons/texTofuIcon.png
+- Assets/Hunk/Materials/matTVirusSample.mat
 - Assets/Hunk/Weapons/mdlGoldenGunPickup.prefab
 - Assets/Hunk/Textures/RocketLauncher/Leon_ATM-4_N.png
 - Assets/Hunk/Textures/Terminal/Terminal_albedo.png
@@ -216,8 +218,10 @@ Assets:
 - Assets/Hunk/Animations/Rocket/Idle.anim
 - Assets/Hunk/Weapons/mdlFlamethrower.prefab
 - Assets/Hunk/Textures/Keycard/texKeycardGold.png
+- Assets/Hunk/Items/mdlTVirusSample.prefab
 - Assets/Hunk/Animations/Default/Ascend.anim
 - Assets/Hunk/Animations/PistolAlt/Ascend.anim
+- Assets/Hunk/Textures/GVirus/sm74_201_Gvirus01A_A_EMI 1.png
 - Assets/Hunk/HUD/Textures/texHealthFill.png
 - Assets/Hunk/Textures/Terminal/Terminal_normal.png
 - Assets/Hunk/Animations/Default/ShootShotgun.anim
@@ -542,6 +546,7 @@ Assets:
 - Assets/Hunk/HUD/GenericTextPanel.prefab
 - Assets/Hunk/AmmoInteraction.prefab
 - Assets/Hunk/VFX/texMoons.png
+- Assets/Hunk/Textures/GVirus/sm74_201_GVirus01A_A_ALBM 1.png
 - Assets/Hunk/Icons/Skill/texOSPIcon.png
 - Assets/Hunk/Textures/AmmoBox/Bullet_holder_Diffuse.png
 - Assets/Hunk/Textures/Knife/T_K29W006_N.png
@@ -587,6 +592,7 @@ Assets:
 - Assets/Hunk/HUD/DodgeFlash.prefab
 - Assets/Hunk/Textures/Doom/doomslayer_helmet_visor_n.jpg
 - Assets/Hunk/Animations/Pistol/RoundReloadLoop.anim
+- Assets/Hunk/Icons/Item/texTVirusSampleIcon.png
 - Assets/Hunk/Textures/AssaultRifle/wp2000_AssaultRifle_ALBM.png
 - Assets/Hunk/Icons/Item/texKeycardMasterIcon.png
 - Assets/Hunk/Icons/Weapon/texM19Icon.png

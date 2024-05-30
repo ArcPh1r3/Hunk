@@ -1,9 +1,8 @@
 ﻿using R2API.Networking;
 using R2API.Networking.Interfaces;
 using RoR2;
+using RoR2.Audio;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -35,6 +34,15 @@ namespace HunkMod.Modules.Components
 
         public bool wtfTheFuck = false;
         public bool ignoreFlag = false;
+
+        private int remainingVictims;
+
+        private enum VirusType
+        {
+            GVirus,
+            TVirus
+        }
+        private VirusType virusType;
 
         private HunkController hunk
         {
@@ -90,6 +98,7 @@ namespace HunkMod.Modules.Components
 
             UnityEngine.SceneManagement.SceneManager.sceneLoaded += SceneManager_sceneLoaded;
             this.CancelInvoke();
+            this.virusType = VirusType.GVirus;
             if (NetworkServer.active) this.Invoke("SpawnKeycard", 60f);
         }
 
@@ -105,7 +114,13 @@ namespace HunkMod.Modules.Components
             this.spawnedTerminalThisStage = false;
             this.usedAmmoThisStage = false;
 
+            Modules.Survivors.Hunk.requiredKills = 10;
+
             this.CancelInvoke();
+
+            if (UnityEngine.Random.value > 0.5f) this.virusType = VirusType.TVirus;
+            else this.virusType = VirusType.GVirus;
+
             if (NetworkServer.active) this.Invoke("SpawnKeycard", UnityEngine.Random.Range(5f, 30f));
         }
 
@@ -412,12 +427,7 @@ namespace HunkMod.Modules.Components
                 return;
             }
 
-            float rng = UnityEngine.Random.value;
-
-            // wahoo
-            rng = 0f;
-
-            if (rng > 0.5f)
+            if (this.virusType == VirusType.GVirus)
             {
                 // gvirus
                 if (this.SpawnKeycardHolder(Modules.Enemies.Parasite.characterSpawnCard))
@@ -437,11 +447,33 @@ namespace HunkMod.Modules.Components
             }
         }
 
+        private void PlaySoundCue(string soundString)
+        {
+            if (!Modules.Config.globalInfectionSound.Value) return;
+            if (!NetworkServer.active) return;
+
+            EntitySoundManager.EmitSoundServer((AkEventIdArg)soundString, this.gameObject);
+        }
+
         private void StartOutbreak()
         {
-            if (Modules.Config.globalInfectionSound.Value) Util.PlaySound("sfx_hunk_retheme_global", this.gameObject);
-
             if (!NetworkServer.active) return;
+
+            this.PlaySoundCue("sfx_hunk_retheme_global");
+
+            this.remainingVictims = 10;
+            this.InvokeRepeating("TryInfect", 0f, 1f);
+        }
+
+        private void TryInfect()
+        {
+            if (this.remainingVictims <= 0)
+            {
+                this.CancelInvoke();
+                return;
+            }
+
+            bool canInfectBoss = Modules.Config.tCanInfectBosses.Value;
 
             NetworkIdentity identity = this.GetComponent<NetworkIdentity>();
 
@@ -449,11 +481,25 @@ namespace HunkMod.Modules.Components
             {
                 if (i && i.teamComponent && i.teamComponent.teamIndex == TeamIndex.Monster && i.healthComponent.alive)
                 {
-                    if (!i.GetComponent<TVirusHandler>() && !i.GetComponent<ParasiteController>())
+                    if (!i.GetComponent<TVirusHandler>())
                     {
-                        if (identity)
+                        if (i.isChampion && !canInfectBoss)
                         {
-                            new SyncTVirus(identity.netId, i.gameObject).Send(NetworkDestination.Clients);
+                            // boooo
+                        }
+                        else
+                        {
+                            this.remainingVictims--;
+                            if (identity)
+                            {
+                                new SyncTVirus(identity.netId, i.gameObject).Send(NetworkDestination.Clients);
+                            }
+
+                            if (this.remainingVictims <= 0)
+                            {
+                                this.CancelInvoke();
+                                return;
+                            }
                         }
                     }
                 }
@@ -462,6 +508,8 @@ namespace HunkMod.Modules.Components
 
         private bool SpawnKeycardHolder(SpawnCard spawnCard)
         {
+            bool canInfectBoss = Modules.Config.gCanInfectBosses.Value;
+
             // just spawn it on a random enemy idc
             Transform target = null;
             foreach (CharacterBody i in CharacterBody.readOnlyInstancesList)
@@ -470,8 +518,15 @@ namespace HunkMod.Modules.Components
                 {
                     if (!i.GetComponent<VirusHandler>() && !i.GetComponent<ParasiteController>())
                     {
-                        target = i.transform;
-                        break;
+                        if (i.isChampion && !canInfectBoss)
+                        {
+                            // fuck you.
+                        }
+                        else
+                        {
+                            target = i.transform;
+                            break;
+                        }
                     }
                 }
             }
@@ -480,10 +535,10 @@ namespace HunkMod.Modules.Components
 
             if (!target) return false;
 
-            if (Modules.Config.globalInfectionSound.Value) Util.PlaySound("sfx_hunk_virus_spawn", this.gameObject);
-
             if (NetworkServer.active)
             {
+                this.PlaySoundCue("sfx_hunk_virus_spawn");
+
                 NetworkIdentity identity = this.GetComponent<NetworkIdentity>();
                 if (identity)
                 {

@@ -4,7 +4,7 @@ namespace HunkMod.Modules.Components
 {
     public class TVirusMaster : MonoBehaviour
     {
-        public int revivalCount = 1;
+        public int revivalCount = 2;
 
         private void OnEnable()
         {

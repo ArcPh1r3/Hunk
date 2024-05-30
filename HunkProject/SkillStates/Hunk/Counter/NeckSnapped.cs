@@ -8,7 +8,9 @@ namespace HunkMod.SkillStates.Hunk.Counter
     public class NeckSnapped : BaseState
     {
         public float duration = 3f;
+
         private bool hasSnapped;
+        private Vector3 originalScale;
 
         public override void OnEnter()
         {
@@ -17,6 +19,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
             if (NetworkServer.active) this.characterBody.AddBuff(RoR2Content.Buffs.ArmorBoost);
 
             //this.modelLocator.modelBaseTransform.localPosition = new Vector3(0.4f, -0.914f, 0.4f);
+            this.originalScale = this.modelLocator.modelTransform.localScale;
             if (this.gameObject.name.Contains("Lemurian")) this.modelLocator.modelTransform.localScale = new Vector3(0.1f, 0.13f, 0.1f);
             if (this.gameObject.name.Contains("Clay")) this.modelLocator.modelTransform.localScale = new Vector3(1.1f, 1.23f, 1.4f);
         }
@@ -30,8 +33,8 @@ namespace HunkMod.SkillStates.Hunk.Counter
                 this.hasSnapped = true;
                 if (NetworkServer.active) this.characterBody.RemoveBuff(RoR2Content.Buffs.ArmorBoost);
 
-                // their death is an explosion anyway
-                //if (this.gameObject.name.Contains("Clay")) this.modelLocator.modelTransform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
+                if (this.gameObject.name.Contains("Lemurian")) this.modelLocator.modelTransform.localScale = this.originalScale;
+                if (this.gameObject.name.Contains("Clay")) this.modelLocator.modelTransform.localScale = this.originalScale;
 
                 this.modelLocator.modelTransform.gameObject.AddComponent<Modules.Components.Snapped>();
             }

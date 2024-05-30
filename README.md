@@ -1,8 +1,8 @@
 # HUNK
 - Adds HUNK from the Resident Evil franchise
-- Has a couple item displays, unlockable skins and skills and is fully multiplayer compatible
+- Has a couple item displays, unlockable skins/knife skins and is fully multiplayer compatible
 - Comes with a unique side objective and a handful of unique weapons to obtain (permanently)
-- Configurable stats and a few other things to mess around with
+- Configurable stats and a bunch of other things to mess around with
 - Full Risk of Options support for all configuration options
 
 [![](https://github.com/ArcPh1r3/Hunk/blob/main/Release/FuckShit/screen1.png?raw=true)]()
@@ -132,11 +132,22 @@ ___
 
 ## Changelog
 
-`1.3.4`
+`1.4.0`
+- Added new virus event: T-Virus Outbreak - there's now a chance for this to be triggered instead of the G-Virus event
+- T-Virus infects every enemy currently alive, allowing them to defy death 2 times, and continues until at least 10 enemies have been infected
+- Killing the last infected enemy will drop a T-Virus Sample, with the same function as the G-Virus Sample
+- In multiplayer, the Sample drops every 10 kills and each HUNK gets their own 10 enemies - they also roll their virus types separately so you can have both events ongoing at once
 - Added item: U.C. Keycard (Star) - used to access the Golden Gun
 - Added item: U.C. Keycard (Master) - allows access to all cases by itself, allowing you to scrap/print all the others
+- Added config to allow viruses to infect bosses, G-Virus can by default but T-Virus cannot
+- Mangled damage: 2100% > 2800%, stack falloff timer 5s > 15s, still has room to be more rewarding/consistent
+- Updated footstep sounds
 - Tweaked G-Virus visuals
+- Tweaked ammo popups to be more visible
 - Fixed broken unlock
+- Fixed Lemurians remaining shrunken after the neck snap finished
+- Fixed new Beetle Guard counter animation not being networked
+- Fixed certain counters having the enemies mispositioned when playing as a client in multiplayer
 
 `1.3.3`
 - LE 5 damage: 280% > 300%, fire rate slightly increased, spread slightly reduced - i am just biased i like this gun

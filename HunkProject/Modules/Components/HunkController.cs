@@ -720,10 +720,17 @@ namespace HunkMod.Modules.Components
             bool valid = false;
             int index = 0;
 
+            int tries = 0;
             while (!valid)
             {
                 index = UnityEngine.Random.Range(0, this.weaponTracker.weaponData.Length);
                 if (this.weaponTracker.weaponData[index].weaponDef.canPickUpAmmo) valid = true;
+                tries++;
+                if (tries >= 500)
+                {
+                    Chat.AddMessage("One day you will have to answer for your actions.");
+                    return;
+                }
             }
 
             new SyncAmmoPickup(identity.netId, multiplier, index).Send(NetworkDestination.Clients);
@@ -1221,7 +1228,7 @@ namespace HunkMod.Modules.Components
 
             this.weaponTracker.weaponData[index].totalAmmo += amount;
 
-            GameObject effect = GameObject.Instantiate(Modules.Assets.ammoPickupEffectPrefab, this.characterBody.aimOrigin + (Vector3.up * 0.85f) + (this.characterBody.inputBank.aimDirection * 2f), Quaternion.identity);
+            GameObject effect = GameObject.Instantiate(Modules.Assets.ammoPickupEffectPrefab, this.characterBody.aimOrigin + (Vector3.up * 0.95f) + (this.characterBody.inputBank.aimDirection * 5f), Quaternion.identity);
 
             effect.GetComponentInChildren<RoR2.UI.LanguageTextMeshController>().token = "+" + amount + " " + this.weaponTracker.weaponData[index].weaponDef.ammoName;
             Util.PlaySound("sfx_hunk_pickup", this.gameObject);
@@ -1260,7 +1267,7 @@ namespace HunkMod.Modules.Components
 
             System.Random random = new System.Random();
             NodeGraph groundNodes = SceneInfo.instance.groundNodes;
-            List<NodeGraph.NodeIndex> nodeList = groundNodes.FindNodesInRange(transform.position, 3f, 16f, HullMask.Human);
+            List<NodeGraph.NodeIndex> nodeList = groundNodes.FindNodesInRange(transform.position, 1f, 5f, HullMask.Human);
             NodeGraph.NodeIndex randomNode = nodeList[random.Next(nodeList.Count)];
             if (randomNode != null)
             {

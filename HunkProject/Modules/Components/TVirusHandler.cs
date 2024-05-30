@@ -14,7 +14,6 @@ namespace HunkMod.Modules.Components
         private SphereSearch search;
         private List<HurtBox> hits;
 
-        private CharacterModel characterModel;
         private CharacterBody characterBody;
         private CharacterMaster characterMaster;
         private Inventory inventory;
@@ -25,11 +24,6 @@ namespace HunkMod.Modules.Components
             this.characterMaster = this.characterBody.master;
             if (this.characterMaster) this.inventory = this.characterMaster.inventory;
             this.characterMaster.gameObject.AddComponent<TVirusMaster>();
-            ModelLocator modelLocator = this.GetComponent<ModelLocator>();
-            if (modelLocator && modelLocator.modelTransform)
-            {
-                this.characterModel = modelLocator.modelTransform.GetComponent<CharacterModel>();
-            }
 
             this.characterBody.baseMaxHealth *= 1.5f;
             this.characterBody.baseDamage *= 1.2f;
@@ -51,8 +45,8 @@ namespace HunkMod.Modules.Components
             this.search.mask = LayerIndex.entityPrecise.mask;
             this.search.radius = this.infectionRadius;
 
-            if (NetworkServer.active) this.InvokeRepeating("AttemptSpread", 0f, 2f);
-            this.InvokeRepeating("AddOverlay", 0f, 40f);
+            if (NetworkServer.active) this.InvokeRepeating("AttemptSpread", 0f, 1f);
+            this.InvokeRepeating("AddOverlay", 0.2f, 40f);
         }
 
         private void AttemptSpread()
@@ -101,7 +95,27 @@ namespace HunkMod.Modules.Components
                     temporaryOverlay.destroyComponentOnEnd = false;
                     temporaryOverlay.originalMaterial = Modules.Assets.tVirusBodyMat;
                     temporaryOverlay.inspectorCharacterModel = modelTransform.GetComponent<CharacterModel>();
-                    temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 4f, 1f);
+                    temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 40f, 1f);
+                    temporaryOverlay.animateShaderAlpha = true;
+                }
+            }
+        }
+
+        public void TriggerRevive()
+        {
+            Util.PlaySound("sfx_hunk_tvirus_proc", this.gameObject);
+            ModelLocator penis = this.GetComponent<ModelLocator>();
+            if (penis)
+            {
+                Transform modelTransform = penis.modelTransform;
+                if (modelTransform)
+                {
+                    TemporaryOverlay temporaryOverlay = modelTransform.gameObject.AddComponent<TemporaryOverlay>();
+                    temporaryOverlay.duration = 1f;
+                    temporaryOverlay.destroyComponentOnEnd = false;
+                    temporaryOverlay.originalMaterial = Modules.Assets.tVirusOverlay;
+                    temporaryOverlay.inspectorCharacterModel = modelTransform.GetComponent<CharacterModel>();
+                    temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 3f, 1f, 0f);
                     temporaryOverlay.animateShaderAlpha = true;
                 }
             }

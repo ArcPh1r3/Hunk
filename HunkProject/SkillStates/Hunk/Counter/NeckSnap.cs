@@ -141,7 +141,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
             this.characterDirection.moveVector = -this.lookVector;
             this.characterDirection.forward = -this.lookVector;
 
-            if (this.target && NetworkServer.active)
+            if (this.target && base.isAuthority)
             {
                 this.target.body.characterMotor.velocity = Vector3.zero;
                 this.target.body.characterMotor.moveDirection = Vector3.zero;

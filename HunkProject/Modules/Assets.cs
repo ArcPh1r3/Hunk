@@ -42,6 +42,7 @@ namespace HunkMod.Modules
 
         public static Material virusBodyMat;
         public static Material tVirusBodyMat;
+        public static Material tVirusOverlay;
 
         public static Material shieldOverlayMat;
         public static Material voidShieldOverlayMat;
@@ -104,6 +105,7 @@ namespace HunkMod.Modules
         public static GameObject tarExplosion;
 
         internal static Material woundOverlayMat;
+        public static Material tVirusMat;
 
         internal static TMP_FontAsset hgFont;
 
@@ -906,6 +908,16 @@ namespace HunkMod.Modules
             tVirusBodyMat.SetFloat("_Boost", 3f);
             tVirusBodyMat.SetFloat("_AlphaBoost", 1f);
             tVirusBodyMat.SetFloat("_AlphaBias", 0.35f);
+
+            tVirusOverlay = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/ArmorReductionOnHit/matPulverizedOverlay.mat").WaitForCompletion());
+            tVirusOverlay.SetColor("_TintColor", new Color(28f / 255f, 69f / 255f, 1f));
+            tVirusOverlay.SetTexture("_RemapTex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Common/ColorRamps/texRampParentTeleport.png").WaitForCompletion());
+            tVirusOverlay.SetFloat("_Boost", 20f);
+            tVirusOverlay.SetFloat("_AlphaBoost", 1.8f);
+            tVirusOverlay.SetFloat("_AlphaBias", 0.1f);
+
+            tVirusMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/DLC1/VoidJailer/matVoidJailerEyes.mat").WaitForCompletion());
+            tVirusMat.SetColor("_EmColor", new Color(44f / 255f, 61f / 255f, 1f, 1f));
         }
 
         private static GameObject CreateBloodExplosionEffect(string effectName, Material bloodMat, float scale = 1f)

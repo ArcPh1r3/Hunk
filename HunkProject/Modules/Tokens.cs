@@ -207,6 +207,9 @@ namespace HunkMod.Modules
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_G_VIRUS_SAMPLE_NAME", "G-Virus Sample");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_G_VIRUS_SAMPLE_DESC", "Volatile sample of the <color=#" + Helpers.voidItemHex + ">Golgotha Virus" + Helpers.colorSuffix + ". <style=cIsHealth>Handle with care.</style>");
 
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_T_VIRUS_SAMPLE_NAME", "T-Virus Sample");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_T_VIRUS_SAMPLE_DESC", "Volatile sample of the <color=#" + Helpers.lunarItemHex + ">Tyrant Virus" + Helpers.colorSuffix + ". <style=cIsHealth>Handle with care.</style>");
+
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_HEARTCHEST_NAME", "Heart-Key Weapon Case");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_HEARTCHEST_CONTEXT", "Open Heart-Key Weapon Case");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HEARTCOST", "Heart Keycard");
@@ -242,12 +245,12 @@ namespace HunkMod.Modules
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_AMMO_CONTEXT", "Rummage for ammo");
 
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYWORD_LOOTING", "<style=cKeywordName>Looting</style><style=cSub>Enemies slain with this skill have a small chance to drop ammo.");
-            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYWORD_MANGLED", "<style=cKeywordName>Mangled</style><style=cSub>Upon reaching 6 stacks of this debuff, enemies suffer an instant <style=cIsDamage>2100% damage</style>.");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYWORD_MANGLED", "<style=cKeywordName>Mangled</style><style=cSub>Upon reaching 6 stacks of this debuff, enemies suffer an instant <style=cIsDamage>2800% damage</style>.");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYWORD_PERFECTDODGE", "<style=cKeywordName>Perfect Dodge</style><style=cSub>Refund cooldown and become briefly invulnerable. Allows you to perform a Counterattack.");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYWORD_COUNTER", "<style=cKeywordName>Counterattack</style><style=cSub>Pressing primary performs a lethal counterattack on a nearby enemy.");
 
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYWORD_GVIRUS", "<style=cKeywordName>G-Virus</style><style=cSub>Once every stage, a random monster becomes <color=#" + Helpers.voidItemHex + ">Infected" + Helpers.colorSuffix + ". It mutates, <style=cIsHealth>growing stronger over time</style>, and killing it drops a <color=#" + Helpers.yellowItemHex + ">G-Virus Sample" + Helpers.colorSuffix + ".");
-            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYWORD_TVIRUS", "<style=cKeywordName>T-Virus</style><style=cSub>Once every stage, every monster becomes <color=#" + Helpers.lunarItemHex + ">Infected" + Helpers.colorSuffix + ". This <style=cIsHealth>revives</style> them one time, and killing all of them nets you a <color=#" + Helpers.yellowItemHex + ">T-Virus Sample" + Helpers.colorSuffix + ".");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYWORD_TVIRUS", "<style=cKeywordName>T-Virus</style><style=cSub>Once every stage, every monster becomes <color=#" + Helpers.lunarItemHex + ">Infected" + Helpers.colorSuffix + ". This <style=cIsHealth>revives</style> them twice, and killing all of them nets you a <color=#" + Helpers.yellowItemHex + ">T-Virus Sample" + Helpers.colorSuffix + ".");
         }
     }
 }

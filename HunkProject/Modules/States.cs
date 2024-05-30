@@ -67,6 +67,8 @@ namespace HunkMod.Modules
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Counter.TemplarGrenade));
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Counter.TemplarAirDodge));
             entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Counter.Suplex));
+            entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Counter.BeetleSlam));
+            entityStates.Add(typeof(HunkMod.SkillStates.Hunk.Counter.BeetleSlamCounter));
 
             entityStates.Add(typeof(HunkMod.SkillStates.Parasite.Infest));
             entityStates.Add(typeof(HunkMod.SkillStates.Parasite.Death));

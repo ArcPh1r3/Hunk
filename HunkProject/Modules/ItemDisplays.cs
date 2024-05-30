@@ -11,10 +11,14 @@ namespace HunkMod.Modules
 
         internal static GameObject VirusEye;
         internal static GameObject GVirusSample;
+        internal static GameObject TVirusSample;
         internal static GameObject SpadeKeycard;
         internal static GameObject ClubKeycard;
         internal static GameObject HeartKeycard;
         internal static GameObject DiamondKeycard;
+        internal static GameObject StarKeycard;
+        internal static GameObject MasterKeycard;
+        internal static GameObject Wristband;
 
         internal static void PopulateDisplays()
         {
@@ -80,6 +84,46 @@ namespace HunkMod.Modules
                 }
             };
 
+            TVirusSample = Assets.mainAssetBundle.LoadAsset<GameObject>("DisplayTVirusSample");
+            //Modules.Assets.ConvertAllRenderersToHopooShader(TVirusSample);
+
+            TVirusSample.transform.Find("Model").GetComponent<MeshRenderer>().material = Modules.Assets.CreateMaterial("matTVirusSample", 1f, Color.white, 1f);
+            TVirusSample.transform.Find("Model/Glass").GetComponent<MeshRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/HealingPotion/matHealingPotionGlass.mat").WaitForCompletion();
+            TVirusSample.transform.Find("Model/Glass2").GetComponent<MeshRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/HealingPotion/matHealingPotionGlass.mat").WaitForCompletion();
+            TVirusSample.transform.Find("Model/30_MainMesh-2-SubMesh-1--sm74-201-Gvirus01_0.3_16_16").GetComponent<MeshRenderer>().material = Modules.Assets.tVirusMat;
+
+            TVirusSample.AddComponent<ItemDisplay>().rendererInfos = new CharacterModel.RendererInfo[]
+            {
+                new CharacterModel.RendererInfo
+                {
+                    defaultMaterial = Modules.Assets.CreateMaterial("matTVirusSample", 1f, Color.white, 1f),
+                    ignoreOverlays = false,
+                    defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
+                    renderer = TVirusSample.transform.Find("Model").GetComponent<MeshRenderer>()
+                },
+                new CharacterModel.RendererInfo
+                {
+                    defaultMaterial = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/HealingPotion/matHealingPotionGlass.mat").WaitForCompletion(),
+                    ignoreOverlays = false,
+                    defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
+                    renderer = TVirusSample.transform.Find("Model/Glass").GetComponent<MeshRenderer>()
+                },
+                new CharacterModel.RendererInfo
+                {
+                    defaultMaterial = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/HealingPotion/matHealingPotionGlass.mat").WaitForCompletion(),
+                    ignoreOverlays = false,
+                    defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
+                    renderer = TVirusSample.transform.Find("Model/Glass2").GetComponent<MeshRenderer>()
+                },
+                new CharacterModel.RendererInfo
+                {
+                    defaultMaterial = Modules.Assets.tVirusMat,
+                    ignoreOverlays = false,
+                    defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
+                    renderer = TVirusSample.transform.Find("Model/30_MainMesh-2-SubMesh-1--sm74-201-Gvirus01_0.3_16_16").GetComponent<MeshRenderer>()
+                }
+            };
+
             SpadeKeycard = Assets.mainAssetBundle.LoadAsset<GameObject>("DisplayKeycardSpade");
             Modules.Assets.ConvertAllRenderersToHopooShader(SpadeKeycard);
             SpadeKeycard.AddComponent<ItemDisplay>();
@@ -95,6 +139,18 @@ namespace HunkMod.Modules
             DiamondKeycard = Assets.mainAssetBundle.LoadAsset<GameObject>("DisplayKeycardDiamond");
             Modules.Assets.ConvertAllRenderersToHopooShader(DiamondKeycard);
             DiamondKeycard.AddComponent<ItemDisplay>();
+
+            StarKeycard = Assets.mainAssetBundle.LoadAsset<GameObject>("DisplayKeycardGold");
+            Modules.Assets.ConvertAllRenderersToHopooShader(StarKeycard);
+            StarKeycard.AddComponent<ItemDisplay>();
+
+            MasterKeycard = Assets.mainAssetBundle.LoadAsset<GameObject>("DisplayKeycardMaster");
+            Modules.Assets.ConvertAllRenderersToHopooShader(MasterKeycard);
+            MasterKeycard.AddComponent<ItemDisplay>();
+
+            Wristband = Assets.mainAssetBundle.LoadAsset<GameObject>("DisplayWristband");
+            Modules.Assets.ConvertAllRenderersToHopooShader(Wristband);
+            Wristband.AddComponent<ItemDisplay>();
 
             PopulateFromBody("Commando");
             PopulateFromBody("Croco");

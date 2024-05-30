@@ -44,7 +44,7 @@ namespace HunkMod
     {
         public const string MODUID = "com.rob.Hunk";
         public const string MODNAME = "Hunk";
-        public const string MODVERSION = "1.3.4";
+        public const string MODVERSION = "1.4.0";
 
         public const string developerPrefix = "ROB";
 
@@ -97,6 +97,7 @@ namespace HunkMod
             NetworkingAPI.RegisterMessageType<Modules.Components.SyncCaseItem>();
             NetworkingAPI.RegisterMessageType<Modules.Components.SyncTemplarExplosion>();
             NetworkingAPI.RegisterMessageType<Modules.Components.SyncTVirus>();
+            NetworkingAPI.RegisterMessageType<Modules.Components.SyncTVirusOverlay>();
 
             Hook();
 
@@ -190,7 +191,7 @@ namespace HunkMod
                         }
                     }
 
-                    int sampleCount = self.inventory.GetItemCount(Modules.Survivors.Hunk.gVirusSample);
+                    int sampleCount = self.inventory.GetItemCount(Modules.Survivors.Hunk.gVirusSample) + self.inventory.GetItemCount(Modules.Survivors.Hunk.tVirusSample);
                     if (sampleCount > 0)
                     {
                         self.regen += (sampleCount * 0.5f);

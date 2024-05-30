@@ -1081,6 +1081,17 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="sfx_hunk_tvirus_proc" ID="{D03D25C6-45A6-4F7C-AB23-C5D17966164F}">
+					<ChildrenList>
+						<Action Name="" ID="{9371F109-F0C9-4D81-A8D6-28F6B163821C}" ShortID="380095544">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_tvirus_proc" ID="{0FAF4CEE-ECDF-4DE3-B47F-2B6CB8130349}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

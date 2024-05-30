@@ -17,6 +17,8 @@ namespace HunkMod.Modules
         public static ConfigEntry<bool> dynamicCrosshair;
         public static ConfigEntry<bool> enableRecoil;
         public static ConfigEntry<bool> capInfection;
+        public static ConfigEntry<bool> gCanInfectBosses;
+        public static ConfigEntry<bool> tCanInfectBosses;
         public static ConfigEntry<bool> globalInfectionSound;
         public static ConfigEntry<bool> customEscapeSequence;
         public static ConfigEntry<bool> permanentInfectionEvent;
@@ -75,11 +77,23 @@ true,
 true,
 "Caps G-Virus infection at 5 stacks of mutation. Set to false to restore the original infinite scaling.");
 
+            gCanInfectBosses
+= Config.BindAndOptions("01 - General",
+"G-Virus Can Infect Bosses",
+true,
+"If set to true, G-Virus will be allowed to infect boss monsters.");
+
+            tCanInfectBosses
+= Config.BindAndOptions("01 - General",
+"T-Virus Can Infect Bosses",
+false,
+"If set to true, T-Virus will be allowed to infect boss monsters.");
+
             globalInfectionSound
 = Config.BindAndOptions("01 - General",
 "Infection Sound Cue",
 true,
-"Set to false to disable the global sound cue when an Infected enemy spawns. (Client-side)");
+"Set to false to disable the global sound cue when an Infection event starts.");
 
             customEscapeSequence
 = Config.BindAndOptions("01 - General",

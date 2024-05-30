@@ -80,6 +80,7 @@ namespace HunkMod.Modules.Survivors
         public static List<string> blacklistedStageNames = new List<string>();
 
         public HealthBarStyle infectedHealthBarStyle;
+        public HealthBarStyle tInfectedHealthBarStyle;
 
         public static InteractableSpawnCard chestInteractableCard;
         internal static GameObject weaponChestPrefab;
@@ -154,6 +155,8 @@ namespace HunkMod.Modules.Survivors
         internal static BuffDef infectedBuff;
         internal static BuffDef infectedBuff2;
         internal static BuffDef mangledBuff;
+
+        public static int requiredKills = 0;
 
         public static List<GolemLaser> golemLasers = new List<GolemLaser>();
 
@@ -2433,6 +2436,69 @@ localScale = new Vector3(19.82461F, 22.86115F, 30.86304F)
 
             itemDisplayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
             {
+                keyAsset = Hunk.goldKeycard,
+                displayRuleGroup = new DisplayRuleGroup
+                {
+                    rules = new ItemDisplayRule[]
+{
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.StarKeycard,
+                            limbMask = LimbFlags.None,
+childName = "Pelvis",
+localPos = new Vector3(19.87744F, -3.52511F, -7.59921F),
+localAngles = new Vector3(54.63135F, 152.5819F, 198.216F),
+localScale = new Vector3(19.82461F, 22.86115F, 30.86304F)
+                        }
+}
+                }
+            });
+
+            itemDisplayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            {
+                keyAsset = Hunk.masterKeycard,
+                displayRuleGroup = new DisplayRuleGroup
+                {
+                    rules = new ItemDisplayRule[]
+{
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.MasterKeycard,
+                            limbMask = LimbFlags.None,
+childName = "Pelvis",
+localPos = new Vector3(21.71092F, -6.29003F, -7.494F),
+localAngles = new Vector3(35.30389F, 123.9322F, 198.5352F),
+localScale = new Vector3(22.80404F, 26.29696F, 35.5014F)
+                        }
+}
+                }
+            });
+
+            itemDisplayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            {
+                keyAsset = Hunk.wristband,
+                displayRuleGroup = new DisplayRuleGroup
+                {
+                    rules = new ItemDisplayRule[]
+{
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.Wristband,
+                            limbMask = LimbFlags.None,
+childName = "LowerArmL",
+localPos = new Vector3(1.6174F, 20.56634F, -1.37473F),
+localAngles = new Vector3(331.4508F, 260.9691F, 0F),
+localScale = new Vector3(9.34054F, 9.34054F, 9.34054F)
+                        }
+}
+                }
+            });
+
+            itemDisplayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            {
                 keyAsset = Hunk.gVirusSample,
                 displayRuleGroup = new DisplayRuleGroup
                 {
@@ -2445,6 +2511,27 @@ localScale = new Vector3(19.82461F, 22.86115F, 30.86304F)
                             limbMask = LimbFlags.None,
 childName = "Stomach",
 localPos = new Vector3(-4.27445F, 14.75704F, -16.96162F),
+localAngles = new Vector3(0F, 0F, 46.0078F),
+localScale = new Vector3(15.77204F, 15.77204F, 15.77204F)
+                        }
+}
+                }
+            });
+
+            itemDisplayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
+            {
+                keyAsset = Hunk.tVirusSample,
+                displayRuleGroup = new DisplayRuleGroup
+                {
+                    rules = new ItemDisplayRule[]
+{
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            followerPrefab = ItemDisplays.TVirusSample,
+                            limbMask = LimbFlags.None,
+childName = "Stomach",
+localPos = new Vector3(-4.03512F, 20.82401F, -16.96177F),
 localAngles = new Vector3(0F, 0F, 46.0078F),
 localScale = new Vector3(15.77204F, 15.77204F, 15.77204F)
                         }
@@ -3109,6 +3196,13 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
             infectedHealthBarStyle.trailingUnderHealthBarStyle.sprite = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texWhite");
             infectedHealthBarStyle.trailingUnderHealthBarStyle.baseColor = new Color(1f, 1f, 0f);
+
+            tInfectedHealthBarStyle = HealthBarStyle.Instantiate(Addressables.LoadAssetAsync<HealthBarStyle>("RoR2/Base/Common/CombatHealthBar.asset").WaitForCompletion());
+            tInfectedHealthBarStyle.name = "TInfectedHealthBar";
+            tInfectedHealthBarStyle.trailingOverHealthBarStyle.baseColor = new Color(28f / 255f, 69f / 255f, 1f);
+
+            tInfectedHealthBarStyle.trailingUnderHealthBarStyle.sprite = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texWhite");
+            tInfectedHealthBarStyle.trailingUnderHealthBarStyle.baseColor = new Color(1f, 1f, 0f);
         }
 
         private static void CreateOrb()
@@ -3343,7 +3437,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             tVirusSample.loreToken = "ROB_HUNK_T_VIRUS_SAMPLE_DESC";
             tVirusSample.canRemove = false;
             tVirusSample.hidden = false;
-            tVirusSample.pickupIconSprite = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texVirusSampleIcon");
+            tVirusSample.pickupIconSprite = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texTVirusSampleIcon");
             tVirusSample.requiredExpansion = null;
             tVirusSample.tags = new ItemTag[]
             {
@@ -3356,7 +3450,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             };
             tVirusSample.unlockableDef = null;
 
-            tVirusSample.pickupModelPrefab = Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlGVirusSample");
+            tVirusSample.pickupModelPrefab = Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlTVirusSample");
             Modules.Assets.ConvertAllRenderersToHopooShader(tVirusSample.pickupModelPrefab);
             tVirusSample.pickupModelPrefab.transform.Find("Model/Glass").GetComponent<MeshRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/HealingPotion/matHealingPotionGlass.mat").WaitForCompletion();
             tVirusSample.pickupModelPrefab.transform.Find("Model/Glass2").GetComponent<MeshRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/HealingPotion/matHealingPotionGlass.mat").WaitForCompletion();
@@ -3596,7 +3690,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             On.RoR2.CharacterBody.OnDeathStart += CharacterBody_OnDeathStart;
 
             // t-virus revival
-            //On.RoR2.CharacterMaster.OnBodyDeath += CharacterMaster_OnBodyDeath;
+            On.RoR2.CharacterMaster.OnBodyDeath += CharacterMaster_OnBodyDeath;
             //On.RoR2.CharacterMaster.RespawnExtraLife += CharacterMaster_RespawnExtraLife;
             //On.RoR2.CharacterMaster.IsDeadAndOutOfLivesServer += CharacterMaster_IsDeadAndOutOfLivesServer;
             //On.EntityStates.GenericCharacterDeath.OnEnter += GenericCharacterDeath_OnEnter;
@@ -3675,7 +3769,13 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                             if (virus && virus.revivalCount > 0)
                             {
                                 virus.revivalCount--;
-                                hc.health = hc.fullHealth;
+                                if (virus.revivalCount == 0) hc.health = hc.fullHealth * 0.5f;
+                                else hc.health = hc.fullHealth;
+
+                                hc.body.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 0.5f);
+
+                                NetworkIdentity identity = hc.GetComponent<NetworkIdentity>();
+                                if (identity) new SyncTVirusOverlay(identity.netId, hc.gameObject).Send(NetworkDestination.Clients);
                             }
                         }
                     }
@@ -3761,6 +3861,22 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             {
                 if (Hunk.virusObjectiveObjects2.Count > 0)
                 {
+                    if (body.HasBuff(Hunk.infectedBuff2))
+                    {
+                        Hunk.requiredKills--;
+                        if (Hunk.requiredKills <= 0)
+                        {
+                            Hunk.requiredKills = 10;
+
+                            PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Survivors.Hunk.tVirusSample.itemIndex),
+body.corePosition + (Vector3.up * 0.5f),
+Vector3.up * 20f);
+                        }
+                    }
+                }
+
+                /*if (Hunk.virusObjectiveObjects2.Count > 0)
+                {
                     if (self.inventory && self.inventory.GetItemCount(Hunk.tVirusRevival) > 0)
                     {
                         self.lostBodyToDeath = true;
@@ -3779,7 +3895,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
                         self.gameObject.AddComponent<TVirusRevivalBehavior>().master = self;
                     }
-                }
+                }*/
             }
 
             orig(self, body);
@@ -3988,6 +4104,37 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                                 it.text = self.transform.Find("LevelRoot/ValueText").GetComponent<HGTextMeshProUGUI>();
                                 self.transform.Find("LevelRoot").gameObject.SetActive(true);
                                 self.transform.Find("LevelRoot").GetComponent<RectTransform>().localPosition = new Vector3(-78f, -2f, 0f);
+                            }
+                        }
+                    }
+                }
+
+                if (Hunk.virusObjectiveObjects2.Count > 0)
+                {
+                    if (self.source.GetComponent<TVirusHandler>())
+                    {
+                        if (self.eliteBackdropRectTransform)
+                        {
+                            if (!self.transform.Find("Backdrop,Elite/Backdrop, Infected"))
+                            {
+                                GameObject infectedBackdrop = GameObject.Instantiate(self.transform.Find("Backdrop,Elite").gameObject, self.transform.Find("Backdrop,Elite"));
+                                infectedBackdrop.SetActive(true);
+                                infectedBackdrop.name = "Backdrop, Infected";
+                                infectedBackdrop.GetComponent<UnityEngine.UI.Image>().color = new Color(130f / 255f, 171f / 255f, 1f);
+                                infectedBackdrop.GetComponent<RectTransform>().localScale = new Vector3(0.94f, 0.5f, 1f);
+
+                                self.style = Hunk.instance.tInfectedHealthBarStyle;
+
+                                self.eliteBackdropRectTransform = null;
+                                self.transform.Find("Backdrop,Elite").gameObject.SetActive(true);
+                                self.transform.Find("Backdrop,Elite/Arrow,EliteBackdrop").gameObject.SetActive(true);
+
+                                //MonoBehaviour.Destroy(self.GetComponent<LevelText>());
+                                //var it = self.gameObject.AddComponent<InfectionText>();
+                                //it.target = self.source.body;
+                                //it.text = self.transform.Find("LevelRoot/ValueText").GetComponent<HGTextMeshProUGUI>();
+                                //self.transform.Find("LevelRoot").gameObject.SetActive(true);
+                                //self.transform.Find("LevelRoot").GetComponent<RectTransform>().localPosition = new Vector3(-78f, -2f, 0f);
                             }
                         }
                     }
@@ -4233,7 +4380,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                     {
                         if (self.body)
                         {
-                            self.body.AddTimedBuff(Hunk.mangledBuff, 5f);
+                            self.body.AddTimedBuff(Hunk.mangledBuff, 15f);
 
                             int count = self.body.GetBuffCount(Hunk.mangledBuff);
                             if (count >= 6)
@@ -4253,7 +4400,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                                     attacker = damageInfo.attacker,
                                     canRejectForce = false,
                                     crit = false,
-                                    damage = damageInfo.attacker.GetComponent<CharacterBody>().damage * 21f,
+                                    damage = damageInfo.attacker.GetComponent<CharacterBody>().damage * 28f,
                                     damageColorIndex = DamageColorIndex.DeathMark,
                                     damageType = DamageType.Stun1s,
                                     force = Vector3.zero,
@@ -5199,17 +5346,13 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
         private static string MakeInfectedName(On.RoR2.Util.orig_GetBestBodyName orig, GameObject bodyObject)
         {
             var text = orig(bodyObject);
-            var infectedIndex = infectedBuff.buffIndex;
             if (!bodyObject)
                 return text;
 
             if (!bodyObject.TryGetComponent<CharacterBody>(out var body))
                 return text;
 
-            if (!body.HasBuff(infectedIndex))
-            {
-                return text;
-            }
+            if (!body.HasBuff(infectedBuff) && !body.HasBuff(infectedBuff2)) return text;
 
             text = "Infected " + text;
 

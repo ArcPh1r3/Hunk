@@ -63,7 +63,7 @@ namespace HunkMod.Modules.Components
                     temporaryOverlay.destroyComponentOnEnd = false;
                     temporaryOverlay.originalMaterial = Modules.Assets.virusBodyMat;
                     temporaryOverlay.inspectorCharacterModel = modelTransform.GetComponent<CharacterModel>();
-                    temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 4f, 1f);
+                    temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 40f, 1f);
                     temporaryOverlay.animateShaderAlpha = true;
                 }
             }
