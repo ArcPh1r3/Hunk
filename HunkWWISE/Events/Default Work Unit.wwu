@@ -993,6 +993,94 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="sfx_hunk_mangle" ID="{1340FF94-9269-4932-93DE-176EE22BBC1C}">
+					<ChildrenList>
+						<Action Name="" ID="{6DA9F773-81FC-4D0E-AFAA-A3AB072FAAE6}" ShortID="783026249">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="mangle" ID="{87EA308D-9954-4D2E-ADE0-1E286787B00B}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_slam_impact" ID="{79D749E2-47EA-4040-8F8F-6280F922CF3A}">
+					<ChildrenList>
+						<Action Name="" ID="{374B50CD-C612-44AB-B5DE-C11F67B023F7}" ShortID="155420848">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="slam" ID="{3B379E24-96A2-4762-AA0E-C9121B542BF4}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_bluerose_fire" ID="{922241E7-67D9-4662-903F-007967A0F5E9}">
+					<ChildrenList>
+						<Action Name="" ID="{28AD1E19-6D55-46FF-965F-E41517833826}" ShortID="408165264">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="bluerose" ID="{B9EB7D4E-24FB-4BB2-85E2-1CB7375FC01F}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_grapple" ID="{941658BE-5DDA-4FE0-A464-0D65FDAAF921}">
+					<ChildrenList>
+						<Action Name="" ID="{51BDD1F6-0001-4721-A4C9-F8A3FD95F869}" ShortID="834100183">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="fuck my bad" ID="{BE58C433-9FAE-4CD6-80B4-926DA98A916A}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_crunch" ID="{B2399682-EF06-4541-B038-CDCBE0D3BA0F}">
+					<ChildrenList>
+						<Action Name="" ID="{4FD500BD-1A38-4C61-A5EA-C57528D53BF8}" ShortID="115707352">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="crunch" ID="{36646031-B80F-4043-BBD2-2AC9F9B53A05}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_jump" ID="{67C43F32-5481-4B9E-9249-CBCD7B8B982E}">
+					<ChildrenList>
+						<Action Name="" ID="{2544F90A-F667-492B-BCB5-40B727BFA2E9}" ShortID="1050610300">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="jump" ID="{68C9810B-A3E8-4E62-B400-7AD4C66322E1}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_kick_impact2" ID="{214A82A0-3E4C-4924-90BA-875C8CD9F7E5}">
+					<ChildrenList>
+						<Action Name="" ID="{570C2B20-ACD7-410A-8076-489DD8663C96}" ShortID="1007075820">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_kick_impact2" ID="{E28754C7-85C1-472C-A1A0-8DA1BC0A3B42}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_retheme_global" ID="{09E97F01-598F-47BA-877C-1C0667B478F3}">
+					<ChildrenList>
+						<Action Name="" ID="{3B576A60-3BAF-44CB-B89D-089D09BFED22}" ShortID="770560040">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_retheme_01" ID="{67978C35-F092-475B-9413-C698B954F9D4}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

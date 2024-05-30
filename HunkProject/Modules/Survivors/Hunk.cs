@@ -14,6 +14,9 @@ using R2API.Networking;
 using R2API.Networking.Interfaces;
 using UnityEngine.SceneManagement;
 using RoR2.Orbs;
+using MonoMod.Cil;
+using Mono.Cecil.Cil;
+using static MonoMod.Cil.RuntimeILReferenceBag.FastDelegateInvokers;
 
 namespace HunkMod.Modules.Survivors
 {
@@ -70,6 +73,7 @@ namespace HunkMod.Modules.Survivors
         public static List<HunkWeaponDef> defaultWeaponPool = new List<HunkWeaponDef>();
         public static List<ItemDef> spawnedWeaponList = new List<ItemDef>();
         public static List<GameObject> virusObjectiveObjects = new List<GameObject>();
+        public static List<GameObject> virusObjectiveObjects2 = new List<GameObject>();
         public static List<CostTypeDef> spawnedCostTypeList = new List<CostTypeDef>();
 
         public static string stageBlacklist = "arena,artifactworld,bazaar,limbo,moon,moon2,outro,voidoutro,voidraid,voidstage";
@@ -95,6 +99,9 @@ namespace HunkMod.Modules.Survivors
         public static CostTypeDef diamondCostDef;
         public static int diamondCostTypeIndex;
 
+        public static CostTypeDef starCostDef;
+        public static int starCostTypeIndex;
+
         public static CostTypeDef wristbandCostDef;
         public static int wristbandCostTypeIndex;
 
@@ -112,10 +119,15 @@ namespace HunkMod.Modules.Survivors
         internal static ItemDef heartKeycard;
         internal static ItemDef diamondKeycard;
         internal static ItemDef wristband;
+        internal static ItemDef goldKeycard;
+        internal static ItemDef masterKeycard;
         internal static ItemDef gVirusSample;
         internal static ItemDef gVirus;
         internal static ItemDef gVirus2;
         internal static ItemDef gVirusFinal;
+        internal static ItemDef tVirusSample;
+        internal static ItemDef tVirus;
+        internal static ItemDef tVirusRevival;
         internal static ItemDef ammoItem;
 
         // orb
@@ -140,6 +152,8 @@ namespace HunkMod.Modules.Survivors
 
         internal static BuffDef immobilizedBuff;
         internal static BuffDef infectedBuff;
+        internal static BuffDef infectedBuff2;
+        internal static BuffDef mangledBuff;
 
         public static List<GolemLaser> golemLasers = new List<GolemLaser>();
 
@@ -187,9 +201,11 @@ namespace HunkMod.Modules.Survivors
                 //else Modules.Prefabs.RegisterNewSurvivor(characterPrefab, displayPrefab, "DRIVER", characterUnlockableDef);
 
                 umbraMaster = CreateMaster(characterPrefab, "RobHunkMonsterMaster");
-
+                
                 immobilizedBuff = Modules.Buffs.AddNewBuff("buffHunkImmobilized", null, Color.white, false, false, true);
                 infectedBuff = Modules.Buffs.AddNewBuff("buffHunkInfected", null, Color.yellow, false, false, true);
+                infectedBuff2 = Modules.Buffs.AddNewBuff("buffHunkInfected2", null, Color.blue, false, false, true);
+                mangledBuff = Modules.Buffs.AddNewBuff("buffHunkMangled", Addressables.LoadAssetAsync<BuffDef>("RoR2/Base/Bandit2/bdSuperBleed.asset").WaitForCompletion().iconSprite, Color.red, true, false);
 
                 AddVirusDisplayRules();
                 CreateKnifeSkins();
@@ -240,14 +256,14 @@ namespace HunkMod.Modules.Survivors
 
             SfxLocator sfx = newPrefab.GetComponent<SfxLocator>();
             //sfx.barkSound = "";
-            //sfx.landingSound = "";
+            //sfx.landingSound = "sfx_hunk_land";
             sfx.deathSound = "sfx_hunk_death";
             //sfx.fallDamageSound = "";
 
-            //FootstepHandler footstep = newPrefab.GetComponentInChildren<FootstepHandler>();
+            FootstepHandler footstep = newPrefab.GetComponentInChildren<FootstepHandler>();
             //footstep.footstepDustPrefab = Resources.Load<GameObject>("Prefabs/GenericHugeFootstepDust");
-            //footstep.baseFootstepString = "Play_moonBrother_step";
-            //footstep.sprintFootstepOverrideString = "Play_moonBrother_sprint";
+            footstep.baseFootstepString = "sfx_hunk_footstep";
+            footstep.sprintFootstepOverrideString = "sfx_hunk_sprint";
 
             //KinematicCharacterMotor characterController = newPrefab.GetComponent<KinematicCharacterMotor>();
             //characterController.CapsuleRadius = 4f;
@@ -520,7 +536,7 @@ namespace HunkMod.Modules.Survivors
             skillLocator.passiveSkill.skillNameToken = prefix + "_HUNK_BODY_PPASSIVE_NAME";
             skillLocator.passiveSkill.skillDescriptionToken = prefix + "_HUNK_BODY_PPASSIVE_DESCRIPTION";
             skillLocator.passiveSkill.icon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texOSPIcon");
-            skillLocator.passiveSkill.keywordToken = MainPlugin.developerPrefix + "_HUNK_KEYWORD_VIRUS";
+            skillLocator.passiveSkill.keywordToken = MainPlugin.developerPrefix + "_HUNK_KEYWORD_GVIRUS";
 
             Hunk.reloadSkillDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
             {
@@ -661,7 +677,8 @@ namespace HunkMod.Modules.Survivors
             knife.interruptPriority = EntityStates.InterruptPriority.Skill;
             knife.keywordTokens = new string[]
             {
-                MainPlugin.developerPrefix + "_HUNK_KEYWORD_LOOTING"
+                MainPlugin.developerPrefix + "_HUNK_KEYWORD_LOOTING",
+                MainPlugin.developerPrefix + "_HUNK_KEYWORD_MANGLED"
             };
 
             /*SkillDef knifeAlt = Modules.Skills.CreatePrimarySkillDef(new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.SwingAltKnife)),
@@ -2823,6 +2840,19 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             list.Add(diamondCostDef);
         }
 
+        private static void AddStarCostType(List<CostTypeDef> list)
+        {
+            starCostDef = new CostTypeDef();
+            starCostDef.costStringFormatToken = MainPlugin.developerPrefix + "_STARCOST";
+            starCostDef.isAffordable = new CostTypeDef.IsAffordableDelegate(Misc.ItemCostTypeHelperStar.IsAffordable);
+            starCostDef.payCost = new CostTypeDef.PayCostDelegate(Misc.ItemCostTypeHelperStar.PayCost);
+            starCostDef.colorIndex = ColorCatalog.ColorIndex.Blood;
+            starCostDef.saturateWorldStyledCostString = true;
+            starCostDef.darkenWorldStyledCostString = false;
+            starCostTypeIndex = CostTypeCatalog.costTypeDefs.Length + list.Count;
+            list.Add(starCostDef);
+        }
+
         private static void AddWristbandCostType(List<CostTypeDef> list)
         {
             wristbandCostDef = new CostTypeDef();
@@ -3230,6 +3260,54 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             wristband.pickupModelPrefab = Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlWristband");
             Modules.Assets.ConvertAllRenderersToHopooShader(wristband.pickupModelPrefab);
 
+            goldKeycard = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/Base/ArtifactKey/ArtifactKey.asset").WaitForCompletion());
+            goldKeycard.name = "goldKeycard";
+            goldKeycard.nameToken = "ROB_HUNK_GOLD_KEYCARD_NAME";
+            goldKeycard.descriptionToken = "ROB_HUNK_KEYCARD_DESC";
+            goldKeycard.pickupToken = "ROB_HUNK_KEYCARD_DESC";
+            goldKeycard.loreToken = "ROB_HUNK_KEYCARD_DESC";
+            goldKeycard.canRemove = false;
+            goldKeycard.hidden = false;
+            goldKeycard.pickupIconSprite = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKeycardGoldIcon");
+            goldKeycard.requiredExpansion = null;
+            goldKeycard.tags = new ItemTag[]
+            {
+                ItemTag.AIBlacklist,
+                ItemTag.BrotherBlacklist,
+                ItemTag.CannotCopy,
+                ItemTag.CannotDuplicate,
+                ItemTag.CannotSteal,
+                ItemTag.WorldUnique
+            };
+            goldKeycard.unlockableDef = null;
+
+            goldKeycard.pickupModelPrefab = Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlKeycardGold");
+            Modules.Assets.ConvertAllRenderersToHopooShader(goldKeycard.pickupModelPrefab);
+
+            masterKeycard = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/Base/ArtifactKey/ArtifactKey.asset").WaitForCompletion());
+            masterKeycard.name = "masterKeycard";
+            masterKeycard.nameToken = "ROB_HUNK_MASTER_KEYCARD_NAME";
+            masterKeycard.descriptionToken = "ROB_HUNK_KEYCARD_MASTER_DESC";
+            masterKeycard.pickupToken = "ROB_HUNK_KEYCARD_MASTER_DESC";
+            masterKeycard.loreToken = "ROB_HUNK_KEYCARD_MASTER_DESC";
+            masterKeycard.canRemove = false;
+            masterKeycard.hidden = false;
+            masterKeycard.pickupIconSprite = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKeycardMasterIcon");
+            masterKeycard.requiredExpansion = null;
+            masterKeycard.tags = new ItemTag[]
+            {
+                ItemTag.AIBlacklist,
+                ItemTag.BrotherBlacklist,
+                ItemTag.CannotCopy,
+                ItemTag.CannotDuplicate,
+                ItemTag.CannotSteal,
+                ItemTag.WorldUnique
+            };
+            masterKeycard.unlockableDef = null;
+
+            masterKeycard.pickupModelPrefab = Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlKeycardMaster");
+            Modules.Assets.ConvertAllRenderersToHopooShader(masterKeycard.pickupModelPrefab);
+
             gVirusSample = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/Base/ArtifactKey/ArtifactKey.asset").WaitForCompletion());
             gVirusSample.name = "GVirusSample";
             gVirusSample.nameToken = "ROB_HUNK_G_VIRUS_SAMPLE_NAME";
@@ -3256,6 +3334,75 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             gVirusSample.pickupModelPrefab.transform.Find("Model/Glass").GetComponent<MeshRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/HealingPotion/matHealingPotionGlass.mat").WaitForCompletion();
             gVirusSample.pickupModelPrefab.transform.Find("Model/Glass2").GetComponent<MeshRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/HealingPotion/matHealingPotionGlass.mat").WaitForCompletion();
             //gVirusSample.pickupModelPrefab.transform.Find("Model/Liquid").GetComponent<MeshRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/EliteVoid/matVoidInfestorEyes.mat").WaitForCompletion();
+
+            tVirusSample = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/Base/ArtifactKey/ArtifactKey.asset").WaitForCompletion());
+            tVirusSample.name = "TVirusSample";
+            tVirusSample.nameToken = "ROB_HUNK_T_VIRUS_SAMPLE_NAME";
+            tVirusSample.descriptionToken = "ROB_HUNK_T_VIRUS_SAMPLE_DESC";
+            tVirusSample.pickupToken = "ROB_HUNK_T_VIRUS_SAMPLE_DESC";
+            tVirusSample.loreToken = "ROB_HUNK_T_VIRUS_SAMPLE_DESC";
+            tVirusSample.canRemove = false;
+            tVirusSample.hidden = false;
+            tVirusSample.pickupIconSprite = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texVirusSampleIcon");
+            tVirusSample.requiredExpansion = null;
+            tVirusSample.tags = new ItemTag[]
+            {
+                ItemTag.AIBlacklist,
+                ItemTag.BrotherBlacklist,
+                ItemTag.CannotCopy,
+                ItemTag.CannotDuplicate,
+                ItemTag.CannotSteal,
+                ItemTag.WorldUnique
+            };
+            tVirusSample.unlockableDef = null;
+
+            tVirusSample.pickupModelPrefab = Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlGVirusSample");
+            Modules.Assets.ConvertAllRenderersToHopooShader(tVirusSample.pickupModelPrefab);
+            tVirusSample.pickupModelPrefab.transform.Find("Model/Glass").GetComponent<MeshRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/HealingPotion/matHealingPotionGlass.mat").WaitForCompletion();
+            tVirusSample.pickupModelPrefab.transform.Find("Model/Glass2").GetComponent<MeshRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/HealingPotion/matHealingPotionGlass.mat").WaitForCompletion();
+            //gVirusSample.pickupModelPrefab.transform.Find("Model/Liquid").GetComponent<MeshRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/EliteVoid/matVoidInfestorEyes.mat").WaitForCompletion();
+
+            tVirus = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/Base/DrizzlePlayerHelper/DrizzlePlayerHelper.asset").WaitForCompletion());
+            tVirus.name = "TVirus";
+            tVirus.nameToken = "ROB_HUNK_T_VIRUS_NAME";
+            tVirus.descriptionToken = "ROB_HUNK_T_VIRUS_DESC";
+            tVirus.pickupToken = "ROB_HUNK_T_VIRUS_DESC";
+            tVirus.loreToken = "ROB_HUNK_T_VIRUS_DESC";
+            tVirus.canRemove = false;
+            tVirus.hidden = true;
+            tVirus.pickupIconSprite = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKeycardDiamondIcon");
+            tVirus.requiredExpansion = null;
+            tVirus.tags = new ItemTag[]
+            {
+                ItemTag.AIBlacklist,
+                ItemTag.BrotherBlacklist,
+                ItemTag.CannotCopy,
+                ItemTag.CannotDuplicate,
+                ItemTag.CannotSteal,
+                ItemTag.WorldUnique
+            };
+            tVirus.unlockableDef = null;
+
+            tVirusRevival = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/Base/DrizzlePlayerHelper/DrizzlePlayerHelper.asset").WaitForCompletion());
+            tVirusRevival.name = "TVirusRevival";
+            tVirusRevival.nameToken = "ROB_HUNK_T_VIRUS_NAME";
+            tVirusRevival.descriptionToken = "ROB_HUNK_T_VIRUS_DESC";
+            tVirusRevival.pickupToken = "ROB_HUNK_T_VIRUS_DESC";
+            tVirusRevival.loreToken = "ROB_HUNK_T_VIRUS_DESC";
+            tVirusRevival.canRemove = false;
+            tVirusRevival.hidden = true;
+            tVirusRevival.pickupIconSprite = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKeycardDiamondIcon");
+            tVirusRevival.requiredExpansion = null;
+            tVirusRevival.tags = new ItemTag[]
+            {
+                ItemTag.AIBlacklist,
+                ItemTag.BrotherBlacklist,
+                ItemTag.CannotCopy,
+                ItemTag.CannotDuplicate,
+                ItemTag.CannotSteal,
+                ItemTag.WorldUnique
+            };
+            tVirusRevival.unlockableDef = null;
 
             gVirus = ItemDef.Instantiate(Addressables.LoadAssetAsync<ItemDef>("RoR2/Base/DrizzlePlayerHelper/DrizzlePlayerHelper.asset").WaitForCompletion());
             gVirus.name = "GVirus";
@@ -3346,10 +3493,15 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             HunkWeaponCatalog.itemDefs.Add(heartKeycard);
             HunkWeaponCatalog.itemDefs.Add(diamondKeycard);
             HunkWeaponCatalog.itemDefs.Add(wristband);
+            HunkWeaponCatalog.itemDefs.Add(goldKeycard);
+            HunkWeaponCatalog.itemDefs.Add(masterKeycard);
             HunkWeaponCatalog.itemDefs.Add(gVirusSample);
             HunkWeaponCatalog.itemDefs.Add(gVirus);
             HunkWeaponCatalog.itemDefs.Add(gVirus2);
             HunkWeaponCatalog.itemDefs.Add(gVirusFinal);
+            HunkWeaponCatalog.itemDefs.Add(tVirusSample);
+            HunkWeaponCatalog.itemDefs.Add(tVirus);
+            HunkWeaponCatalog.itemDefs.Add(tVirusRevival);
             HunkWeaponCatalog.itemDefs.Add(ammoItem);
         }
 
@@ -3436,11 +3588,19 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             CostTypeCatalog.modHelper.getAdditionalEntries += AddSpadeCostType;
             CostTypeCatalog.modHelper.getAdditionalEntries += AddDiamondCostType;
             CostTypeCatalog.modHelper.getAdditionalEntries += AddClubCostType;
+            CostTypeCatalog.modHelper.getAdditionalEntries += AddStarCostType;
             CostTypeCatalog.modHelper.getAdditionalEntries += AddWristbandCostType;
             CostTypeCatalog.modHelper.getAdditionalEntries += AddSampleCostType;
 
             // spawn g-young
             On.RoR2.CharacterBody.OnDeathStart += CharacterBody_OnDeathStart;
+
+            // t-virus revival
+            //On.RoR2.CharacterMaster.OnBodyDeath += CharacterMaster_OnBodyDeath;
+            //On.RoR2.CharacterMaster.RespawnExtraLife += CharacterMaster_RespawnExtraLife;
+            //On.RoR2.CharacterMaster.IsDeadAndOutOfLivesServer += CharacterMaster_IsDeadAndOutOfLivesServer;
+            //On.EntityStates.GenericCharacterDeath.OnEnter += GenericCharacterDeath_OnEnter;
+            IL.RoR2.HealthComponent.TakeDamage += TVirusDeathIL;
 
             // place chests
             On.RoR2.SceneDirector.Start += SceneDirector_Start;
@@ -3478,7 +3638,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             On.RoR2.CharacterBody.OnSkillActivated += CharacterBody_OnSkillActivated;
 
             // if i speak i am in trouble
-            //On.RoR2.UI.MainMenu.BaseMainMenuScreen.Awake += BaseMainMenuScreen_Awake;
+            if (Modules.Config.menuSFX.Value) On.RoR2.UI.MainMenu.BaseMainMenuScreen.Awake += BaseMainMenuScreen_Awake;
             On.RoR2.UI.MainMenu.BaseMainMenuScreen.Update += BaseMainMenuScreen_Update;
             // 🙈 🙉 🙊
 
@@ -3487,6 +3647,142 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             On.EntityStates.GlobalSkills.LunarNeedle.ChargeLunarSecondary.PlayChargeAnimation += PlayChargeLunarAnimation;
             On.EntityStates.GlobalSkills.LunarNeedle.ThrowLunarSecondary.PlayThrowAnimation += PlayThrowLunarAnimation;
             On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += PlayRuinAnimation;
+        }
+
+        private static void TVirusDeathIL(ILContext il)
+        {
+            ILCursor c = new ILCursor(il);
+
+            bool ILFound = c.TryGotoNext(MoveType.Before,
+                x => x.MatchLdloc(11),
+                x => x.MatchCallOrCallvirt<GlobalEventManager>(nameof(GlobalEventManager.ServerDamageDealt)),
+                x => x.MatchLdarg(0),
+                x => x.MatchCallOrCallvirt<HealthComponent>("get_alive")
+            );
+
+            c.Index += 3;
+
+            if (ILFound)
+            {
+                c.Emit(OpCodes.Ldarg_0);
+                c.EmitDelegate<Action<HealthComponent>>((hc) =>
+                {
+                    if (hc.health <= 0 && hc.body.HasBuff(Hunk.infectedBuff2))
+                    {
+                        if (hc.body.master)
+                        {
+                            TVirusMaster virus = hc.body.master.GetComponent<TVirusMaster>();
+                            if (virus && virus.revivalCount > 0)
+                            {
+                                virus.revivalCount--;
+                                hc.health = hc.fullHealth;
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        private static bool CharacterMaster_IsDeadAndOutOfLivesServer(On.RoR2.CharacterMaster.orig_IsDeadAndOutOfLivesServer orig, CharacterMaster self)
+        {
+            if (NetworkServer.active)
+            {
+                CharacterBody body = self.GetBody();
+                if (!body || !body.healthComponent.alive)
+                {
+                    if (self.inventory.GetItemCount(Hunk.tVirusRevival) >= 0) return false;
+                }
+            }
+
+            return orig(self);
+        }
+
+        private static void GenericCharacterDeath_OnEnter(On.EntityStates.GenericCharacterDeath.orig_OnEnter orig, EntityStates.GenericCharacterDeath self)
+        {
+            if (Hunk.virusObjectiveObjects2.Count > 0 && self.GetComponent<TVirusHandler>())
+            {
+                if (self.characterBody && self.characterBody.inventory && self.characterBody.inventory.GetItemCount(Hunk.tVirusRevival) > 0)
+                {
+                    if (self.modelLocator && self.modelLocator.modelTransform)
+                    {
+                        self.modelLocator.modelTransform.gameObject.AddComponent<DestroyOnTimer>().duration = 1f;
+                    }
+                }
+            }
+
+            orig(self);
+        }
+
+        private static void CharacterMaster_RespawnExtraLife(On.RoR2.CharacterMaster.orig_RespawnExtraLife orig, CharacterMaster self)
+        {
+            if (Hunk.virusObjectiveObjects2.Count > 0 && self.GetComponent<TVirusRevivalBehavior>())
+            {
+                Vector3 vector = self.deathFootPosition;
+                if (self.killedByUnsafeArea)
+                {
+                    vector = (TeleportHelper.FindSafeTeleportDestination(self.deathFootPosition, self.bodyPrefab.GetComponent<CharacterBody>(), RoR2Application.rng) ?? self.deathFootPosition);
+                }
+
+                Quaternion rot = Quaternion.Euler(0f, UnityEngine.Random.Range(0f, 360f), 0f);
+                if (self.bodyInstanceObject)
+                {
+                    var cd = self.bodyInstanceObject.GetComponent<CharacterDirection>();
+                    if (cd) rot = Quaternion.Euler(cd.forward);
+                }
+
+                self.Respawn(vector, rot);
+                self.GetBody().AddTimedBuff(RoR2Content.Buffs.Immune, 0.25f);
+
+                //GameObject gameObject = LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/HippoRezEffect");
+                if (self.bodyInstanceObject)
+                {
+                    foreach (EntityStateMachine entityStateMachine in self.bodyInstanceObject.GetComponents<EntityStateMachine>())
+                    {
+                        entityStateMachine.initialStateType = entityStateMachine.mainStateType;
+                    }
+                    /*if (gameObject)
+                    {
+                        EffectManager.SpawnEffect(gameObject, new EffectData
+                        {
+                            origin = vector,
+                            rotation = self.bodyInstanceObject.transform.rotation
+                        }, true);
+                    }*/
+                }
+
+                return;
+            }
+            orig(self);
+        }
+
+        private static void CharacterMaster_OnBodyDeath(On.RoR2.CharacterMaster.orig_OnBodyDeath orig, CharacterMaster self, CharacterBody body)
+        {
+            if (self && body)
+            {
+                if (Hunk.virusObjectiveObjects2.Count > 0)
+                {
+                    if (self.inventory && self.inventory.GetItemCount(Hunk.tVirusRevival) > 0)
+                    {
+                        self.lostBodyToDeath = true;
+                        self.deathFootPosition = body.footPosition;
+
+                        BaseAI[] array = self.aiComponents;
+                        for (int i = 0; i < array.Length; i++)
+                        {
+                            array[i].OnBodyDeath(body);
+                        }
+
+                        if (self.playerCharacterMasterController) self.playerCharacterMasterController.OnBodyDeath();
+
+                        self.ResetLifeStopwatch();
+                        self.onBodyDeath?.Invoke();
+
+                        self.gameObject.AddComponent<TVirusRevivalBehavior>().master = self;
+                    }
+                }
+            }
+
+            orig(self, body);
         }
 
         private static void PickupDropletController_OnCollisionEnter(On.RoR2.PickupDropletController.orig_OnCollisionEnter orig, PickupDropletController self, Collision collision)
@@ -3701,7 +3997,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
         private static void BaseMainMenuScreen_Awake(On.RoR2.UI.MainMenu.BaseMainMenuScreen.orig_Awake orig, RoR2.UI.MainMenu.BaseMainMenuScreen self)
         {
-            if (self) Util.PlaySound("sfx_hunk_virus_spawn", self.gameObject);
+            if (self) Util.PlaySound("sfx_hunk_retheme_global", self.gameObject);
             orig(self);
         }
 
@@ -3737,6 +4033,16 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                         });
                     }
 
+                    if (Hunk.virusObjectiveObjects2.Count > 0)
+                    {
+                        output.Add(new ObjectivePanelController.ObjectiveSourceDescriptor
+                        {
+                            source = master,
+                            master = master,
+                            objectiveType = typeof(Modules.Objectives.KillTVirus)
+                        });
+                    }
+
                     if (master.inventory.GetItemCount(Hunk.gVirusSample) > 0)
                     {
                         output.Add(new ObjectivePanelController.ObjectiveSourceDescriptor
@@ -3744,6 +4050,16 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                             source = master,
                             master = master,
                             objectiveType = typeof(Modules.Objectives.TurnInSample)
+                        });
+                    }
+
+                    if (master.inventory.GetItemCount(Hunk.tVirusSample) > 0)
+                    {
+                        output.Add(new ObjectivePanelController.ObjectiveSourceDescriptor
+                        {
+                            source = master,
+                            master = master,
+                            objectiveType = typeof(Modules.Objectives.TurnInTSample)
                         });
                     }
                 }
@@ -3805,9 +4121,20 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                                 if (tries >= 50)
                                 {
                                     valid = true;
-                                    if (characterBody.inventory.GetItemCount(Hunk.wristband) > 0) self.GetComponent<Terminal>().itemDef = RoR2Content.Items.Pearl;
+                                    if (characterBody.inventory.GetItemCount(Hunk.wristband) > 0)
+                                    {
+                                        if (characterBody.inventory.GetItemCount(Hunk.masterKeycard) > 0) self.GetComponent<Terminal>().itemDef = RoR2Content.Items.Pearl;
+                                        else self.GetComponent<Terminal>().itemDef = Hunk.masterKeycard;
+                                    }
                                     else self.GetComponent<Terminal>().itemDef = Hunk.wristband;
                                 }
+                            }
+
+                            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "goldshores") self.GetComponent<Terminal>().itemDef = Hunk.goldKeycard;
+
+                            if (Modules.Config.depositKeycards.Value)
+                            {
+                                characterBody.inventory.GiveItem(self.GetComponent<Terminal>().itemDef);
                             }
                         }
                     }
@@ -3898,6 +4225,49 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
         private static void HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
         {
+            if ((damageInfo.damageType & DamageType.ApplyMercExpose) > DamageType.Generic)
+            {
+                if (damageInfo.attacker && damageInfo.attacker.name.Contains("RobHunkBody"))
+                {
+                    if (self)
+                    {
+                        if (self.body)
+                        {
+                            self.body.AddTimedBuff(Hunk.mangledBuff, 5f);
+
+                            int count = self.body.GetBuffCount(Hunk.mangledBuff);
+                            if (count >= 6)
+                            {
+                                self.body.ClearTimedBuffs(Hunk.mangledBuff.buffIndex);
+
+                                // kaboom
+                                EffectManager.SpawnEffect(Modules.Assets.mangledExplosionEffect, new EffectData
+                                {
+                                    origin = self.body.corePosition,
+                                    rotation = Quaternion.identity,
+                                    scale = 1f
+                                }, true);
+
+                                self.TakeDamage(new DamageInfo
+                                {
+                                    attacker = damageInfo.attacker,
+                                    canRejectForce = false,
+                                    crit = false,
+                                    damage = damageInfo.attacker.GetComponent<CharacterBody>().damage * 21f,
+                                    damageColorIndex = DamageColorIndex.DeathMark,
+                                    damageType = DamageType.Stun1s,
+                                    force = Vector3.zero,
+                                    inflictor = damageInfo.attacker,
+                                    position = self.body.corePosition,
+                                    procChainMask = default(ProcChainMask),
+                                    procCoefficient = 0f
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+
             if ((damageInfo.damageType & DamageType.ClayGoo) > DamageType.Generic)
             {
                 if (damageInfo.attacker && damageInfo.attacker.name.Contains("RobHunkBody"))
@@ -4007,7 +4377,14 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                 {
                     self.GetComponent<PurchaseInteraction>().SetAvailable(true);
 
-                    PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(self.GetComponent<Terminal>().itemDef.itemIndex), self.transform.position + (Vector3.up * 0.85f), (self.transform.forward * 3f) + Vector3.up * 10f);
+                    if (Modules.Config.depositKeycards.Value)
+                    {
+
+                    }
+                    else
+                    {
+                        PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(self.GetComponent<Terminal>().itemDef.itemIndex), self.transform.position + (Vector3.up * 0.85f), (self.transform.forward * 3f) + Vector3.up * 10f);
+                    }
 
                     return;
                 }
@@ -4615,6 +4992,7 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                 blacklistedStageNames = new List<string>(splitString);
 
                 bool doSpawns = true;
+                bool validStage = true;
 
                 switch (currStageName)
                 {
@@ -4708,12 +5086,37 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
                         pos2 = new Vector3(113.6481f, 2.273259f, -149.9676f);
                         rot2 = Quaternion.Euler(0, 180, 3);
                         break;
+                    case "lakes":
+                        pos = new Vector3(-120.3369f, 1.2f, -32.24873f);
+                        rot = Quaternion.Euler(0f, 230f, 0f);
+                        pos2 = new Vector3(128.4f, 14f, -52.77487f);
+                        rot2 = Quaternion.Euler(5f, 107f, 357f);
+                        break;
+                    case "catacombs_DS1_Catacombs":
+                        pos = new Vector3(43.75f, 281.3f, -638.9667f);
+                        rot = Quaternion.Euler(0f, 0f, 0f);
+                        pos2 = new Vector3(98.62f, 177f, -264.2091f);
+                        rot2 = Quaternion.Euler(0f, 180f, 0f);
+                        break;
+                    case "slumberingsatellite":
+                        pos = new Vector3(-61.48913f, 89.4f, -20.67262f);
+                        rot = Quaternion.Euler(0f, 315f, 4f);
+                        pos2 = new Vector3(-64f, 89.25f, -18f);
+                        rot2 = Quaternion.Euler(0f, 130f, 0f);
+                        break;
+                    case "FBLScene":
+                        pos = new Vector3(192.4988f, 271.3f, 364.7507f);
+                        rot = Quaternion.Euler(-6.40330307f, 15f, 340f);
+                        pos2 = new Vector3(322.2951f, 231.8f, -114.0785f);
+                        rot2 = Quaternion.Euler(28f, 130f, 3f);
+                        break;
 
                     //WHY NOT???????????
                     // you were breaking out of the for loop, but the switch statement wasn't broken
                     // so the two random chests were still being spawned
                     // it's fixed but i'll leave this commented out- putting this back in is your call
                     default:
+                        validStage = false;
                         bool isBlacklisted = false;
                         foreach (string stage in blacklistedStageNames)
                         {
@@ -4775,11 +5178,11 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
                 if (NetworkServer.active && doSpawns)
                 {
-                    GameObject chest1 = Object.Instantiate(weaponChestPrefab, pos, rot);
-                    NetworkServer.Spawn(chest1);
-
-                    GameObject chest2 = Object.Instantiate(weaponChestPrefab, pos2, rot2);
-                    NetworkServer.Spawn(chest2);
+                    if (validStage)
+                    {
+                        NetworkServer.Spawn(GameObject.Instantiate(weaponChestPrefab, pos, rot));
+                        NetworkServer.Spawn(GameObject.Instantiate(weaponChestPrefab, pos2, rot2));
+                    }
 
                     if (hunkCount > 1)
                     {

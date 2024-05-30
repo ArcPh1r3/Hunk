@@ -40,6 +40,7 @@ namespace HunkMod.SkillStates.Hunk
             this.baseDuration = 1.1f;
             this.baseEarlyExitTime = 0.55f;
             this.attackRecoil = 5f / this.attackSpeedStat;
+            this.hitHopVelocity = 8f;
 
             this.attackStartTime = 0.265f;
             this.attackEndTime = 0.5f;
@@ -51,7 +52,7 @@ namespace HunkMod.SkillStates.Hunk
             this.hitSoundString = "";
             this.impactSound = Modules.Assets.knifeImpactSoundDef.index;
 
-            this.damageType = DamageType.ClayGoo;
+            this.damageType = DamageType.ApplyMercExpose | DamageType.ClayGoo;
 
             switch (this.swingIndex)
             {

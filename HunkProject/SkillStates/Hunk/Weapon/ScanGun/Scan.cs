@@ -21,7 +21,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.ScanGun
 
             this.weaponCases = MonoBehaviour.FindObjectsOfType<WeaponChest>();
 
-            float dist = 201f;
+            float dist = 126f;
             for (int i = 0; i < this.weaponCases.Length; i++)
             {
                 if (this.weaponCases[i] && this.weaponCases[i].alive)
@@ -33,9 +33,9 @@ namespace HunkMod.SkillStates.Hunk.Weapon.ScanGun
                     }
                 }
             }
-            this.duration = Util.Remap(dist, 0f, 200f, 0.15f, 1.4f);
+            this.duration = Util.Remap(dist, 0f, 125f, 0.125f, 1.7f);
 
-            if (dist <= 200f)
+            if (dist <= 125f)
             {
                 this.Fire();
             }

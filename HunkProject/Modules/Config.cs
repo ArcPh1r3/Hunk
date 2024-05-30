@@ -33,6 +33,8 @@ namespace HunkMod.Modules
         public static ConfigEntry<bool> loreAccurateWeskah;
         public static ConfigEntry<bool> originalAmmoPickups;
         public static ConfigEntry<bool> enableRollSnap;
+        public static ConfigEntry<bool> depositKeycards;
+        public static ConfigEntry<bool> menuSFX;
         public static ConfigEntry<bool> blacklistHunkItems;
         public static ConfigEntry<bool> overTheShoulderCamera;
         public static ConfigEntry<bool> overTheShoulderCamera2;
@@ -168,6 +170,18 @@ false,
 "Perfect Dodge Camera Snap",
 true,
 "Set to false to disable the camera snap when performing a Perfect Dodge.");
+
+            depositKeycards
+= Config.BindAndOptions("01 - General",
+"Deposit Keycards to Inventory",
+false,
+"Set to true to make Keycards directly enter your inventory instead of dropping as an item.");
+
+            menuSFX
+= Config.BindAndOptions("01 - General",
+"Main Menu SFX",
+false,
+"Set to true to play a sound cue when entering the Main Menu. I only use this for testing.", true);
 
             blacklistHunkItems
 = Config.BindAndOptions("01 - General",

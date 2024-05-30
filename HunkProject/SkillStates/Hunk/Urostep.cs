@@ -127,8 +127,6 @@ namespace HunkMod.SkillStates.Hunk
                     {
                         if (base.isAuthority)
                         {
-                            //Roll nextState = new Roll();
-
                             foreach (HurtBox i in h.hurtBoxGroup.hurtBoxes)
                             {
                                 if (i.isSniperTarget)
@@ -136,8 +134,6 @@ namespace HunkMod.SkillStates.Hunk
                                     this.hunk.targetHurtbox = i;
                                 }
                             }
-
-                            //outer.SetNextState(nextState);
                         }
                         return true;
                     }
@@ -160,8 +156,6 @@ namespace HunkMod.SkillStates.Hunk
                                 HealthComponent hc = pc.owner.GetComponent<HealthComponent>();
                                 if (hc) this.hunk.targetHurtbox = hc.body.mainHurtBox;
                             }
-                            //Roll nextState = new Roll();
-                            //outer.SetNextState(nextState);
                         }
                         return true;
                     }
@@ -172,11 +166,6 @@ namespace HunkMod.SkillStates.Hunk
             {
                 if (i && Vector3.Distance(i.transform.position, this.transform.position) <= this.checkRadius * 0.75f)
                 {
-                    if (base.isAuthority)
-                    {
-                        //Roll nextState = new Roll();
-                        //outer.SetNextState(nextState);
-                    }
                     return true;
                 }
             }
@@ -187,8 +176,7 @@ namespace HunkMod.SkillStates.Hunk
                 {
                     if (base.isAuthority)
                     {
-                        //Roll nextState = new Roll();
-                        //outer.SetNextState(nextState);
+                        if (i.characterBody) this.hunk.targetHurtbox = i.characterBody.mainHurtBox;
                     }
                     return true;
                 }

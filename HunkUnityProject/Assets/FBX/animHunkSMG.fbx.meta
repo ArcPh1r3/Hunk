@@ -219,6 +219,9 @@ ModelImporter:
   - first:
       74: 6504932581183508873
     second: Armature|CounterSuplex
+  - first:
+      74: 2541126873049022423
+    second: Armature|CounterBeetleSlam
   externalObjects: {}
   materials:
     materialImportMode: 1

@@ -289,14 +289,14 @@ namespace HunkMod.SkillStates.Hunk.Counter
 
             if (base.fixedAge >= 0.595f * this.duration && this.eyeInstance)
             {
-                EffectManager.SpawnEffect(Modules.Assets.bloodExplosionEffect, new EffectData
+                EffectManager.SpawnEffect(Modules.Assets.impEyeExplosionEffect, new EffectData
                 {
                     origin = this.eyeInstance.transform.position,
-                    scale = 0.25f,
+                    scale = 1f,
                     rotation = Quaternion.identity
                 }, false);
 
-                Util.PlaySound("sfx_hunk_blood_gurgle", this.gameObject);
+                Util.PlaySound("sfx_hunk_mangle", this.gameObject);
 
                 Destroy(this.eyeInstance);
             }

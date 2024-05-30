@@ -4,23 +4,40 @@ using HunkMod.SkillStates.BaseStates;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
+using RoR2.Skills;
 
 namespace HunkMod.SkillStates.Hunk
 {
     public class KnifeCounter : BaseMeleeAttack
     {
-        protected override string prop => "KnifeModel";
         private GameObject swingEffectInstance;
+        private GameObject knifeInstance;
+        private bool knifeHidden;
 
         public override void OnEnter()
         {
+            this.hunk = this.GetComponent<Modules.Components.HunkController>();
+
+            SkillDef knifeSkinDef = this.hunk.knifeSkin;
+            if (knifeSkinDef)
+            {
+                if (Modules.Survivors.Hunk.knifeSkins.ContainsKey(knifeSkinDef))
+                {
+                    this.prop = "";
+                    this.knifeInstance = this.CreateKnife(Modules.Survivors.Hunk.knifeSkins[knifeSkinDef]);
+                }
+                else
+                {
+                    // hidden blade is the only case for now.
+                    this.prop = "HiddenKnifeModel";
+                }
+            }
+
             this.hitboxName = "Knife";
 
-            this.swingIndex = Random.Range(0, 3);
-
-            this.damageCoefficient = 3.9f;
+            this.damageCoefficient = 8f;
             this.pushForce = 200f;
-            this.baseDuration = 1.1f;
+            this.baseDuration = 1.25f;
             this.baseEarlyExitTime = 0.55f;
             this.attackRecoil = 5f / this.attackSpeedStat;
 
@@ -58,6 +75,25 @@ namespace HunkMod.SkillStates.Hunk
                 this.outer.SetNextStateToMain();
                 return;
             }
+
+            if (!this.knifeHidden && this.stopwatch >= (0.85f * this.duration))
+            {
+                this.knifeHidden = true;
+                if (this.prop != "") this.FindModelChild(this.prop).gameObject.SetActive(false);
+                if (this.knifeInstance) Destroy(this.knifeInstance);
+            }
+        }
+
+        public override void OnExit()
+        {
+            if (!this.knifeHidden)
+            {
+                this.knifeHidden = true;
+                if (this.prop != "") this.FindModelChild(this.prop).gameObject.SetActive(false);
+                if (this.knifeInstance) Destroy(this.knifeInstance);
+            }
+
+            base.OnExit();
         }
 
         protected override void FireAttack()
@@ -94,11 +130,25 @@ namespace HunkMod.SkillStates.Hunk
         {
             base.TriggerHitStop();
 
+            this.hunk.TriggerCounter();
+
             if (this.swingEffectInstance)
             {
                 ScaleParticleSystemDuration fuck = this.swingEffectInstance.GetComponent<ScaleParticleSystemDuration>();
                 if (fuck) fuck.newDuration = 20f;
             }
+        }
+
+        private GameObject CreateKnife(GameObject modelPrefab)
+        {
+            GameObject newKnife = GameObject.Instantiate(modelPrefab);
+
+            newKnife.transform.parent = this.FindModelChild("KnifeBase");
+            newKnife.transform.localPosition = Vector3.zero;
+            newKnife.transform.localRotation = Quaternion.identity;
+            newKnife.transform.localScale = Vector3.one;
+
+            return newKnife;
         }
 
         protected override void ClearHitStop()

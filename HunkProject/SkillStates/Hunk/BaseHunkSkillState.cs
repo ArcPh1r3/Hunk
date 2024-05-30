@@ -17,6 +17,14 @@ namespace HunkMod.SkillStates.Hunk
             }
         }
 
+        protected virtual bool normalizeModel
+        {
+            get
+            {
+                return false;
+            }
+        }
+
         public virtual void AddRecoil2(float x1, float x2, float y1, float y2)
         {
             //if (this.hunk.lockOnTimer > 0f) return;
@@ -58,6 +66,7 @@ namespace HunkMod.SkillStates.Hunk
             if (!this.turningAllowed) this.characterDirection.turnSpeed = 0f;
             if (this.hideGun) this.GetModelChildLocator().FindChild("Weapon").gameObject.SetActive(false);
             if (!String.IsNullOrEmpty(this.prop)) this.GetModelChildLocator().FindChild(this.prop).gameObject.SetActive(true);
+            if (this.normalizeModel) this.modelLocator.normalizeToFloor = true;
         }
 
         public override void FixedUpdate()
@@ -78,6 +87,7 @@ namespace HunkMod.SkillStates.Hunk
             if (!this.turningAllowed) this.characterDirection.turnSpeed = this.hunk.baseTurnSpeed;
             if (this.hideGun) this.GetModelChildLocator().FindChild("Weapon").gameObject.SetActive(true);
             if (!String.IsNullOrEmpty(this.prop)) this.GetModelChildLocator().FindChild(this.prop).gameObject.SetActive(false);
+            if (this.normalizeModel) this.modelLocator.normalizeToFloor = false;
         }
     }
 }

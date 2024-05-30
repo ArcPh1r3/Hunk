@@ -7,6 +7,7 @@ namespace HunkMod.SkillStates.Hunk
 {
     public class PerfectLanding : BaseHunkSkillState
     {
+        protected override bool normalizeModel => true;
         protected Vector3 slipVector = Vector3.zero;
         public float duration = 0.8f;
 

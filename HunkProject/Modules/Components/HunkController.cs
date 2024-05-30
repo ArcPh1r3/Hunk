@@ -18,6 +18,8 @@ namespace HunkMod.Modules.Components
         public ushort syncedWeapon;
         public NetworkInstanceId netId;
 
+        public float counterTimer;
+
         public bool spawnedATM = false;
         public HunkPassive passive;
 
@@ -119,6 +121,16 @@ namespace HunkMod.Modules.Components
 
         public float iFrames;
 
+        private Inventory inventory
+        {
+            get
+            {
+                if (this.characterBody && this.characterBody.inventory) return this.characterBody.inventory;
+                if (this.weaponTracker && this.weaponTracker.GetComponent<CharacterMaster>()) return this.weaponTracker.GetComponent<CharacterMaster>().inventory;
+                return null;
+            }
+        }
+
         private void Awake()
         {
             this.characterBody = this.GetComponent<CharacterBody>();
@@ -202,7 +214,8 @@ namespace HunkMod.Modules.Components
 
         private void TeleporterInteraction_onTeleporterFinishGlobal(TeleporterInteraction obj)
         {
-            Action<bool> action = onStageCompleted;
+            onStageCompleted(this.weaponTracker.usedAmmoThisStage);
+            Action<bool> action = new Action<bool>(onStageCompleted);
             if (action == null) return;
             action(this.weaponTracker.usedAmmoThisStage);
         }
@@ -241,9 +254,9 @@ namespace HunkMod.Modules.Components
 
         private void SetInventoryHook()
         {
-            if (this.characterBody && this.characterBody.master && this.characterBody.master.inventory)
+            if (this.inventory)
             {
-                this.characterBody.master.inventory.onInventoryChanged += this.Inventory_onInventoryChanged;
+                this.inventory.onInventoryChanged += this.Inventory_onInventoryChanged;
             }
 
             this.CheckForNeedler();
@@ -293,9 +306,9 @@ namespace HunkMod.Modules.Components
 
         private void CheckForHooks()
         {
-            if (this.characterBody && this.characterBody.inventory && this.characterBody.inventory.GetItemCount(RoR2Content.Items.LunarSecondaryReplacement) > 0)
+            if (this.inventory && this.inventory.GetItemCount(RoR2Content.Items.LunarSecondaryReplacement) > 0)
             {
-                this.EquipWeapon(this.weaponTracker.equippedIndex);
+                this.EquipWeapon(this.weaponTracker.equippedIndex, false);
             }
         }
 
@@ -303,25 +316,40 @@ namespace HunkMod.Modules.Components
         {
             this.weaponTracker.SwapToLastWeapon();
             this.EquipWeapon(this.weaponTracker.equippedIndex);
+
+            if (this.inventory)
+            {
+                this.ammo += this.inventory.GetItemCount(DLC1Content.Items.EquipmentMagazineVoid);
+            }
         }
 
         public void CycleWeapon()
         {
             this.weaponTracker.CycleWeapon();
             this.EquipWeapon(this.weaponTracker.equippedIndex);
+
+            if (this.inventory)
+            {
+                this.ammo += this.inventory.GetItemCount(DLC1Content.Items.EquipmentMagazineVoid);
+            }
         }
 
         public void SwapToWeapon(int index)
         {
             this.weaponTracker.SwapToWeapon(index);
             this.EquipWeapon(this.weaponTracker.equippedIndex);
+
+            if (this.inventory)
+            {
+                this.ammo += this.inventory.GetItemCount(DLC1Content.Items.EquipmentMagazineVoid);
+            }
         }
 
         private void Inventory_onInventoryChanged()
         {
             if (this.weaponDef == Modules.Weapons.SMG.instance.weaponDef)
             {
-                if (this.characterBody.inventory && this.characterBody.inventory.GetItemCount(Modules.Weapons.SMG.extendedMag) > 0)
+                if (this.inventory && this.inventory.GetItemCount(Modules.Weapons.SMG.extendedMag) > 0)
                 {
                     this.maxAmmo = 60;
                 }
@@ -329,13 +357,13 @@ namespace HunkMod.Modules.Components
 
             if (onInventoryUpdate != null)
             {
-                onInventoryUpdate(this.characterBody.inventory);
+                onInventoryUpdate(this.inventory);
             }
 
             this.CheckForNeedler();
             this.CheckForHooks();
 
-            if (this.characterBody.inventory.GetItemCount(DLC1Content.Items.MissileVoid) > 0)
+            if (this.inventory.GetItemCount(DLC1Content.Items.MissileVoid) > 0)
             {
                 this.shieldIsVoid = true;
             }
@@ -377,6 +405,7 @@ namespace HunkMod.Modules.Components
             this.ammoKillTimer -= Time.fixedDeltaTime;
             this.iFrames -= Time.fixedDeltaTime;
             this.flamethrowerLifetime -= Time.fixedDeltaTime;
+            this.counterTimer -= Time.fixedDeltaTime;
 
             if (this.characterBody)
             {
@@ -713,17 +742,14 @@ namespace HunkMod.Modules.Components
             int diff = this.maxAmmo - this.ammo;
             int magSize = this.weaponDef.magSize;
 
-            /*if (this.characterBody.master)
+            if (this.inventory)
             {
-                if (this.characterBody.master.inventory)
-                {
-                    magSize *= 1 + this.characterBody.master.inventory.GetItemCount(RoR2Content.Items.LunarBadLuck);
-                }
-            }*/
+                magSize *= 1 + this.inventory.GetItemCount(RoR2Content.Items.LunarBadLuck);
+            }
 
             if (this.weaponDef == Modules.Weapons.SMG.instance.weaponDef)
             {
-                if (this.characterBody.inventory && this.characterBody.inventory.GetItemCount(Modules.Weapons.SMG.extendedMag) > 0)
+                if (this.inventory && this.inventory.GetItemCount(Modules.Weapons.SMG.extendedMag) > 0)
                 {
                     magSize = 60;
                 }
@@ -740,12 +766,9 @@ namespace HunkMod.Modules.Components
                 this.ammo = this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].currentAmmo;
             }
 
-            if (this.characterBody.master)
+            if (this.inventory)
             {
-                if (this.characterBody.master.inventory)
-                {
-                    this.ammo += this.characterBody.master.inventory.GetItemCount(RoR2Content.Items.SecondarySkillMagazine);
-                }
+                this.ammo += this.inventory.GetItemCount(RoR2Content.Items.SecondarySkillMagazine);
             }
 
             this.weaponTracker.weaponData[this.weaponTracker.equippedIndex].totalAmmo -= diff;
@@ -754,12 +777,9 @@ namespace HunkMod.Modules.Components
 
         public void FinishRoundReload()
         {
-            if (this.characterBody.master)
+            if (this.inventory)
             {
-                if (this.characterBody.master.inventory)
-                {
-                    this.ammo += this.characterBody.master.inventory.GetItemCount(RoR2Content.Items.SecondarySkillMagazine);
-                }
+                this.ammo += this.inventory.GetItemCount(RoR2Content.Items.SecondarySkillMagazine);
             }
         }
 
@@ -815,24 +835,33 @@ namespace HunkMod.Modules.Components
             }
         }
 
-        public void EquipWeapon(int index)
+        public void EquipWeapon(int index, bool setAmmo = true)
         {
             this.weaponTracker.equippedIndex = index;
 
             this.weaponDef = this.weaponTracker.weaponData[index].weaponDef;
 
             // ammo
-            this.maxAmmo = this.weaponDef.magSize;
-            this.ammo = this.weaponTracker.weaponData[index].currentAmmo;
-
-            if (this.weaponDef == Modules.Weapons.SMG.instance.weaponDef)
+            if (setAmmo)
             {
-                if (this.weaponTracker.weaponData[index].weaponDef == Modules.Weapons.SMG.instance.weaponDef)
+                this.maxAmmo = this.weaponDef.magSize;
+                this.ammo = this.weaponTracker.weaponData[index].currentAmmo;
+
+                if (this.weaponDef == Modules.Weapons.SMG.instance.weaponDef)
                 {
-                    if (this.characterBody.inventory && this.characterBody.inventory.GetItemCount(Modules.Weapons.SMG.extendedMag) > 0)
+                    if (this.weaponTracker.weaponData[index].weaponDef == Modules.Weapons.SMG.instance.weaponDef)
                     {
-                        this.maxAmmo = 60;
+                        if (this.inventory && this.inventory.GetItemCount(Modules.Weapons.SMG.extendedMag) > 0)
+                        {
+                            this.maxAmmo = 60;
+                        }
                     }
+                }
+
+
+                if (this.inventory)
+                {
+                    this.maxAmmo *= 1 + this.inventory.GetItemCount(RoR2Content.Items.LunarBadLuck);
                 }
             }
 
@@ -845,7 +874,7 @@ namespace HunkMod.Modules.Components
                 GameObject modelPrefab = this.weaponDef.modelPrefab;
                 // #swuff
                 // if your current skin has an override just swap the prefab out here and done
-                if (this.characterBody && this.characterBody.inventory && this.characterBody.inventory.GetItemCount(RoR2Content.Items.LunarSecondaryReplacement) > 0)
+                if (this.inventory && this.inventory.GetItemCount(RoR2Content.Items.LunarSecondaryReplacement) > 0)
                 {
                     // heheheha
                 }
@@ -886,7 +915,7 @@ namespace HunkMod.Modules.Components
             this.ToggleLayer("Gesture (Railgun)", false);
             this.ToggleLayer("FullBody (Railgun)", false);
 
-            if (this.characterBody && this.characterBody.inventory && this.characterBody.inventory.GetItemCount(RoR2Content.Items.LunarSecondaryReplacement) > 0)
+            if (this.inventory && this.inventory.GetItemCount(RoR2Content.Items.LunarSecondaryReplacement) > 0)
             {
                 this.ToggleLayer("Body (Pistol2)", true);
                 this.ToggleLayer("Gesture (Pistol2)", true);
@@ -1092,9 +1121,9 @@ namespace HunkMod.Modules.Components
                 }
             }
 
-            if (this.characterBody && this.characterBody.master && this.characterBody.master.inventory)
+            if (this.inventory)
             {
-                this.characterBody.master.inventory.onInventoryChanged -= this.Inventory_onInventoryChanged;
+                this.inventory.onInventoryChanged -= this.Inventory_onInventoryChanged;
             }
 
             if (this.speedLines) Destroy(this.speedLines.gameObject);
@@ -1111,9 +1140,9 @@ namespace HunkMod.Modules.Components
             // change this to a weighted selection, so stronger weapons are less likely to get ammo
 
             // alien head
-            if (this.characterBody && this.characterBody.inventory)
+            if (this.inventory)
             {
-                int alienHeadCount = this.characterBody.inventory.GetItemCount(RoR2Content.Items.AlienHead);
+                int alienHeadCount = this.inventory.GetItemCount(RoR2Content.Items.AlienHead);
                 if (alienHeadCount > 0)
                 {
                     for (int i = 0; i < alienHeadCount; i++)
@@ -1154,25 +1183,25 @@ namespace HunkMod.Modules.Components
             if (this.passive.isFullArsenal) return;
 
             // alien head
-            if (this.characterBody && this.characterBody.inventory)
+            if (this.inventory)
             {
                 float baseMult = 1.25f;
                 if (MainPlugin.greenAlienHeadInstalled) baseMult = 1.1f;
 
-                int alienHeadCount = this.characterBody.inventory.GetItemCount(RoR2Content.Items.AlienHead);
+                int alienHeadCount = this.inventory.GetItemCount(RoR2Content.Items.AlienHead);
                 if (alienHeadCount > 0)
                 {
                     for (int i = 0; i < alienHeadCount; i++)
                     {
                         if (MainPlugin.greenAlienHeadInstalled)
                         {
-                            multiplier *= baseMult;
-                            baseMult *= 1.1f - 1f;
+                            multiplier += baseMult;
+                            baseMult *= 0.15f;
                         }
                         else
                         {
-                            multiplier *= baseMult;
-                            baseMult *= 1.25f - 1f;
+                            multiplier += baseMult;
+                            baseMult *= 0.25f;
                         }
                     }
                 }
@@ -1182,7 +1211,7 @@ namespace HunkMod.Modules.Components
 
             if (this.weaponTracker.weaponData[index].weaponDef == Modules.Weapons.SMG.instance.weaponDef)
             {
-                if (this.characterBody.inventory && this.characterBody.inventory.GetItemCount(Modules.Weapons.SMG.extendedMag) > 0)
+                if (this.inventory && this.inventory.GetItemCount(Modules.Weapons.SMG.extendedMag) > 0)
                 {
                     magSize = 90;
                 }

@@ -16,7 +16,7 @@ namespace HunkMod.Modules
             desc = desc + "< ! > Securing the G-Virus will net you a keycard, allowing you to access weapon cases on each stage." + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > Quickstep near an attacking enemy or projectile to Dodge, then perform a counter with Primary." + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > Ammo is scarce, but can be found in opened chests. Secondary stocks and cooldown reduction also affect ammo." + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > Find the extraction point. ASAP." + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > This is war. Survival is your responsibility." + Environment.NewLine + Environment.NewLine;
 
             string outro = "..and so he left, fine.";
             string outroFailure = "..and so he vanished, human unit now killed.";
@@ -60,7 +60,7 @@ namespace HunkMod.Modules
 
             #region Primary
             LanguageAPI.Add(prefix + "PRIMARY_KNIFE_NAME", "Combat Knife");
-            LanguageAPI.Add(prefix + "PRIMARY_KNIFE_DESCRIPTION", $"<style=cIsUtility>Looting.</style> <style=cIsDamage>Slash</style> close-range combatants for <style=cIsDamage>{100f * 3.5}% damage</style>.");
+            LanguageAPI.Add(prefix + "PRIMARY_KNIFE_DESCRIPTION", $"<style=cIsUtility>Looting.</style> <style=cIsDamage>Slash</style> close-range combatants for <style=cIsDamage>{100f * 3.5}% damage</style>, inflicting <style=cIsHealth>Mangled</style>.");
             
             LanguageAPI.Add(prefix + "SHOOT_SCANNER_NAME", "Scan");
             LanguageAPI.Add(prefix + "SHOOT_SCANNER_DESCRIPTION", "Scan for <style=cIsUtility>unopened weapon cases</style>.");
@@ -105,7 +105,7 @@ namespace HunkMod.Modules
             LanguageAPI.Add(prefix + "SHOOT_SLUGGER_DESCRIPTION", "Shoot for <style=cIsDamage>1800% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
 
             LanguageAPI.Add(prefix + "SHOOT_SMG_NAME", "Fire");
-            LanguageAPI.Add(prefix + "SHOOT_SMG_DESCRIPTION", "Shoot for <style=cIsDamage>280% damage</style>. <style=cIsUtility>25% headshot bonus.</style>");
+            LanguageAPI.Add(prefix + "SHOOT_SMG_DESCRIPTION", "Shoot for <style=cIsDamage>300% damage</style>. <style=cIsUtility>25% headshot bonus.</style>");
 
             LanguageAPI.Add(prefix + "SHOOT_AR_NAME", "Fire");
             LanguageAPI.Add(prefix + "SHOOT_AR_DESCRIPTION", "Shoot for <style=cIsDamage>385% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
@@ -196,7 +196,10 @@ namespace HunkMod.Modules
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_CLUB_KEYCARD_NAME", "U.C. Keycard (Club)");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_HEART_KEYCARD_NAME", "U.C. Keycard (Heart)");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_DIAMOND_KEYCARD_NAME", "U.C. Keycard (Diamond)");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_GOLD_KEYCARD_NAME", "U.C. Keycard (Star)");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_MASTER_KEYCARD_NAME", "U.C. Keycard (Master)");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYCARD_DESC", "Used to open <color=#" + Helpers.umbrellaHex + ">Umbrella Corporation" + Helpers.colorSuffix + " <style=cIsUtility>weapon cases</style>.");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYCARD_MASTER_DESC", "Used to open <color=#" + Helpers.umbrellaHex + ">Umbrella Corporation" + Helpers.colorSuffix + " <style=cIsUtility>weapon cases</style>. <style=cIsUtility>Can open all cases by itself.</style>");
 
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_WRISTBAND_NAME", "I.D. Wristband");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_WRISTBAND_DESC", "An electronic key for use in <color=#" + Helpers.umbrellaHex + ">Umbrella Corporation" + Helpers.colorSuffix + " facilities.");
@@ -206,19 +209,23 @@ namespace HunkMod.Modules
 
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_HEARTCHEST_NAME", "Heart-Key Weapon Case");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_HEARTCHEST_CONTEXT", "Open Heart-Key Weapon Case");
-            LanguageAPI.Add(MainPlugin.developerPrefix + "_HEARTCOST", "Heart Key Card");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HEARTCOST", "Heart Keycard");
 
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_SPADECHEST_NAME", "Spade-Key Weapon Case");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_SPADECHEST_CONTEXT", "Open Spade-Key Weapon Case");
-            LanguageAPI.Add(MainPlugin.developerPrefix + "_SPADECOST", "Spade Key Card");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_SPADECOST", "Spade Keycard");
 
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_CLUBCHEST_NAME", "Club-Key Weapon Case");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_CLUBCHEST_CONTEXT", "Open Club-Key Weapon Case");
-            LanguageAPI.Add(MainPlugin.developerPrefix + "_CLUBCOST", "Club Key Card");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_CLUBCOST", "Club Keycard");
 
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_DIAMONDCHEST_NAME", "Diamond-Key Weapon Case");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_DIAMONDCHEST_CONTEXT", "Open Diamond-Key Weapon Case");
-            LanguageAPI.Add(MainPlugin.developerPrefix + "_DIAMONDCOST", "Diamond Key Card");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_DIAMONDCOST", "Diamond Keycard");
+
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_STARCHEST_NAME", "Star-Key Weapon Case");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_STARCHEST_CONTEXT", "Open Star-Key Weapon Case");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_STARCOST", "Star Keycard");
 
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_WRISTBANDCHEST_NAME", "Special Weapon Case");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_WRISTBANDCHEST_CONTEXT", "Open Special Weapon Case");
@@ -235,10 +242,12 @@ namespace HunkMod.Modules
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_AMMO_CONTEXT", "Rummage for ammo");
 
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYWORD_LOOTING", "<style=cKeywordName>Looting</style><style=cSub>Enemies slain with this skill have a small chance to drop ammo.");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYWORD_MANGLED", "<style=cKeywordName>Mangled</style><style=cSub>Upon reaching 6 stacks of this debuff, enemies suffer an instant <style=cIsDamage>2100% damage</style>.");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYWORD_PERFECTDODGE", "<style=cKeywordName>Perfect Dodge</style><style=cSub>Refund cooldown and become briefly invulnerable. Allows you to perform a Counterattack.");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYWORD_COUNTER", "<style=cKeywordName>Counterattack</style><style=cSub>Pressing primary performs a lethal counterattack on a nearby enemy.");
 
-            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYWORD_VIRUS", "<style=cKeywordName>G-Virus</style><style=cSub>Every stage, a random monster becomes <color=#" + Helpers.voidItemHex + ">Infected" + Helpers.colorSuffix + ". It mutates, <style=cIsHealth>growing stronger over time</style>, and killing it drops a <color=#" + Helpers.yellowItemHex + ">G-Virus Sample" + Helpers.colorSuffix + ".");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYWORD_GVIRUS", "<style=cKeywordName>G-Virus</style><style=cSub>Once every stage, a random monster becomes <color=#" + Helpers.voidItemHex + ">Infected" + Helpers.colorSuffix + ". It mutates, <style=cIsHealth>growing stronger over time</style>, and killing it drops a <color=#" + Helpers.yellowItemHex + ">G-Virus Sample" + Helpers.colorSuffix + ".");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYWORD_TVIRUS", "<style=cKeywordName>T-Virus</style><style=cSub>Once every stage, every monster becomes <color=#" + Helpers.lunarItemHex + ">Infected" + Helpers.colorSuffix + ". This <style=cIsHealth>revives</style> them one time, and killing all of them nets you a <color=#" + Helpers.yellowItemHex + ">T-Virus Sample" + Helpers.colorSuffix + ".");
         }
     }
 }

@@ -26,6 +26,7 @@ namespace HunkMod.Modules.Components
             Club,
             Heart,
             Diamond,
+            Star,
             Wristband
         }
         private ChestType chestType;
@@ -140,10 +141,11 @@ namespace HunkMod.Modules.Components
 
             int p = random.Next(1, 5);
 
-            if (Run.instance.stageClearCount <= 0 || UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "goldshores") p = 2;
+            if (Run.instance.stageClearCount <= 0) p = 2;
             if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "moon") p = 0;
             if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "moon2") p = 0;
             if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "voidraid") p = 5;
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "goldshores") p = 6;
 
             new SyncCaseItem(identity.netId, (int)this.itemDef.itemIndex, p).Send(NetworkDestination.Clients);
         }
@@ -202,7 +204,6 @@ namespace HunkMod.Modules.Components
 
                 if (sceneName == "moon") purchaseInteraction.costType = CostTypeIndex.None;
                 if (sceneName == "moon2") purchaseInteraction.costType = CostTypeIndex.None;
-                if (sceneName == "voidraid") purchaseInteraction.costType = CostTypeIndex.None;
             }
 
             gunPickup.Init();
@@ -236,6 +237,9 @@ namespace HunkMod.Modules.Components
                 case 5:
                     chestType = ChestType.Wristband;
                     break;
+                case 6:
+                    chestType = ChestType.Star;
+                    break;
             }
             #endregion
 
@@ -256,6 +260,7 @@ namespace HunkMod.Modules.Components
                         h.targetRenderer.transform.parent.Find("Lock/Club").gameObject.SetActive(false);
                         h.targetRenderer.transform.parent.Find("Lock/Heart").gameObject.SetActive(true);
                         h.targetRenderer.transform.parent.Find("Lock/Diamond").gameObject.SetActive(false);
+                        h.targetRenderer.transform.parent.Find("Lock/Star").gameObject.SetActive(false);
                         if (pingInfoProvider != null)
                             pingInfoProvider.pingIconOverride = Assets.mainAssetBundle.LoadAsset<Sprite>("texIconHeart");
                         break;
@@ -272,6 +277,7 @@ namespace HunkMod.Modules.Components
                         h.targetRenderer.transform.parent.Find("Lock/Club").gameObject.SetActive(false);
                         h.targetRenderer.transform.parent.Find("Lock/Heart").gameObject.SetActive(false);
                         h.targetRenderer.transform.parent.Find("Lock/Diamond").gameObject.SetActive(false);
+                        h.targetRenderer.transform.parent.Find("Lock/Star").gameObject.SetActive(false);
                         if (pingInfoProvider != null)
                             pingInfoProvider.pingIconOverride = Assets.mainAssetBundle.LoadAsset<Sprite>("texIconSpade");
                         break;
@@ -288,6 +294,7 @@ namespace HunkMod.Modules.Components
                         h.targetRenderer.transform.parent.Find("Lock/Club").gameObject.SetActive(false);
                         h.targetRenderer.transform.parent.Find("Lock/Heart").gameObject.SetActive(false);
                         h.targetRenderer.transform.parent.Find("Lock/Diamond").gameObject.SetActive(true);
+                        h.targetRenderer.transform.parent.Find("Lock/Star").gameObject.SetActive(false);
                         if (pingInfoProvider != null)
                             pingInfoProvider.pingIconOverride = Assets.mainAssetBundle.LoadAsset<Sprite>("texIconDiamond");
                         break;
@@ -304,8 +311,26 @@ namespace HunkMod.Modules.Components
                         h.targetRenderer.transform.parent.Find("Lock/Club").gameObject.SetActive(true);
                         h.targetRenderer.transform.parent.Find("Lock/Heart").gameObject.SetActive(false);
                         h.targetRenderer.transform.parent.Find("Lock/Diamond").gameObject.SetActive(false);
+                        h.targetRenderer.transform.parent.Find("Lock/Star").gameObject.SetActive(false);
                         if (pingInfoProvider != null)
                             pingInfoProvider.pingIconOverride = Assets.mainAssetBundle.LoadAsset<Sprite>("texIconClub");
+                        break;
+                    case ChestType.Star:
+                        purchaseInteraction.costType = (CostTypeIndex)Survivors.Hunk.starCostTypeIndex;
+                        purchaseInteraction.cost = 1;
+                        //purchaseInteraction.displayNameToken = MainPlugin.developerPrefix + "_HUNK_CLUBCHEST_NAME";
+                        //purchaseInteraction.contextToken = MainPlugin.developerPrefix + "_HUNK_CLUBCHEST_CONTEXT";
+                        if (genericDisplayNameProvider != null)
+                        {
+                            genericDisplayNameProvider.displayToken = MainPlugin.developerPrefix + "_HUNK_STARCHEST_NAME";
+                        }
+                        h.targetRenderer.transform.parent.Find("Lock/Spade").gameObject.SetActive(false);
+                        h.targetRenderer.transform.parent.Find("Lock/Club").gameObject.SetActive(false);
+                        h.targetRenderer.transform.parent.Find("Lock/Heart").gameObject.SetActive(false);
+                        h.targetRenderer.transform.parent.Find("Lock/Diamond").gameObject.SetActive(false);
+                        h.targetRenderer.transform.parent.Find("Lock/Star").gameObject.SetActive(true);
+                        if (pingInfoProvider != null)
+                            pingInfoProvider.pingIconOverride = Assets.mainAssetBundle.LoadAsset<Sprite>("texIconStar");
                         break;
                     case ChestType.Wristband:
                         purchaseInteraction.costType = (CostTypeIndex)Survivors.Hunk.wristbandCostTypeIndex;
@@ -320,6 +345,7 @@ namespace HunkMod.Modules.Components
                         h.targetRenderer.transform.parent.Find("Lock/Club").gameObject.SetActive(false);
                         h.targetRenderer.transform.parent.Find("Lock/Heart").gameObject.SetActive(false);
                         h.targetRenderer.transform.parent.Find("Lock/Diamond").gameObject.SetActive(false);
+                        h.targetRenderer.transform.parent.Find("Lock/Star").gameObject.SetActive(false);
                         if (pingInfoProvider != null)
                             pingInfoProvider.pingIconOverride = Assets.mainAssetBundle.LoadAsset<Sprite>("texIconTerminal");
                         break;

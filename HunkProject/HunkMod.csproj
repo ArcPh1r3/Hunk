@@ -16,6 +16,7 @@
   <ItemGroup>
 	  <None Remove=".gitignore" />
 	  <None Remove="hunk_bank.bnk" />
+	  <None Remove="hunk_footsteps.bnk" />
 	  <None Remove="nuget.config" />
     <None Remove="driver_bank.bnk" />
     <None Remove="mechorilla" />
@@ -28,6 +29,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="hunk_bank.bnk" />
+    <EmbeddedResource Include="hunk_footsteps.bnk" />
     <EmbeddedResource Include="robhunk" />
   </ItemGroup>
 

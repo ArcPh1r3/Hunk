@@ -85,6 +85,8 @@ namespace HunkMod.Modules.Components
                 }
             }
 
+            if (this.hunk.counterTimer > 0f) maxOffset = 0f;
+
             if (this.offset < maxOffset) this.checkStopwatch = 1.5f;
             else this.checkStopwatch = 0.5f;
 

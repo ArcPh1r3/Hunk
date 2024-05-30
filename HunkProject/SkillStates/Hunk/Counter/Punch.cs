@@ -106,6 +106,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
             base.TriggerHitStop();
 
             this.hunk.TriggerCounter();
+            this.hunk.iFrames = this.hitStopDuration * 2f;
 
             if (NetworkServer.active) this.characterBody.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, this.hitStopDuration);
 

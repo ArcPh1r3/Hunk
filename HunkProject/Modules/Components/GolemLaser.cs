@@ -1,16 +1,24 @@
 ﻿using UnityEngine;
+using RoR2;
 
 namespace HunkMod.Modules.Components
 {
     public class GolemLaser : MonoBehaviour
     {
         public Vector3 endPoint { get; private set; }
+        public CharacterBody characterBody { get; private set; }
 
         private LineRenderer lineRenderer;
 
         private void Awake()
         {
             this.lineRenderer = this.GetComponent<LineRenderer>();
+        }
+
+        private void Start()
+        {
+            CharacterModel characterModel = this.transform.root.GetComponent<CharacterModel>();
+            if (characterModel && characterModel.body) this.characterBody = characterModel.body;
         }
         
         private void Update()

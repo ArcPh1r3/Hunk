@@ -17,6 +17,8 @@ namespace HunkMod.Modules.Misc
             int cost = context.cost;
             int itemCount = inv.GetItemCount(Modules.Survivors.Hunk.heartKeycard);
 
+            if (inv.GetItemCount(Modules.Survivors.Hunk.masterKeycard) > 0) return true;
+
             if (itemCount >= cost)
                 return true;
             else

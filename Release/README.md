@@ -71,6 +71,10 @@ Alien Head - Increased ammo on pickup, same scaling and nerfed if Green Alien He
 
 Brainstalks - Shots don't consume ammo while active
 
+Lysate Cell - +1 fake bullet every time you swap to a new gun
+
+Purity - Double magazine capacity (consumption remains the same)
+
 
 FAKE BULLETS can be fired without consuming any actual ammo, but are all lost when you reload or swap weapons
 
@@ -127,6 +131,29 @@ Big thanks to everyone in the community for all the valuable feedback and critic
 ___
 
 ## Changelog
+
+`1.3.3`
+- LE 5 damage: 280% > 300%, fire rate slightly increased, spread slightly reduced - i am just biased i like this gun
+- Primary hit hop height greatly increased
+- Mangled damage: 800% > 2100% - just wasn't anywhere near rewarding enough for the required effort
+- Fixed Mangled only proccing once per enemy
+- Fixed Perfect Dodges on Golem lasers not properly identifying the attacker
+
+`1.3.2`
+- Added new debuff: Mangled - each knife hit adds one stack, upon reaching 6 stacks the enemy suffers an instant 800% damage
+- Added custom interactions for Lysate Cell and Purity
+- Added weapon case placements for Verdant Falls and the mod stages Fogbound Lagoon, Catacombs and Slumbering Satellite
+- Added frontal counterattack for Beetle Guards
+- Alloy Vultures can now be suplexed
+- Countering Blind Vermin from behind is also a suplex now
+- Generic knife counter (hold m1 while lunging without running into anything) damage boosted to 800%, uses the proper knife model and now counts as a counterattack
+- Greatly extended the i-frames on counter kicks and punches to make them less of a flight risk
+- Made EMF Scanner more precise
+- Fixed extra weapon cases spawning on stages without preset positions
+- Fixed Alien Head scaling negatively after getting more than one, resulting in 0 ammo from each pickup..
+
+`1.3.1`
+- Added a config option to deposit keycards straight to your inventory as a temporary fix for some edge case mod incompats
 
 `1.3.0`
 - Added tool: EMF Scanner - acts as a weapon case detector to make finding them less of a struggle

@@ -105,7 +105,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
             base.TriggerHitStop();
 
             this.hunk.TriggerCounter();
-            this.hunk.iFrames = this.hitStopDuration;
+            this.hunk.iFrames = 0.8f;
 
             if (this.swingEffectInstance)
             {

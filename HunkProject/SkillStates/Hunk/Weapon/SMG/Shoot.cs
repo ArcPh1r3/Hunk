@@ -6,11 +6,11 @@ namespace HunkMod.SkillStates.Hunk.Weapon.SMG
 {
     public class Shoot : BaseHunkSkillState
     {
-        public static float damageCoefficient = 2.8f;
+        public static float damageCoefficient = 3f;
         public static float procCoefficient = 1f;
-        public static float baseDuration = 0.21f;
+        public static float baseDuration = 0.185f;
         public static float force = 20f;
-        public static float recoil = 1.5f;
+        public static float recoil = 1.35f;
         public static float range = 2000f;
         public static GameObject tracerEffectPrefab = RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/Tracers/TracerCommandoDefault");
 
@@ -45,13 +45,13 @@ namespace HunkMod.SkillStates.Hunk.Weapon.SMG
             if (this.isCrit) Util.PlaySound("sfx_hunk_smg_shoot", base.gameObject);
             else Util.PlaySound("sfx_hunk_smg_shoot", base.gameObject);
 
-            float spreadBloom = 0.7f;
+            float spreadBloom = 0.3f;
 
             if (base.isAuthority)
             {
                 Ray aimRay = base.GetAimRay2();
 
-                float spread = this.characterBody.spreadBloomAngle * 3f;
+                float spread = this.characterBody.spreadBloomAngle * 2.8f;
                 BulletAttack.FalloffModel falloff = BulletAttack.FalloffModel.DefaultBullet;
                 float recoilAmplitude = Shoot.recoil / this.attackSpeedStat;
 
@@ -60,7 +60,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.SMG
                     recoil *= 0.25f;
                     spread = 0f;
                     falloff = BulletAttack.FalloffModel.None;
-                    spreadBloom = 0.1f;
+                    spreadBloom = 0f;
                 }
 
                 base.AddRecoil2(-1f * recoilAmplitude, -2f * recoilAmplitude, -0.5f * recoilAmplitude, 0.5f * recoilAmplitude);

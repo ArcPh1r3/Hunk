@@ -68,6 +68,10 @@ namespace HunkMod.Modules.Components
             {
                 if (!this.inventory) return false;
 
+                if (this.inventory.GetItemCount(Modules.Survivors.Hunk.masterKeycard) > 0) return true;
+
+                if (this.inventory.GetItemCount(Modules.Survivors.Hunk.goldKeycard) <= 0 && UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "goldshores") return false;
+
                 if (this.inventory.GetItemCount(Modules.Survivors.Hunk.spadeKeycard) <= 0) return false;
                 if (this.inventory.GetItemCount(Modules.Survivors.Hunk.clubKeycard) <= 0) return false;
                 if (this.inventory.GetItemCount(Modules.Survivors.Hunk.heartKeycard) <= 0) return false;
@@ -408,14 +412,51 @@ namespace HunkMod.Modules.Components
                 return;
             }
 
-            if (this.SpawnKeycardHolder(Modules.Enemies.Parasite.characterSpawnCard))
+            float rng = UnityEngine.Random.value;
+
+            // wahoo
+            rng = 0f;
+
+            if (rng > 0.5f)
             {
-                this.spawnedKeycardThisStage = true;
-                return;
+                // gvirus
+                if (this.SpawnKeycardHolder(Modules.Enemies.Parasite.characterSpawnCard))
+                {
+                    this.spawnedKeycardThisStage = true;
+                    return;
+                }
+                else
+                {
+                    this.Invoke("SpawnKeycard", 0.5f);
+                }
             }
             else
             {
-                this.Invoke("SpawnKeycard", 0.5f);
+                // tvirus
+                this.StartOutbreak();
+            }
+        }
+
+        private void StartOutbreak()
+        {
+            if (Modules.Config.globalInfectionSound.Value) Util.PlaySound("sfx_hunk_retheme_global", this.gameObject);
+
+            if (!NetworkServer.active) return;
+
+            NetworkIdentity identity = this.GetComponent<NetworkIdentity>();
+
+            foreach (CharacterBody i in CharacterBody.readOnlyInstancesList)
+            {
+                if (i && i.teamComponent && i.teamComponent.teamIndex == TeamIndex.Monster && i.healthComponent.alive)
+                {
+                    if (!i.GetComponent<TVirusHandler>() && !i.GetComponent<ParasiteController>())
+                    {
+                        if (identity)
+                        {
+                            new SyncTVirus(identity.netId, i.gameObject).Send(NetworkDestination.Clients);
+                        }
+                    }
+                }
             }
         }
 

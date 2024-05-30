@@ -8,6 +8,7 @@ namespace HunkMod.SkillStates.Hunk
     public class Roll : BaseHunkSkillState
     {
         protected override bool turningAllowed => false;
+        protected override bool normalizeModel => true;
         protected Vector3 slipVector = Vector3.zero;
         public float duration = 1.1f;
         //private Vector3 cachedForward;

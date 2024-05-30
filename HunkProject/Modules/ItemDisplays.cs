@@ -21,11 +21,11 @@ namespace HunkMod.Modules
             VirusEye = Assets.mainAssetBundle.LoadAsset<GameObject>("mdlVirusEye");
 
             Material eyeMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/Imp/matImpBoss.mat").WaitForCompletion());
-            eyeMat.SetColor("_EmColor", new Color(1f, 202f / 255f, 0f));
-            eyeMat.SetFloat("_EmPower", 3f);
+            eyeMat.SetColor("_EmColor", new Color(1f, 157f / 255f, 0f));
+            eyeMat.SetFloat("_EmPower", 1f);
             eyeMat.SetFloat("_Smoothness", 0f);
-            eyeMat.SetColor("_Color", new Color(189f / 255f, 57f / 255f, 130f / 255f));
-            eyeMat.SetTexture("_MainTex", null);
+            eyeMat.SetColor("_Color", new Color(174f / 255f, 76f / 255f, 99f / 255f));
+            eyeMat.SetTexture("_MainTex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Lemurian/texLemurianDiffuse.tga").WaitForCompletion());
             eyeMat.SetTexture("_FresnelRamp", Addressables.LoadAssetAsync<Texture>("RoR2/DLC1/Common/ColorRamps/texRampConstructLaser.png").WaitForCompletion());
 
             VirusEye.AddComponent<ItemDisplay>().rendererInfos = new CharacterModel.RendererInfo[]

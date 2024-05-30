@@ -12,6 +12,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
     {
         protected override bool hideGun => true;
         protected override bool turningAllowed => false;
+        protected override bool normalizeModel => true;
 
         public float duration = 2.25f;
         private HealthComponent target;
@@ -229,7 +230,8 @@ namespace HunkMod.SkillStates.Hunk.Counter
                         rotation = Quaternion.identity
                     }, false);
 
-                    Util.PlaySound("sfx_hunk_kick_impact", this.gameObject);
+                    Util.PlaySound("sfx_hunk_slam_impact", this.gameObject);
+                    Util.PlaySound("sfx_hunk_crunch", this.gameObject);
 
                     if (base.isAuthority)
                     {
@@ -242,7 +244,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
                         blastAttack.baseDamage = this.damageStat * 40f;
                         blastAttack.falloffModel = BlastAttack.FalloffModel.None;
                         blastAttack.baseForce = 0f;
-                        blastAttack.bonusForce = this.GetAimRay().direction * 1000f + (Vector3.up * 2000f);
+                        blastAttack.bonusForce = this.GetAimRay().direction * 1000f + (Vector3.up * 1000f);
                         blastAttack.teamIndex = TeamComponent.GetObjectTeam(blastAttack.attacker);
                         blastAttack.damageType = DamageType.Stun1s | DamageType.ClayGoo;
                         blastAttack.attackerFiltering = AttackerFiltering.NeverHitSelf;

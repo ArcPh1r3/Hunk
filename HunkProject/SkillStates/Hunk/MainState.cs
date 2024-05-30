@@ -220,6 +220,7 @@ namespace HunkMod.SkillStates.Hunk
 						}
 					}
 
+					Util.PlaySound("sfx_hunk_jump", this.gameObject);
 					GenericCharacterMain.ApplyJumpVelocity(base.characterMotor, base.characterBody, horizontalBonus, verticalBonus, false);
 
 					if (this.hasModelAnimator)

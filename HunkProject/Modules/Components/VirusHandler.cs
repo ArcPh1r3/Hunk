@@ -8,7 +8,7 @@ namespace HunkMod.Modules.Components
     public class VirusHandler : MonoBehaviour
     {
         public float mutationStopwatch;
-        public Material overrideMat = Addressables.LoadAssetAsync<Material>("RoR2/Base/ParentEgg/matParentEggOuter.mat").WaitForCompletion();
+        public Material overrideMat = Modules.Assets.virusBodyMat;
         public Material overrideParticleMat = Addressables.LoadAssetAsync<Material>("RoR2/Base/moon2/matBloodSiphon.mat").WaitForCompletion();
 
         private CharacterModel characterModel;
@@ -43,6 +43,28 @@ namespace HunkMod.Modules.Components
                 if (this.inventory)
                 {
                     this.inventory.GiveItem(RoR2Content.Items.TeleportWhenOob);
+                }
+            }
+
+            this.InvokeRepeating("AddOverlay", 0f, 40f);
+            this.AddOverlay();
+        }
+
+        private void AddOverlay()
+        {
+            ModelLocator penis = this.GetComponent<ModelLocator>();
+            if (penis)
+            {
+                Transform modelTransform = penis.modelTransform;
+                if (modelTransform)
+                {
+                    TemporaryOverlay temporaryOverlay = modelTransform.gameObject.AddComponent<TemporaryOverlay>();
+                    temporaryOverlay.duration = 40f;
+                    temporaryOverlay.destroyComponentOnEnd = false;
+                    temporaryOverlay.originalMaterial = Modules.Assets.virusBodyMat;
+                    temporaryOverlay.inspectorCharacterModel = modelTransform.GetComponent<CharacterModel>();
+                    temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 4f, 1f);
+                    temporaryOverlay.animateShaderAlpha = true;
                 }
             }
         }
@@ -98,7 +120,7 @@ namespace HunkMod.Modules.Components
                     if (this.characterModel.baseRendererInfos[i].renderer)
                     {
                         if (this.characterModel.baseRendererInfos[i].renderer.gameObject.GetComponent<ParticleSystemRenderer>() || this.characterModel.baseRendererInfos[i].renderer.gameObject.GetComponent<LineRenderer>()) this.characterModel.baseRendererInfos[i].defaultMaterial = this.overrideParticleMat;
-                        else this.characterModel.baseRendererInfos[i].defaultMaterial = this.overrideMat;
+                        //else this.characterModel.baseRendererInfos[i].defaultMaterial = this.overrideMat;
                     }
                 }
             }

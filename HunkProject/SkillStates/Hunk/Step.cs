@@ -184,6 +184,9 @@ namespace HunkMod.SkillStates.Hunk
                     if (base.isAuthority)
                     {
                         Roll nextState = new Roll();
+
+                        if (i.characterBody) this.hunk.targetHurtbox = i.characterBody.mainHurtBox;
+
                         outer.SetNextState(nextState);
                     }
                     return true;

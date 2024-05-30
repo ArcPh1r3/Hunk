@@ -35,9 +35,13 @@ namespace HunkMod.Modules
 
         public static GameObject headshotEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Junk/Common/VFX/WeakPointProcEffect.prefab").WaitForCompletion();
         public static GameObject virusPositionIndicator;
+        public static GameObject tVirusPositionIndicator;
 
         public static Material dodgeOverlayMat;
         public static Material targetOverlayMat;
+
+        public static Material virusBodyMat;
+        public static Material tVirusBodyMat;
 
         public static Material shieldOverlayMat;
         public static Material voidShieldOverlayMat;
@@ -66,6 +70,8 @@ namespace HunkMod.Modules
 
         public static GameObject ammoPickupModel;
         public static GameObject bloodExplosionEffect;
+        public static GameObject impEyeExplosionEffect;
+        public static GameObject mangledExplosionEffect;
         public static GameObject bloodSpurtEffect;
         public static GameObject ammoPickupSparkle;
         public static GameObject ammoSpawnEffect;
@@ -112,6 +118,13 @@ namespace HunkMod.Modules
             }
 
             using (Stream manifestResourceStream2 = Assembly.GetExecutingAssembly().GetManifestResourceStream("HunkMod.hunk_bank.bnk"))
+            {
+                byte[] array = new byte[manifestResourceStream2.Length];
+                manifestResourceStream2.Read(array, 0, array.Length);
+                SoundAPI.SoundBanks.Add(array);
+            }
+
+            using (Stream manifestResourceStream2 = Assembly.GetExecutingAssembly().GetManifestResourceStream("HunkMod.hunk_footsteps.bnk"))
             {
                 byte[] array = new byte[manifestResourceStream2.Length];
                 manifestResourceStream2.Read(array, 0, array.Length);
@@ -168,6 +181,12 @@ namespace HunkMod.Modules
                 if (i) i.color = new Color(215f / 255f, 118f / 255f, 156f / 255f);
             }
 
+            tVirusPositionIndicator = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/BossPositionIndicator.prefab").WaitForCompletion().InstantiateClone("HunkVirusPositionIndicator", false);
+            foreach (SpriteRenderer i in tVirusPositionIndicator.GetComponentsInChildren<SpriteRenderer>())
+            {
+                if (i) i.color = new Color(28f / 255f, 69f / 255f, 1f);
+            }
+
             headshotOverlay = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/Railgunner/RailgunnerScopeLightOverlay.prefab").WaitForCompletion().InstantiateClone("HunkHeadshotOverlay", false);
             SniperTargetViewer viewer = headshotOverlay.GetComponentInChildren<SniperTargetViewer>();
             headshotOverlay.transform.Find("ScopeOverlay").gameObject.SetActive(false);
@@ -183,7 +202,7 @@ namespace HunkMod.Modules
             bool dynamicCrosshair = Modules.Config.dynamicCrosshair.Value;
 
             Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Golem/LaserGolem.prefab").WaitForCompletion().AddComponent<Modules.Components.GolemLaser>();
-            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Wisp/LaserWisp.prefab").WaitForCompletion().AddComponent<Modules.Components.GolemLaser>();
+            //Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Wisp/LaserWisp.prefab").WaitForCompletion().AddComponent<Modules.Components.GolemLaser>();
 
             #region Pistol Crosshair
             pistolCrosshairPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/StandardCrosshair.prefab").WaitForCompletion().InstantiateClone("HunkPistolCrosshair", false);
@@ -714,6 +733,7 @@ namespace HunkMod.Modules
 
             AddNewEffectDef(railgunImpact, "sfx_hunk_railgun_impact");
 
+            //
             bloodExplosionEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/ImpBoss/ImpBossBlink.prefab").WaitForCompletion().InstantiateClone("HunkBloodExplosion", false);
 
             Material bloodMat = Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/VFX/matBloodHumanLarge.mat").WaitForCompletion();
@@ -731,6 +751,50 @@ namespace HunkMod.Modules
             bloodExplosionEffect.GetComponentInChildren<ShakeEmitter>().duration *= 0.25f;
 
             AddNewEffectDef(bloodExplosionEffect);
+            //
+
+            //
+            impEyeExplosionEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/ImpBoss/ImpBossBlink.prefab").WaitForCompletion().InstantiateClone("HunkImpEyeExplosion", false);
+
+            impEyeExplosionEffect.transform.Find("Particles/LongLifeNoiseTrails").GetComponent<ParticleSystemRenderer>().material = bloodMat;
+            impEyeExplosionEffect.transform.Find("Particles/LongLifeNoiseTrails, Bright").GetComponent<ParticleSystemRenderer>().material = bloodMat;
+            impEyeExplosionEffect.transform.Find("Particles/Dash").GetComponent<ParticleSystemRenderer>().material = bloodMat;
+            impEyeExplosionEffect.transform.Find("Particles/Dash, Bright").GetComponent<ParticleSystemRenderer>().material = bloodMat;
+            impEyeExplosionEffect.transform.Find("Particles/DashRings").GetComponent<ParticleSystemRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Base/moon2/matBloodSiphon.mat").WaitForCompletion();
+            impEyeExplosionEffect.transform.Find("Particles/DashRings").localScale *= 0.25f;
+            impEyeExplosionEffect.transform.Find("Particles/Distortion").gameObject.SetActive(false);
+            impEyeExplosionEffect.transform.Find("Particles/Sphere").gameObject.SetActive(false);
+            impEyeExplosionEffect.transform.Find("Particles/Flash, White").gameObject.SetActive(false);
+            impEyeExplosionEffect.transform.Find("Particles/Flash, Red").gameObject.SetActive(false);
+            impEyeExplosionEffect.GetComponentInChildren<Light>().gameObject.SetActive(false);
+
+            impEyeExplosionEffect.GetComponentInChildren<PostProcessVolume>().sharedProfile = Addressables.LoadAssetAsync<PostProcessProfile>("RoR2/Base/title/ppLocalGold.asset").WaitForCompletion();
+            impEyeExplosionEffect.GetComponentInChildren<ShakeEmitter>().wave.amplitude *= 0.05f;
+            impEyeExplosionEffect.GetComponentInChildren<ShakeEmitter>().duration *= 0.1f;
+
+            AddNewEffectDef(impEyeExplosionEffect);
+            //
+
+            //
+            mangledExplosionEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/ImpBoss/ImpBossBlink.prefab").WaitForCompletion().InstantiateClone("HunkMangledExplosion", false);
+
+            mangledExplosionEffect.transform.Find("Particles/LongLifeNoiseTrails").GetComponent<ParticleSystemRenderer>().material = bloodMat;
+            mangledExplosionEffect.transform.Find("Particles/LongLifeNoiseTrails, Bright").GetComponent<ParticleSystemRenderer>().material = bloodMat;
+            mangledExplosionEffect.transform.Find("Particles/Dash").GetComponent<ParticleSystemRenderer>().material = bloodMat;
+            mangledExplosionEffect.transform.Find("Particles/Dash, Bright").GetComponent<ParticleSystemRenderer>().material = bloodMat;
+            mangledExplosionEffect.transform.Find("Particles/DashRings").gameObject.SetActive(false);//GetComponent<ParticleSystemRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Base/moon2/matBloodSiphon.mat").WaitForCompletion();
+            mangledExplosionEffect.transform.Find("Particles/Distortion").gameObject.SetActive(false);
+            mangledExplosionEffect.transform.Find("Particles/Sphere").gameObject.SetActive(false);
+            mangledExplosionEffect.transform.Find("Particles/Flash, White").gameObject.SetActive(false);
+            mangledExplosionEffect.transform.Find("Particles/Flash, Red").gameObject.SetActive(false);
+            mangledExplosionEffect.GetComponentInChildren<Light>().gameObject.SetActive(false);
+
+            mangledExplosionEffect.GetComponentInChildren<PostProcessVolume>().sharedProfile = Addressables.LoadAssetAsync<PostProcessProfile>("RoR2/Base/title/ppLocalGold.asset").WaitForCompletion();
+            mangledExplosionEffect.GetComponentInChildren<ShakeEmitter>().wave.amplitude *= 0.05f;
+            mangledExplosionEffect.GetComponentInChildren<ShakeEmitter>().duration *= 0.05f;
+
+            AddNewEffectDef(mangledExplosionEffect, "sfx_hunk_mangle");
+            //
 
             bloodSpurtEffect = mainAssetBundle.LoadAsset<GameObject>("BloodSpurtEffect");
 
@@ -827,6 +891,21 @@ namespace HunkMod.Modules
             ammoSpawnEffect.transform.Find("SoftGlow").gameObject.SetActive(false);
 
             AddNewEffectDef(ammoSpawnEffect);
+
+            //virusBodyMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/ParentEgg/matParentEggOuter.mat").WaitForCompletion());
+            virusBodyMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/ArmorReductionOnHit/matPulverizedOverlay.mat").WaitForCompletion());
+            virusBodyMat.SetColor("_TintColor", new Color(1f, 61f / 255f, 1f, 1f));
+            virusBodyMat.SetTexture("_RemapTex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Common/ColorRamps/texRampParentTeleport.png").WaitForCompletion());
+            virusBodyMat.SetFloat("_Boost", 1f);
+            virusBodyMat.SetFloat("_AlphaBoost", 3f);
+            virusBodyMat.SetFloat("_AlphaBias", 0.35f);
+
+            tVirusBodyMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/ArmorReductionOnHit/matPulverizedOverlay.mat").WaitForCompletion());
+            tVirusBodyMat.SetColor("_TintColor", new Color(28f / 255f, 69f / 255f, 1f));
+            tVirusBodyMat.SetTexture("_RemapTex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Common/ColorRamps/texRampParentTeleport.png").WaitForCompletion());
+            tVirusBodyMat.SetFloat("_Boost", 3f);
+            tVirusBodyMat.SetFloat("_AlphaBoost", 1f);
+            tVirusBodyMat.SetFloat("_AlphaBias", 0.35f);
         }
 
         private static GameObject CreateBloodExplosionEffect(string effectName, Material bloodMat, float scale = 1f)

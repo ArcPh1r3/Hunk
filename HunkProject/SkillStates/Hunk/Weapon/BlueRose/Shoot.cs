@@ -53,8 +53,8 @@ namespace HunkMod.SkillStates.Hunk.Weapon.BlueRose
 
             EffectManager.SimpleMuzzleFlash(EntityStates.Commando.CommandoWeapon.FirePistol2.muzzleEffectPrefab, base.gameObject, this.muzzleString, false);
 
-            if (this.isCrit) Util.PlaySound("sfx_hunk_revolver_shoot", base.gameObject);
-            else Util.PlaySound("sfx_hunk_revolver_shoot", base.gameObject);
+            if (this.isCrit) Util.PlaySound("sfx_hunk_bluerose_fire", base.gameObject);
+            else Util.PlaySound("sfx_hunk_bluerose_fire", base.gameObject);
 
             if (base.isAuthority)
             {

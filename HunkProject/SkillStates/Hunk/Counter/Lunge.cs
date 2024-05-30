@@ -137,10 +137,40 @@ namespace HunkMod.SkillStates.Hunk.Counter
                         {
                             if (base.isAuthority)
                             {
-                                this.outer.SetNextState(new CounterEyePluck
+                                if (hurtBox.healthComponent.gameObject.GetComponent<VirusHandler>())
                                 {
-                                    targetObject = hurtBox.healthComponent.gameObject
-                                });
+                                    this.outer.SetNextState(new CounterKnee
+                                    {
+                                        targetObject = hurtBox.healthComponent.gameObject
+                                    });
+                                }
+                                else
+                                {
+                                    this.outer.SetNextState(new CounterEyePluck
+                                    {
+                                        targetObject = hurtBox.healthComponent.gameObject
+                                    });
+                                }
+                            }
+
+                            return true;
+                        }
+
+                        if (hurtBox.healthComponent.gameObject.name == "BeetleGuardBody(Clone)")
+                        {
+                            if (base.isAuthority)
+                            {
+                                if (this.CounterIsBehind(hurtBox.healthComponent.body.characterDirection.forward))
+                                {
+                                    if (base.isAuthority) this.outer.SetNextState(new Punch());
+                                }
+                                else
+                                {
+                                    this.outer.SetNextState(new BeetleSlamCounter
+                                    {
+                                        targetObject = hurtBox.healthComponent.gameObject
+                                    });
+                                }
                             }
 
                             return true;
@@ -161,7 +191,14 @@ namespace HunkMod.SkillStates.Hunk.Counter
 
                         if (hurtBox.healthComponent.gameObject.name == "VerminBody(Clone)")
                         {
-                            if (base.isAuthority)
+                            if (this.CounterIsBehind(hurtBox.healthComponent.body.characterDirection.forward))
+                            {
+                                this.outer.SetNextState(new Suplex
+                                {
+                                    targetObject = hurtBox.healthComponent.gameObject
+                                });
+                            }
+                            else
                             {
                                 this.outer.SetNextState(new CounterKnee
                                 {
@@ -222,6 +259,39 @@ namespace HunkMod.SkillStates.Hunk.Counter
                                     {
                                         targetObject = hurtBox.healthComponent.gameObject
                                     });
+                                }
+                            }
+
+                            return true;
+                        }
+
+                        if (hurtBox.healthComponent.gameObject.name == "VultureBody(Clone)")
+                        {
+                            if (base.isAuthority)
+                            {
+                                if (hurtBox.healthComponent.combinedHealthFraction <= 0.5f || hurtBox.healthComponent.gameObject.GetComponent<VirusHandler>())
+                                {
+                                    this.outer.SetNextState(new CounterKnee
+                                    {
+                                        targetObject = hurtBox.healthComponent.gameObject
+                                    });
+                                }
+                                else
+                                {
+                                    if (this.CounterIsBehind(hurtBox.healthComponent.body.characterDirection.forward))
+                                    {
+                                        this.outer.SetNextState(new Suplex
+                                        {
+                                            targetObject = hurtBox.healthComponent.gameObject
+                                        });
+                                    }
+                                    else
+                                    {
+                                        this.outer.SetNextState(new CounterKnee
+                                        {
+                                            targetObject = hurtBox.healthComponent.gameObject
+                                        });
+                                    }
                                 }
                             }
 

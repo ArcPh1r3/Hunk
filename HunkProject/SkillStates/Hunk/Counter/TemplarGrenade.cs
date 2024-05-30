@@ -31,6 +31,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
             this.targetPos = this.target.transform.position;
             this.lerpSpeed *= this.attackSpeedStat;
             this.duration /= this.attackSpeedStat;
+            this.hunk.counterTimer = this.duration;
 
             if (NetworkServer.active)
             {
