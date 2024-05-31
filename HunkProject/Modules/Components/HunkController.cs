@@ -32,6 +32,7 @@ namespace HunkMod.Modules.Components
         public float chargeValue;
         public float lockOnTimer;
         public HurtBox targetHurtbox;
+        public Transform targetTransform;
 
         public float snapOffset = 0.25f;
         public float flamethrowerLifetime;
@@ -647,6 +648,20 @@ namespace HunkMod.Modules.Components
         {
             if (this.cameraController)
             {
+                if (this.targetTransform)
+                {
+                    if (this.lastVector == Vector3.zero) this.lastVector = this.characterBody.inputBank.aimDirection;
+                    Vector3 targetVector = (this.targetTransform.position - this.cameraPivot.position).normalized;
+                    Vector3 lookVector = Vector3.Lerp(this.lastVector, targetVector, 12f * Time.fixedDeltaTime);
+
+                    //if (Input.mouse)
+                    //if ()
+
+                    ((RoR2.CameraModes.CameraModePlayerBasic.InstanceData)this.cameraController.cameraMode.camToRawInstanceData[this.cameraController]).SetPitchYawFromLookVector(lookVector);
+                    this.lastVector = lookVector;
+                    return;
+                }
+
                 if (this.targetHurtbox)
                 {
                     if (this.lastVector == Vector3.zero) this.lastVector = this.characterBody.inputBank.aimDirection;
@@ -1275,13 +1290,16 @@ namespace HunkMod.Modules.Components
 
             System.Random random = new System.Random();
             NodeGraph groundNodes = SceneInfo.instance.groundNodes;
-            List<NodeGraph.NodeIndex> nodeList = groundNodes.FindNodesInRange(transform.position, 1f, 5f, HullMask.Human);
+            List<NodeGraph.NodeIndex> nodeList = groundNodes.FindNodesInRange(transform.position, 5f, 10f, HullMask.Human);
             NodeGraph.NodeIndex randomNode = nodeList[random.Next(nodeList.Count)];
             if (randomNode != null)
             {
                 Vector3 position;
                 groundNodes.GetNodePosition(randomNode, out position);
                 GameObject rocketLauncherChest = Instantiate(Survivors.Hunk.weaponCasePrefab, position, Quaternion.identity);
+
+                NetworkIdentity identity = this.GetComponent<NetworkIdentity>();
+                if (identity) new SyncHunkTarget(identity.netId, rocketLauncherChest).Send(NetworkDestination.Clients);
 
                 NetworkServer.Spawn(rocketLauncherChest);
 
@@ -1293,7 +1311,14 @@ namespace HunkMod.Modules.Components
         scale = 2f
     }, true);
             }
+
             //DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(Survivors.Hunk.terminalInteractableCard, new DirectorPlacementRule { placementMode = DirectorPlacementRule.PlacementMode.NearestNode }, rng));
+        }
+
+        public void TargetObject(Transform newTarget)
+        {
+            this.lockOnTimer = 1.5f;
+            this.targetTransform = newTarget;
         }
 
         public void StartDialogue1()

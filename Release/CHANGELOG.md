@@ -1,5 +1,8 @@
 ## Changelog
 
+`1.4.4`
+- Made Anti-Tank Missile spawn much more prominent - too many people were missing this which is my bad
+
 `1.4.3`
 - Overhauled custom HUD with almost full functionality and a properly working health bar with curse, barrier and shield all supported
 - ^Most UI elements are hidden unless tab is being held or they're being used
