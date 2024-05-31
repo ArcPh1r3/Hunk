@@ -3650,6 +3650,9 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
 
             // custom hud
             RoR2.UI.HUD.onHudTargetChangedGlobal += HUDSetup;
+            On.RoR2.GlobalEventManager.OnTeamLevelUp += GlobalEventManager_OnTeamLevelUp;
+            On.RoR2.GlobalEventManager.OnInteractionBegin += GlobalEventManager_OnInteractionBegin;
+            On.RoR2.DeathRewards.OnKilledServer += DeathRewards_OnKilledServer;
 
             // hide the bazooka skin
             On.RoR2.UI.LoadoutPanelController.Row.AddButton += Row_AddButton;
@@ -3741,6 +3744,47 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             On.EntityStates.GlobalSkills.LunarNeedle.ChargeLunarSecondary.PlayChargeAnimation += PlayChargeLunarAnimation;
             On.EntityStates.GlobalSkills.LunarNeedle.ThrowLunarSecondary.PlayThrowAnimation += PlayThrowLunarAnimation;
             On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += PlayRuinAnimation;
+        }
+
+        private static void DeathRewards_OnKilledServer(On.RoR2.DeathRewards.orig_OnKilledServer orig, DeathRewards self, DamageReport damageReport)
+        {
+            if (Modules.Components.UI.HunkMoneyDisplay.instance)
+            {
+                Modules.Components.UI.HunkMoneyDisplay.instance.activeTimer = 3f;
+            }
+        }
+
+        private static void GlobalEventManager_OnInteractionBegin(On.RoR2.GlobalEventManager.orig_OnInteractionBegin orig, GlobalEventManager self, Interactor interactor, IInteractable interactable, GameObject interactableObject)
+        {
+            if (self && interactor)
+            {
+                CharacterBody characterBody = interactor.GetComponent<CharacterBody>();
+                if (characterBody)
+                {
+                    if (characterBody.hasAuthority)
+                    {
+                        if (Modules.Components.UI.HunkMoneyDisplay.instance)
+                        {
+                            Modules.Components.UI.HunkMoneyDisplay.instance.activeTimer = 3f;
+                        }
+                    }
+                }
+            }
+
+            orig(self, interactor, interactable, interactableObject);
+        }
+
+        private static void GlobalEventManager_OnTeamLevelUp(On.RoR2.GlobalEventManager.orig_OnTeamLevelUp orig, TeamIndex teamIndex)
+        {
+            if (Modules.Components.UI.HunkObjectiveDisplay.instance)
+            {
+                if (teamIndex == TeamIndex.Monster)
+                {
+                    Modules.Components.UI.HunkObjectiveDisplay.instance.activeTimer = 3f;
+                }
+            }
+
+            orig(teamIndex);
         }
 
         private static void TVirusDeathIL(ILContext il)
@@ -4839,10 +4883,20 @@ Vector3.up * 20f);
                         // hide health bar
                         hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/BottomLeftCluster/BarRoots").gameObject.SetActive(false);
 
-                        // hide money
-                        //hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/UpperLeftCluster").gameObject.SetActive(false);
+                        // money
+                        hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/UpperLeftCluster").gameObject.AddComponent<Modules.Components.UI.HunkMoneyDisplay>();
                         //GameObject.Destroy(hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/UpperLeftCluster/MoneyRoot").gameObject);
                         //GameObject.Destroy(hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/UpperLeftCluster/LunarCoinRoot").gameObject);
+
+                        // inventory
+                        var id = hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/TopCenterCluster/ItemInventoryDisplayRoot").gameObject.AddComponent<Modules.Components.UI.HunkItemDisplay>();
+                        id.activePosition = new Vector3(-576f, 0f, 0f);
+                        id.inactivePosition = new Vector3(-576f, 200f, 0f);
+
+                        // objective
+                        var od = hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/UpperRightCluster/ClassicRunInfoHudPanel(Clone)").gameObject.AddComponent<Modules.Components.UI.HunkObjectiveDisplay>();
+                        od.activePosition = new Vector3(-64f, -25.5f, 0f);
+                        od.inactivePosition = new Vector3(350f, -25.5f, 0f);
 
                         // dodge stamina bar
                         GameObject staminaBar = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("StaminaBar"), healthbarContainer);
@@ -4861,7 +4915,7 @@ Vector3.up * 20f);
                         rect.offsetMax = new Vector2(150f, 0f);
                         rect.pivot = new Vector2(0f, 0f);
                         rect.anchoredPosition = new Vector2(00f, 0f);
-                        rect.localPosition = new Vector3(-150f, -350f, 0f);
+                        rect.localPosition = new Vector3(-150f, -300f, 0f);
                         rect.localRotation = Quaternion.identity;
                         rect.sizeDelta = new Vector2(300f, 10f);
 
@@ -4869,7 +4923,10 @@ Vector3.up * 20f);
                         GameObject newHealthBar = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("CustomHealthBar"), healthbarContainer);
                         newHealthBar.name = "CustomHealthBar";
                         newHealthBar.transform.SetParent(hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/BottomRightCluster"));
-                        newHealthBar.AddComponent<CustomHealthBar>().targetHUD = hud;
+                        var hh = newHealthBar.AddComponent<Modules.Components.UI.CustomHealthBar>();
+                        hh.targetHUD = hud;
+                        hh.activePosition = new Vector3(-300f, -40f, 0f);
+                        hh.inactivePosition = new Vector3(-300f, -400f, 0f);
 
                         //HunkNotificationHandler notificationHandler = staminaBar.AddComponent<HunkNotificationHandler>();
                         //notificationHandler.targetHUD = hud;
@@ -5039,10 +5096,16 @@ Vector3.up * 20f);
                     fuckMe = hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/BottomCenterCluster").gameObject.GetComponentInChildren<HealthBar>();
                     if (fuckMe) fuckMe.transform.parent.gameObject.SetActive(false);
 
-                    // hide money
-                    //hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/UpperLeftCluster").gameObject.SetActive(false);
+                    // money
+                    hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/UpperLeftCluster").gameObject.AddComponent<Modules.Components.UI.HunkMoneyDisplay>();
                     //GameObject.Destroy(hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/UpperLeftCluster/MoneyRoot").gameObject);
                     //GameObject.Destroy(hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/UpperLeftCluster/LunarCoinRoot").gameObject);
+
+                    // inventory
+                    hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/TopCenterCluster/InventoryPosition2").gameObject.AddComponent<Modules.Components.UI.HunkItemDisplay>();
+
+                    // objective
+                    hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/UpperRightCluster/MaterialClassicRunInfoHudPanel(Clone)").gameObject.AddComponent<Modules.Components.UI.HunkObjectiveDisplay>();
 
                     // railgun charge bar
                     GameObject railgunChargeBar = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("StaminaBar"), mainContainer);
@@ -5079,7 +5142,7 @@ Vector3.up * 20f);
                     rect.offsetMax = new Vector2(150f, 0f);
                     rect.pivot = new Vector2(0f, 0f);
                     rect.anchoredPosition = new Vector2(00f, 0f);
-                    rect.localPosition = new Vector3(-150f, -350f, 0f);
+                    rect.localPosition = new Vector3(-150f, -300f, 0f);
                     rect.localRotation = Quaternion.identity;
                     rect.sizeDelta = new Vector2(300f, 10f);
 
@@ -5087,7 +5150,7 @@ Vector3.up * 20f);
                     GameObject newHealthBar = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("CustomHealthBar"), mainContainer);
                     newHealthBar.name = "CustomHealthBar";
                     newHealthBar.transform.SetParent(hud.transform.Find("MainContainer/MainUIArea/SpringCanvas/BottomRightCluster"));
-                    newHealthBar.AddComponent<CustomHealthBar>().targetHUD = hud;
+                    newHealthBar.AddComponent<Modules.Components.UI.CustomHealthBar>().targetHUD = hud;
 
                     //HunkNotificationHandler notificationHandler = staminaBar.AddComponent<HunkNotificationHandler>();
                     //notificationHandler.targetHUD = hud;

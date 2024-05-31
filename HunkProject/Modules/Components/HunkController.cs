@@ -360,6 +360,14 @@ namespace HunkMod.Modules.Components
                 onInventoryUpdate(this.inventory);
             }
 
+            if (this.characterBody.hasAuthority)
+            {
+                if (Modules.Components.UI.HunkItemDisplay.instance)
+                {
+                    Modules.Components.UI.HunkItemDisplay.instance.activeTimer = 3f;
+                }
+            }
+
             this.CheckForNeedler();
             this.CheckForHooks();
 

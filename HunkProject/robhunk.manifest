@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2684306042
+CRC: 1608668372
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: f8d76df8d8ebdf894bbc8eb4b7dbebf9
+    Hash: 1f803c99a711dbef8194dbe773fa0665
   TypeTreeHash:
     serializedVersion: 2
-    Hash: c0613469c5f5f41ecc95af7ab71e2d70
+    Hash: 578f72f44b5a2ccce06c5be12e40e453
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -41,6 +41,8 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 114
   Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 67079b849227b734694872d8810229b8, type: 3}
 - Class: 114
@@ -278,6 +280,7 @@ Assets:
 - Assets/Hunk/Materials/matWesker05.mat
 - Assets/Hunk/Textures/M19/Leon_M1911_N.png
 - Assets/Hunk/Materials/matDoom03.mat
+- Assets/Hunk/HUD/Textures/texHealthBarShade.png
 - Assets/Hunk/Icons/texIconHeart.png
 - Assets/Hunk/Icons/Knife/texKnifeMachete.png
 - Assets/Hunk/HUD/Textures/texRadialDefault.png
@@ -578,6 +581,7 @@ Assets:
 - Assets/Hunk/Textures/Flamethrower/Leon_FlameThrowerExt_N.png
 - Assets/Hunk/Textures/Wesker/T_K29Head00_BC.png
 - Assets/Hunk/Items/mdlLongBarrel.prefab
+- Assets/Hunk/HUD/Textures/texBarMask.png
 - Assets/Hunk/Weapons/mdlRocketLauncherPickup.prefab
 - Assets/Hunk/Icons/Item/texGunStockIcon.png
 - Assets/Hunk/Items/DisplayGVirusSample.prefab

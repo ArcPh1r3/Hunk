@@ -41,7 +41,7 @@ namespace HunkMod.Modules
                 aimCameraParams = NewCameraParams("ccpRobHunkAim", 70f, 0.1f, new Vector3(2.2f, 0.1f, -2f));
             }
 
-            meleeCameraParams = NewCameraParams("ccpRobHunkMelee", 70f, 0.15f, new Vector3(0.5f, 0.9f, -3.3f));
+            meleeCameraParams = NewCameraParams("ccpRobHunkMelee", 70f, 0.15f, new Vector3(0.5f, 0.3f, -3.3f));
             sniperAimCameraParams = NewCameraParams("ccpRobHunkSniperAim", 70f, 0.8f, new Vector3(0f, 0f, 0.75f));
             emoteCameraParams = NewCameraParams("ccpRobHunkEmote", 70f, 0.4f, new Vector3(0f, 0f, -6f));
         }

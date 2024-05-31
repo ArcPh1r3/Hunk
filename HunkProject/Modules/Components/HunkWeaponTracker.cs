@@ -449,10 +449,16 @@ namespace HunkMod.Modules.Components
 
         private void PlaySoundCue(string soundString)
         {
-            if (!Modules.Config.globalInfectionSound.Value) return;
-            if (!NetworkServer.active) return;
+            if (Modules.Components.UI.HunkObjectiveDisplay.instance)
+            {
+                Modules.Components.UI.HunkObjectiveDisplay.instance.activeTimer = 5f;
+            }
 
-            EntitySoundManager.EmitSoundServer((AkEventIdArg)soundString, this.gameObject);
+            if (!Modules.Config.globalInfectionSound.Value) return;
+            //if (!NetworkServer.active) return;
+
+            Util.PlaySound(soundString, this.gameObject);
+            //EntitySoundManager.EmitSoundServer((AkEventIdArg)soundString, this.gameObject);
         }
 
         private void StartOutbreak()

@@ -58,7 +58,7 @@ namespace HunkMod.Modules.Components
                     {
                         if (master.inventory)
                         {
-                            if (master.inventory.GetItemCount(Modules.Survivors.Hunk.gVirusSample) > 0)
+                            if (master.inventory.GetItemCount(Modules.Survivors.Hunk.gVirusSample) > 0 || master.inventory.GetItemCount(Modules.Survivors.Hunk.tVirusSample) > 0)
                             {
                                 anyRealers = true;
                                 break;
