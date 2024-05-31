@@ -1,5 +1,8 @@
 ## Changelog
 
+`1.4.5`
+- Bugfix
+
 `1.4.4`
 - Made Anti-Tank Missile spawn much more prominent - too many people were missing this which is my bad
 

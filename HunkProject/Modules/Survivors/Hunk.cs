@@ -3752,6 +3752,8 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             {
                 Modules.Components.UI.HunkMoneyDisplay.instance.activeTimer = 3f;
             }
+
+            orig(self, damageReport);
         }
 
         private static void GlobalEventManager_OnInteractionBegin(On.RoR2.GlobalEventManager.orig_OnInteractionBegin orig, GlobalEventManager self, Interactor interactor, IInteractable interactable, GameObject interactableObject)
