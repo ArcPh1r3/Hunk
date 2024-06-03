@@ -14,6 +14,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.ScanGun
 
         private float duration;
         private WeaponChest[] weaponCases;
+        private Transform target;
 
         public override void OnEnter()
         {
@@ -21,7 +22,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.ScanGun
 
             this.weaponCases = MonoBehaviour.FindObjectsOfType<WeaponChest>();
 
-            float dist = 126f;
+            float dist = 251f;
             for (int i = 0; i < this.weaponCases.Length; i++)
             {
                 if (this.weaponCases[i] && this.weaponCases[i].alive)
@@ -30,12 +31,13 @@ namespace HunkMod.SkillStates.Hunk.Weapon.ScanGun
                     if (_dist <= dist)
                     {
                         dist = _dist;
+                        this.target = this.weaponCases[i].transform;
                     }
                 }
             }
-            this.duration = Util.Remap(dist, 0f, 125f, 0.125f, 1.7f);
+            this.duration = Util.Remap(dist, 0f, 250f, 0.125f, 1.7f);
 
-            if (dist <= 125f)
+            if (dist <= 250f)
             {
                 this.Fire();
             }
@@ -50,6 +52,17 @@ namespace HunkMod.SkillStates.Hunk.Weapon.ScanGun
             {
                 float recoilAmplitude = Shoot.recoil / this.attackSpeedStat;
                 base.AddRecoil2(-1f * recoilAmplitude, -2f * recoilAmplitude, -0.5f * recoilAmplitude, 0.5f * recoilAmplitude);
+
+                // draw line
+                if (this.target)
+                {
+                    EffectData effectData = new EffectData
+                    {
+                        origin = this.target.position + Vector3.up,
+                        start = this.FindModelChild("MuzzlePistol").position
+                    };
+                    EffectManager.SpawnEffect(Modules.Assets.scannerLineIndicator, effectData, false);
+                }
             }
 
             base.characterBody.AddSpreadBloom(0.7f);

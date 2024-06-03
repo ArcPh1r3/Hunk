@@ -1,4 +1,5 @@
-﻿using R2API;
+﻿using HunkMod.Modules.Components;
+using R2API;
 using RoR2;
 using System;
 using UnityEngine;
@@ -35,16 +36,26 @@ namespace HunkMod.Modules.Achievements
         {
             base.OnInstall();
 
-            Modules.Components.HunkController.onStageCompleted += Check;
+            RoR2.SceneExitController.onBeginExit += SceneExitController_onBeginExit;
         }
 
-        private void Check(bool huh)
+        private void SceneExitController_onBeginExit(SceneExitController self)
         {
-            if (!huh)
+            foreach (var player in PlayerCharacterMasterController.instances)
             {
-                if (base.meetsBodyRequirement)
+                if (player.networkUser && player.networkUser.isLocalPlayer && player.networkUser.bodyIndexPreference == BodyCatalog.FindBodyIndex(Modules.Survivors.Hunk.bodyName) && player.body)
                 {
-                    base.Grant();
+                    HunkController hunk = player.body.GetComponent<HunkController>();
+                    if (hunk)
+                    {
+                        if (hunk.weaponTracker.usedAmmoThisStage)
+                        {
+                            if (base.meetsBodyRequirement)
+                            {
+                                base.Grant();
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -52,7 +63,7 @@ namespace HunkMod.Modules.Achievements
         public override void OnUninstall()
         {
             base.OnUninstall();
-            Modules.Components.HunkController.onStageCompleted -= Check;
+            RoR2.SceneExitController.onBeginExit -= SceneExitController_onBeginExit;
         }
     }
 }

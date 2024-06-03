@@ -9,7 +9,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.BlueRose
 {
     public class Shoot : BaseHunkSkillState
     {
-        public static float damageCoefficient = 24f;
+        public static float damageCoefficient = 38f;
         public static float procCoefficient = 1f;
         public static float baseDuration = 0.8f;
         public static float force = 3000f;

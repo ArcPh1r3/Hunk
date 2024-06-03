@@ -68,11 +68,11 @@ namespace HunkMod.SkillStates.Hunk
         {
 			if (this.characterBody.inventory)
             {
-				if (this.characterBody.inventory.GetItemCount(ItemCatalog.GetItemDef(AncientScepter.AncientScepterItem.Index)) <= 0)
+				if (this.characterBody.inventory.GetItemCount(ItemCatalog.GetItemDef(ItemCatalog.FindItemIndex("AncientScepter"))) <= 0)
                 {
 					if (NetworkServer.active)
                     {
-						this.characterBody.inventory.GiveItem(ItemCatalog.GetItemDef(AncientScepter.AncientScepterItem.Index));
+						this.characterBody.inventory.GiveItem(ItemCatalog.GetItemDef(ItemCatalog.FindItemIndex("AncientScepter")));
                     }
                 }
             }

@@ -1,8 +1,5 @@
-﻿using R2API;
-using RoR2;
-using RoR2.Skills;
+﻿using RoR2.Skills;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace HunkMod.Modules.Weapons
 {

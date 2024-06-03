@@ -85,6 +85,7 @@ namespace HunkMod.Modules.Components
                 if (this.inventory.GetItemCount(Modules.Survivors.Hunk.heartKeycard) <= 0) return false;
                 if (this.inventory.GetItemCount(Modules.Survivors.Hunk.diamondKeycard) <= 0) return false;
                 if (this.inventory.GetItemCount(Modules.Survivors.Hunk.wristband) <= 0) return false;
+                if (this.inventory.GetItemCount(Modules.Survivors.Hunk.masterKeycard) <= 0) return false;
 
                 return true;
             }
@@ -114,7 +115,7 @@ namespace HunkMod.Modules.Components
             this.spawnedTerminalThisStage = false;
             this.usedAmmoThisStage = false;
 
-            Modules.Survivors.Hunk.requiredKills = 10;
+            Modules.Survivors.Hunk.requiredKills = 6;
 
             this.CancelInvoke();
 
@@ -467,7 +468,7 @@ namespace HunkMod.Modules.Components
 
             this.PlaySoundCue("sfx_hunk_retheme_global");
 
-            this.remainingVictims = 10;
+            this.remainingVictims = 6;
             this.InvokeRepeating("TryInfect", 0f, 1f);
         }
 

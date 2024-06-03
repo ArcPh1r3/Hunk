@@ -11,8 +11,8 @@ namespace HunkMod.Modules.Weapons
         public override string iconName => "texM19Icon";
         public override GameObject crosshairPrefab => Modules.Assets.pistolCrosshairPrefab;
         public override int magSize => 7;
-        public override float magPickupMultiplier => 2f;
-        public override int startingMags => 1;
+        public override float magPickupMultiplier => 2.5f;
+        public override int startingMags => 2;
         public override float reloadDuration => 1.2f;
         public override string ammoName => "M19 Rounds";
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlM19");
@@ -20,7 +20,7 @@ namespace HunkMod.Modules.Weapons
         public override bool storedOnBack => false;
         public override float damageFillValue => 0.5f;
         public override float rangefillValue => 0.7f;
-        public override float fireRateFillValue => 0.7f;
+        public override float fireRateFillValue => 0.75f;
         public override float reloadFillValue => 1f;
         public override float accuracyFillValue => 0.9f;
 

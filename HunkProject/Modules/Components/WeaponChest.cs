@@ -2,7 +2,9 @@
 using R2API.Networking;
 using R2API.Networking.Interfaces;
 using RoR2;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -31,6 +33,8 @@ namespace HunkMod.Modules.Components
         }
         private ChestType chestType;
 
+        private bool allRandom;
+
         private void InitPickup()
         {
             if (!NetworkServer.active) return;
@@ -45,87 +49,139 @@ namespace HunkMod.Modules.Components
             if (sceneName == "moon2") fuck = true;
             if (sceneName == "voidraid") fuck = true;
 
-            // im just gonna hard code this rn okay.
-            // just get it working and move on. it can be cleaned up later.
-            if (Modules.Helpers.HunkHasWeapon(Modules.Weapons.Shotgun.instance.weaponDef) || Modules.Helpers.HunkHasWeapon(Modules.Weapons.Slugger.instance.weaponDef))
+            if (this.allRandom)
             {
-                if (Modules.Helpers.HunkHasWeapon(Modules.Weapons.Magnum.instance.weaponDef) || Modules.Helpers.HunkHasWeapon(Modules.Weapons.Revolver.instance.weaponDef))
+                List<ItemDef> itemPool = new List<ItemDef>();
+                itemPool.Add(Modules.Weapons.SMG.instance.itemDef);
+                itemPool.Add(Modules.Weapons.MUP.instance.itemDef);
+                itemPool.Add(Modules.Weapons.Shotgun.instance.itemDef);
+                itemPool.Add(Modules.Weapons.Slugger.instance.itemDef);
+                itemPool.Add(Modules.Weapons.Magnum.instance.itemDef);
+                itemPool.Add(Modules.Weapons.Revolver.instance.itemDef);
+                itemPool.Add(Modules.Weapons.Flamethrower.instance.itemDef);
+                itemPool.Add(Modules.Weapons.GrenadeLauncher.instance.itemDef);
+                itemPool.Add(Modules.Weapons.AssaultRifle.instance.itemDef);
+                itemPool.Add(Modules.Weapons.M19.instance.itemDef);
+                itemPool.Add(Modules.Weapons.SMG.laserSight);
+                itemPool.Add(Modules.Weapons.SMG.extendedMag);
+                itemPool.Add(Modules.Weapons.MUP.gunStock);
+                itemPool.Add(Modules.Weapons.Magnum.longBarrel);
+                itemPool.Add(Modules.Weapons.Revolver.speedloader);
+
+                // heheheha
+                if (UnityEngine.Random.value < 0.2f) itemPool.Add(Modules.Weapons.RocketLauncher.instance.itemDef);
+                if (UnityEngine.Random.value < 0.2f) itemPool.Add(Modules.Weapons.Railgun.instance.itemDef);
+                if (UnityEngine.Random.value < 0.2f) itemPool.Add(Modules.Weapons.GoldenGun.instance.itemDef);
+                if (UnityEngine.Random.value < 0.2f) itemPool.Add(Modules.Weapons.BlueRose.instance.itemDef);
+
+                // shuffle
+                itemPool.Shuffle<ItemDef>();
+
+                bool foundWeapon = false;
+                foreach (ItemDef i in itemPool)
                 {
-                    if (Modules.Helpers.HunkHasWeapon(Modules.Weapons.Flamethrower.instance.weaponDef))
+                    if (!Modules.Helpers.HunkHasWeapon(i) && !Modules.Survivors.Hunk.spawnedWeaponList.Contains(i))
                     {
-                        // start giving the rest of the unowned weapons
-                        List<ItemDef> itemPool = new List<ItemDef>();
-                        itemPool.Add(Modules.Weapons.SMG.instance.itemDef);
-                        itemPool.Add(Modules.Weapons.MUP.instance.itemDef);
-                        itemPool.Add(Modules.Weapons.Shotgun.instance.itemDef);
-                        itemPool.Add(Modules.Weapons.Slugger.instance.itemDef);
-                        itemPool.Add(Modules.Weapons.Magnum.instance.itemDef);
-                        itemPool.Add(Modules.Weapons.Revolver.instance.itemDef);
-                        itemPool.Add(Modules.Weapons.Flamethrower.instance.itemDef);
-                        itemPool.Add(Modules.Weapons.GrenadeLauncher.instance.itemDef);
-                        itemPool.Add(Modules.Weapons.AssaultRifle.instance.itemDef);
-                        itemPool.Add(Modules.Weapons.SMG.laserSight);
-                        itemPool.Add(Modules.Weapons.SMG.extendedMag);
-                        itemPool.Add(Modules.Weapons.MUP.gunStock);
-                        itemPool.Add(Modules.Weapons.Magnum.longBarrel);
-                        itemPool.Add(Modules.Weapons.Revolver.speedloader);
+                        Modules.Survivors.Hunk.spawnedWeaponList.Add(i);
+                        this.itemDef = i;
+                        foundWeapon = true;
+                        break;
+                    }
+                }
 
-                        // heheheha
-                        if (UnityEngine.Random.value < 0.05f) itemPool.Add(Modules.Weapons.RocketLauncher.instance.itemDef);
-                        if (UnityEngine.Random.value < 0.05f) itemPool.Add(Modules.Weapons.Railgun.instance.itemDef);
-
-                        bool foundWeapon = false;
-                        foreach (ItemDef i in itemPool)
+                if (!foundWeapon && !fuck)
+                {
+                    // destroy this if no more weanpos are vailbnelne
+                    Destroy(this.gameObject);
+                }
+            }
+            else
+            {
+                // im just gonna hard code this rn okay.
+                // just get it working and move on. it can be cleaned up later.
+                if (Modules.Helpers.HunkHasWeapon(Modules.Weapons.Shotgun.instance.weaponDef) || Modules.Helpers.HunkHasWeapon(Modules.Weapons.Slugger.instance.weaponDef))
+                {
+                    if (Modules.Helpers.HunkHasWeapon(Modules.Weapons.Magnum.instance.weaponDef) || Modules.Helpers.HunkHasWeapon(Modules.Weapons.Revolver.instance.weaponDef))
+                    {
+                        if (Modules.Helpers.HunkHasWeapon(Modules.Weapons.Flamethrower.instance.weaponDef))
                         {
-                            if (!Modules.Helpers.HunkHasWeapon(i) && !Modules.Survivors.Hunk.spawnedWeaponList.Contains(i))
+                            // start giving the rest of the unowned weapons
+                            List<ItemDef> itemPool = new List<ItemDef>();
+                            itemPool.Add(Modules.Weapons.SMG.instance.itemDef);
+                            itemPool.Add(Modules.Weapons.MUP.instance.itemDef);
+                            itemPool.Add(Modules.Weapons.Shotgun.instance.itemDef);
+                            itemPool.Add(Modules.Weapons.Slugger.instance.itemDef);
+                            itemPool.Add(Modules.Weapons.Magnum.instance.itemDef);
+                            itemPool.Add(Modules.Weapons.Revolver.instance.itemDef);
+                            itemPool.Add(Modules.Weapons.Flamethrower.instance.itemDef);
+                            itemPool.Add(Modules.Weapons.GrenadeLauncher.instance.itemDef);
+                            itemPool.Add(Modules.Weapons.AssaultRifle.instance.itemDef);
+                            itemPool.Add(Modules.Weapons.SMG.laserSight);
+                            itemPool.Add(Modules.Weapons.SMG.extendedMag);
+                            itemPool.Add(Modules.Weapons.MUP.gunStock);
+                            itemPool.Add(Modules.Weapons.Magnum.longBarrel);
+                            itemPool.Add(Modules.Weapons.Revolver.speedloader);
+
+                            // heheheha
+                            if (UnityEngine.Random.value < 0.05f) itemPool.Add(Modules.Weapons.RocketLauncher.instance.itemDef);
+                            if (UnityEngine.Random.value < 0.05f) itemPool.Add(Modules.Weapons.Railgun.instance.itemDef);
+
+                            // shuffle
+                            itemPool.Shuffle<ItemDef>();
+
+                            bool foundWeapon = false;
+                            foreach (ItemDef i in itemPool)
                             {
-                                Modules.Survivors.Hunk.spawnedWeaponList.Add(i);
-                                this.itemDef = i;
-                                foundWeapon = true;
-                                break;
+                                if (!Modules.Helpers.HunkHasWeapon(i) && !Modules.Survivors.Hunk.spawnedWeaponList.Contains(i))
+                                {
+                                    Modules.Survivors.Hunk.spawnedWeaponList.Add(i);
+                                    this.itemDef = i;
+                                    foundWeapon = true;
+                                    break;
+                                }
+                            }
+
+                            if (!foundWeapon && !fuck)
+                            {
+                                // destroy this if no more weanpos are vailbnelne
+                                Destroy(this.gameObject);
                             }
                         }
-
-                        if (!foundWeapon && !fuck)
+                        else
                         {
-                            // destroy this if no more weanpos are vailbnelne
-                            Destroy(this.gameObject);
+                            if (MainPlugin.badaBingBadaBoom) this.itemDef = Modules.Weapons.Flamethrower.instance.itemDef;
+                            else itemDef = Modules.Weapons.GrenadeLauncher.instance.itemDef;
+
+                            MainPlugin.badaBingBadaBoom = !MainPlugin.badaBingBadaBoom;
                         }
                     }
                     else
                     {
-                        if (MainPlugin.badaBingBadaBoom) this.itemDef = Modules.Weapons.Flamethrower.instance.itemDef;
-                        else itemDef = Modules.Weapons.GrenadeLauncher.instance.itemDef;
+                        if (MainPlugin.badaBingBadaBoom) itemDef = Modules.Weapons.Magnum.instance.itemDef;
+                        else itemDef = Modules.Weapons.Revolver.instance.itemDef;
 
                         MainPlugin.badaBingBadaBoom = !MainPlugin.badaBingBadaBoom;
                     }
                 }
                 else
                 {
-                    if (MainPlugin.badaBingBadaBoom) itemDef = Modules.Weapons.Magnum.instance.itemDef;
-                    else itemDef = Modules.Weapons.Revolver.instance.itemDef;
+                    if (Modules.Helpers.HunkHasWeapon(Modules.Weapons.MUP.gunStock))
+                    {
+                        if (MainPlugin.badaBingBadaBoom) itemDef = Modules.Weapons.Shotgun.instance.itemDef;
+                        else itemDef = Modules.Weapons.Slugger.instance.itemDef;
+                    }
+                    else
+                    {
+                        if (MainPlugin.badaBingBadaBoom)
+                        {
+                            if (UnityEngine.Random.value > 0.5f) itemDef = Modules.Weapons.Shotgun.instance.itemDef;
+                            else itemDef = Modules.Weapons.Slugger.instance.itemDef;
+                        }
+                        else itemDef = Modules.Weapons.MUP.gunStock;
+                    }
 
                     MainPlugin.badaBingBadaBoom = !MainPlugin.badaBingBadaBoom;
                 }
-            }
-            else
-            {
-                if (Modules.Helpers.HunkHasWeapon(Modules.Weapons.MUP.gunStock))
-                {
-                    if (MainPlugin.badaBingBadaBoom) itemDef = Modules.Weapons.Shotgun.instance.itemDef;
-                    else itemDef = Modules.Weapons.Slugger.instance.itemDef;
-                }
-                else
-                {
-                    if (MainPlugin.badaBingBadaBoom)
-                    {
-                        if (UnityEngine.Random.value > 0.5f) itemDef = Modules.Weapons.Shotgun.instance.itemDef;
-                        else itemDef = Modules.Weapons.Slugger.instance.itemDef;
-                    }
-                    else itemDef = Modules.Weapons.MUP.gunStock;
-                }
-
-                MainPlugin.badaBingBadaBoom = !MainPlugin.badaBingBadaBoom;
             }
 
             if (sceneName == "goldshores") itemDef = Modules.Weapons.GoldenGun.instance.itemDef;
@@ -368,6 +424,8 @@ namespace HunkMod.Modules.Components
         {
             gunPickup = GetComponentInChildren<HunkGunPickup>();
             gunPickup.GetComponent<GenericPickupController>().enabled = false;
+
+            this.allRandom = Modules.Config.allRandomWeapons.Value;
 
             // weapondef and shit
             Invoke("InitPickup", 1f); // delay it to give time for the player to spawn in, just as a safety measure

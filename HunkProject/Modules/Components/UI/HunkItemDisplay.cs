@@ -9,7 +9,7 @@ namespace HunkMod.Modules.Components.UI
         public float activeTimer;
         public float smoothSpeed = 5f;
         public Vector3 activePosition = new Vector3(0f, -72f, 0f);
-        public Vector3 inactivePosition = new Vector3(0f, 150f, 0f);
+        public Vector3 inactivePosition = new Vector3(0f, 350f, 0f);
 
         private Vector3 desiredPosition;
         private RectTransform rectTransform;

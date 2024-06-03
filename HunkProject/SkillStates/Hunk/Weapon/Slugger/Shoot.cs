@@ -9,7 +9,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Slugger
 {
     public class Shoot : BaseHunkSkillState
     {
-        public static float damageCoefficient = 18f;
+        public static float damageCoefficient = 24f;
         public static float procCoefficient = 1f;
         public float baseDuration = 1.2f;
         public static float bulletRecoil = 8f;
@@ -125,7 +125,12 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Slugger
                     bulletAttack.Fire();
 
                     float _selfForce = this.selfForce;
-                    if (!this.isGrounded) _selfForce *= 1.5f;
+                    if (!this.isGrounded)
+                    {
+                        _selfForce *= 1.25f;
+                        if (this.inputBank.jump.down) _selfForce *= 2f;
+                    }
+
                     this.characterMotor.ApplyForce(aimRay.direction * -_selfForce);
                 }
             }

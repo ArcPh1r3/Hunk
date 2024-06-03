@@ -44,13 +44,14 @@ namespace HunkMod
     {
         public const string MODUID = "com.rob.Hunk";
         public const string MODNAME = "Hunk";
-        public const string MODVERSION = "1.4.5";
+        public const string MODVERSION = "1.4.7";
 
         public const string developerPrefix = "ROB";
 
         public static MainPlugin instance;
 
         public static bool badaBingBadaBoom = false;
+        public static bool spawnedGuaranteedCase = false;
 
         public static bool scepterInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.DestroyedClone.AncientScepter");
         public static bool rooInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");
@@ -60,6 +61,7 @@ namespace HunkMod
         public static bool emptyChestsInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.Elysium.ECBG");
         public static bool unlockAllInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.xoxfaby.UnlockAll");
         public static bool moreShrinesInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.evaisa.moreshrines");
+        public static bool ss2Installed => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.evaisa.moreshrines");
 
         public static List<HurtBox> hurtboxesList = new List<HurtBox>();
         public static List<Modules.Components.HunkProjectileTracker> projectileList = new List<Modules.Components.HunkProjectileTracker>();
@@ -190,6 +192,11 @@ namespace HunkMod
                         {
                             self.moveSpeed /= 1.1f;
                         }
+                    }
+
+                    if (self.inventory.GetItemCount(Modules.Survivors.Hunk.tVirus) > 0)
+                    {
+                        self.armor -= 10f;
                     }
 
                     int sampleCount = self.inventory.GetItemCount(Modules.Survivors.Hunk.gVirusSample) + self.inventory.GetItemCount(Modules.Survivors.Hunk.tVirusSample);

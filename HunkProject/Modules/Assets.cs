@@ -37,6 +37,8 @@ namespace HunkMod.Modules
         public static GameObject virusPositionIndicator;
         public static GameObject tVirusPositionIndicator;
 
+        public static GameObject scannerLineIndicator;
+
         public static Material dodgeOverlayMat;
         public static Material targetOverlayMat;
 
@@ -918,6 +920,20 @@ namespace HunkMod.Modules
 
             tVirusMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/DLC1/VoidJailer/matVoidJailerEyes.mat").WaitForCompletion());
             tVirusMat.SetColor("_EmColor", new Color(44f / 255f, 61f / 255f, 1f, 1f));
+
+            scannerLineIndicator = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Golem/TracerGolem.prefab").WaitForCompletion(), "HunkScannerLineIndicator", false);
+
+            Material lineMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/Teleporters/matTPLunarLightning.mat").WaitForCompletion());
+            //lineMat.SetTexture("_RemapTex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Common/ColorRamps/texRampGolem.png").WaitForCompletion());
+
+            scannerLineIndicator.transform.Find("SmokeBeam").GetComponent<ParticleSystemRenderer>().material = lineMat;
+            scannerLineIndicator.transform.Find("SmokeBeam").localScale = new Vector3(0.5f, 0.025f, 0.025f);
+
+            Tracer scannerTracer = scannerLineIndicator.GetComponent<Tracer>();
+            scannerTracer.length = 45f;
+            scannerTracer.speed = 100f;
+
+            AddNewEffectDef(scannerLineIndicator);
         }
 
         private static GameObject CreateBloodExplosionEffect(string effectName, Material bloodMat, float scale = 1f)

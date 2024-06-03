@@ -1,5 +1,25 @@
 ## Changelog
 
+`1.4.7`
+- Added G-Virus eye displays to the entire basegame enemy cast! SoTV enemies soon
+- EMF Scanner range increased and added new effect making it actually useful
+- Fixed New Game+ config not actually shuffling the weapon pool
+- Fixed default weapon pool also not shuffling like it was supposed to
+
+`1.4.6`
+- Added New Game+ config option for fun
+- Rewrote T-Virus to boost compatibility with other mods
+- T-Virus outbreak victims lowered from 10 to 6, infected enemies now have a -10 armor debuff - T event was way more of a time sink than G, hoping to even that out
+- Holding jump while firing Slugger now doubles the pushback
+- Slugger damage: 1800% > 2400%
+- Lightning Hawk damage: 2400% > 2800%
+- Quickdraw Army damage: 2400% > 2800%
+- Blue Rose damage: 2400x2% > 3800x2%
+- Lively Pots are now always counted as in combat and can be perfect dodged
+- Sentinels from TitansOfTheRift are now counted as Golems, meaning HUNK's camera adapts and his counterattack on them is now a punch
+- M19 fire rate slightly increased and ammo pickup multiplier increased - Gun Stock shot MUP too far ahead so this one's getting a slight boost to keep up
+- Fixed Alien Head boosting ammo amount way more than intended
+
 `1.4.5`
 - Bugfix
 

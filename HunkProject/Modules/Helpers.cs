@@ -100,7 +100,7 @@ namespace HunkMod.Modules
             {
                 foreach (var player in PlayerCharacterMasterController.instances)
                 {
-                    if (player.networkUser.bodyIndexPreference == BodyCatalog.FindBodyIndex(Modules.Survivors.Hunk.bodyName))
+                    if (player.networkUser && player.networkUser.bodyIndexPreference == BodyCatalog.FindBodyIndex(Modules.Survivors.Hunk.bodyName))
                     {
                         if (player.body)
                         {
@@ -139,7 +139,7 @@ namespace HunkMod.Modules
                 int i = 0;
                 foreach (var player in PlayerCharacterMasterController.instances)
                 {
-                    if (player.networkUser.bodyIndexPreference == BodyCatalog.FindBodyIndex(Modules.Survivors.Hunk.bodyName))
+                    if (player.networkUser && player.networkUser.bodyIndexPreference == BodyCatalog.FindBodyIndex(Modules.Survivors.Hunk.bodyName))
                     {
                         i++;
                     }
@@ -190,6 +190,25 @@ namespace HunkMod.Modules
             }
 
             return false;
+        }
+    }
+
+    public static class IListExtensions
+    {
+        /// <summary>
+        /// Shuffles the element order of the specified list.
+        /// </summary>
+        public static void Shuffle<T>(this System.Collections.Generic.IList<T> ts)
+        {
+            var count = ts.Count;
+            var last = count - 1;
+            for (var i = 0; i < last; ++i)
+            {
+                var r = UnityEngine.Random.Range(i, count);
+                var tmp = ts[i];
+                ts[i] = ts[r];
+                ts[r] = tmp;
+            }
         }
     }
 }

@@ -258,10 +258,22 @@ namespace HunkMod.Modules.Components
             if (this.inventory)
             {
                 this.inventory.onInventoryChanged += this.Inventory_onInventoryChanged;
+                this.inventory.onItemAddedClient += Inventory_onItemAddedClient;
             }
 
             this.CheckForNeedler();
             this.CheckForHooks();
+        }
+
+        private void Inventory_onItemAddedClient(ItemIndex obj)
+        {
+            if (this.characterBody.hasAuthority)
+            {
+                if (Modules.Components.UI.HunkItemDisplay.instance)
+                {
+                    Modules.Components.UI.HunkItemDisplay.instance.activeTimer = 3f;
+                }
+            }
         }
 
         public HunkWeaponTracker weaponTracker
@@ -359,14 +371,6 @@ namespace HunkMod.Modules.Components
             if (onInventoryUpdate != null)
             {
                 onInventoryUpdate(this.inventory);
-            }
-
-            if (this.characterBody.hasAuthority)
-            {
-                if (Modules.Components.UI.HunkItemDisplay.instance)
-                {
-                    Modules.Components.UI.HunkItemDisplay.instance.activeTimer = 3f;
-                }
             }
 
             this.CheckForNeedler();
@@ -1154,6 +1158,7 @@ namespace HunkMod.Modules.Components
             if (this.inventory)
             {
                 this.inventory.onInventoryChanged -= this.Inventory_onInventoryChanged;
+                this.inventory.onItemAddedClient -= Inventory_onItemAddedClient;
             }
 
             if (this.speedLines) Destroy(this.speedLines.gameObject);
@@ -1215,8 +1220,8 @@ namespace HunkMod.Modules.Components
             // alien head
             if (this.inventory)
             {
-                float baseMult = 1.25f;
-                if (MainPlugin.greenAlienHeadInstalled) baseMult = 1.1f;
+                float baseMult = 0.25f;
+                if (MainPlugin.greenAlienHeadInstalled) baseMult = 0.1f;
 
                 int alienHeadCount = this.inventory.GetItemCount(RoR2Content.Items.AlienHead);
                 if (alienHeadCount > 0)

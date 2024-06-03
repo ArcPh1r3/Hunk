@@ -36,6 +36,7 @@ namespace HunkMod.Modules
         public static ConfigEntry<bool> originalAmmoPickups;
         public static ConfigEntry<bool> enableRollSnap;
         public static ConfigEntry<bool> depositKeycards;
+        public static ConfigEntry<bool> allRandomWeapons;
         public static ConfigEntry<bool> menuSFX;
         public static ConfigEntry<bool> blacklistHunkItems;
         public static ConfigEntry<bool> overTheShoulderCamera;
@@ -190,6 +191,12 @@ true,
 "Deposit Keycards to Inventory",
 false,
 "Set to true to make Keycards directly enter your inventory instead of dropping as an item.");
+
+            allRandomWeapons
+= Config.BindAndOptions("01 - General",
+"New Game+",
+false,
+"Set to true to fully randomize all the weapons inside cases, barring special ones.", false);
 
             menuSFX
 = Config.BindAndOptions("01 - General",
