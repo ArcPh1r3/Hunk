@@ -45,7 +45,7 @@ namespace HunkMod.Modules.Components
             this.search.mask = LayerIndex.entityPrecise.mask;
             this.search.radius = this.infectionRadius;
 
-            if (NetworkServer.active) this.InvokeRepeating("AttemptSpread", 0f, 1f);
+            //if (NetworkServer.active) this.InvokeRepeating("AttemptSpread", 0f, 1f);
             this.InvokeRepeating("AddOverlay", 0.2f, 40f);
         }
 

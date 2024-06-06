@@ -19,6 +19,7 @@ namespace HunkMod.Modules
         public static ConfigEntry<bool> capInfection;
         public static ConfigEntry<bool> gCanInfectBosses;
         public static ConfigEntry<bool> tCanInfectBosses;
+        public static ConfigEntry<bool> cCanInfectBosses;
         public static ConfigEntry<bool> globalInfectionSound;
         public static ConfigEntry<bool> customEscapeSequence;
         public static ConfigEntry<bool> permanentInfectionEvent;
@@ -89,6 +90,12 @@ true,
 "T-Virus Can Infect Bosses",
 false,
 "If set to true, T-Virus will be allowed to infect boss monsters.");
+
+            cCanInfectBosses
+= Config.BindAndOptions("01 - General",
+"C-Virus Can Infect Bosses",
+true,
+"If set to true, C-Virus will be allowed to infect boss monsters.");
 
             globalInfectionSound
 = Config.BindAndOptions("01 - General",

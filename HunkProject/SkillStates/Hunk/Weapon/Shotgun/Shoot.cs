@@ -37,8 +37,9 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Shotgun
             this.isCrit = base.RollCrit();
             this.earlyExitTime = 1f * this.duration;
 
-            if (this.isCrit) Util.PlaySound("sfx_hunk_riot_shotgun_shoot_critical", base.gameObject);
-            else Util.PlaySound("sfx_hunk_riot_shotgun_shoot", base.gameObject);
+            //if (this.isCrit) Util.PlaySound("sfx_hunk_riot_shotgun_shoot_critical", base.gameObject);
+            // else Util.PlaySound("sfx_hunk_riot_shotgun_shoot", base.gameObject);
+            Util.PlaySound("sfx_hunk_shotgun_fire", this.gameObject);
 
             this.PlayAnimation("Gesture, Override", "ShootShotgun", "Shoot.playbackRate", this.duration * 1.2f);
 

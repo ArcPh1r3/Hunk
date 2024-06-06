@@ -36,6 +36,7 @@ namespace HunkMod.Modules
         public static GameObject headshotEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Junk/Common/VFX/WeakPointProcEffect.prefab").WaitForCompletion();
         public static GameObject virusPositionIndicator;
         public static GameObject tVirusPositionIndicator;
+        public static GameObject cVirusPositionIndicator;
 
         public static GameObject scannerLineIndicator;
 
@@ -45,6 +46,9 @@ namespace HunkMod.Modules
         public static Material virusBodyMat;
         public static Material tVirusBodyMat;
         public static Material tVirusOverlay;
+
+        public static Material cVirusBodyMat;
+        public static Material cVirusOverlay;
 
         public static Material shieldOverlayMat;
         public static Material voidShieldOverlayMat;
@@ -105,9 +109,11 @@ namespace HunkMod.Modules
         public static GameObject uroborosEffect;
 
         public static GameObject tarExplosion;
+        public static GameObject cVirusExplosion;
 
         internal static Material woundOverlayMat;
         public static Material tVirusMat;
+        public static Material cVirusMat;
 
         internal static TMP_FontAsset hgFont;
 
@@ -189,6 +195,12 @@ namespace HunkMod.Modules
             foreach (SpriteRenderer i in tVirusPositionIndicator.GetComponentsInChildren<SpriteRenderer>())
             {
                 if (i) i.color = new Color(28f / 255f, 69f / 255f, 1f);
+            }
+
+            cVirusPositionIndicator = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/BossPositionIndicator.prefab").WaitForCompletion().InstantiateClone("HunkVirusPositionIndicator", false);
+            foreach (SpriteRenderer i in cVirusPositionIndicator.GetComponentsInChildren<SpriteRenderer>())
+            {
+                if (i) i.color = Color.red;// new Color(28f / 255f, 69f / 255f, 1f);
             }
 
             headshotOverlay = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/Railgunner/RailgunnerScopeLightOverlay.prefab").WaitForCompletion().InstantiateClone("HunkHeadshotOverlay", false);
@@ -878,7 +890,8 @@ namespace HunkMod.Modules
 
             AddNewEffectDef(uroborosEffect);
 
-            tarExplosion = CreateBloodExplosionEffect("HunkTarBloodExplosion", Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/VFX/matBloodClayLarge.mat").WaitForCompletion());
+            tarExplosion = CreateBloodExplosionEffect("HunkTarBloodExplosion", Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/VFX/matBloodClayLarge.mat").WaitForCompletion(), 2f);
+            cVirusExplosion = CreateBloodExplosionEffect("HunkTarBloodExplosion", Addressables.LoadAssetAsync<Material>("RoR2/Base/Titan/matTitanLaserGlob.mat").WaitForCompletion(), 2f, 0.3f);
 
             Material sparkleMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/Firework/matFireworkSparkle.mat").WaitForCompletion());
             sparkleMat.SetColor("_TintColor", new Color(1f, 47f / 255f, 0f, 1f));
@@ -921,6 +934,26 @@ namespace HunkMod.Modules
             tVirusMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/DLC1/VoidJailer/matVoidJailerEyes.mat").WaitForCompletion());
             tVirusMat.SetColor("_EmColor", new Color(44f / 255f, 61f / 255f, 1f, 1f));
 
+            cVirusBodyMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/ArmorReductionOnHit/matPulverizedOverlay.mat").WaitForCompletion());
+            cVirusBodyMat.SetColor("_TintColor", Color.red/*new Color(28f / 255f, 69f / 255f, 1f)*/);
+            cVirusBodyMat.SetTexture("_RemapTex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Common/ColorRamps/texRampDeathmark.png").WaitForCompletion());
+            cVirusBodyMat.SetFloat("_Boost", 3f);
+            cVirusBodyMat.SetFloat("_AlphaBoost", 3f);
+            cVirusBodyMat.SetFloat("_AlphaBias", 0.4f);
+            cVirusBodyMat.SetTexture("_Cloud1Tex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Common/texCloudWhitenoiseNormal.png").WaitForCompletion());
+
+            cVirusOverlay = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/ArmorReductionOnHit/matPulverizedOverlay.mat").WaitForCompletion());
+            cVirusOverlay.SetColor("_TintColor", Color.red/*new Color(28f / 255f, 69f / 255f, 1f)*/);
+            cVirusOverlay.SetTexture("_MainTex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Common/texCloudCaustic1.jpg").WaitForCompletion());
+            cVirusOverlay.SetTexture("_RemapTex", Addressables.LoadAssetAsync<Texture>("RoR2/DLC1/VoidSurvivor/texRampVoidSurvivorCorrupted1.png").WaitForCompletion());
+            cVirusOverlay.SetFloat("_Boost", 10f);
+            cVirusOverlay.SetFloat("_AlphaBoost", 17f);
+            cVirusOverlay.SetFloat("_AlphaBias", 0.15f);
+            cVirusOverlay.SetTexture("_Cloud1Tex", Addressables.LoadAssetAsync<Texture>("RoR2/Base/Common/texCloudWhitenoiseNormal.png").WaitForCompletion());
+
+            cVirusMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/DLC1/VoidJailer/matVoidJailerEyes.mat").WaitForCompletion());
+            cVirusMat.SetColor("_EmColor", Color.red/*new Color(44f / 255f, 61f / 255f, 1f, 1f)*/);
+
             scannerLineIndicator = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Golem/TracerGolem.prefab").WaitForCompletion(), "HunkScannerLineIndicator", false);
 
             Material lineMat = Material.Instantiate(Addressables.LoadAssetAsync<Material>("RoR2/Base/Teleporters/matTPLunarLightning.mat").WaitForCompletion());
@@ -936,7 +969,7 @@ namespace HunkMod.Modules
             AddNewEffectDef(scannerLineIndicator);
         }
 
-        private static GameObject CreateBloodExplosionEffect(string effectName, Material bloodMat, float scale = 1f)
+        private static GameObject CreateBloodExplosionEffect(string effectName, Material bloodMat, float scale = 1f, float lifetimeModifier = 1f)
         {
             GameObject newEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Brother/BrotherSlamImpact.prefab").WaitForCompletion().InstantiateClone(effectName, true);
 
@@ -955,18 +988,25 @@ namespace HunkMod.Modules
             newEffect.transform.Find("Fire").GetComponent<ParticleSystemRenderer>().material = bloodMat;
 
             var sex = newEffect.transform.Find("Fire").GetComponent<ParticleSystem>().main;
-            sex.startLifetimeMultiplier = 1.85f;
+            sex.startLifetimeMultiplier = 1.85f * lifetimeModifier;
             sex = newEffect.transform.Find("Flash Lines, Fire").GetComponent<ParticleSystem>().main;
-            sex.startLifetimeMultiplier = 1.53f;
+            sex.startLifetimeMultiplier = 1.53f * lifetimeModifier;
             sex = newEffect.transform.GetChild(6).GetComponent<ParticleSystem>().main;
-            sex.startLifetimeMultiplier = 1.74f;
+            sex.startLifetimeMultiplier = 1.74f * lifetimeModifier;
 
             newEffect.transform.Find("Physics").GetComponent<ParticleSystemRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Base/MagmaWorm/matFracturedGround.mat").WaitForCompletion();
 
-            newEffect.transform.Find("Decal").GetComponent<Decal>().Material = Addressables.LoadAssetAsync<Material>("RoR2/Base/ClayBruiser/matClayGooDecalLong.mat").WaitForCompletion();
-            newEffect.transform.Find("Decal").GetComponent<AnimateShaderAlpha>().timeMax = 80f;
-            newEffect.transform.Find("Decal").transform.localPosition = Vector3.zero;
-            newEffect.transform.Find("Decal").transform.localScale = Vector3.one * 24f;
+            if (lifetimeModifier < 1f)
+            {
+                newEffect.transform.Find("Decal").gameObject.SetActive(false);
+            }
+            else
+            {
+                newEffect.transform.Find("Decal").GetComponent<Decal>().Material = Addressables.LoadAssetAsync<Material>("RoR2/Base/ClayBruiser/matClayGooDecalLong.mat").WaitForCompletion();
+                newEffect.transform.Find("Decal").GetComponent<AnimateShaderAlpha>().timeMax = 80f;
+                newEffect.transform.Find("Decal").transform.localPosition = Vector3.zero;
+                newEffect.transform.Find("Decal").transform.localScale = Vector3.one * 24f;
+            }
 
             newEffect.transform.Find("FoamSplash").gameObject.SetActive(false);
             newEffect.transform.Find("FoamBilllboard").gameObject.SetActive(false);

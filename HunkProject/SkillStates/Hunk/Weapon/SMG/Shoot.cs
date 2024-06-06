@@ -8,7 +8,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.SMG
     {
         public static float damageCoefficient = 3f;
         public static float procCoefficient = 1f;
-        public static float baseDuration = 0.185f;
+        public static float baseDuration = 0.175f;
         public static float force = 20f;
         public static float recoil = 1.35f;
         public static float range = 2000f;

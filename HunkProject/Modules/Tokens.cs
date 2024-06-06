@@ -84,13 +84,13 @@ namespace HunkMod.Modules
             LanguageAPI.Add(prefix + "SHOOT_M19_DESCRIPTION", "Shoot for <style=cIsDamage>700% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
 
             LanguageAPI.Add(prefix + "SHOOT_MAGNUM_NAME", "Fire");
-            LanguageAPI.Add(prefix + "SHOOT_MAGNUM_DESCRIPTION", "Shoot for <style=cIsDamage>2800% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
+            LanguageAPI.Add(prefix + "SHOOT_MAGNUM_DESCRIPTION", "Shoot for <style=cIsDamage>3200% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
 
             LanguageAPI.Add(prefix + "SHOOT_MUP_NAME", "Fire");
             LanguageAPI.Add(prefix + "SHOOT_MUP_DESCRIPTION", "Shoot for <style=cIsDamage>320% damage</style>. <style=cIsUtility>25% headshot bonus.</style>");
 
             LanguageAPI.Add(prefix + "SHOOT_REVOLVER_NAME", "Fire");
-            LanguageAPI.Add(prefix + "SHOOT_REVOLVER_DESCRIPTION", "Shoot for <style=cIsDamage>2800% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
+            LanguageAPI.Add(prefix + "SHOOT_REVOLVER_DESCRIPTION", "Shoot for <style=cIsDamage>3200% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
 
             LanguageAPI.Add(prefix + "SHOOT_GOLDGUN_NAME", "Fire");
             LanguageAPI.Add(prefix + "SHOOT_GOLDGUN_DESCRIPTION", "Shoot for <style=cIsDamage>99999% damage</style>. <style=cIsUtility>50% headshot bonus.</style>");
@@ -209,6 +209,9 @@ namespace HunkMod.Modules
 
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_T_VIRUS_SAMPLE_NAME", "T-Virus Sample");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_T_VIRUS_SAMPLE_DESC", "Volatile sample of the <color=#" + Helpers.lunarItemHex + ">Tyrant Virus" + Helpers.colorSuffix + ". <style=cIsHealth>Handle with care.</style>");
+
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_C_VIRUS_SAMPLE_NAME", "C-Virus Sample");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_C_VIRUS_SAMPLE_DESC", "Volatile sample of the <color=#" + Helpers.redItemHex + ">Chrysalid Virus" + Helpers.colorSuffix + ". <style=cIsHealth>Handle with care.</style>");
 
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_HEARTCHEST_NAME", "Heart-Key Weapon Case");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_HEARTCHEST_CONTEXT", "Open Heart-Key Weapon Case");

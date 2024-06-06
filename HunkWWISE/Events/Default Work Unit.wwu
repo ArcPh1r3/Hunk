@@ -1092,6 +1092,39 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="sfx_hunk_cvirus_stinger" ID="{0BCB43FB-2770-4D2D-BE6E-F3D334517581}">
+					<ChildrenList>
+						<Action Name="" ID="{507D1D8D-1903-43F1-9E59-6EB3DBE6738C}" ShortID="831006742">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_cvirus_stinger" ID="{9D296050-A3AC-46AA-9CC8-8385C9C54865}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_cvirus_proc" ID="{CE32341D-9D8C-47D2-B251-8C9123053FE9}">
+					<ChildrenList>
+						<Action Name="" ID="{EE1A7D24-EC4B-4752-A551-BAD7418DEB04}" ShortID="981460873">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_cvirus_procced" ID="{0E71E351-2449-42D2-A4DA-BFE514B108ED}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_shotgun_fire" ID="{0AED23C1-481F-4813-BEB5-C470A7703F0C}">
+					<ChildrenList>
+						<Action Name="" ID="{F5C06719-D867-4365-8CB9-E77CCA5B702B}" ShortID="1049133256">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="shotgun_shoot" ID="{02D35BBC-AFA8-4BC1-9E6D-CF9EE2E8013B}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

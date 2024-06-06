@@ -15,7 +15,7 @@ namespace HunkMod.Modules.Misc
                 return false;
 
             int cost = context.cost;
-            int itemCount = inv.GetItemCount(Modules.Survivors.Hunk.gVirusSample) + inv.GetItemCount(Modules.Survivors.Hunk.tVirusSample);
+            int itemCount = inv.GetItemCount(Modules.Survivors.Hunk.gVirusSample) + inv.GetItemCount(Modules.Survivors.Hunk.tVirusSample) + +inv.GetItemCount(Modules.Survivors.Hunk.cVirusSample);
 
             if (itemCount >= cost)
                 return true;
@@ -36,6 +36,13 @@ namespace HunkMod.Modules.Misc
             {
                 context.activatorMaster.inventory.RemoveItem(Modules.Survivors.Hunk.tVirusSample);
                 Modules.Helpers.CreateItemTakenOrb(context.activatorBody.corePosition, context.purchasedObject, Modules.Survivors.Hunk.tVirusSample.itemIndex);
+                return;
+            }
+
+            if (context.activatorMaster.inventory.GetItemCount(Modules.Survivors.Hunk.cVirusSample) > 0)
+            {
+                context.activatorMaster.inventory.RemoveItem(Modules.Survivors.Hunk.cVirusSample);
+                Modules.Helpers.CreateItemTakenOrb(context.activatorBody.corePosition, context.purchasedObject, Modules.Survivors.Hunk.cVirusSample.itemIndex);
                 return;
             }
         }

@@ -12,6 +12,7 @@ namespace HunkMod.Modules
         internal static GameObject VirusEye;
         internal static GameObject GVirusSample;
         internal static GameObject TVirusSample;
+        internal static GameObject CVirusSample;
         internal static GameObject SpadeKeycard;
         internal static GameObject ClubKeycard;
         internal static GameObject HeartKeycard;
@@ -121,6 +122,46 @@ namespace HunkMod.Modules
                     ignoreOverlays = false,
                     defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
                     renderer = TVirusSample.transform.Find("Model/30_MainMesh-2-SubMesh-1--sm74-201-Gvirus01_0.3_16_16").GetComponent<MeshRenderer>()
+                }
+            };
+
+            CVirusSample = Assets.mainAssetBundle.LoadAsset<GameObject>("DisplayCVirusSample");
+            //Modules.Assets.ConvertAllRenderersToHopooShader(TVirusSample);
+
+            CVirusSample.transform.Find("Model").GetComponent<MeshRenderer>().material = Modules.Assets.CreateMaterial("matCVirusSample", 1f, Color.white, 1f);
+            CVirusSample.transform.Find("Model/Glass").GetComponent<MeshRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/HealingPotion/matHealingPotionGlass.mat").WaitForCompletion();
+            CVirusSample.transform.Find("Model/Glass2").GetComponent<MeshRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/HealingPotion/matHealingPotionGlass.mat").WaitForCompletion();
+            CVirusSample.transform.Find("Model/30_MainMesh-2-SubMesh-1--sm74-201-Gvirus01_0.3_16_16").GetComponent<MeshRenderer>().material = Modules.Assets.cVirusMat;
+
+            CVirusSample.AddComponent<ItemDisplay>().rendererInfos = new CharacterModel.RendererInfo[]
+            {
+                new CharacterModel.RendererInfo
+                {
+                    defaultMaterial = Modules.Assets.CreateMaterial("matCVirusSample", 1f, Color.white, 1f),
+                    ignoreOverlays = false,
+                    defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
+                    renderer = CVirusSample.transform.Find("Model").GetComponent<MeshRenderer>()
+                },
+                new CharacterModel.RendererInfo
+                {
+                    defaultMaterial = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/HealingPotion/matHealingPotionGlass.mat").WaitForCompletion(),
+                    ignoreOverlays = false,
+                    defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
+                    renderer = CVirusSample.transform.Find("Model/Glass").GetComponent<MeshRenderer>()
+                },
+                new CharacterModel.RendererInfo
+                {
+                    defaultMaterial = Addressables.LoadAssetAsync<Material>("RoR2/DLC1/HealingPotion/matHealingPotionGlass.mat").WaitForCompletion(),
+                    ignoreOverlays = false,
+                    defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
+                    renderer = CVirusSample.transform.Find("Model/Glass2").GetComponent<MeshRenderer>()
+                },
+                new CharacterModel.RendererInfo
+                {
+                    defaultMaterial = Modules.Assets.cVirusMat,
+                    ignoreOverlays = false,
+                    defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
+                    renderer = CVirusSample.transform.Find("Model/30_MainMesh-2-SubMesh-1--sm74-201-Gvirus01_0.3_16_16").GetComponent<MeshRenderer>()
                 }
             };
 

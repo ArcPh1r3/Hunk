@@ -9,7 +9,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Magnum
 {
     public class Shoot : BaseHunkSkillState
     {
-        public static float damageCoefficient = 28f;
+        public static float damageCoefficient = 32f;
         public static float procCoefficient = 1f;
         public static float baseDuration = 0.8f;
         public static float force = 1500f;
@@ -57,10 +57,12 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Magnum
                 base.AddRecoil2(-1f * recoilAmplitude, -2f * recoilAmplitude, -0.5f * recoilAmplitude, 0.5f * recoilAmplitude);
 
                 float dmg = Shoot.damageCoefficient;
+                BulletAttack.FalloffModel falloff = BulletAttack.FalloffModel.DefaultBullet;
 
                 if (this.characterBody.inventory && this.characterBody.inventory.GetItemCount(Modules.Weapons.Magnum.longBarrel) > 0)
                 {
-                    dmg = 32f;
+                    dmg = 48f;
+                    falloff = BulletAttack.FalloffModel.None;
                 }
 
                 BulletAttack bulletAttack = new BulletAttack
@@ -71,7 +73,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Magnum
                     damage = dmg * this.damageStat,
                     damageColorIndex = DamageColorIndex.Default,
                     damageType = DamageType.Generic,
-                    falloffModel = BulletAttack.FalloffModel.DefaultBullet,
+                    falloffModel = falloff,
                     maxDistance = Shoot.range,
                     force = Shoot.force,
                     hitMask = LayerIndex.CommonMasks.bullet,

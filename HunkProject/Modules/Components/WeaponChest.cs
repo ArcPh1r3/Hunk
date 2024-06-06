@@ -61,12 +61,15 @@ namespace HunkMod.Modules.Components
                 itemPool.Add(Modules.Weapons.Flamethrower.instance.itemDef);
                 itemPool.Add(Modules.Weapons.GrenadeLauncher.instance.itemDef);
                 itemPool.Add(Modules.Weapons.AssaultRifle.instance.itemDef);
-                itemPool.Add(Modules.Weapons.M19.instance.itemDef);
-                itemPool.Add(Modules.Weapons.SMG.laserSight);
-                itemPool.Add(Modules.Weapons.SMG.extendedMag);
-                itemPool.Add(Modules.Weapons.MUP.gunStock);
-                itemPool.Add(Modules.Weapons.Magnum.longBarrel);
-                itemPool.Add(Modules.Weapons.Revolver.speedloader);
+                //itemPool.Add(Modules.Weapons.M19.instance.itemDef);
+                if (Modules.Helpers.HunkHasWeapon(Modules.Weapons.SMG.instance.weaponDef))
+                {
+                    itemPool.Add(Modules.Weapons.SMG.laserSight);
+                    itemPool.Add(Modules.Weapons.SMG.extendedMag);
+                }
+                if (Modules.Helpers.HunkHasWeapon(Modules.Weapons.MUP.instance.weaponDef)) itemPool.Add(Modules.Weapons.MUP.gunStock);
+                if (Modules.Helpers.HunkHasWeapon(Modules.Weapons.Magnum.instance.weaponDef)) itemPool.Add(Modules.Weapons.Magnum.longBarrel);
+                if (Modules.Helpers.HunkHasWeapon(Modules.Weapons.Revolver.instance.weaponDef)) itemPool.Add(Modules.Weapons.Revolver.speedloader);
 
                 // heheheha
                 if (UnityEngine.Random.value < 0.2f) itemPool.Add(Modules.Weapons.RocketLauncher.instance.itemDef);
@@ -116,11 +119,14 @@ namespace HunkMod.Modules.Components
                             itemPool.Add(Modules.Weapons.Flamethrower.instance.itemDef);
                             itemPool.Add(Modules.Weapons.GrenadeLauncher.instance.itemDef);
                             itemPool.Add(Modules.Weapons.AssaultRifle.instance.itemDef);
-                            itemPool.Add(Modules.Weapons.SMG.laserSight);
-                            itemPool.Add(Modules.Weapons.SMG.extendedMag);
-                            itemPool.Add(Modules.Weapons.MUP.gunStock);
-                            itemPool.Add(Modules.Weapons.Magnum.longBarrel);
-                            itemPool.Add(Modules.Weapons.Revolver.speedloader);
+                            if (Modules.Helpers.HunkHasWeapon(Modules.Weapons.SMG.instance.weaponDef))
+                            {
+                                itemPool.Add(Modules.Weapons.SMG.laserSight);
+                                itemPool.Add(Modules.Weapons.SMG.extendedMag);
+                            }
+                            if (Modules.Helpers.HunkHasWeapon(Modules.Weapons.MUP.instance.weaponDef)) itemPool.Add(Modules.Weapons.MUP.gunStock);
+                            if (Modules.Helpers.HunkHasWeapon(Modules.Weapons.Magnum.instance.weaponDef)) itemPool.Add(Modules.Weapons.Magnum.longBarrel);
+                            if (Modules.Helpers.HunkHasWeapon(Modules.Weapons.Revolver.instance.weaponDef)) itemPool.Add(Modules.Weapons.Revolver.speedloader);
 
                             // heheheha
                             if (UnityEngine.Random.value < 0.05f) itemPool.Add(Modules.Weapons.RocketLauncher.instance.itemDef);

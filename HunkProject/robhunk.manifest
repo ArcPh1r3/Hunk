@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1608668372
+CRC: 4279671197
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1f803c99a711dbef8194dbe773fa0665
+    Hash: 3db4a67a1d4d21d2d1f9f6504f5d3368
   TypeTreeHash:
     serializedVersion: 2
     Hash: 578f72f44b5a2ccce06c5be12e40e453
@@ -141,9 +141,11 @@ Assets:
 - Assets/Hunk/HUD/Textures/texBlankFill.png
 - Assets/Hunk/VFX/matSpeedLine.mat
 - Assets/Hunk/VFX/matSpike.mat
+- Assets/Hunk/Items/mdlCVirusSample.prefab
 - Assets/Hunk/Animations/VirusEye/Spawn.anim
 - Assets/Hunk/Animations/WeaponCase/Idle.anim
 - Assets/Hunk/Textures/Grenade/Leon_Grenade_N.png
+- Assets/Hunk/Icons/Item/texMaskSample.png
 - Assets/Hunk/Animations/Rocket/Descend.anim
 - Assets/Hunk/VFX/ShotgunShell.prefab
 - Assets/Hunk/Textures/Matilda/Leon_VP70Custom_N.png
@@ -198,6 +200,7 @@ Assets:
 - Assets/Hunk/Items/mdlSpeedloader.prefab
 - Assets/Hunk/Items/mdlKeycardMaster.prefab
 - Assets/Hunk/HunkDisplay.prefab
+- Assets/Hunk/Textures/GVirus/sm74_201_GVirus01A_A_ALBM 2.png
 - Assets/Hunk/Animations/Default/AirDodgePerfectLoop.anim
 - Assets/Hunk/Icons/Weapon/texGrenadeLauncherIcon.png
 - Assets/Hunk/Icons/texLightweightSkin.png
@@ -236,6 +239,7 @@ Assets:
 - Assets/Hunk/Textures/Magnum/Leon_LightningHawkLongBarrel_D.png
 - Assets/Hunk/Textures/DisplayCase/M_Weapon_Case_albedo.jpeg
 - Assets/Hunk/Animations/animHunk.controller
+- Assets/Hunk/Materials/matCVirusSample.mat
 - Assets/Hunk/Materials/matKeyCardSpadeOld.mat
 - Assets/Hunk/Animations/VirusEye/animVirusEye.controller
 - Assets/Hunk/Animations/Default/AimYaw.anim
@@ -416,8 +420,10 @@ Assets:
 - Assets/Hunk/Animations/Pistol/SprintFast.anim
 - Assets/Hunk/Items/mdlWristband.prefab
 - Assets/Hunk/Icons/Skill/texPassiveIcon.png
+- Assets/Hunk/Items/DisplayCVirusSample.prefab
 - Assets/Hunk/Weapons/mdlRevolverPickup.prefab
 - Assets/Hunk/Textures/Magnum/Leon_LightningHawkSight_D.png
+- Assets/Hunk/Icons/Item/texCVirusSampleIcon.png
 - Assets/Hunk/Textures/Keycard/texKeycardNormal.png
 - Assets/Hunk/Textures/jacket_albm.png
 - Assets/Hunk/Materials/matFlashlight.mat
@@ -633,6 +639,7 @@ Assets:
 - Assets/Hunk/Textures/Tofu/texTofuNormal.png
 - Assets/Hunk/Icons/texTofuAchievement.png
 - Assets/Hunk/Weapons/mdlGrenadeLauncher.prefab
+- Assets/Hunk/Textures/GVirus/sm74_201_Gvirus01A_A_EMI 2.png
 - Assets/Hunk/Textures/Misc/texShell.png
 - Assets/Hunk/Textures/Wesker/T_K29Torso006_BC.png
 - Assets/Hunk/Animations/WeaponCase/animWeaponCase.controller

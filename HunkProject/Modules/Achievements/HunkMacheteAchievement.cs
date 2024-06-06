@@ -48,7 +48,7 @@ namespace HunkMod.Modules.Achievements
                     HunkController hunk = player.body.GetComponent<HunkController>();
                     if (hunk)
                     {
-                        if (hunk.weaponTracker.usedAmmoThisStage)
+                        if (!hunk.weaponTracker.usedAmmoThisStage)
                         {
                             if (base.meetsBodyRequirement)
                             {

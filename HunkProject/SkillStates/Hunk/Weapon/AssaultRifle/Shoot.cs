@@ -8,7 +8,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.AssaultRifle
     {
         public static float damageCoefficient = 3.85f;
         public static float procCoefficient = 1f;
-        public static float baseDuration = 0.35f;
+        public static float baseDuration = 0.225f;
         public static float force = 40f;
         public static float recoil = 0.5f;
         public static float range = 5000f;

@@ -1,5 +1,30 @@
 ## Changelog
 
+`1.5.3`
+- Slightly increased LE 5 fire rate
+- Increased CQBR Assault Rifle fire rate
+- Lightning Hawk damage: 2800% > 3200%
+- Quickdraw Army damage: 2800% > 3200%
+- Long Barrel (Lightning Hawk) damage boost: 3200% > 4800%, now also removes distance falloff
+- M19 distance falloff removed
+- Weapon attachments now only show up in cases if you have the corresponding weapon
+- Potentially fixed C-Virus never actually showing up? code seemed right to me but unity documentation seems to disagree so idk..
+
+`1.5.2`
+- Fixed broken unlock
+
+`1.5.1`
+- Removed leftover debugging code
+
+`1.5.0`
+- Added new virus event: C-Virus Outbreak
+- C-Virus causes enemies to fully heal once killed, becoming invulnerable and frenzied for the next 8 seconds, after which they will self detonate
+- C-Virus events have 10 enemies and drop a C-Virus Sample when the last one dies
+- Added G-Virus eye displays to the SoTV enemies, making them 100% complete barring mod enemies (maybe one day)
+- Added weapon case placements to Bob-omb Battlefield
+- HUNK's multiplayer item protection is now disabled when there is no one playing HUNK (weird edge case)
+- Fixed new items not using HUNK's multiplayer protection system
+
 `1.4.7`
 - Added G-Virus eye displays to the entire basegame enemy cast! SoTV enemies soon
 - EMF Scanner range increased and added new effect making it actually useful

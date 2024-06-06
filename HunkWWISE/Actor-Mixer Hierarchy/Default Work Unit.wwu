@@ -2920,6 +2920,11 @@
 									<PropertyList>
 										<Property Name="3DSpatialization" Type="int16" Value="1"/>
 										<Property Name="OverridePositioning" Type="bool" Value="True"/>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>5</Value>
+											</ValueList>
+										</Property>
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Attenuation">
@@ -5601,6 +5606,158 @@
 										<ActiveSource Name="sfx_hunk_tvirus_proc" ID="{0376C778-5A86-4554-BA90-28D9929184C9}" Platform="Linked"/>
 									</ActiveSourceList>
 								</Sound>
+								<Sound Name="sfx_hunk_cvirus_procced" ID="{0E71E351-2449-42D2-A4DA-BFE514B108ED}" ShortID="654140321">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{92A1A0F3-7047-4165-95AE-D5CFCC30AE61}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="sfx_hunk_cvirus_procced" ID="{05B572B6-3040-441A-A025-390D700E6506}">
+											<Language>SFX</Language>
+											<AudioFile>sfx_hunk_cvirus_procced.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="307078324"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="sfx_hunk_cvirus_procced" ID="{05B572B6-3040-441A-A025-390D700E6506}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="sfx_hunk_key_jingle" ID="{90110F8F-CC17-4165-AC60-4D01540F4047}" ShortID="1020644587">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{92A1A0F3-7047-4165-95AE-D5CFCC30AE61}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="sfx_hunk_key_jingle" ID="{B4AC06E9-EA96-4561-BA35-A5F41971031F}">
+											<Language>SFX</Language>
+											<AudioFile>sfx_hunk_key_jingle.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="173875542"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="sfx_hunk_key_jingle" ID="{B4AC06E9-EA96-4561-BA35-A5F41971031F}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<RandomSequenceContainer Name="shotgun_shoot" ID="{02D35BBC-AFA8-4BC1-9E6D-CF9EE2E8013B}" ShortID="702222534">
+									<PropertyList>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>4</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{92A1A0F3-7047-4165-95AE-D5CFCC30AE61}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="sfx_hunk_shotgun_fire_03" ID="{07826472-E237-485D-86E2-7006DD526B26}" ShortID="190960274">
+											<PropertyList>
+												<Property Name="3DSpatialization" Type="int16" Value="1"/>
+												<Property Name="Volume" Type="Real64">
+													<ValueList>
+														<Value>2</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Attenuation">
+													<ObjectRef Name="Default Attenuation" ID="{1C16C885-97A9-48B9-99CA-62239B098C14}" WorkUnitID="{E9A01ADD-D16C-4AEF-92DB-DCF89FC42AD2}"/>
+												</Reference>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{92A1A0F3-7047-4165-95AE-D5CFCC30AE61}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="sfx_hunk_shotgun_fire_03" ID="{65FC7989-9C2E-4EE1-8DFD-E67EAEB463C2}">
+													<Language>SFX</Language>
+													<AudioFile>sfx_hunk_shotgun_fire_03.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="812727309"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="sfx_hunk_shotgun_fire_03" ID="{65FC7989-9C2E-4EE1-8DFD-E67EAEB463C2}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="sfx_hunk_shotgun_fire_01" ID="{7918AF63-0B88-4384-809C-FF9F4E4A86B2}" ShortID="80006670">
+											<PropertyList>
+												<Property Name="3DSpatialization" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Attenuation">
+													<ObjectRef Name="Default Attenuation" ID="{1C16C885-97A9-48B9-99CA-62239B098C14}" WorkUnitID="{E9A01ADD-D16C-4AEF-92DB-DCF89FC42AD2}"/>
+												</Reference>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{92A1A0F3-7047-4165-95AE-D5CFCC30AE61}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="sfx_hunk_shotgun_fire_01" ID="{B1D6FF26-A201-4706-A4F4-E5CDE8177741}">
+													<Language>SFX</Language>
+													<AudioFile>sfx_hunk_shotgun_fire_01.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="406482943"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="sfx_hunk_shotgun_fire_01" ID="{B1D6FF26-A201-4706-A4F4-E5CDE8177741}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="sfx_hunk_shotgun_fire_02" ID="{A45BFABC-1AFE-4DB4-8ECA-D6F59419CCBE}" ShortID="286918281">
+											<PropertyList>
+												<Property Name="3DSpatialization" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Attenuation">
+													<ObjectRef Name="Default Attenuation" ID="{1C16C885-97A9-48B9-99CA-62239B098C14}" WorkUnitID="{E9A01ADD-D16C-4AEF-92DB-DCF89FC42AD2}"/>
+												</Reference>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{92A1A0F3-7047-4165-95AE-D5CFCC30AE61}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="sfx_hunk_shotgun_fire_02" ID="{7AAEAAB7-E01A-4BA1-B71A-1912E78AF257}">
+													<Language>SFX</Language>
+													<AudioFile>sfx_hunk_shotgun_fire_02.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="344376396"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="sfx_hunk_shotgun_fire_02" ID="{7AAEAAB7-E01A-4BA1-B71A-1912E78AF257}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</RandomSequenceContainer>
 							</ChildrenList>
 						</ActorMixer>
 						<Sound Name="sfx_driver_explosion" ID="{FD8D7F5F-8FF7-41A0-BC29-86BDA8782570}" ShortID="639982188">
@@ -6084,6 +6241,36 @@
 									</ChildrenList>
 									<ActiveSourceList>
 										<ActiveSource Name="sfx_hunk_dodge_perfect2" ID="{B54442BD-EA78-4053-AEC8-067ED7671389}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="sfx_hunk_cvirus_stinger" ID="{9D296050-A3AC-46AA-9CC8-8385C9C54865}" ShortID="172687312">
+									<PropertyList>
+										<Property Name="OverridePositioning" Type="bool" Value="True"/>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>-5</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{140D52C2-62AC-4006-AE21-98F493D2358C}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{92A1A0F3-7047-4165-95AE-D5CFCC30AE61}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="sfx_hunk_cvirus_stinger" ID="{137791D2-4F25-4AB4-A240-1A302C47EBC3}">
+											<Language>SFX</Language>
+											<AudioFile>sfx_hunk_cvirus_stinger.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="976559505"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="sfx_hunk_cvirus_stinger" ID="{137791D2-4F25-4AB4-A240-1A302C47EBC3}" Platform="Linked"/>
 									</ActiveSourceList>
 								</Sound>
 							</ChildrenList>

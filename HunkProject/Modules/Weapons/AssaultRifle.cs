@@ -17,7 +17,7 @@ namespace HunkMod.Modules.Weapons
         public override float magPickupMultiplier => 1.5f;
         public override int startingMags => 2;
         public override float reloadDuration => 2.4f;
-        public override string ammoName => "5.56x45mm Ammo";
+        public override string ammoName => "5.56mm Ammo";
         public override GameObject modelPrefab => Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("mdlAssaultRifle");
         public override HunkWeaponDef.AnimationSet animationSet => HunkWeaponDef.AnimationSet.SMG;
         public override bool storedOnBack => true;

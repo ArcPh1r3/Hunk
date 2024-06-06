@@ -14,7 +14,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.M19
         public static float baseDuration = 0.6f;
         public static float force = 500f;
         public static float recoil = 1f;
-        public static float range = 2000f;
+        public static float range = 5000f;
         public static GameObject tracerEffectPrefab = RoR2.LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/Tracers/TracerCommandoDefault");
 
         private float duration;
@@ -64,7 +64,7 @@ namespace HunkMod.SkillStates.Hunk.Weapon.M19
                     damage = Shoot.damageCoefficient * this.damageStat,
                     damageColorIndex = DamageColorIndex.Default,
                     damageType = DamageType.Generic,
-                    falloffModel = BulletAttack.FalloffModel.DefaultBullet,
+                    falloffModel = BulletAttack.FalloffModel.None,
                     maxDistance = Shoot.range,
                     force = Shoot.force,
                     hitMask = LayerIndex.CommonMasks.bullet,

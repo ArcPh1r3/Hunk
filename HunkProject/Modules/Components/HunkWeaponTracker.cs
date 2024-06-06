@@ -40,7 +40,8 @@ namespace HunkMod.Modules.Components
         private enum VirusType
         {
             GVirus,
-            TVirus
+            TVirus,
+            CVirus
         }
         private VirusType virusType;
 
@@ -116,11 +117,26 @@ namespace HunkMod.Modules.Components
             this.usedAmmoThisStage = false;
 
             Modules.Survivors.Hunk.requiredKills = 6;
+            Modules.Survivors.Hunk.requiredKillsC = 10;
 
             this.CancelInvoke();
 
-            if (UnityEngine.Random.value > 0.5f) this.virusType = VirusType.TVirus;
-            else this.virusType = VirusType.GVirus;
+            int type = UnityEngine.Random.Range(0, 3);
+            switch (type)
+            {
+                default:
+                    this.virusType = VirusType.GVirus;
+                    break;
+                case 0:
+                    this.virusType = VirusType.GVirus;
+                    break;
+                case 1:
+                    this.virusType = VirusType.TVirus;
+                    break;
+                case 2:
+                    this.virusType = VirusType.CVirus;
+                    break;
+            }
 
             if (NetworkServer.active) this.Invoke("SpawnKeycard", UnityEngine.Random.Range(5f, 30f));
         }
@@ -441,9 +457,9 @@ namespace HunkMod.Modules.Components
                     this.Invoke("SpawnKeycard", 0.5f);
                 }
             }
-            else
+            else if (this.virusType == VirusType.TVirus || this.virusType == VirusType.CVirus)
             {
-                // tvirus
+                // tvirus and cvirus (useful comments)
                 this.StartOutbreak();
             }
         }
@@ -452,7 +468,7 @@ namespace HunkMod.Modules.Components
         {
             if (Modules.Components.UI.HunkObjectiveDisplay.instance)
             {
-                Modules.Components.UI.HunkObjectiveDisplay.instance.activeTimer = 5f;
+                Modules.Components.UI.HunkObjectiveDisplay.instance.activeTimer = 8f;
             }
 
             if (!Modules.Config.globalInfectionSound.Value) return;
@@ -466,9 +482,11 @@ namespace HunkMod.Modules.Components
         {
             if (!NetworkServer.active) return;
 
-            this.PlaySoundCue("sfx_hunk_retheme_global");
+            if (this.virusType == VirusType.TVirus) this.PlaySoundCue("sfx_hunk_retheme_global");
+            else this.PlaySoundCue("sfx_hunk_cvirus_stinger");
 
             this.remainingVictims = 6;
+            if (this.virusType == VirusType.CVirus) this.remainingVictims = 10;
             this.InvokeRepeating("TryInfect", 0f, 1f);
         }
 
@@ -480,7 +498,7 @@ namespace HunkMod.Modules.Components
                 return;
             }
 
-            bool canInfectBoss = Modules.Config.tCanInfectBosses.Value;
+            bool canInfectBoss = true;
 
             NetworkIdentity identity = this.GetComponent<NetworkIdentity>();
 
@@ -488,24 +506,53 @@ namespace HunkMod.Modules.Components
             {
                 if (i && i.teamComponent && i.teamComponent.teamIndex == TeamIndex.Monster && i.healthComponent.alive)
                 {
-                    if (!i.GetComponent<TVirusHandler>())
+                    if (this.virusType == VirusType.TVirus)
                     {
-                        if (i.isChampion && !canInfectBoss)
+                        canInfectBoss = Modules.Config.tCanInfectBosses.Value;
+                        if (!i.GetComponent<TVirusHandler>())
                         {
-                            // boooo
-                        }
-                        else
-                        {
-                            this.remainingVictims--;
-                            if (identity)
+                            if (i.isChampion && !canInfectBoss)
                             {
-                                new SyncTVirus(identity.netId, i.gameObject).Send(NetworkDestination.Clients);
+                                // boooo
                             }
-
-                            if (this.remainingVictims <= 0)
+                            else
                             {
-                                this.CancelInvoke();
-                                return;
+                                this.remainingVictims--;
+                                if (identity)
+                                {
+                                    new SyncTVirus(identity.netId, i.gameObject).Send(NetworkDestination.Clients);
+                                }
+
+                                if (this.remainingVictims <= 0)
+                                {
+                                    this.CancelInvoke();
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                    else if (this.virusType == VirusType.CVirus)
+                    {
+                        canInfectBoss = Modules.Config.cCanInfectBosses.Value;
+                        if (!i.GetComponent<CVirusHandler>())
+                        {
+                            if (i.isChampion && !canInfectBoss)
+                            {
+                                // boooo
+                            }
+                            else
+                            {
+                                this.remainingVictims--;
+                                if (identity)
+                                {
+                                    new SyncCVirus(identity.netId, i.gameObject).Send(NetworkDestination.Clients);
+                                }
+
+                                if (this.remainingVictims <= 0)
+                                {
+                                    this.CancelInvoke();
+                                    return;
+                                }
                             }
                         }
                     }
