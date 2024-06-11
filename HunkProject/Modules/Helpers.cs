@@ -85,10 +85,12 @@ namespace HunkMod.Modules
             {
                 foreach (var player in PlayerCharacterMasterController.instances)
                 {
-                    if (player.networkUser.bodyIndexPreference == BodyCatalog.FindBodyIndex(Modules.Survivors.Hunk.bodyName))
+                    // more expensive but fully futureproof
+                    if (BodyCatalog.GetBodyPrefab(player.networkUser.bodyIndexPreference).GetComponent<HunkController>()) return true;
+                    /*if (player.networkUser.bodyIndexPreference == BodyCatalog.FindBodyIndex(Modules.Survivors.Hunk.bodyName))
                     {
                         return true;
-                    }
+                    }*/
                 }
                 return false;
             }
@@ -126,7 +128,7 @@ namespace HunkMod.Modules
                 var localPlayers = LocalUserManager.readOnlyLocalUsersList;
                 foreach (LocalUser i in localPlayers)
                 {
-                    if (i.cachedBody.baseNameToken == Modules.Survivors.Hunk.bodyNameToken && i.cachedBody.hasAuthority) return true;
+                    if (i.cachedBody.GetComponent<HunkController>() && i.cachedBody.hasAuthority) return true;
                 }
                 return false;
             }

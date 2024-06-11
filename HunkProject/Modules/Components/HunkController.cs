@@ -1347,6 +1347,7 @@ namespace HunkMod.Modules.Components
         {
             get
             {
+                if (!this.knifeSkinSkillSlot) return Modules.Survivors.Hunk.defaultKnifeDef;
                 return this.knifeSkinSkillSlot.skillDef;
             }
         }

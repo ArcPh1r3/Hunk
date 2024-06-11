@@ -18,7 +18,7 @@ namespace HunkMod.Modules.Components
 			if (NetworkServer.active && !this.gravitateTarget)
 			{
 				CharacterBody characterBody = other.gameObject.GetComponent<CharacterBody>();
-				if (characterBody && characterBody.baseNameToken == Modules.Survivors.Hunk.bodyNameToken)
+				if (characterBody && characterBody.GetComponent<HunkController>())
 				{
 					this.gravitateTarget = other.gameObject.transform;
 				}

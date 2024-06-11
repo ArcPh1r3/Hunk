@@ -39,13 +39,13 @@ namespace HunkMod.Modules.Components
 			if (activator)
             {
 				CharacterBody cb = activator.GetComponent<CharacterBody>();
-				if (cb && cb.baseNameToken != Modules.Survivors.Hunk.bodyNameToken) return Interactability.Disabled;
+				if (cb && !cb.GetComponent<HunkController>()) return Interactability.Disabled;
 				else
                 {
 					if (cb)
                     {
 						HunkPassive passive = cb.GetComponent<HunkPassive>();
-						if (passive.isFullArsenal) return Interactability.Disabled;
+						if (passive && passive.isFullArsenal) return Interactability.Disabled;
                     }
                 }
             }

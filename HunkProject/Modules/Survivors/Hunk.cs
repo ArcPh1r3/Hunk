@@ -20,14 +20,15 @@ using static MonoMod.Cil.RuntimeILReferenceBag.FastDelegateInvokers;
 
 namespace HunkMod.Modules.Survivors
 {
-    internal class Hunk
+    public class Hunk
     {
-        internal static Hunk instance;
+        public static Hunk instance;
 
-        internal static GameObject characterPrefab;
-        internal static GameObject displayPrefab;
+        public static GameObject characterPrefab;
+        public static GameObject displayPrefab;
+        public static SurvivorDef survivorDef;
 
-        internal static GameObject umbraMaster;
+        public static GameObject umbraMaster;
 
         internal static ConfigEntry<bool> forceUnlock;
         internal static ConfigEntry<bool> characterEnabled;
@@ -63,7 +64,7 @@ namespace HunkMod.Modules.Survivors
 
         internal static EntityStates.SerializableEntityStateType airDodgeState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.AirDodge));
 
-        internal static string bodyNameToken;
+        public static string bodyNameToken;
 
         internal static GameObject spawnPodPrefab;
         internal static GameObject podPanelPrefab;
@@ -162,6 +163,8 @@ namespace HunkMod.Modules.Survivors
         internal static BuffDef infectedBuff3;
         internal static BuffDef mangledBuff;
 
+        public static SkinDef jacketSkinDef;
+
         public static int requiredKills = 0;
         public static int requiredKillsC = 0;
 
@@ -206,7 +209,7 @@ namespace HunkMod.Modules.Survivors
                 childLocator.FindChild("KnifeModel").gameObject.SetActive(false);
                 childLocator.FindChild("HiddenKnifeModel").gameObject.SetActive(false);
 
-                Modules.Prefabs.RegisterNewSurvivor(characterPrefab, displayPrefab, "HUNK");
+                survivorDef = Modules.Prefabs.RegisterNewSurvivor(characterPrefab, displayPrefab, "HUNK");
                 //if (forceUnlock.Value) Modules.Prefabs.RegisterNewSurvivor(characterPrefab, displayPrefab, "DRIVER");
                 //else Modules.Prefabs.RegisterNewSurvivor(characterPrefab, displayPrefab, "DRIVER", characterUnlockableDef);
 
@@ -1220,7 +1223,7 @@ Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
             #endregion
 
             #region JacketSkin
-            SkinDef jacketSkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_JACKET_SKIN_NAME",
+            jacketSkinDef = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_JACKET_SKIN_NAME",
                 Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texJacketSkin"),
                 SkinRendererInfos(defaultRenderers,
                 new Material[]
@@ -1230,7 +1233,7 @@ Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
                 mainRenderer,
                 model);
 
-            jacketSkin.meshReplacements = new SkinDef.MeshReplacement[]
+            jacketSkinDef.meshReplacements = new SkinDef.MeshReplacement[]
             {
                 new SkinDef.MeshReplacement
                 {
@@ -1264,7 +1267,7 @@ Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
                 }
             };
 
-            if (Modules.Config.cursed.Value) skins.Add(jacketSkin);
+            if (Modules.Config.cursed.Value) skins.Add(jacketSkinDef);
             #endregion
 
             #region WeskerSkin
@@ -6465,7 +6468,7 @@ Vector3.up * 20f);
                     string nameToken = PickupCatalog.GetPickupDef(self.pickupIndex).nameToken;
                     if (nameToken.Contains("ROB_HUNK_WEAPON_") && !nameToken.Contains("ADDON"))
                     {
-                        if (body.baseNameToken == Hunk.bodyNameToken)
+                        if (body.GetComponent<HunkController>())
                         {
                             HunkController hunk = body.GetComponent<HunkController>();
                             if (!hunk) return; // < should never happen
@@ -6900,7 +6903,7 @@ Vector3.up * 20f);
         {
             if ((damageInfo.damageType & DamageType.ApplyMercExpose) > DamageType.Generic)
             {
-                if (damageInfo.attacker && damageInfo.attacker.name.Contains("RobHunkBody"))
+                if (damageInfo.attacker && damageInfo.attacker.GetComponent<HunkController>())
                 {
                     if (self)
                     {
@@ -6943,7 +6946,7 @@ Vector3.up * 20f);
 
             if ((damageInfo.damageType & DamageType.ClayGoo) > DamageType.Generic)
             {
-                if (damageInfo.attacker && damageInfo.attacker.name.Contains("RobHunkBody"))
+                if (damageInfo.attacker && damageInfo.attacker.GetComponent<HunkController>())
                 {
                     if ((damageInfo.damageType & DamageType.Stun1s) > DamageType.Generic) damageInfo.damageType = DamageType.Stun1s;
                     else damageInfo.damageType = DamageType.Generic;
@@ -7097,7 +7100,7 @@ Vector3.up * 20f);
                 {
                     bool isKnifeKill = false;
                     // headshot first
-                    if (damageReport.attackerBody.baseNameToken == Hunk.bodyNameToken)
+                    if (damageReport.attackerBody.GetComponent<HunkController>())
                     {
                         if (damageReport.victim.GetComponent<HunkHeadshotTracker>())
                         {
@@ -7186,7 +7189,7 @@ Vector3.up * 20f);
 
         internal static void HUDSetup(RoR2.UI.HUD hud)
         {
-            if (hud.targetBodyObject && hud.targetMaster && hud.targetMaster.bodyPrefab == Hunk.characterPrefab)
+            if (hud.targetBodyObject && hud.targetMaster && hud.targetMaster.bodyPrefab.GetComponent<HunkController>())
             {
                 if (!hud.targetMaster.hasAuthority) return;
 

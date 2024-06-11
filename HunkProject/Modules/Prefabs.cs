@@ -18,7 +18,7 @@ namespace HunkMod.Modules
         internal static List<GameObject> masterPrefabs = new List<GameObject>();
         internal static List<GameObject> projectilePrefabs = new List<GameObject>();
 
-        internal static void RegisterNewSurvivor(GameObject bodyPrefab, GameObject displayPrefab, string namePrefix, UnlockableDef unlockableDef)
+        internal static SurvivorDef RegisterNewSurvivor(GameObject bodyPrefab, GameObject displayPrefab, string namePrefix, UnlockableDef unlockableDef)
         {
             string fullNameString = MainPlugin.developerPrefix + "_" + namePrefix + "_BODY_NAME";
             string fullDescString = MainPlugin.developerPrefix + "_" + namePrefix + "_BODY_DESCRIPTION";
@@ -37,9 +37,11 @@ namespace HunkMod.Modules
             survivorDef.cachedName = fullNameString;
 
             survivorDefinitions.Add(survivorDef);
+
+            return survivorDef;
         }
 
-        internal static void RegisterNewSurvivor(GameObject bodyPrefab, GameObject displayPrefab, string namePrefix) { RegisterNewSurvivor(bodyPrefab, displayPrefab, namePrefix, null); }
+        internal static SurvivorDef RegisterNewSurvivor(GameObject bodyPrefab, GameObject displayPrefab, string namePrefix) { return RegisterNewSurvivor(bodyPrefab, displayPrefab, namePrefix, null); }
 
         internal static GameObject CreateDisplayPrefab(string modelName, GameObject prefab)
         {

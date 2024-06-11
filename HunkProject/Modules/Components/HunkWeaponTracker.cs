@@ -55,6 +55,7 @@ namespace HunkMod.Modules.Components
                 {
                     if (this.GetComponent<CharacterMaster>().GetBody())
                     {
+                        this.variantHandler = this.GetComponent<CharacterMaster>().GetBody().GetComponent<HunkVariantHandler>();
                         this._hunk = this.GetComponent<CharacterMaster>().GetBody().GetComponent<HunkController>();
                         return this._hunk;
                     }
@@ -68,6 +69,8 @@ namespace HunkMod.Modules.Components
         public bool spawnedTerminalThisStage = false;
         public bool usedAmmoThisStage = false;
 
+        private bool hasInit = false;
+        private HunkVariantHandler variantHandler;
         private Inventory inventory;
         private HunkController _hunk;
 
@@ -164,14 +167,36 @@ namespace HunkMod.Modules.Components
             }
         }
 
+        private void FinishInit()
+        {
+            this.hasInit = true;
+        }
+
         private void Init()
         {
-            if (this.hunk.GetComponent<HunkPassive>().isFullArsenal)
+            if (this.hunk)
             {
-                if (RoR2Application.isInMultiPlayer) this.ignoreFlag = true;
-
-                this.weaponData = new HunkWeaponData[]
+                if (this.variantHandler)
                 {
+                    if (NetworkServer.active)
+                    {
+                        for (int i = 0; i < this.variantHandler.loadout.Length; i++)
+                        {
+                            this.inventory.GiveItem(this.variantHandler.loadout[i]);
+                        }
+                    }
+
+                    this.Invoke("FinishInit", 0.25f);
+                    //this.hasInit = true;
+                    return;
+                }
+
+                if (this.hunk.GetComponent<HunkPassive>().isFullArsenal)
+                {
+                    if (RoR2Application.isInMultiPlayer) this.ignoreFlag = true;
+
+                    this.weaponData = new HunkWeaponData[]
+                    {
                     new HunkWeaponData
                     {
                         weaponDef = Modules.Weapons.SMG.instance.weaponDef,
@@ -220,30 +245,30 @@ namespace HunkMod.Modules.Components
                         totalAmmo = Modules.Weapons.GrenadeLauncher.instance.magSize * 8,
                         currentAmmo = Modules.Weapons.GrenadeLauncher.instance.magSize
                     }
-                };
+                    };
 
-                this.AddWeaponItem(Modules.Weapons.SMG.instance.weaponDef);
-                this.AddWeaponItem(Modules.Weapons.MUP.instance.weaponDef);
-                this.AddWeaponItem(Modules.Weapons.Shotgun.instance.weaponDef);
-                this.AddWeaponItem(Modules.Weapons.Slugger.instance.weaponDef);
-                this.AddWeaponItem(Modules.Weapons.Magnum.instance.weaponDef);
-                this.AddWeaponItem(Modules.Weapons.Revolver.instance.weaponDef);
-                this.AddWeaponItem(Modules.Weapons.Flamethrower.instance.weaponDef);
-                this.AddWeaponItem(Modules.Weapons.GrenadeLauncher.instance.weaponDef);
+                    this.AddWeaponItem(Modules.Weapons.SMG.instance.weaponDef);
+                    this.AddWeaponItem(Modules.Weapons.MUP.instance.weaponDef);
+                    this.AddWeaponItem(Modules.Weapons.Shotgun.instance.weaponDef);
+                    this.AddWeaponItem(Modules.Weapons.Slugger.instance.weaponDef);
+                    this.AddWeaponItem(Modules.Weapons.Magnum.instance.weaponDef);
+                    this.AddWeaponItem(Modules.Weapons.Revolver.instance.weaponDef);
+                    this.AddWeaponItem(Modules.Weapons.Flamethrower.instance.weaponDef);
+                    this.AddWeaponItem(Modules.Weapons.GrenadeLauncher.instance.weaponDef);
 
-                if (NetworkServer.active)
-                {
-                    this.inventory.GiveItem(Modules.Weapons.SMG.laserSight);
-                    this.inventory.GiveItem(Modules.Weapons.SMG.extendedMag);
-                    this.inventory.GiveItem(Modules.Weapons.MUP.gunStock);
-                    this.inventory.GiveItem(Modules.Weapons.Magnum.longBarrel);
-                    this.inventory.GiveItem(Modules.Weapons.Revolver.speedloader);
+                    if (NetworkServer.active)
+                    {
+                        this.inventory.GiveItem(Modules.Weapons.SMG.laserSight);
+                        this.inventory.GiveItem(Modules.Weapons.SMG.extendedMag);
+                        this.inventory.GiveItem(Modules.Weapons.MUP.gunStock);
+                        this.inventory.GiveItem(Modules.Weapons.Magnum.longBarrel);
+                        this.inventory.GiveItem(Modules.Weapons.Revolver.speedloader);
+                    }
                 }
-            }
-            else
-            {
-                this.weaponData = new HunkWeaponData[]
+                else
                 {
+                    this.weaponData = new HunkWeaponData[]
+                    {
                     new HunkWeaponData
                     {
                         weaponDef = Modules.Weapons.SMG.instance.weaponDef,
@@ -262,12 +287,15 @@ namespace HunkMod.Modules.Components
                         totalAmmo = 999,
                         currentAmmo = 999
                     }
-                };
+                    };
 
-                this.AddWeaponItem(Modules.Weapons.SMG.instance.weaponDef);
-                this.AddWeaponItem(Modules.Weapons.MUP.instance.weaponDef);
-                this.AddWeaponItem(Modules.Weapons.ScanGun.instance.weaponDef);
+                    this.AddWeaponItem(Modules.Weapons.SMG.instance.weaponDef);
+                    this.AddWeaponItem(Modules.Weapons.MUP.instance.weaponDef);
+                    this.AddWeaponItem(Modules.Weapons.ScanGun.instance.weaponDef);
+                }
             }
+
+            this.hasInit = true;
         }
 
         public void SwapToLastWeapon()
@@ -326,7 +354,7 @@ namespace HunkMod.Modules.Components
                 };
             }
 
-            Util.PlaySound("sfx_hunk_weapon_get", this.hunk.gameObject);
+            if (this.hasInit) Util.PlaySound("sfx_hunk_weapon_get", this.hunk.gameObject);
 
             // redundant notification lmao
             //this.hunk.PickUpWeapon(weaponDef);
@@ -432,6 +460,13 @@ namespace HunkMod.Modules.Components
 
         private void SpawnKeycard()
         {
+            if (this.variantHandler)
+            {
+                this.spawnedKeycardThisStage = true;
+                this.CancelInvoke();
+                return;
+            }
+
             if (this.spawnedKeycardThisStage)
             {
                 this.CancelInvoke();
