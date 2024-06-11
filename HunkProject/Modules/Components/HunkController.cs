@@ -215,7 +215,7 @@ namespace HunkMod.Modules.Components
 
         private void TeleporterInteraction_onTeleporterFinishGlobal(TeleporterInteraction obj)
         {
-            onStageCompleted(this.weaponTracker.usedAmmoThisStage);
+            //onStageCompleted(this.weaponTracker.usedAmmoThisStage);
             Action<bool> action = new Action<bool>(onStageCompleted);
             if (action == null) return;
             action(this.weaponTracker.usedAmmoThisStage);
@@ -230,10 +230,11 @@ namespace HunkMod.Modules.Components
                 CameraTargetParams ctp = this.characterBody.GetComponent<CameraTargetParams>();
                 if (ctp)
                 {
-                    if (Modules.Config.overTheShoulderCamera.Value && !Modules.Config.overTheShoulderCamera2.Value)
+                    ctp.cameraPivotTransform = this.childLocator.FindChild("CameraTracker");
+                    /*if (Modules.Config.overTheShoulderCamera.Value)
                     {
                         ctp.cameraPivotTransform = this.childLocator.FindChild("CameraTracker");
-                    }
+                    }*/
                 }
             }
 

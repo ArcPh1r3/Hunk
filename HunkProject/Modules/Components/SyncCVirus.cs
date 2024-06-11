@@ -37,7 +37,12 @@ namespace HunkMod.Modules.Components
             positionIndicator.transform.parent = this.target.transform;
             positionIndicator.transform.localPosition = Vector3.zero;
 
-            positionIndicator.GetComponent<PositionIndicator>().targetTransform = this.target.GetComponent<CharacterBody>().mainHurtBox.transform;
+            CharacterBody body = this.target.GetComponent<CharacterBody>();
+            if (body)
+            {
+                if (body.mainHurtBox) positionIndicator.GetComponent<PositionIndicator>().targetTransform = body.mainHurtBox.transform;
+            }
+            else positionIndicator.GetComponent<PositionIndicator>().targetTransform = this.target.transform;
         }
 
         public void Serialize(NetworkWriter writer)

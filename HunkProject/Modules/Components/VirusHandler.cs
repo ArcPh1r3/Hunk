@@ -139,6 +139,15 @@ namespace HunkMod.Modules.Components
                 }
             }
 
+            if (this.characterBody && this.characterBody.teamComponent)
+            {
+                if (this.characterBody.teamComponent.teamIndex == TeamIndex.Player)
+                {
+                    this.characterBody.teamComponent.teamIndex = TeamIndex.Neutral;
+                    if (this.characterBody.master) this.characterBody.master.teamIndex = TeamIndex.Neutral;
+                }
+            }
+
             if (NetworkServer.active)
             {
                 if (this.inventory)
@@ -156,8 +165,11 @@ namespace HunkMod.Modules.Components
                         this.inventory.GiveItem(Modules.Survivors.Hunk.gVirusFinal);
                         if (capped)
                         {
-                            this.characterBody.teamComponent.teamIndex = TeamIndex.Neutral;
-                            if (this.characterBody.master) this.characterBody.master.teamIndex = TeamIndex.Neutral;
+                            if (this.characterBody && this.characterBody.teamComponent)
+                            {
+                                this.characterBody.teamComponent.teamIndex = TeamIndex.Neutral;
+                                if (this.characterBody.master) this.characterBody.master.teamIndex = TeamIndex.Neutral;
+                            }
 
                             this.inventory.GiveItem(RoR2Content.Items.Medkit, 2);
                             this.inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);

@@ -32,13 +32,7 @@ namespace HunkMod.Modules
             else
             {
                 defaultCameraParams = NewCameraParams("ccpRobHunk", 70f, 1.37f, new Vector3(0f, 0f, -8.1f));
-                aimCameraParams = NewCameraParams("ccpRobHunkAim", 70f, 0.8f, new Vector3(1f, 0f, -5f));
-            }
-
-            if (Modules.Config.overTheShoulderCamera2.Value)
-            {
-                defaultCameraParams = NewCameraParams("ccpRobHunk", 70f, 0.15f, new Vector3(2f, 0.08f, -3.2f));
-                aimCameraParams = NewCameraParams("ccpRobHunkAim", 70f, 0.1f, new Vector3(2.2f, 0.1f, -2f));
+                aimCameraParams = NewCameraParams("ccpRobHunkAim", 70f, 0.8f, new Vector3(1.35f, 0f, -3.25f));
             }
 
             meleeCameraParams = NewCameraParams("ccpRobHunkMelee", 70f, 0.15f, new Vector3(0.5f, 0.3f, -3.3f));

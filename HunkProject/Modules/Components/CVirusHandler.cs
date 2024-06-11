@@ -16,26 +16,32 @@ namespace HunkMod.Modules.Components
         private void Start()
         {
             this.characterBody = this.GetComponent<CharacterBody>();
-            this.characterMaster = this.characterBody.master;
-            if (this.characterMaster) this.inventory = this.characterMaster.inventory;
-            this.characterMaster.gameObject.AddComponent<CVirusMaster>();
-
-            this.characterBody.baseMaxHealth *= 1.25f;
-            this.characterBody.baseDamage *= 1.25f;
-
-            if (NetworkServer.active)
+            if (this.characterBody)
             {
-                this.characterBody.AddBuff(Modules.Survivors.Hunk.infectedBuff3);
-                if (this.inventory)
+                this.characterMaster = this.characterBody.master;
+                if (this.characterMaster)
                 {
-                    this.inventory.GiveItem(RoR2Content.Items.TeleportWhenOob);
-                    this.inventory.GiveItem(Modules.Survivors.Hunk.cVirus);
-                    this.inventory.GiveItem(Modules.Survivors.Hunk.gVirus2);
-                    this.inventory.GiveItem(Modules.Survivors.Hunk.gVirusFinal);
+                    this.inventory = this.characterMaster.inventory;
+                    this.characterMaster.gameObject.AddComponent<CVirusMaster>();
                 }
-            }
 
-            this.InvokeRepeating("AddOverlay", 0.2f, 40f);
+                this.characterBody.baseMaxHealth *= 1.25f;
+                this.characterBody.baseDamage *= 1.25f;
+
+                if (NetworkServer.active)
+                {
+                    this.characterBody.AddBuff(Modules.Survivors.Hunk.infectedBuff3);
+                    if (this.inventory)
+                    {
+                        this.inventory.GiveItem(RoR2Content.Items.TeleportWhenOob);
+                        this.inventory.GiveItem(Modules.Survivors.Hunk.cVirus);
+                        this.inventory.GiveItem(Modules.Survivors.Hunk.gVirus2);
+                        this.inventory.GiveItem(Modules.Survivors.Hunk.gVirusFinal);
+                    }
+                }
+
+                this.InvokeRepeating("AddOverlay", 0.2f, 40f);
+            }
         }
 
         private void AddOverlay()
@@ -76,10 +82,17 @@ namespace HunkMod.Modules.Components
             }
         }
 
+        private void Explode()
+        {
+            if (this.characterBody && this.characterBody.healthComponent.alive) this.characterBody.healthComponent.Suicide();
+        }
+
         public void TriggerRevive()
         {
             if (this.revived) return;
             this.revived = true;
+
+            this.Invoke("Explode", 9f);
 
             Util.PlaySound("sfx_hunk_cvirus_proc", this.gameObject);
 

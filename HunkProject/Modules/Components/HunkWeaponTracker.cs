@@ -117,7 +117,7 @@ namespace HunkMod.Modules.Components
             this.usedAmmoThisStage = false;
 
             Modules.Survivors.Hunk.requiredKills = 6;
-            Modules.Survivors.Hunk.requiredKillsC = 10;
+            Modules.Survivors.Hunk.requiredKillsC = 4;
 
             this.CancelInvoke();
 
@@ -486,7 +486,7 @@ namespace HunkMod.Modules.Components
             else this.PlaySoundCue("sfx_hunk_cvirus_stinger");
 
             this.remainingVictims = 6;
-            if (this.virusType == VirusType.CVirus) this.remainingVictims = 10;
+            if (this.virusType == VirusType.CVirus) this.remainingVictims = 4;
             this.InvokeRepeating("TryInfect", 0f, 1f);
         }
 
@@ -542,16 +542,20 @@ namespace HunkMod.Modules.Components
                             }
                             else
                             {
-                                this.remainingVictims--;
-                                if (identity)
+                                // this is fucked
+                                if (!i.name.Contains("ScavBody"))
                                 {
-                                    new SyncCVirus(identity.netId, i.gameObject).Send(NetworkDestination.Clients);
-                                }
+                                    this.remainingVictims--;
+                                    if (identity)
+                                    {
+                                        new SyncCVirus(identity.netId, i.gameObject).Send(NetworkDestination.Clients);
+                                    }
 
-                                if (this.remainingVictims <= 0)
-                                {
-                                    this.CancelInvoke();
-                                    return;
+                                    if (this.remainingVictims <= 0)
+                                    {
+                                        this.CancelInvoke();
+                                        return;
+                                    }
                                 }
                             }
                         }

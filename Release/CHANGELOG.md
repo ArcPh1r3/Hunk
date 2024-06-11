@@ -1,5 +1,17 @@
 ## Changelog
 
+`1.5.4`
+- Added cursed skin: Jacket
+- Tweaked cursed Commando skin to be a little less awkward
+- Removed the redundant second camera config option - too awkward and a waste of time to maintain
+- Over the should camera config is now off by default, only new installs will be affected- too much whining about the character being "small", you win, it's now opt-in
+- Improved ror2-style camera a little as well, adding some of the flair from the other option
+- C-Virus enemy count: 10 > 4, it did end up feeling long despite the enemies being easier to kill, and general frustration was just high 
+- G-Virus Infected allies now swap to the neutral team immediately, allowing you to kill them- I'll have no more complaints on this subject
+- Blacklisted Scavengers from the C-Virus, as it prevented them from dropping their bags
+- Fixed C-Virus Perfected elites never dying
+- Fixed a couple harmless cosmetic errors
+
 `1.5.3`
 - Slightly increased LE 5 fire rate
 - Increased CQBR Assault Rifle fire rate

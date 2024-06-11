@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 4279671197
+CRC: 3287081155
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 3db4a67a1d4d21d2d1f9f6504f5d3368
+    Hash: 28c17ae7c6f7479f61e107c8e5f0d499
   TypeTreeHash:
     serializedVersion: 2
     Hash: 578f72f44b5a2ccce06c5be12e40e453
@@ -112,6 +112,7 @@ Assets:
 - Assets/Hunk/Textures/Doom/doomslayer_torso_n.jpg
 - Assets/Hunk/Materials/matFragGrenade.mat
 - Assets/Hunk/Textures/GVirus/sm74_201_GVirus01A_A_NRMR.png
+- Assets/Hunk/Textures/Jacket/texJacket.png
 - Assets/Hunk/Mesh/meshSlayerLegs.mesh
 - Assets/Hunk/Textures/WeaponCase/DirtyHardcase_DirectXNormal.png
 - Assets/Hunk/Mesh/0002_Resident Evil 7_ 3.mesh
@@ -185,6 +186,7 @@ Assets:
 - Assets/Hunk/Materials/matTVirusSample.mat
 - Assets/Hunk/Weapons/mdlGoldenGunPickup.prefab
 - Assets/Hunk/Textures/RocketLauncher/Leon_ATM-4_N.png
+- Assets/Hunk/Mesh/meshCommando.mesh
 - Assets/Hunk/Textures/Terminal/Terminal_albedo.png
 - Assets/Hunk/VFX/texChargeRing.png
 - Assets/Hunk/Animations/Rocket/AimIdle.anim
@@ -232,6 +234,7 @@ Assets:
 - Assets/Hunk/Animations/Default/ShootShotgun.anim
 - Assets/Hunk/Materials/matTerminal.mat
 - Assets/Hunk/Icons/Knife/texKnifeBloody.png
+- Assets/Hunk/Mesh/meshJacket.mesh
 - Assets/Hunk/Textures/jacket_n.png
 - Assets/Hunk/Materials/matSpeedloader.mat
 - Assets/Hunk/Materials/matKnife.mat
@@ -255,6 +258,7 @@ Assets:
 - Assets/Hunk/Textures/Knife/Leon_Knife_D.png
 - Assets/Hunk/Animations/Default/ShootSlugger.anim
 - Assets/Hunk/Textures/WeaponCase/DirtyHardcase_BaseColor.png
+- Assets/Hunk/Icons/texJacketSkin.png
 - Assets/Hunk/Icons/Weapon/texRevolverIcon.png
 - Assets/Hunk/Icons/Knife/texKnifeDefault.png
 - Assets/Hunk/Materials/matDoom04.mat
@@ -348,7 +352,6 @@ Assets:
 - Assets/Hunk/Materials/matDisplayCase01.mat
 - Assets/Hunk/Materials/matGrenade.mat
 - Assets/Hunk/Items/DisplayKeycardSpade.prefab
-- Assets/Hunk/Mesh/meshCommando.mesh
 - Assets/Hunk/Weapons/mdlGrenadeLauncherPickup.prefab
 - Assets/Hunk/Textures/GVirus/texGVirusSample.png
 - Assets/Hunk/Weapons/mdlAssaultRifle.prefab
@@ -619,6 +622,7 @@ Assets:
 - Assets/Hunk/Weapons/mdlATMPickup.prefab
 - Assets/Hunk/Weapons/mdlSluggerPickup.prefab
 - Assets/Hunk/Textures/Attachments/03___Default_1001_albedo.jpeg
+- Assets/Hunk/Materials/matJacket.mat
 - Assets/Hunk/Textures/AmmoBox/9mm_ammo_box_REMAKE_Normal.jpg
 - Assets/Hunk/Weapons/mdlMagnumPickup.prefab
 - Assets/Hunk/Animations/CardboardBox/animCardboardBox.controller

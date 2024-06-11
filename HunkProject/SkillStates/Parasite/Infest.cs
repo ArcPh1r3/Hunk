@@ -96,9 +96,6 @@ namespace HunkMod.SkillStates.Parasite
 						CharacterMaster master = body.master;
 						if (healthComponent.alive && master != null && !body.isPlayerControlled && !body.bodyFlags.HasFlag(CharacterBody.BodyFlags.Mechanical))
 						{
-							//master.teamIndex = TeamIndex.Void;
-							//body.teamComponent.teamIndex = TeamIndex.Void;
-							//body.inventory.SetEquipmentIndex(DLC1Content.Elites.Void.eliteEquipmentDef.equipmentIndex);
 							body.gameObject.AddComponent<VirusHandler>();
 
 							BaseAI component = master.GetComponent<BaseAI>();

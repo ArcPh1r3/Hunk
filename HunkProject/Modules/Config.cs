@@ -1,6 +1,4 @@
 ﻿using BepInEx.Configuration;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using RiskOfOptions;
@@ -41,7 +39,6 @@ namespace HunkMod.Modules
         public static ConfigEntry<bool> menuSFX;
         public static ConfigEntry<bool> blacklistHunkItems;
         public static ConfigEntry<bool> overTheShoulderCamera;
-        public static ConfigEntry<bool> overTheShoulderCamera2;
         public static ConfigEntry<bool> cursed;
 
         public static ConfigEntry<float> baseHealth;
@@ -226,14 +223,8 @@ true,
             overTheShoulderCamera
 = Config.BindAndOptions("01 - General",
 "Enable Over The Shoulder Camera",
-true,
-"Set to false to use more standard camera positioning.", true);
-
-            overTheShoulderCamera2
-= Config.BindAndOptions("01 - General",
-"Enable Resident Evil Style Camera",
 false,
-"Set to true to use a more tight camera position based on Resident Evil 2.", true);
+"Set to true to position the camera in a traditional over the shoulder view.", true);
 
             cursed
 = Config.BindAndOptions("01 - General",

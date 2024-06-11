@@ -20,6 +20,7 @@ namespace HunkMod.Modules.Components
         private float offset;
         private float desiredOffset;
         private float offsetMult;
+        private bool isRor2Cam;
 
         private void Awake()
         {
@@ -32,6 +33,7 @@ namespace HunkMod.Modules.Components
             this.cameraTracker.transform.parent = null;
             this.desiredOffset = 0f;
             this.offset = 0f;
+            this.isRor2Cam = !Modules.Config.overTheShoulderCamera.Value;
 
             this.search = new SphereSearch
             {
@@ -42,6 +44,8 @@ namespace HunkMod.Modules.Components
             this.offsetMult = Modules.Config.cameraZoomInfluence.Value;
             this.smoothSpeed = Modules.Config.cameraSmoothSpeed.Value;
             this.checkStopwatch = 0.5f;
+
+            if (this.isRor2Cam) this.smoothSpeed *= 1.5f;
         }
 
         private void Update()
@@ -108,6 +112,8 @@ namespace HunkMod.Modules.Components
             if (this.hunk.isAiming) d = 0f;
             this.offset = Mathf.Lerp(this.offset, d, 0.8f * Time.deltaTime);
 
+            if (this.isRor2Cam) this.offset = 0f;
+
             float bias = 0.75f;
             if (this.hunk.isRolling) bias = 1f;
             Vector3 desiredPosition = Vector3.Lerp(this.fakeBaseTransform.position, this.baseTransform.position, bias);
@@ -115,7 +121,7 @@ namespace HunkMod.Modules.Components
             float speed = this.smoothSpeed * (this.body.moveSpeed / this.body.baseMoveSpeed);
             if (this.hunk.isRolling || this.hunk.immobilized) speed = 80f;
             if (this.cameraTracker && this.baseTransform) 
-                this.cameraTracker.position = Vector3.Slerp(this.cameraTracker.position, desiredPosition - (this.body.inputBank.aimDirection * this.offset), speed * Time.deltaTime);
+                this.cameraTracker.position = Vector3.Lerp(this.cameraTracker.position, desiredPosition - (this.body.inputBank.aimDirection * this.offset), speed * Time.deltaTime);
         }
     }
 }

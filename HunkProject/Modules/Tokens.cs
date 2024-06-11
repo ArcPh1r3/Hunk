@@ -39,6 +39,7 @@ namespace HunkMod.Modules
             LanguageAPI.Add(prefix + "WESKER_SKIN_NAME", "Mastermind");
             LanguageAPI.Add(prefix + "DOOM_SKIN_NAME", "Slayer");
             LanguageAPI.Add(prefix + "COMMANDO_SKIN_NAME", "Commando");
+            LanguageAPI.Add(prefix + "JACKET_SKIN_NAME", "Jacket");
             #endregion
 
             #region Passive

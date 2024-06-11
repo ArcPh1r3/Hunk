@@ -305,7 +305,7 @@ namespace HunkMod.Modules.Survivors
             newPrefab.GetComponent<CharacterDeathBehavior>().deathState = new EntityStates.SerializableEntityStateType(typeof(SkillStates.FuckMyAss));
 
             newPrefab.AddComponent<Modules.Components.HunkController>();
-            if (Modules.Config.overTheShoulderCamera.Value) newPrefab.AddComponent<Modules.Components.HunkCameraAdjuster>();
+            /*if (Modules.Config.overTheShoulderCamera.Value) */newPrefab.AddComponent<Modules.Components.HunkCameraAdjuster>();
             #endregion
 
             #region Model
@@ -1217,6 +1217,54 @@ Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
             };
 
             if (Modules.Config.cursed.Value) skins.Add(commandoSkin);
+            #endregion
+
+            #region JacketSkin
+            SkinDef jacketSkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_JACKET_SKIN_NAME",
+                Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texJacketSkin"),
+                SkinRendererInfos(defaultRenderers,
+                new Material[]
+                {
+                    Modules.Assets.CreateMaterial("matJacket")
+                }),
+                mainRenderer,
+                model);
+
+            jacketSkin.meshReplacements = new SkinDef.MeshReplacement[]
+            {
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model01").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("meshJacket")
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model02").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = null
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model03").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = null
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model04").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = null
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model05").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = null
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model06").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = null
+                }
+            };
+
+            if (Modules.Config.cursed.Value) skins.Add(jacketSkin);
             #endregion
 
             #region WeskerSkin
@@ -6278,7 +6326,7 @@ Vector3.up * 20f);
                         Hunk.requiredKillsC--;
                         if (Hunk.requiredKillsC <= 0)
                         {
-                            Hunk.requiredKillsC = 10;
+                            Hunk.requiredKillsC = 4;
 
                             PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(Modules.Survivors.Hunk.cVirusSample.itemIndex),
 body.corePosition + (Vector3.up * 0.5f),
