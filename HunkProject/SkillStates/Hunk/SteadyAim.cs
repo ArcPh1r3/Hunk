@@ -39,7 +39,8 @@ namespace HunkMod.SkillStates.Hunk
                 }
             }
 
-            base.PlayCrossfade("AimPitch", "AimPitchAiming", 0.1f);
+            if (this.hunk.weaponTracker.variantHandler) base.PlayCrossfade("AimPitch", "AimPitchJacket", 0.1f);
+            else base.PlayCrossfade("AimPitch", "AimPitchAiming", 0.1f);
 
             if (this.hunk.weaponDef.exposeWeakPoints)
             {

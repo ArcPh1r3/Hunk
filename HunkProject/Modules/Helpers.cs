@@ -86,7 +86,11 @@ namespace HunkMod.Modules
                 foreach (var player in PlayerCharacterMasterController.instances)
                 {
                     // more expensive but fully futureproof
-                    if (BodyCatalog.GetBodyPrefab(player.networkUser.bodyIndexPreference).GetComponent<HunkController>()) return true;
+                    if (player != null && player.networkUser != null)
+                    {
+                        GameObject bodyPrefab = BodyCatalog.GetBodyPrefab(player.networkUser.bodyIndexPreference);
+                        if (bodyPrefab && bodyPrefab.GetComponent<HunkController>()) return true;
+                    }
                     /*if (player.networkUser.bodyIndexPreference == BodyCatalog.FindBodyIndex(Modules.Survivors.Hunk.bodyName))
                     {
                         return true;

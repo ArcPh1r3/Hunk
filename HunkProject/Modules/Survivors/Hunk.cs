@@ -1233,6 +1233,8 @@ Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
                 mainRenderer,
                 model);
 
+            jacketSkinDef.rendererInfos[6].defaultMaterial = Modules.Assets.CreateMaterial("matBarbedBat");
+
             jacketSkinDef.meshReplacements = new SkinDef.MeshReplacement[]
             {
                 new SkinDef.MeshReplacement
@@ -1264,6 +1266,11 @@ Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
                 {
                     renderer = childLocator.FindChild("Model06").GetComponent<SkinnedMeshRenderer>(),
                     mesh = null
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("KnifeModel").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("meshBarbedBat")
                 }
             };
 
@@ -5949,6 +5956,9 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             On.RoR2.GlobalEventManager.OnInteractionBegin += GlobalEventManager_OnInteractionBegin;
             On.RoR2.DeathRewards.OnKilledServer += DeathRewards_OnKilledServer;
 
+            // custom interaction notification
+            On.RoR2.UI.NotificationUIController.ShowCurrentNotification += NotificationUIController_ShowCurrentNotification;
+
             // hide the bazooka skin
             On.RoR2.UI.LoadoutPanelController.Row.AddButton += Row_AddButton;
 
@@ -6044,6 +6054,31 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             On.EntityStates.GlobalSkills.LunarNeedle.ChargeLunarSecondary.PlayChargeAnimation += PlayChargeLunarAnimation;
             On.EntityStates.GlobalSkills.LunarNeedle.ThrowLunarSecondary.PlayThrowAnimation += PlayThrowLunarAnimation;
             On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += PlayRuinAnimation;
+        }
+
+        private static void NotificationUIController_ShowCurrentNotification(On.RoR2.UI.NotificationUIController.orig_ShowCurrentNotification orig, NotificationUIController self, CharacterMasterNotificationQueue notificationQueue)
+        {
+            if (self && notificationQueue)
+            {
+                CharacterMasterNotificationQueue.NotificationInfo notificationInfo = notificationQueue.GetCurrentNotification();
+                if (notificationInfo != null)
+                {
+                    HunkNotificationQueue hunkNotification = notificationQueue.gameObject.GetComponent<HunkNotificationQueue>();
+                    if (hunkNotification)
+                    {
+                        ItemDef itemDef = null;
+                        if ((itemDef = (notificationInfo.data as ItemDef)) != null)
+                        {
+                            if (Modules.Assets.customItemInteractionNotifications.ContainsKey(itemDef))
+                            {
+                                HunkNotificationQueue.PushNotification(notificationQueue.gameObject.GetComponent<CharacterMaster>(), Modules.Assets.customItemInteractionNotifications[itemDef]);
+                            }
+                        }
+                    }
+                }
+            }
+
+            orig(self, notificationQueue);
         }
 
         private static void TVirusDeathDefied(DamageReport damageReport)
@@ -6640,13 +6675,25 @@ Vector3.up * 20f);
         {
             if (self)
             {
-                if (Modules.Config.menuSFX.Value) Util.PlaySound("sfx_hunk_retheme_global", self.gameObject);
+                if (!MainPlugin.hasInitLate)
+                {
+                    MainPlugin.hasInitLate = true;
 
-                GameObject blueBuff = BodyCatalog.FindBodyPrefab("BlueBody");
-                if (blueBuff) blueBuff.GetComponent<CharacterBody>().hullClassification = HullClassification.Golem;
+                    if (Modules.Config.menuSFX.Value) Util.PlaySound("sfx_hunk_retheme_global", self.gameObject);
 
-                GameObject livelyPot = BodyCatalog.FindBodyPrefab("PotMobileMonsterBody");
-                if (livelyPot) livelyPot.AddComponent<FuckYouLivelyPot>();
+                    GameObject blueBuff = BodyCatalog.FindBodyPrefab("BlueBody");
+                    if (blueBuff) blueBuff.GetComponent<CharacterBody>().hullClassification = HullClassification.Golem;
+
+                    GameObject livelyPot = BodyCatalog.FindBodyPrefab("PotMobileMonsterBody");
+                    if (livelyPot) livelyPot.AddComponent<FuckYouLivelyPot>();
+
+                    Modules.Assets.customItemInteractionNotifications.Add(RoR2Content.Items.SecondarySkillMagazine, MainPlugin.developerPrefix + "ITEM_EFFECT_BACKUPMAG");
+                    Modules.Assets.customItemInteractionNotifications.Add(RoR2Content.Items.Bandolier, MainPlugin.developerPrefix + "ITEM_EFFECT_BANDOLIER");
+                    Modules.Assets.customItemInteractionNotifications.Add(RoR2Content.Items.AlienHead, MainPlugin.developerPrefix + "ITEM_EFFECT_ALIENHEAD");
+                    Modules.Assets.customItemInteractionNotifications.Add(RoR2Content.Items.KillEliteFrenzy, MainPlugin.developerPrefix + "ITEM_EFFECT_BRAINSTALKS");
+                    Modules.Assets.customItemInteractionNotifications.Add(RoR2Content.Items.LunarBadLuck, MainPlugin.developerPrefix + "ITEM_EFFECT_PURITY");
+                    Modules.Assets.customItemInteractionNotifications.Add(DLC1Content.Items.EquipmentMagazineVoid, MainPlugin.developerPrefix + "ITEM_EFFECT_LYSATECELL");
+                }
             }
 
             orig(self);
@@ -7236,21 +7283,21 @@ Vector3.up * 20f);
                         MonoBehaviour.DestroyImmediate(equipmentIconComponent);
                     }
 
-                    // weapon pickup notification
+                    // custom item effect notification
 
-                    /*GameObject notificationPanel = GameObject.Instantiate(hud.transform.Find("MainContainer").Find("NotificationArea").gameObject);
+                    GameObject notificationPanel = GameObject.Instantiate(hud.transform.Find("MainContainer").Find("NotificationArea").gameObject);
                     notificationPanel.transform.SetParent(hud.transform.Find("MainContainer"), true);
                     notificationPanel.GetComponent<RectTransform>().localPosition = new Vector3(0f, -265f, -150f);
                     notificationPanel.transform.localScale = Vector3.one;
 
                     NotificationUIController _old = notificationPanel.GetComponent<NotificationUIController>();
-                    WeaponNotificationUIController _new = notificationPanel.AddComponent<WeaponNotificationUIController>();
+                    HunkNotificationUIController _new = notificationPanel.AddComponent<HunkNotificationUIController>();
 
                     _new.hud = _old.hud;
-                    _new.genericNotificationPrefab = Modules.Assets.weaponNotificationPrefab;
-                    _new.notificationQueue = hud.targetMaster.gameObject.AddComponent<WeaponNotificationQueue>();
+                    _new.genericNotificationPrefab = Modules.Assets.customNotificationPrefab;
+                    _new.notificationQueue = hud.targetMaster.gameObject.AddComponent<HunkNotificationQueue>();
 
-                    _old.enabled = false;*/
+                    _old.enabled = false;
 
 
 
@@ -7494,19 +7541,19 @@ Vector3.up * 20f);
 
                 // weapon pickup notification
 
-                /*GameObject notificationPanel = GameObject.Instantiate(hud.transform.Find("MainContainer").Find("NotificationArea").gameObject);
+                GameObject notificationPanel = GameObject.Instantiate(hud.transform.Find("MainContainer").Find("NotificationArea").gameObject);
                 notificationPanel.transform.SetParent(hud.transform.Find("MainContainer"), true);
                 notificationPanel.GetComponent<RectTransform>().localPosition = new Vector3(0f, -210f, -50f);
                 notificationPanel.transform.localScale = Vector3.one;
 
                 NotificationUIController _old = notificationPanel.GetComponent<NotificationUIController>();
-                WeaponNotificationUIController _new = notificationPanel.AddComponent<WeaponNotificationUIController>();
+                HunkNotificationUIController _new = notificationPanel.AddComponent<HunkNotificationUIController>();
 
                 _new.hud = _old.hud;
-                _new.genericNotificationPrefab = Modules.Assets.weaponNotificationPrefab;
-                _new.notificationQueue = hud.targetMaster.gameObject.AddComponent<WeaponNotificationQueue>();
+                _new.genericNotificationPrefab = Modules.Assets.customNotificationPrefab;
+                _new.notificationQueue = hud.targetMaster.gameObject.AddComponent<HunkNotificationQueue>();
 
-                _old.enabled = false;*/
+                _old.enabled = false;
 
 
                 // ammo display

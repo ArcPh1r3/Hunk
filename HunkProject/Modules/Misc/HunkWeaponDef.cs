@@ -80,6 +80,16 @@ public class HunkWeaponDef : ScriptableObject
 
         return weaponDef;
     }
+
+    public HunkWeaponDef CloneWeapon(bool addToCatalog = true)
+    {
+        HunkWeaponDef weaponDef = HunkWeaponDef.Instantiate(this);
+
+        HunkMod.HunkWeaponCatalog.AddWeapon(weaponDef, false);
+        R2API.ContentAddition.AddItemDef(weaponDef.itemDef);
+
+        return weaponDef;
+    }
 }
 
 [System.Serializable]

@@ -117,6 +117,7 @@ namespace HunkMod.Modules.Components
         private float sprintMultiplier;
         private float sprintStopwatch;
         private float baseSprintValue;
+        public HunkVariantHandler variant;
 
         public int mupQueuedShots = 2;
 
@@ -154,6 +155,7 @@ namespace HunkMod.Modules.Components
             this.baseTurnSpeed = this.GetComponent<CharacterDirection>().turnSpeed;
             this.baseSprintValue = this.characterBody.sprintingSpeedMultiplier;
             this.railgunChargeEffect = this.childLocator.FindChild("RailgunChargeEffect").gameObject.GetComponent<ParticleSystem>();
+            this.variant = this.GetComponent<HunkVariantHandler>();
 
             this.railgunChargeEffect.GetComponent<ParticleSystemRenderer>().material = Addressables.LoadAssetAsync<Material>("RoR2/Junk/Mage/matMageLightningLaser.mat").WaitForCompletion();
             this.railgunChargeEffect.transform.Find("Electricity").GetComponent<ParticleSystemRenderer>().trailMaterial = Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/VFX/matLightningArm.mat").WaitForCompletion();
@@ -950,41 +952,55 @@ namespace HunkMod.Modules.Components
             this.ToggleLayer("Gesture (Railgun)", false);
             this.ToggleLayer("FullBody (Railgun)", false);
 
-            if (this.inventory && this.inventory.GetItemCount(RoR2Content.Items.LunarSecondaryReplacement) > 0)
+            this.ToggleLayer("Body (Jacket)", false);
+            this.ToggleLayer("Gesture (Jacket)", false);
+            this.ToggleLayer("FullBody (Jacket)", false);
+
+            if (this.variant)
             {
-                this.ToggleLayer("Body (Pistol2)", true);
-                this.ToggleLayer("Gesture (Pistol2)", true);
-                this.ToggleLayer("FullBody (Pistol2)", true);
+                this.childLocator.FindChild("KnifeModel").gameObject.SetActive(true);
+                this.ToggleLayer("Body (Jacket)", true);
+                this.ToggleLayer("Gesture (Jacket)", true);
+                this.ToggleLayer("FullBody (Jacket)", true);
             }
             else
             {
-                switch (this.weaponDef.animationSet)
+                if (this.inventory && this.inventory.GetItemCount(RoR2Content.Items.LunarSecondaryReplacement) > 0)
                 {
-                    case HunkWeaponDef.AnimationSet.Pistol:
-                        this.ToggleLayer("Body (Pistol)", true);
-                        this.ToggleLayer("Gesture (Pistol)", true);
-                        this.ToggleLayer("FullBody (Pistol)", true);
-                        break;
-                    case HunkWeaponDef.AnimationSet.PistolAlt:
-                        this.ToggleLayer("Body (Pistol2)", true);
-                        this.ToggleLayer("Gesture (Pistol2)", true);
-                        this.ToggleLayer("FullBody (Pistol2)", true);
-                        break;
-                    case HunkWeaponDef.AnimationSet.Rocket:
-                        this.ToggleLayer("Body (Rocket)", true);
-                        this.ToggleLayer("Gesture (Rocket)", true);
-                        this.ToggleLayer("FullBody (Rocket)", true);
-                        break;
-                    case HunkWeaponDef.AnimationSet.Throwable:
-                        this.ToggleLayer("Body (Pistol2)", true);
-                        this.ToggleLayer("Gesture (Pistol2)", true);
-                        this.ToggleLayer("FullBody (Pistol2)", true);
-                        break;
-                    case HunkWeaponDef.AnimationSet.Railgun:
-                        this.ToggleLayer("Body (Railgun)", true);
-                        this.ToggleLayer("Gesture (Railgun)", true);
-                        this.ToggleLayer("FullBody (Railgun)", true);
-                        break;
+                    this.ToggleLayer("Body (Pistol2)", true);
+                    this.ToggleLayer("Gesture (Pistol2)", true);
+                    this.ToggleLayer("FullBody (Pistol2)", true);
+                }
+                else
+                {
+                    switch (this.weaponDef.animationSet)
+                    {
+                        case HunkWeaponDef.AnimationSet.Pistol:
+                            this.ToggleLayer("Body (Pistol)", true);
+                            this.ToggleLayer("Gesture (Pistol)", true);
+                            this.ToggleLayer("FullBody (Pistol)", true);
+                            break;
+                        case HunkWeaponDef.AnimationSet.PistolAlt:
+                            this.ToggleLayer("Body (Pistol2)", true);
+                            this.ToggleLayer("Gesture (Pistol2)", true);
+                            this.ToggleLayer("FullBody (Pistol2)", true);
+                            break;
+                        case HunkWeaponDef.AnimationSet.Rocket:
+                            this.ToggleLayer("Body (Rocket)", true);
+                            this.ToggleLayer("Gesture (Rocket)", true);
+                            this.ToggleLayer("FullBody (Rocket)", true);
+                            break;
+                        case HunkWeaponDef.AnimationSet.Throwable:
+                            this.ToggleLayer("Body (Pistol2)", true);
+                            this.ToggleLayer("Gesture (Pistol2)", true);
+                            this.ToggleLayer("FullBody (Pistol2)", true);
+                            break;
+                        case HunkWeaponDef.AnimationSet.Railgun:
+                            this.ToggleLayer("Body (Railgun)", true);
+                            this.ToggleLayer("Gesture (Railgun)", true);
+                            this.ToggleLayer("FullBody (Railgun)", true);
+                            break;
+                    }
                 }
             }
 

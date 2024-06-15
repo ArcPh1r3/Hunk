@@ -11,7 +11,7 @@ namespace HunkMod
         public static HunkWeaponDef[] weaponDefs = new HunkWeaponDef[0];
         public static List<ItemDef> itemDefs = new List<ItemDef>(0);
 
-        public static void AddWeapon(HunkWeaponDef weaponDef)
+        public static void AddWeapon(HunkWeaponDef weaponDef, bool addItem = true)
         {
             Array.Resize(ref weaponDefs, weaponDefs.Length + 1);
 
@@ -47,7 +47,7 @@ namespace HunkMod
                 }
             }*/
 
-            itemDefs.Add(weaponDef.itemDef);
+            if (addItem) itemDefs.Add(weaponDef.itemDef);
 
             Debug.Log("Added " + weaponDef.nameToken + " to Hunk weapon catalog with index: " + weaponDef.index);
         }

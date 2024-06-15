@@ -35,6 +35,7 @@ namespace HunkMod.Modules
             survivorDef.desiredSortPosition = 3.99f;
             survivorDef.unlockableDef = unlockableDef;
             survivorDef.cachedName = fullNameString;
+            survivorDef.primaryColor = Modules.Survivors.Hunk.characterColor;
 
             survivorDefinitions.Add(survivorDef);
 

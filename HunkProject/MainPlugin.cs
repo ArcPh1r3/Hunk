@@ -44,7 +44,7 @@ namespace HunkMod
     {
         public const string MODUID = "com.rob.Hunk";
         public const string MODNAME = "Hunk";
-        public const string MODVERSION = "1.5.4";
+        public const string MODVERSION = "1.5.8";
 
         public const string developerPrefix = "ROB";
 
@@ -52,6 +52,7 @@ namespace HunkMod
 
         public static bool badaBingBadaBoom = false;
         public static bool spawnedGuaranteedCase = false;
+        public static bool hasInitLate = false;
 
         public static bool scepterInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.DestroyedClone.AncientScepter");
         public static bool rooInstalled => BepInEx.Bootstrap.Chainloader.PluginInfos.ContainsKey("com.rune580.riskofoptions");

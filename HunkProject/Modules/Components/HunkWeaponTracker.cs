@@ -55,7 +55,6 @@ namespace HunkMod.Modules.Components
                 {
                     if (this.GetComponent<CharacterMaster>().GetBody())
                     {
-                        this.variantHandler = this.GetComponent<CharacterMaster>().GetBody().GetComponent<HunkVariantHandler>();
                         this._hunk = this.GetComponent<CharacterMaster>().GetBody().GetComponent<HunkController>();
                         return this._hunk;
                     }
@@ -70,7 +69,14 @@ namespace HunkMod.Modules.Components
         public bool usedAmmoThisStage = false;
 
         private bool hasInit = false;
-        private HunkVariantHandler variantHandler;
+        public HunkVariantHandler variantHandler
+        {
+            get
+            {
+                if (!this.hunk) return null;
+                return this.hunk.variant;
+            }
+        }
         private Inventory inventory;
         private HunkController _hunk;
 
@@ -109,8 +115,17 @@ namespace HunkMod.Modules.Components
 
         private void OnDestroy()
         {
-            if (this.inventory) this.inventory.onItemAddedClient -= this.Inventory_onItemAddedClient;
+            if (this.inventory)
+            {
+                this.inventory.onItemAddedClient -= this.Inventory_onItemAddedClient;
+                this.inventory.onInventoryChanged -= this.Inventory_onInventoryChanged;
+            }
             UnityEngine.SceneManagement.SceneManager.sceneLoaded -= SceneManager_sceneLoaded;
+        }
+
+        private void Inventory_onInventoryChanged()
+        {
+            this.ValidateWeapons();
         }
 
         private void SceneManager_sceneLoaded(UnityEngine.SceneManagement.Scene arg0, UnityEngine.SceneManagement.LoadSceneMode arg1)
@@ -147,6 +162,7 @@ namespace HunkMod.Modules.Components
         private void Start()
         {
             this.inventory.onItemAddedClient += this.Inventory_onItemAddedClient;
+            this.inventory.onInventoryChanged += this.Inventory_onInventoryChanged;
         }
 
         public void SetHunk(HunkController i)
@@ -157,14 +173,6 @@ namespace HunkMod.Modules.Components
         private void Inventory_onItemAddedClient(ItemIndex itemIndex)
         {
             if (itemIndex == Modules.Survivors.Hunk.gVirusSample.itemIndex) this.missionStep = 0;
-            // hmm.. not the best
-            foreach (HunkWeaponDef i in HunkWeaponCatalog.weaponDefs)
-            {
-                if (itemIndex == i.itemDef.itemIndex)
-                {
-                    this.AddWeapon(i);
-                }
-            }
         }
 
         private void FinishInit()
@@ -172,8 +180,28 @@ namespace HunkMod.Modules.Components
             this.hasInit = true;
         }
 
+        private void ValidateWeapons()
+        {
+            foreach (HunkWeaponDef i in HunkWeaponCatalog.weaponDefs)
+            {
+                // add weapons based on itemdefs - this should solve drop-in issue
+                if (this.inventory.GetItemCount(i.itemDef) > 0)
+                {
+                    this.AddWeapon(i);
+                }
+
+                // remove weapons if no itemdef is held - solves item drop mod duplication
+                if (this.inventory.GetItemCount(i.itemDef) <= 0)
+                {
+                    this.RemoveWeapon(i);
+                }
+            }
+        }
+
         private void Init()
         {
+            this.gameObject.AddComponent<HunkNotificationQueue>();
+
             if (this.hunk)
             {
                 if (this.variantHandler)
@@ -363,7 +391,19 @@ namespace HunkMod.Modules.Components
             this.AddWeaponItem(weaponDef);
         }
 
-        public void DropWeapon(int index)
+        public void RemoveWeapon(HunkWeaponDef weaponDef)
+        {
+            for (int i = 0; i < this.weaponData.Length; i++)
+            {
+                if (this.weaponData[i].weaponDef == weaponDef)
+                {
+                    this.DropWeapon(i, false);
+                    return;
+                }
+            }
+        }
+
+        public void DropWeapon(int index, bool createPickup = true)
         {
             if (index >= this.weaponData.Length) return;
             if (this.weaponData[index].weaponDef == null) return;
@@ -399,7 +439,7 @@ namespace HunkMod.Modules.Components
             Array.Resize(ref this.weaponData, this.weaponData.Length - 1);
 
             // create pickup now
-            if (NetworkServer.active)
+            if (NetworkServer.active && createPickup)
             {
                 PickupDropletController.CreatePickupDroplet(
                     PickupCatalog.FindPickupIndex(weaponDef.itemDef.itemIndex),
@@ -460,7 +500,7 @@ namespace HunkMod.Modules.Components
 
         private void SpawnKeycard()
         {
-            if (this.variantHandler)
+            if (this.hunk && this.variantHandler)
             {
                 this.spawnedKeycardThisStage = true;
                 this.CancelInvoke();

@@ -191,7 +191,16 @@ namespace HunkMod.Modules
             LanguageAPI.Add(prefix + "RE4KNIFE_ACHIEVEMENT_DESC", "As HUNK, reach stage 6.");
             #endregion
 
-
+            prefix = MainPlugin.developerPrefix;
+            #region Custom Interactions
+            LanguageAPI.Add(prefix + "ITEM_EFFECT_TITLE", "Bonus Effect");
+            LanguageAPI.Add(prefix + "ITEM_EFFECT_BACKUPMAG", "Gain <color=#" + Helpers.greenItemHex + ">Fake Ammo" + Helpers.colorSuffix + " after a successful reload.");
+            LanguageAPI.Add(prefix + "ITEM_EFFECT_BANDOLIER", "Ammo packs refill your magazine with <color=#" + Helpers.greenItemHex + ">Fake Ammo" + Helpers.colorSuffix + ".");
+            LanguageAPI.Add(prefix + "ITEM_EFFECT_ALIENHEAD", "Gain <style=cIsUtility>more ammo</style> when picking any up.");
+            LanguageAPI.Add(prefix + "ITEM_EFFECT_BRAINSTALKS", "While active, firing your gun <style=cIsUtility>consumes no ammo</style>.");
+            LanguageAPI.Add(prefix + "ITEM_EFFECT_LYSATECELL", "Gain <color=#" + Helpers.greenItemHex + ">Fake Ammo" + Helpers.colorSuffix + " when equipping a weapon.");
+            LanguageAPI.Add(prefix + "ITEM_EFFECT_PURITY", "Double your <style=cIsUtility>magazine size</style>. Ammo consumption is unchanged.");
+            #endregion
 
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_SPADE_KEYCARD_NAME", "U.C. Keycard (Spade)");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_CLUB_KEYCARD_NAME", "U.C. Keycard (Club)");

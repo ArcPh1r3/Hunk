@@ -58,12 +58,21 @@ namespace HunkMod.SkillStates.Hunk
 
             base.OnEnter();
 
+            if (this.hunk.variant)
+            {
+                Util.PlaySound("sfx_hunk_kick_foley", this.gameObject);
+                this.hitStopDuration *= 1.25f;
+                this.swingSoundString = "sfx_jacket_swing_bat";
+                this.attack.impactSound = Modules.Assets.batImpactSoundDef.index;
+                this.attack.hitEffectPrefab = Modules.Assets.batImpactEffect;
+                this.swingEffectPrefab = Modules.Assets.batSwingEffect;
+            }
+            else Util.PlaySound("sfx_hunk_foley_knife", this.gameObject);
+
             EntityStateMachine.FindByCustomName(this.gameObject, "Aim").SetNextStateToMain();
             this.skillLocator.secondary.stock = 0;
             this.skillLocator.secondary.rechargeStopwatch = 0f;
             this.hunk.lockOnTimer = -1f;
-
-            Util.PlaySound("sfx_hunk_foley_knife", this.gameObject);
         }
 
         public override void FixedUpdate()
@@ -141,6 +150,8 @@ namespace HunkMod.SkillStates.Hunk
 
         private GameObject CreateKnife(GameObject modelPrefab)
         {
+            if (this.hunk.variant) return null;
+
             GameObject newKnife = GameObject.Instantiate(modelPrefab);
 
             newKnife.transform.parent = this.FindModelChild("KnifeBase");

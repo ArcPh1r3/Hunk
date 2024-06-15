@@ -8,7 +8,7 @@ namespace HunkMod.SkillStates.Hunk
     public class BaseHunkSkillState : BaseSkillState
     {
         private Animator _animator;
-
+        private bool knifeWasActive;
         protected virtual bool turningAllowed
         {
             get
@@ -64,7 +64,12 @@ namespace HunkMod.SkillStates.Hunk
             base.OnEnter();
 
             if (!this.turningAllowed) this.characterDirection.turnSpeed = 0f;
-            if (this.hideGun) this.GetModelChildLocator().FindChild("Weapon").gameObject.SetActive(false);
+            if (this.hideGun)
+            {
+                this.GetModelChildLocator().FindChild("Weapon").gameObject.SetActive(false);
+                this.knifeWasActive = this.FindModelChild("KnifeModel").gameObject.activeSelf;
+                this.FindModelChild("KnifeModel").gameObject.SetActive(false);
+            }
             if (!String.IsNullOrEmpty(this.prop)) this.GetModelChildLocator().FindChild(this.prop).gameObject.SetActive(true);
             if (this.normalizeModel) this.modelLocator.normalizeToFloor = true;
         }
@@ -85,7 +90,11 @@ namespace HunkMod.SkillStates.Hunk
             base.OnExit();
 
             if (!this.turningAllowed) this.characterDirection.turnSpeed = this.hunk.baseTurnSpeed;
-            if (this.hideGun) this.GetModelChildLocator().FindChild("Weapon").gameObject.SetActive(true);
+            if (this.hideGun)
+            {
+                this.GetModelChildLocator().FindChild("Weapon").gameObject.SetActive(true);
+                this.FindModelChild("KnifeModel").gameObject.SetActive(this.knifeWasActive);
+            }
             if (!String.IsNullOrEmpty(this.prop)) this.GetModelChildLocator().FindChild(this.prop).gameObject.SetActive(false);
             if (this.normalizeModel) this.modelLocator.normalizeToFloor = false;
         }

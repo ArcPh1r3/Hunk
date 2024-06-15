@@ -104,7 +104,7 @@ namespace HunkMod.Modules.Components
 
             if (this.smoothSpeed <= 0f)
             {
-                this.cameraTracker.position = this.baseTransform.position;
+                this.cameraTracker.position = this.transform.position + new Vector3(0f, 0.6f, 0f);
                 return;
             }
 
@@ -120,8 +120,10 @@ namespace HunkMod.Modules.Components
 
             float speed = this.smoothSpeed * (this.body.moveSpeed / this.body.baseMoveSpeed);
             if (this.hunk.isRolling || this.hunk.immobilized) speed = 80f;
-            if (this.cameraTracker && this.baseTransform) 
+            if (this.cameraTracker && this.baseTransform)
+            {
                 this.cameraTracker.position = Vector3.Lerp(this.cameraTracker.position, desiredPosition - (this.body.inputBank.aimDirection * this.offset), speed * Time.deltaTime);
+            }
         }
     }
 }

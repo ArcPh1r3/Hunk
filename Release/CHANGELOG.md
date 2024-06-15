@@ -1,5 +1,21 @@
 ## Changelog
 
+`1.5.8`
+- Added custom popups when picking up items with unique interactions explaining what they do for HUNK specifically
+- Fixed HUNKs disconnecting in multiplayer breaking item pickups for all players
+- Fixed issues with Drop-In multiplayer
+- Fixed ProperSave not properly spawning you in with your guns; this is a partial solution, and ammo saving will be added in later
+- Fixed a camera config option not working as intended
+
+`1.5.7`
+- Fixed virus events happening after stage 1 as Jacket variant
+
+`1.5.6`
+- Added custom animations and weapon for Jacket variant
+
+`1.5.5`
+- Code refactoring to allow variants to exist
+
 `1.5.4`
 - Added cursed skin: Jacket
 - Tweaked cursed Commando skin to be a little less awkward

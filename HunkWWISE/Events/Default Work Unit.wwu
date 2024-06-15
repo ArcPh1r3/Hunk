@@ -1125,6 +1125,28 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="sfx_jacket_swing_bat" ID="{6B803E89-09E5-4CAA-AC4D-4FF72A930135}">
+					<ChildrenList>
+						<Action Name="" ID="{2D4A9C56-F484-4069-9A32-90894CE8AC47}" ShortID="39657188">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="swing_bat" ID="{2B11C95F-4D98-49C7-B7A8-2805ECF70DDF}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_jacket_impact_bat" ID="{A73F7201-420B-40B1-A05B-55328DAF8EB2}">
+					<ChildrenList>
+						<Action Name="" ID="{82B5664E-9091-47FA-BFDD-D780C50716EA}" ShortID="109590602">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="impact_bat" ID="{DAC3651B-742E-4E72-AFF0-29175ECC08E5}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>
