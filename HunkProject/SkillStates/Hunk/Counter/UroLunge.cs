@@ -1,5 +1,6 @@
 ﻿using EntityStates;
 using HunkMod.Modules.Components;
+using HunkMod.Modules.Misc;
 using RoR2;
 using System.Collections.Generic;
 using System.Linq;

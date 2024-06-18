@@ -1,5 +1,20 @@
 ## Changelog
 
+`1.5.10`
+- Added new frontal counterattack for Stone Golems- disables their laser attack for the next 60 seconds, and this counter cannot be repeated while the laser is disabled
+- Added new counterattack for Bighorn Buffalos- mount them, aim for a second, then send them charging forward for 4000% to any enemies in its path, and 8000% self damage if it collides with a wall
+- Added new counterattack for Elder Lemurians- stick a grenade in their mouth, which will detonate to interrupt their next attack for 8000% damage	
+- Added new frontal counterattack for Alloy Vultures- quick, high damage two hit combo
+- Added aerial "counterattack"?- hold primary during a perfect aerial dodge and collide with an enemy to cling onto them, allowing you to slash freely; this is incredibly risky so use with caution
+- Polished the visuals of a handful of counterattacks
+
+`1.5.9`
+- Rolls can now be cancelled into movement MUCH earlier
+- Fixed ProperSave weapon validation not happening until your inventory changed in some way
+- Fixed Jacket variant having the same issue
+- Fixed camera tracking breaking when rooted by void enemies
+- Fixed knee counterattack sometimes having no animation
+
 `1.5.8`
 - Added custom popups when picking up items with unique interactions explaining what they do for HUNK specifically
 - Fixed HUNKs disconnecting in multiplayer breaking item pickups for all players

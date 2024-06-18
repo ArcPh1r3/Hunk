@@ -4,11 +4,14 @@ using RoR2;
 using System.Collections.Generic;
 using RoR2.Projectile;
 using UnityEngine.Networking;
+using HunkMod.Modules.Misc;
+using System.Linq;
 
 namespace HunkMod.SkillStates.Hunk
 {
     public class AirDodge : BaseHunkSkillState
     {
+        public Vector3 overrideVelocity = Vector3.zero;
         protected Vector3 slipVector = Vector3.zero;
         private float stopwatch;
         private float previousAirControl;
@@ -89,6 +92,8 @@ namespace HunkMod.SkillStates.Hunk
                     base.characterMotor.velocity = a + a2 + b + b2;
                 }
             }
+
+            if (this.overrideVelocity != Vector3.zero) this.characterMotor.velocity = this.overrideVelocity;
         }
 
         public bool SearchAttacker()
@@ -174,6 +179,89 @@ namespace HunkMod.SkillStates.Hunk
             if (this.stopwatch >= 0.1f && base.isAuthority && base.characterMotor.isGrounded)
             {
                 this.SetNextState();
+            }
+
+            if (this.stopwatch >= 0.1f && base.isAuthority && this.success)
+            {
+                if (this.inputBank.skill1.down) this.AttemptCling();
+            }
+        }
+
+        private void AttemptCling()
+        {
+            BullseyeSearch2 bullseyeSearch = new BullseyeSearch2
+            {
+                teamMaskFilter = TeamMask.GetEnemyTeams(base.GetTeam()),
+                filterByLoS = false,
+                searchOrigin = base.transform.position,
+                searchDirection = UnityEngine.Random.onUnitSphere,
+                sortMode = BullseyeSearch2.SortMode.Distance,
+                onlyBullseyes = false,
+                maxDistanceFilter = 3f,
+                maxAngleFilter = 360f
+            };
+            bullseyeSearch.RefreshCandidates();
+            bullseyeSearch.FilterOutGameObject(base.gameObject);
+
+            List<HurtBox> list = bullseyeSearch.GetResults().ToList<HurtBox>();
+            foreach (HurtBox hurtBox in list)
+            {
+                if (hurtBox)
+                {
+                    if (hurtBox.healthComponent && hurtBox.healthComponent.body)
+                    {
+                        /*if (hurtBox.healthComponent.body.isChampion)
+                        {
+
+                        }*/
+                        base.PlayCrossfade("FullBody, Override", "Cling", 0.1f);
+                        Util.PlaySound("sfx_ravager_grab", this.gameObject);
+
+                        HurtBox targetHurtbox = hurtBox;
+                        float dist = Mathf.Infinity;
+                        foreach (HurtBox i in hurtBox.healthComponent.gameObject.GetComponentsInChildren<HurtBox>())
+                        {
+                            float d = Vector3.Distance(this.transform.position, i.transform.position);
+                            if (d < dist)
+                            {
+                                dist = d;
+                                targetHurtbox = i;
+                            }
+                        }
+
+                        if (base.isAuthority)
+                        {
+                            Vector3 offset = (this.transform.position - targetHurtbox.transform.position).normalized * this.hunk.snapOffset;
+
+                            GameObject anchor = new GameObject();
+
+                            anchor.transform.parent = targetHurtbox.transform;
+                            anchor.transform.position = targetHurtbox.transform.position + offset;
+
+                            // some more precision :-)
+                            this.characterBody.mainHurtBox.gameObject.SetActive(false);
+                            RaycastHit raycastHit;
+                            if (Physics.Raycast(this.transform.position, -(this.transform.position - targetHurtbox.transform.position).normalized, out raycastHit, 20f, LayerIndex.entityPrecise.mask))
+                            {
+                                offset = targetHurtbox.transform.position - raycastHit.point;
+                                anchor.transform.position = raycastHit.point;
+                            }
+                            this.characterBody.mainHurtBox.gameObject.SetActive(true);
+                            // why didnt this work
+
+                            EntityStateMachine.FindByCustomName(this.gameObject, "Body").SetNextState(new SkillStates.Hunk.Cling.Cling
+                            {
+                                targetHurtbox = targetHurtbox,
+                                offset = offset,
+                                anchor = anchor
+                            });
+
+                            this.outer.SetNextStateToMain();
+                        }
+
+                        return;
+                    }
+                }
             }
         }
 

@@ -119,7 +119,6 @@ namespace HunkMod.SkillStates.Hunk
             base.FixedUpdate();
             this.characterBody.aimTimer = -1f;
             this.hunk.reloadTimer = 1f;
-            this.inputBank.moveVector = Vector3.zero;
             base.characterMotor.velocity = Vector3.zero;
             base.characterMotor.rootMotion = this.slipVector * (this.coeff * Time.fixedDeltaTime) * Mathf.Cos(base.fixedAge / this.duration * 1.57079637f);
 
@@ -165,10 +164,22 @@ namespace HunkMod.SkillStates.Hunk
                 Time.timeScale = this.currentTimeScale;
             }
 
+            if (base.isAuthority && base.fixedAge >= (0.6f * this.duration))
+            {
+                if (this.inputBank.moveVector != Vector3.zero && !this.inputBank.skill2.down)
+                {
+                    this.outer.SetNextStateToMain();
+                    this.GetModelAnimator().SetTrigger("forceCancel");
+                    return;
+                }
+            }
+
             if (base.isAuthority && base.fixedAge >= this.duration)
             {
                 this.outer.SetNextStateToMain();
             }
+
+            this.inputBank.moveVector = Vector3.zero;
         }
 
         public virtual void DampenVelocity()

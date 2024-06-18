@@ -59,6 +59,8 @@ namespace HunkMod.Modules.Survivors
         internal static SkillDef scepterDodgeSkillDef;
         internal static SkillDef scepterCounterSkillDef;
 
+        internal static SkillDef clingSlashSkillDef;
+
         internal static SkillDef confirmSkillDef;
         internal static SkillDef cancelSkillDef;
 
@@ -158,6 +160,7 @@ namespace HunkMod.Modules.Survivors
         internal static UnlockableDef re4KnifeUnlockableDef;
 
         internal static BuffDef immobilizedBuff;
+        internal static BuffDef grenadeInMouthBuff;
         internal static BuffDef infectedBuff;
         internal static BuffDef infectedBuff2;
         internal static BuffDef infectedBuff3;
@@ -216,6 +219,7 @@ namespace HunkMod.Modules.Survivors
                 umbraMaster = CreateMaster(characterPrefab, "RobHunkMonsterMaster");
                 
                 immobilizedBuff = Modules.Buffs.AddNewBuff("buffHunkImmobilized", null, Color.white, false, false, true);
+                grenadeInMouthBuff = Modules.Buffs.AddNewBuff("buffHunkGrenadeInMouth", null, Color.white, false, false, true);
                 infectedBuff = Modules.Buffs.AddNewBuff("buffHunkInfected", null, Color.yellow, false, false, true);
                 infectedBuff2 = Modules.Buffs.AddNewBuff("buffHunkInfected2", null, Color.blue, false, false, true);
                 infectedBuff3 = Modules.Buffs.AddNewBuff("buffHunkInfected3", null, Color.red, false, false, true);
@@ -694,6 +698,13 @@ namespace HunkMod.Modules.Survivors
                 MainPlugin.developerPrefix + "_HUNK_KEYWORD_LOOTING",
                 MainPlugin.developerPrefix + "_HUNK_KEYWORD_MANGLED"
             };
+
+            clingSlashSkillDef = Modules.Skills.CreatePrimarySkillDef(new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.Cling.ClingSlash)),
+                "Weapon",
+                prefix + "_HUNK_BODY_PRIMARY_KNIFE_NAME",
+                prefix + "_HUNK_BODY_PRIMARY_KNIFE_DESCRIPTION",
+                Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
+            clingSlashSkillDef.interruptPriority = EntityStates.InterruptPriority.Skill;
 
             /*SkillDef knifeAlt = Modules.Skills.CreatePrimarySkillDef(new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.SwingAltKnife)),
     "Weapon",
@@ -6038,6 +6049,10 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             On.EntityStates.ParentMonster.GroundSlam.FixedUpdate += GroundSlam_FixedUpdate;
             On.EntityStates.BeetleGuardMonster.GroundSlam.FixedUpdate += GroundSlam_FixedUpdate1;
 
+            // elder lemurian counter
+            On.EntityStates.LemurianBruiserMonster.FireMegaFireball.OnEnter += FireMegaFireball_OnEnter;
+            On.EntityStates.LemurianBruiserMonster.Flamebreath.FireFlame += Flamebreath_FireFlame;
+
             // escape bgm
             On.RoR2.EscapeSequenceController.BeginEscapeSequence += EscapeSequenceController_BeginEscapeSequence;
 
@@ -6054,6 +6069,34 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             On.EntityStates.GlobalSkills.LunarNeedle.ChargeLunarSecondary.PlayChargeAnimation += PlayChargeLunarAnimation;
             On.EntityStates.GlobalSkills.LunarNeedle.ThrowLunarSecondary.PlayThrowAnimation += PlayThrowLunarAnimation;
             On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += PlayRuinAnimation;
+        }
+
+        private static void Flamebreath_FireFlame(On.EntityStates.LemurianBruiserMonster.Flamebreath.orig_FireFlame orig, EntityStates.LemurianBruiserMonster.Flamebreath self, string muzzleString)
+        {
+            if (self.HasBuff(Hunk.grenadeInMouthBuff))
+            {
+                MouthGrenade mouthGrenade = self.GetComponent<MouthGrenade>();
+                if (mouthGrenade) mouthGrenade.Detonate();
+                if (NetworkServer.active) self.characterBody.RemoveBuff(Hunk.grenadeInMouthBuff);
+                self.outer.SetNextStateToMain();
+                return;
+            }
+
+            orig(self, muzzleString);
+        }
+
+        private static void FireMegaFireball_OnEnter(On.EntityStates.LemurianBruiserMonster.FireMegaFireball.orig_OnEnter orig, EntityStates.LemurianBruiserMonster.FireMegaFireball self)
+        {
+            if (self.HasBuff(Hunk.grenadeInMouthBuff))
+            {
+                MouthGrenade mouthGrenade = self.GetComponent<MouthGrenade>();
+                if (mouthGrenade) mouthGrenade.Detonate();
+                if (NetworkServer.active) self.characterBody.RemoveBuff(Hunk.grenadeInMouthBuff);
+                self.outer.SetNextStateToMain();
+                return;
+            }
+
+            orig(self);
         }
 
         private static void NotificationUIController_ShowCurrentNotification(On.RoR2.UI.NotificationUIController.orig_ShowCurrentNotification orig, NotificationUIController self, CharacterMasterNotificationQueue notificationQueue)

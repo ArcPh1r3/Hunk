@@ -1,5 +1,6 @@
 ﻿using EntityStates;
 using HunkMod.Modules.Components;
+using HunkMod.Modules.Misc;
 using RoR2;
 using System.Collections.Generic;
 using System.Linq;
@@ -176,11 +177,59 @@ namespace HunkMod.SkillStates.Hunk.Counter
                             return true;
                         }
 
+                        if (hurtBox.healthComponent.gameObject.name == "GolemBody(Clone)")
+                        {
+                            if (!this.CounterIsBehind(hurtBox.healthComponent.body.characterDirection.forward, 100f))
+                            {
+                                if (!hurtBox.healthComponent.GetComponent<GolemEyeDisabler>())
+                                {
+                                    if (base.isAuthority)
+                                    {
+                                        this.outer.SetNextState(new GolemStab
+                                        {
+                                            targetObject = hurtBox.healthComponent.gameObject
+                                        });
+                                    }
+
+                                    return true;
+                                }
+                            }
+                        }
+
+                        if (hurtBox.healthComponent.gameObject.name == "LemurianBruiserBody(Clone)")
+                        {
+                            if (!hurtBox.healthComponent.GetComponent<MouthGrenade>())
+                            {
+                                if (base.isAuthority)
+                                {
+                                    this.outer.SetNextState(new ElderGrenade
+                                    {
+                                        targetObject = hurtBox.healthComponent.gameObject
+                                    });
+                                }
+
+                                return true;
+                            }
+                        }
+
                         if (hurtBox.healthComponent.gameObject.name == "ClayBruiserBody(Clone)")
                         {
                             if (base.isAuthority)
                             {
                                 this.outer.SetNextState(new TemplarGrenade
+                                {
+                                    targetObject = hurtBox.healthComponent.gameObject
+                                });
+                            }
+
+                            return true;
+                        }
+
+                        if (hurtBox.healthComponent.gameObject.name == "BisonBody(Clone)")
+                        {
+                            if (base.isAuthority)
+                            {
+                                this.outer.SetNextState(new CounterBison
                                 {
                                     targetObject = hurtBox.healthComponent.gameObject
                                 });
@@ -200,10 +249,20 @@ namespace HunkMod.SkillStates.Hunk.Counter
                             }
                             else
                             {
-                                this.outer.SetNextState(new CounterKnee
+                                if (Random.value > 0.5f)
                                 {
-                                    targetObject = hurtBox.healthComponent.gameObject
-                                });
+                                    this.outer.SetNextState(new CounterKnee
+                                    {
+                                        targetObject = hurtBox.healthComponent.gameObject
+                                    });
+                                }
+                                else
+                                {
+                                    this.outer.SetNextState(new CounterUpStab
+                                    {
+                                        targetObject = hurtBox.healthComponent.gameObject
+                                    });
+                                }
                             }
 
                             return true;
@@ -287,7 +346,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
                                     }
                                     else
                                     {
-                                        this.outer.SetNextState(new CounterKnee
+                                        this.outer.SetNextState(new CounterUpStab
                                         {
                                             targetObject = hurtBox.healthComponent.gameObject
                                         });

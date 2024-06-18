@@ -118,7 +118,9 @@ namespace HunkMod.Modules.Components
             if (this.hunk.isRolling) bias = 1f;
             Vector3 desiredPosition = Vector3.Lerp(this.fakeBaseTransform.position, this.baseTransform.position, bias);
 
-            float speed = this.smoothSpeed * (this.body.moveSpeed / this.body.baseMoveSpeed);
+            float speedMult = (this.body.moveSpeed / this.body.baseMoveSpeed);
+            if (speedMult <= 0f) speedMult = 1f;
+            float speed = this.smoothSpeed * speedMult;
             if (this.hunk.isRolling || this.hunk.immobilized) speed = 80f;
             if (this.cameraTracker && this.baseTransform)
             {

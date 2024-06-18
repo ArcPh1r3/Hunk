@@ -37,7 +37,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
             {
                 foreach (EntityStateMachine i in this.target.GetComponents<EntityStateMachine>())
                 {
-                    if (i.customName == "Body") i.SetNextState(new EntityStates.StunState
+                    if (i.customName == "Body") i.SetNextState(new FakeStun
                     {
                         duration = this.duration
                     });

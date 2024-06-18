@@ -83,10 +83,13 @@ namespace HunkMod.SkillStates.Hunk.Counter
                 }
             }
 
+            this.animator.SetLayerWeight(this.animator.GetLayerIndex("AimYaw"), 0f);
+            this.animator.SetLayerWeight(this.animator.GetLayerIndex("AimPitch"), 0f);
+
             if (targetAnim)
             {
-                this.animator.SetLayerWeight(this.animator.GetLayerIndex("AimYaw"), 0f);
-                this.animator.SetLayerWeight(this.animator.GetLayerIndex("AimPitch"), 0f);
+                targetAnim.SetLayerWeight(targetAnim.GetLayerIndex("AimYaw"), 0f);
+                targetAnim.SetLayerWeight(targetAnim.GetLayerIndex("AimPitch"), 0f);
             }
         }
 
@@ -95,6 +98,24 @@ namespace HunkMod.SkillStates.Hunk.Counter
             base.gameObject.layer = LayerIndex.defaultLayer.intVal;
             base.characterMotor.Motor.RebuildCollidableLayers();
             this.characterMotor.jumpCount = 0;
+
+            Animator targetAnim = null;
+            if (this.target)
+            {
+                if (this.target.modelLocator)
+                {
+                    if (this.target.modelLocator.modelTransform)
+                    {
+                        targetAnim = this.target.modelLocator.modelTransform.GetComponent<Animator>();
+                    }
+                }
+            }
+
+            if (targetAnim)
+            {
+                targetAnim.SetLayerWeight(targetAnim.GetLayerIndex("AimYaw"), 1f);
+                targetAnim.SetLayerWeight(targetAnim.GetLayerIndex("AimPitch"),10f);
+            }
 
             base.OnExit();
 

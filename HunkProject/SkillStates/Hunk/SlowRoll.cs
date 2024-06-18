@@ -66,7 +66,6 @@ namespace HunkMod.SkillStates.Hunk
             base.FixedUpdate();
             this.characterBody.aimTimer = -1f;
             this.hunk.reloadTimer = 1f;
-            this.inputBank.moveVector = Vector3.zero;
             base.characterMotor.velocity = Vector3.zero;
             base.characterMotor.rootMotion = this.slipVector * (this.coeff * Time.fixedDeltaTime) * Mathf.Cos(base.fixedAge / this.duration * 1.57079637f);
 
@@ -90,10 +89,22 @@ namespace HunkMod.SkillStates.Hunk
                 this.hunk.desiredYOffset = this.hunk.defaultYOffset;
             }
 
+            if (base.isAuthority && base.fixedAge >= (0.75f * this.duration))
+            {
+                if (this.inputBank.moveVector != Vector3.zero)
+                {
+                    this.outer.SetNextStateToMain();
+                    this.GetModelAnimator().SetTrigger("forceCancel");
+                    return;
+                }
+            }
+
             if (base.isAuthority && base.fixedAge >= this.duration)
             {
                 this.outer.SetNextStateToMain();
             }
+
+            this.inputBank.moveVector = Vector3.zero;
         }
 
         public virtual void DampenVelocity()
@@ -108,7 +119,6 @@ namespace HunkMod.SkillStates.Hunk
             this.hunk.immobilized = false;
             this.characterMotor.jumpCount = 0;
             this.hunk.desiredYOffset = this.hunk.defaultYOffset;
-            this.skillLocator.primary.UnsetSkillOverride(this, Modules.Survivors.Hunk.counterSkillDef, GenericSkill.SkillOverridePriority.Contextual);
 
             base.OnExit();
 

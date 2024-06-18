@@ -180,7 +180,7 @@ namespace HunkMod.Modules.Components
             this.hasInit = true;
         }
 
-        private void ValidateWeapons()
+        public void ValidateWeapons()
         {
             foreach (HunkWeaponDef i in HunkWeaponCatalog.weaponDefs)
             {

@@ -222,6 +222,33 @@ ModelImporter:
   - first:
       74: 2541126873049022423
     second: Armature|CounterBeetleSlam
+  - first:
+      74: 9156383165106664161
+    second: Armature|CounterGolem
+  - first:
+      74: -198745013394611897
+    second: Armature|CounterUpStab
+  - first:
+      74: -8016937545836198252
+    second: Armature|CounterUpStabHigh
+  - first:
+      74: 8246882783010473585
+    second: Armature|CounterBison
+  - first:
+      74: -3825975761050009603
+    second: Armature|CounterElderGrenade
+  - first:
+      74: -9154566838121947745
+    second: Armature|ClingIdle
+  - first:
+      74: 4925602415255453846
+    second: Armature|ClingSlash
+  - first:
+      74: -4032504490370828833
+    second: Armature|ClingStart
+  - first:
+      74: 7806825749733225971
+    second: Armature|ClingStartBAD
   externalObjects: {}
   materials:
     materialImportMode: 1

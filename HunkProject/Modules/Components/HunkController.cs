@@ -76,6 +76,7 @@ namespace HunkMod.Modules.Components
         public ParticleSystem machineGunVFX;
         public float desiredYOffset;
         public float desiredZOffset;
+        public Vector3 realMoveVector;
 
         private GameObject heldWeaponInstance;
         public float reloadTimer;
@@ -425,6 +426,8 @@ namespace HunkMod.Modules.Components
 
             if (this.characterBody)
             {
+                this.realMoveVector = this.characterBody.inputBank.moveVector;
+
                 if (this.immobilized)
                 {
                     this.characterBody.moveSpeed = 0f;
@@ -872,8 +875,20 @@ namespace HunkMod.Modules.Components
             }
         }
 
+        private void Fucklol()
+        {
+            this.EquipWeapon(this.weaponTracker.equippedIndex);
+        }
+
         public void EquipWeapon(int index, bool setAmmo = true)
         {
+            if (index >= this.weaponTracker.weaponData.Length)
+            {
+                this.weaponTracker.ValidateWeapons();
+                //this.Invoke("Fucklol", 0.1f);
+                //return;
+            }
+
             this.weaponTracker.equippedIndex = index;
 
             this.weaponDef = this.weaponTracker.weaponData[index].weaponDef;
