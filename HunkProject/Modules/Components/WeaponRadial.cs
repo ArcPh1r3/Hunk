@@ -31,7 +31,7 @@ namespace HunkMod.Modules.Components
         internal RoR2.UI.MPEventSystem events;
         internal RoR2.UI.MPInputModule inputModule;
 
-        private float scaleSpeed = 14f;
+        private float scaleSpeed = 18f;
         private float selectDist;
 
         private void Awake()

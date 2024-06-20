@@ -14,11 +14,35 @@ namespace HunkMod.SkillStates.Hunk
         private WeaponRadial radial;
         private bool slowing;
         private float currentTimeScale = 1f;
+        private float ignoreStopwatch;
+        private float startupDelay;
 
         public override void OnEnter()
         {
             base.OnEnter();
             this.hunk.ammoKillTimer = -1f;
+
+            this.hunk.mupQueuedShots = 2;
+
+            this.skillLocator.primary.UnsetSkillOverride(this.gameObject, this.hunk.weaponDef.primarySkillDef, GenericSkill.SkillOverridePriority.Network);
+            this.skillLocator.primary.UnsetSkillOverride(this.gameObject, Modules.Survivors.Hunk.reloadSkillDef, GenericSkill.SkillOverridePriority.Network);
+            EntityStateMachine.FindByCustomName(this.gameObject, "Aim").SetNextStateToMain();
+
+            this.startupDelay = Modules.Config.weaponMenuStartupDelay.Value;
+
+            if (this.startupDelay <= 0f) this.OpenMenu();
+
+            this.skillLocator.primary.SetSkillOverride(this, Modules.Survivors.Hunk.confirmSkillDef, GenericSkill.SkillOverridePriority.Network);
+            this.skillLocator.secondary.SetSkillOverride(this, Modules.Survivors.Hunk.cancelSkillDef, GenericSkill.SkillOverridePriority.Network);
+        }
+
+        private void OpenMenu()
+        {
+            if (RoR2Application.isInSinglePlayer)
+            {
+                this.slowing = true;
+                this.currentTimeScale = 0.1f;
+            }
 
             if (base.isAuthority)
             {
@@ -35,27 +59,18 @@ namespace HunkMod.SkillStates.Hunk
                     }
                 }
             }
-
-            if (RoR2Application.isInSinglePlayer)
-            {
-                this.slowing = true;
-                this.currentTimeScale = 0.1f;
-            }
-
-            this.hunk.mupQueuedShots = 2;
-
-            this.skillLocator.primary.UnsetSkillOverride(this.gameObject, this.hunk.weaponDef.primarySkillDef, GenericSkill.SkillOverridePriority.Network);
-            this.skillLocator.primary.UnsetSkillOverride(this.gameObject, Modules.Survivors.Hunk.reloadSkillDef, GenericSkill.SkillOverridePriority.Network);
-            EntityStateMachine.FindByCustomName(this.gameObject, "Aim").SetNextStateToMain();
-
-            this.skillLocator.primary.SetSkillOverride(this, Modules.Survivors.Hunk.confirmSkillDef, GenericSkill.SkillOverridePriority.Network);
-            this.skillLocator.secondary.SetSkillOverride(this, Modules.Survivors.Hunk.cancelSkillDef, GenericSkill.SkillOverridePriority.Network);
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
             this.hunk.reloadTimer = 2f;
+            this.ignoreStopwatch -= Time.fixedDeltaTime;
+
+            if (base.fixedAge >= this.startupDelay && !this.radial && base.isAuthority)
+            {
+                this.OpenMenu();
+            }
 
             //this.skillLocator.secondary.stock = 0;
             //this.skillLocator.secondary.rechargeStopwatch = 0f;
@@ -73,64 +88,82 @@ namespace HunkMod.SkillStates.Hunk
 
             if (base.isAuthority)
             {
-                if (!this.radial.cursorInCenter && this.radial.isValidIndex)
+                if (this.radial)
                 {
-                    if (this.inputBank.skill1.justPressed)
+                    if (!this.radial.cursorInCenter && this.radial.isValidIndex)
                     {
-                        Util.PlaySound("sfx_hunk_menu_click", this.gameObject);
-                        EntityStateMachine.FindByCustomName(this.gameObject, "Weapon").SetInterruptState(new Swap
+                        if (this.inputBank.skill1.justPressed)
                         {
-                            index = this.radial.index
-                        }, InterruptPriority.Frozen);
+                            Util.PlaySound("sfx_hunk_menu_click", this.gameObject);
+                            EntityStateMachine.FindByCustomName(this.gameObject, "Weapon").SetInterruptState(new Swap
+                            {
+                                index = this.radial.index
+                            }, InterruptPriority.Frozen);
 
-                        this.hunk.weaponTracker.nextWeapon = this.radial.index;
-                        NetworkIdentity identity = this.GetComponent<NetworkIdentity>();
-                        if (identity) new SyncGunSwap(identity.netId, this.radial.index).Send(NetworkDestination.Server);
-                        return;
-                    }
+                            this.hunk.weaponTracker.nextWeapon = this.radial.index;
+                            NetworkIdentity identity = this.GetComponent<NetworkIdentity>();
+                            if (identity) new SyncGunSwap(identity.netId, this.radial.index).Send(NetworkDestination.Server);
+                            return;
+                        }
 
-                    if (this.inputBank.skill2.justPressed)
-                    {
-                        Util.PlaySound("sfx_hunk_menu_click", this.gameObject);
+                        if (this.inputBank.skill2.justPressed)
+                        {
+                            Util.PlaySound("sfx_hunk_menu_click", this.gameObject);
 
-                        //this.hunk.weaponTracker.DropWeapon(this.radial.index);
-                        NetworkIdentity identity = this.GetComponent<NetworkIdentity>();
-                        if (identity) new SyncGunDrop(identity.netId, this.radial.index).Send(NetworkDestination.Server);
-                        return;
+                            this.ignoreStopwatch = 0.5f;
+                            //this.hunk.weaponTracker.DropWeapon(this.radial.index);
+                            NetworkIdentity identity = this.GetComponent<NetworkIdentity>();
+                            if (identity) new SyncGunDrop(identity.netId, this.radial.index).Send(NetworkDestination.Server);
+                            return;
+                        }
                     }
                 }
             }
 
             if (base.isAuthority && !this.inputBank.skill4.down)
             {
-                if (!this.radial.cursorInCenter)
+                if (!this.radial)
                 {
-                    if (this.radial.isValidIndex)
+                    this.hunk.weaponTracker.nextWeapon = -1;
+                    EntityStateMachine.FindByCustomName(this.gameObject, "Weapon").SetInterruptState(new Swap
                     {
-                        this.hunk.weaponTracker.nextWeapon = this.radial.index;
-                        EntityStateMachine.FindByCustomName(this.gameObject, "Weapon").SetInterruptState(new Swap
-                        {
-                            index = this.radial.index
-                        }, InterruptPriority.Frozen);
-                    }
-                    else if (this.radial.ValidIndex(this.radial.controllerLatchIndex, false))
-                    {
-                        this.hunk.weaponTracker.nextWeapon = this.radial.controllerLatchIndex;
-                        EntityStateMachine.FindByCustomName(this.gameObject, "Weapon").SetInterruptState(new Swap
-                        {
-                            index = this.radial.controllerLatchIndex
-                        }, InterruptPriority.Frozen);
-                    }
+                        index = -1
+                    }, InterruptPriority.Frozen);
+                    this.outer.SetNextStateToMain();
+                    return;
                 }
-                else
+
+                if (this.ignoreStopwatch < 0f && this.radial)
                 {
-                    if (base.fixedAge <= 0.35f)
+                    if (!this.radial.cursorInCenter)
                     {
-                        this.hunk.weaponTracker.nextWeapon = -1;
-                        EntityStateMachine.FindByCustomName(this.gameObject, "Weapon").SetInterruptState(new Swap
+                        if (this.radial.isValidIndex)
                         {
-                            index = -1
-                        }, InterruptPriority.Frozen);
+                            this.hunk.weaponTracker.nextWeapon = this.radial.index;
+                            EntityStateMachine.FindByCustomName(this.gameObject, "Weapon").SetInterruptState(new Swap
+                            {
+                                index = this.radial.index
+                            }, InterruptPriority.Frozen);
+                        }
+                        else if (this.radial.ValidIndex(this.radial.controllerLatchIndex, false))
+                        {
+                            this.hunk.weaponTracker.nextWeapon = this.radial.controllerLatchIndex;
+                            EntityStateMachine.FindByCustomName(this.gameObject, "Weapon").SetInterruptState(new Swap
+                            {
+                                index = this.radial.controllerLatchIndex
+                            }, InterruptPriority.Frozen);
+                        }
+                    }
+                    else
+                    {
+                        if (base.fixedAge <= 0.3f)
+                        {
+                            this.hunk.weaponTracker.nextWeapon = -1;
+                            EntityStateMachine.FindByCustomName(this.gameObject, "Weapon").SetInterruptState(new Swap
+                            {
+                                index = -1
+                            }, InterruptPriority.Frozen);
+                        }
                     }
                 }
 

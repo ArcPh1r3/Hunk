@@ -1,6 +1,6 @@
 {
     "name": "HUNK",
-    "version_number": "1.5.10",
+    "version_number": "1.5.14",
     "website_url": "https://github.com/ArcPh1r3/Hunk/tree/main",
     "description": "Adds HUNK, a survivor with a focus on resource management, weapon collection and risky CQC. Now with a handful of new unique counterattacks",
     "dependencies": [

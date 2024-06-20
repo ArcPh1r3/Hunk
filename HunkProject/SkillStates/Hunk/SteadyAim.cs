@@ -13,6 +13,7 @@ namespace HunkMod.SkillStates.Hunk
         private OverlayController overlayController;
         //private GameObject lightEffectInstance;
         //private Animator animator;
+        private bool isToggleMode;
 
         public override void OnEnter()
         {
@@ -20,6 +21,7 @@ namespace HunkMod.SkillStates.Hunk
             this.characterBody.hideCrosshair = false;
             this.hunk.isAiming = true;
             this.hunk.lockOnTimer = 0f;
+            this.isToggleMode = Modules.Config.toggleAim.Value;
             //this.animator = this.GetModelAnimator();
             if (!this.camParamsOverrideHandle.isValid) this.camParamsOverrideHandle = Modules.CameraParams.OverrideCameraParams(base.cameraTargetParams, HunkCameraParams.AIM, 0.5f);
 
@@ -111,9 +113,21 @@ namespace HunkMod.SkillStates.Hunk
 
             if (base.fixedAge >= 0.1f)
             {
-                if (!this.inputBank.skill2.down && base.isAuthority)
+                if (this.isToggleMode)
                 {
-                    this.outer.SetNextStateToMain();
+                    if (this.inputBank.skill2.justPressed)
+                    {
+                        this.skillLocator.secondary.stock = 0;
+                        this.skillLocator.secondary.rechargeStopwatch = 0f;
+                        if (base.isAuthority) this.outer.SetNextStateToMain();
+                    }
+                }
+                else
+                {
+                    if (!this.inputBank.skill2.down && base.isAuthority)
+                    {
+                        this.outer.SetNextStateToMain();
+                    }
                 }
 
                 if (this.inputBank.skill4.down && base.isAuthority)

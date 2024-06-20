@@ -1,5 +1,22 @@
 ## Changelog
 
+`1.5.14`
+- Half reverted previous change, delay is now 0 by default and original behavior is restored- feature now must be opted into
+- Added a custom C4 interactable to the Catacombs map to allow access to the second weapon case even when the lower crypt is blocked off
+- Fixed a couple harmless stray errors
+
+`1.5.13`
+- Added a VERY slightly delay to the weapon menu opening up after pressing the key, should be too small to feel, but just enough to tap swap guns without a slowdown
+- ^this is configurable and can be reverted completely if it's not liked
+- Dropping a gun and then closing the menu immediately no longer switches guns
+
+`1.5.12`
+- Added config option to reduce screenshake for HUNK, off by default
+- Added config option to make secondary skill a toggle, off by default
+
+`1.5.11`
+- Bugfix
+
 `1.5.10`
 - Added new frontal counterattack for Stone Golems- disables their laser attack for the next 60 seconds, and this counter cannot be repeated while the laser is disabled
 - Added new counterattack for Bighorn Buffalos- mount them, aim for a second, then send them charging forward for 4000% to any enemies in its path, and 8000% self damage if it collides with a wall

@@ -164,6 +164,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
 			this.attack.isCrit = false;
 			this.attack.pushAwayForce = Charge.awayForceMagnitude;
 			this.attack.hitBoxGroup = this.hitboxGroup;
+			this.attack.attackerFiltering = AttackerFiltering.NeverHitSelf;
 		}
 
 		public override InterruptPriority GetMinimumInterruptPriority()

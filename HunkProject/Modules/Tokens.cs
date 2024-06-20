@@ -257,6 +257,9 @@ namespace HunkMod.Modules
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_AMMO_NAME", "Ammo");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_AMMO_CONTEXT", "Rummage for ammo");
 
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_C4_NAME", "C4");
+            LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_C4_CONTEXT", "Activate detonator");
+
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYWORD_LOOTING", "<style=cKeywordName>Looting</style><style=cSub>Enemies slain with this skill have a small chance to drop ammo.");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYWORD_MANGLED", "<style=cKeywordName>Mangled</style><style=cSub>Upon reaching 6 stacks of this debuff, enemies suffer an instant <style=cIsDamage>2800% damage</style>.");
             LanguageAPI.Add(MainPlugin.developerPrefix + "_HUNK_KEYWORD_PERFECTDODGE", "<style=cKeywordName>Perfect Dodge</style><style=cSub>Refund cooldown and become briefly invulnerable. Allows you to perform a Counterattack.");

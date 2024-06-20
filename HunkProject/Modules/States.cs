@@ -82,6 +82,9 @@ namespace HunkMod.Modules
 
             entityStates.Add(typeof(HunkMod.SkillStates.Parasite.Infest));
             entityStates.Add(typeof(HunkMod.SkillStates.Parasite.Death));
+
+            entityStates.Add(typeof(HunkMod.SkillStates.C4.Charge));
+            entityStates.Add(typeof(HunkMod.SkillStates.C4.Detonate));
         }
     }
 }

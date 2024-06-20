@@ -27,6 +27,7 @@ namespace HunkMod.Modules
         public static ConfigEntry<float> weaponMenuSensitivity;
         public static ConfigEntry<float> cameraSmoothSpeed;
         public static ConfigEntry<float> cameraZoomInfluence;
+        public static ConfigEntry<float> weaponMenuStartupDelay;
         public static ConfigEntry<bool> fancyShield;
         public static ConfigEntry<bool> fancyShieldGlobal;
         public static ConfigEntry<bool> shieldBubble;
@@ -36,6 +37,8 @@ namespace HunkMod.Modules
         public static ConfigEntry<bool> enableRollSnap;
         public static ConfigEntry<bool> depositKeycards;
         public static ConfigEntry<bool> allRandomWeapons;
+        public static ConfigEntry<bool> reduceScreenShake;
+        public static ConfigEntry<bool> toggleAim;
         public static ConfigEntry<bool> menuSFX;
         public static ConfigEntry<bool> blacklistHunkItems;
         public static ConfigEntry<bool> overTheShoulderCamera;
@@ -148,6 +151,12 @@ true,
 1f,
 "Controls the distance the camera will zoom out around large enemies. Set to 0 to disable", 0f, 2f);
 
+            weaponMenuStartupDelay
+= Config.BindAndOptionsSlider("01 - General",
+"Weapon Menu Startup Delay",
+0f,
+"Controls the time it takes for the weapon wheel + slowdown effect to start up after pressing the button. Should ideally be small enough to not notice the difference in most cases. Set to 0 to restore original behavior", 0f, 0.2f);
+
             fancyShield
 = Config.BindAndOptions("01 - General",
 "Fancy Shield",
@@ -201,6 +210,18 @@ false,
 "New Game+",
 false,
 "Set to true to fully randomize all the weapons inside cases, barring special ones.", false);
+
+            reduceScreenShake
+= Config.BindAndOptions("01 - General",
+"Reduce Screen Shake for HUNK",
+false,
+"Set to true to lower the screenshake of the game for HUNK specifically. With his unique camera it gets to be too overbearing.", true);
+
+            toggleAim
+= Config.BindAndOptions("01 - General",
+"Toggle Aim Mode",
+false,
+"Set to true to require a second press to exit your secondary skill's aim mode.", false);
 
             menuSFX
 = Config.BindAndOptions("01 - General",

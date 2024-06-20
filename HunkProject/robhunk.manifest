@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3479432046
+CRC: 1015335187
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: b3ad9962b9564e2d56eb8c552bd020cb
+    Hash: f94af8ee6550fb6ac83a4ea37cd90f55
   TypeTreeHash:
     serializedVersion: 2
     Hash: 578f72f44b5a2ccce06c5be12e40e453
@@ -90,6 +90,7 @@ Assets:
 - Assets/Hunk/Items/mdlKeycardDiamondOld.prefab
 - Assets/Hunk/Animations/Default/LightImpact.anim
 - Assets/Hunk/Materials/matWesker03.mat
+- Assets/Hunk/Textures/C4/wp1096_00_NM.png
 - Assets/Hunk/Materials/matMagnum.mat
 - Assets/Hunk/Weapons/mdlSMGPickup.prefab
 - Assets/Hunk/Mesh/meshTofuHat.mesh
@@ -217,6 +218,7 @@ Assets:
 - Assets/Hunk/Textures/Wristband/Ada_WristbandLevel_N.TGA
 - Assets/Hunk/VFX/SpeedLines.prefab
 - Assets/Hunk/Icons/Weapon/texEMFIcon.png
+- Assets/Hunk/Textures/C4/wp1096_00_BM.png
 - Assets/Hunk/Weapons/mdlShotgunPickup.prefab
 - Assets/Hunk/Icons/Weapon/texMUPIcon.png
 - Assets/Hunk/Animations/WeaponCase/Open.anim
@@ -628,6 +630,7 @@ Assets:
 - Assets/Hunk/Weapons/mdlMUPPickup.prefab
 - Assets/Hunk/Icons/Item/texExtendedMagIcon.png
 - Assets/Hunk/Materials/matKeyCardDiamond.mat
+- Assets/Hunk/Materials/matC4.mat
 - Assets/Hunk/Materials/matGoldenGun.mat
 - Assets/Hunk/Animations/Default/RunB.anim
 - Assets/Hunk/Materials/matClub.mat
@@ -643,6 +646,7 @@ Assets:
 - Assets/Hunk/Materials/matDiamond.mat
 - Assets/Hunk/Textures/Wristband/Ada_Wristband_N.tga
 - Assets/Hunk/VFX/HunkGrenadeGhost.prefab
+- Assets/Hunk/C4Interaction.prefab
 - Assets/Hunk/Textures/Doom/doomslayer_legs_n.jpg
 - Assets/Hunk/Icons/Skill/texSwapIcon.png
 - Assets/Hunk/HUD/CounterFlash.prefab

@@ -119,6 +119,7 @@ namespace HunkMod.Modules.Survivors
 
         internal GameObject ammoPickupInteractable;
         internal GameObject ammoPickupInteractableSmall;
+        internal GameObject c4Interactable;
 
         internal static ItemDef spadeKeycard;
         internal static ItemDef clubKeycard;
@@ -198,6 +199,7 @@ namespace HunkMod.Modules.Survivors
                 CreateKeycards();
                 CreateAmmoInteractable();
                 CreateBarrelAmmoInteractable();
+                CreateC4Interactable();
                 CreateChest();
                 CreateCase();
                 CreateTerminal();
@@ -5956,6 +5958,30 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             interactionEffect.transform.localRotation = Quaternion.identity;
         }
 
+        private void CreateC4Interactable()
+        {
+            c4Interactable = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Barrel1/Barrel1.prefab").WaitForCompletion().InstantiateClone("HunkC4Interactable", true);
+
+            MainPlugin.Destroy(c4Interactable.GetComponent<BarrelInteraction>());
+            //MainPlugin.Destroy(c4Interactable.GetComponent<Highlight>());
+            MainPlugin.Destroy(c4Interactable.GetComponent<GenericDisplayNameProvider>());
+
+            c4Interactable.GetComponent<SfxLocator>().openSound = "sfx_hunk_pickup";
+
+            Transform modelTransform = c4Interactable.GetComponent<ModelLocator>().modelTransform;
+            c4Interactable.AddComponent<HunkC4Interaction>();
+            modelTransform.GetComponent<Animator>().enabled = false;
+            modelTransform.Find("BarrelMesh").GetComponent<SkinnedMeshRenderer>().enabled = false;
+
+            GameObject interactionEffect = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("C4Interaction"));
+            Modules.Assets.ConvertAllRenderersToHopooShader(interactionEffect);
+            interactionEffect.transform.SetParent(modelTransform, false);
+            interactionEffect.transform.localPosition = new Vector3(0f, 1f, 0f);
+            interactionEffect.transform.localRotation = Quaternion.identity;
+
+            c4Interactable.GetComponent<Highlight>().targetRenderer = interactionEffect.GetComponentInChildren<MeshRenderer>();
+        }
+
         private static void Hook()
         {
             // headshots and ammo drops
@@ -6059,6 +6085,9 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             // network dodge. fuck you.
             On.RoR2.CharacterBody.OnSkillActivated += CharacterBody_OnSkillActivated;
 
+            // screenshake reduction
+            if (Modules.Config.reduceScreenShake.Value) On.RoR2.ShakeEmitter.Start += ShakeEmitter_Start;
+
             // if i speak i am in trouble
             On.RoR2.UI.MainMenu.BaseMainMenuScreen.Awake += BaseMainMenuScreen_Awake;
             On.RoR2.UI.MainMenu.BaseMainMenuScreen.Update += BaseMainMenuScreen_Update;
@@ -6069,6 +6098,15 @@ localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
             On.EntityStates.GlobalSkills.LunarNeedle.ChargeLunarSecondary.PlayChargeAnimation += PlayChargeLunarAnimation;
             On.EntityStates.GlobalSkills.LunarNeedle.ThrowLunarSecondary.PlayThrowAnimation += PlayThrowLunarAnimation;
             On.EntityStates.GlobalSkills.LunarDetonator.Detonate.OnEnter += PlayRuinAnimation;
+        }
+
+        private static void ShakeEmitter_Start(On.RoR2.ShakeEmitter.orig_Start orig, ShakeEmitter self)
+        {
+            if (self)
+            {
+                if (Modules.Helpers.isLocalUserHunk) self.wave.amplitude *= 0.5f;
+            }
+            orig(self);
         }
 
         private static void Flamebreath_FireFlame(On.EntityStates.LemurianBruiserMonster.Flamebreath.orig_FireFlame orig, EntityStates.LemurianBruiserMonster.Flamebreath self, string muzzleString)
@@ -7882,6 +7920,8 @@ Vector3.up * 20f);
                         rot = Quaternion.Euler(0f, 0f, 0f);
                         pos2 = new Vector3(98.62f, 177f, -264.2091f);
                         rot2 = Quaternion.Euler(0f, 180f, 0f);
+                        // add c4 shit
+                        if (GameObject.Find("GameManager")) GameObject.Find("GameManager").AddComponent<HunkCatacombChecker>();
                         break;
                     case "slumberingsatellite":
                         pos = new Vector3(-61.48913f, 89.4f, -20.67262f);
