@@ -144,7 +144,17 @@ namespace HunkMod.SkillStates.Hunk
                             if (pc.owner)
                             {
                                 HealthComponent hc = pc.owner.GetComponent<HealthComponent>();
-                                if (hc) this.hunk.targetHurtbox = hc.body.mainHurtBox;
+                                if (hc)
+                                {
+                                    foreach (HurtBox j in hc.body.hurtBoxGroup.hurtBoxes)
+                                    {
+                                        if (j.isSniperTarget)
+                                        {
+                                            this.hunk.targetHurtbox = j;
+                                        }
+                                    }
+                                    this.hunk.targetHurtbox = hc.body.mainHurtBox;
+                                }
                             }
 
                             outer.SetNextState(nextState);
@@ -156,7 +166,7 @@ namespace HunkMod.SkillStates.Hunk
 
             foreach (Modules.Components.HunkProjectileTracker i in MainPlugin.projectileList)
             {
-                if (i && Vector3.Distance(i.transform.position, this.transform.position) <= this.checkRadius * 0.75f)
+                if (i && Vector3.Distance(i.transform.position, this.transform.position) <= this.checkRadius * 0.5f)
                 {
                     if (base.isAuthority)
                     {
@@ -185,7 +195,16 @@ namespace HunkMod.SkillStates.Hunk
                     {
                         Roll nextState = new Roll();
 
-                        if (i.characterBody) this.hunk.targetHurtbox = i.characterBody.mainHurtBox;
+                        if (i.characterBody)
+                        {
+                            foreach (HurtBox j in i.characterBody.hurtBoxGroup.hurtBoxes)
+                            {
+                                if (j.isSniperTarget)
+                                {
+                                    this.hunk.targetHurtbox = j;
+                                }
+                            }
+                        }
 
                         outer.SetNextState(nextState);
                     }

@@ -7,6 +7,8 @@ namespace HunkMod.SkillStates.Hunk
 {
     public class PerfectLanding : BaseHunkSkillState
     {
+        public bool resetCooldown = true;
+        public bool allowCounter = true;
         protected override bool normalizeModel => true;
         protected Vector3 slipVector = Vector3.zero;
         public float duration = 0.8f;
@@ -29,10 +31,13 @@ namespace HunkMod.SkillStates.Hunk
             this.skillLocator.secondary.stock = 0;
             this.skillLocator.secondary.rechargeStopwatch = 0f;
 
-            this.skillLocator.utility.AddOneStock();
-            this.skillLocator.utility.stock = this.skillLocator.utility.maxStock;
+            if (this.resetCooldown)
+            {
+                this.skillLocator.utility.AddOneStock();
+                this.skillLocator.utility.stock = this.skillLocator.utility.maxStock;
+            }
 
-            this.skillLocator.primary.SetSkillOverride(this, Modules.Survivors.Hunk.counterSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+            if (this.allowCounter) this.skillLocator.primary.SetSkillOverride(this, Modules.Survivors.Hunk.counterSkillDef, GenericSkill.SkillOverridePriority.Contextual);
 
             this.hunk.desiredYOffset = 0.6f;
             this.hunk.immobilized = true;

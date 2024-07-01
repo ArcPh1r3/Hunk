@@ -10,6 +10,8 @@ namespace HunkMod.Modules.Components
         public SkillDef fullArsenalPassive;
         public GenericSkill passiveSkillSlot;
 
+        public GenericSkill toolSkillSlot;
+
         public bool isRummage
         {
             get

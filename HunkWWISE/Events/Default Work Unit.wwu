@@ -1147,6 +1147,39 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="sfx_hunk_grapple_shoot" ID="{C63DDFDE-F2E3-4C34-B7F8-08A3F0E2F519}">
+					<ChildrenList>
+						<Action Name="" ID="{D6E3ACF4-0F7D-4593-B7EE-0FE1915910E1}" ShortID="616370248">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_grapple_shoot" ID="{0837125F-9939-4CAE-B1D5-1344091C5629}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_grapple_impact" ID="{58CCF7E3-1D9C-4C01-AA38-7603434BDF05}">
+					<ChildrenList>
+						<Action Name="" ID="{C9D60895-AB1B-4BA1-8F38-15B9389B2210}" ShortID="547789052">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_grapple_impact" ID="{6A4C9BEC-6A60-4878-B480-A754904B0A2D}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="sfx_hunk_grapple_loop" ID="{BAA06DC4-E291-4621-B28E-643A9C1883D8}">
+					<ChildrenList>
+						<Action Name="" ID="{F478441F-3F77-4A53-B4E7-C8D0D2FC4E0A}" ShortID="480702558">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="sfx_hunk_grapple_loop" ID="{D6B7943B-139E-4FD6-B40E-89B97E2DDDBE}" WorkUnitID="{FE3FA7C5-9E89-40FE-8C7C-97CE0994E519}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

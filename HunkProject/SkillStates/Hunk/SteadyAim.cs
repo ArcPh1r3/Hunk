@@ -11,7 +11,6 @@ namespace HunkMod.SkillStates.Hunk
     {
         public CameraParamsOverrideHandle camParamsOverrideHandle;
         private OverlayController overlayController;
-        //private GameObject lightEffectInstance;
         //private Animator animator;
         private bool isToggleMode;
 
@@ -20,12 +19,19 @@ namespace HunkMod.SkillStates.Hunk
             base.OnEnter();
             this.characterBody.hideCrosshair = false;
             this.hunk.isAiming = true;
-            this.hunk.lockOnTimer = 0f;
             this.isToggleMode = Modules.Config.toggleAim.Value;
             //this.animator = this.GetModelAnimator();
             if (!this.camParamsOverrideHandle.isValid) this.camParamsOverrideHandle = Modules.CameraParams.OverrideCameraParams(base.cameraTargetParams, HunkCameraParams.AIM, 0.5f);
 
             if (NetworkServer.active) this.characterBody.AddBuff(RoR2Content.Buffs.Slow50);
+
+            // bullet time
+            if (this.hunk.lockOnTimer > 0f)
+            {
+                this.hunk.lockOnTimer = 0.666f;
+                if (NetworkServer.active) this.characterBody.AddTimedBuff(Modules.Survivors.Hunk.bulletTimeBuff, 0.666f);
+            }
+            //this.hunk.lockOnTimer = 0f;
 
             if (!this.hunk.isReloading)
             {
@@ -52,13 +58,6 @@ namespace HunkMod.SkillStates.Hunk
                     childLocatorEntry = "ScopeContainer"
                 });
             }
-
-            if (this.hunk.weaponDef.nameToken.Contains("M19"))
-            {
-                //this.FindModelChild("PistolSight").gameObject.SetActive(true);
-            }
-
-            //this.lightEffectInstance = GameObject.Instantiate(Modules.Assets.mainAssetBundle.LoadAsset<GameObject>("GunLight"));
         }
 
         protected virtual void PlayAnim()
@@ -70,18 +69,6 @@ namespace HunkMod.SkillStates.Hunk
         {
             //if (!this.hunk.isReloading) base.PlayCrossfade("Gesture, Override", "AimOut", "Action.playbackRate", 0.6f, 0.05f);
         }
-
-        /*private void UpdateLightEffect()
-        {
-            Ray ray = this.GetAimRay();
-            RaycastHit raycastHit;
-            if (Physics.Raycast(ray.origin, ray.direction, out raycastHit, Shoot.range, LayerIndex.CommonMasks.bullet))
-            {
-                this.lightEffectInstance.SetActive(true);
-                this.lightEffectInstance.transform.position = raycastHit.point + (ray.direction * -0.3f);
-            }
-            else this.lightEffectInstance.SetActive(false);
-        }*/
 
         public override void FixedUpdate()
         {
@@ -108,8 +95,6 @@ namespace HunkMod.SkillStates.Hunk
 
             if (base.fixedAge > 0.05f) this.skillLocator.primary.stock = 1;
             else this.skillLocator.primary.stock = 0;
-
-            //this.UpdateLightEffect();
 
             if (base.fixedAge >= 0.1f)
             {
@@ -143,7 +128,6 @@ namespace HunkMod.SkillStates.Hunk
             this.characterBody.hideCrosshair = true;
             this.hunk.isAiming = false;
             this.hunk.lockOnTimer = -1f;
-            //if (this.lightEffectInstance) Destroy(this.lightEffectInstance);
 
             if (NetworkServer.active) this.characterBody.RemoveBuff(RoR2Content.Buffs.Slow50);
 
@@ -159,8 +143,6 @@ namespace HunkMod.SkillStates.Hunk
 
             this.skillLocator.primary.UnsetSkillOverride(this.gameObject, this.hunk.weaponDef.primarySkillDef, GenericSkill.SkillOverridePriority.Network);
             this.skillLocator.primary.UnsetSkillOverride(this.gameObject, Modules.Survivors.Hunk.reloadSkillDef, GenericSkill.SkillOverridePriority.Network);
-
-            //this.FindModelChild("PistolSight").gameObject.SetActive(false);
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

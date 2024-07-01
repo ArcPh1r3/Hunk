@@ -7,16 +7,27 @@ namespace HunkMod.Modules.Components
     {
         private GameObject laserSight;
         private GameObject laser;
+        private LineRenderer laserLine;
+        private GameObject pointer;
         private GameObject magazine;
 
         private void Start()
         {
+            if (!this.hunk) this.GetHunkController();
             this.laserSight = this.childLocator.FindChild("LaserSight").gameObject;
             this.laser = this.childLocator.FindChild("Laser").gameObject;
+            this.laserLine = this.laser.GetComponent<LineRenderer>();
+            this.pointer = this.hunk.childLocator.FindChild("Pointer").gameObject;
+            this.pointer.transform.GetChild(0).gameObject.layer = 21;
             this.magazine = this.childLocator.FindChild("Magazine").gameObject;
 
             this.laserSight.SetActive(false);
             this.laser.SetActive(false);
+        }
+
+        private void OnDisable()
+        {
+            if (this.pointer) this.pointer.SetActive(false);
         }
 
         protected override void RunFixedUpdate()
@@ -40,6 +51,8 @@ namespace HunkMod.Modules.Components
                         {
                             this.laserSight.SetActive(true);
                             if (equipped) this.laser.SetActive(this.hunk.isAiming);
+                            if (this.hunk.isAiming) this.UpdatePointer();
+                            else this.pointer.SetActive(false);
                         }
                         else
                         {
@@ -59,6 +72,28 @@ namespace HunkMod.Modules.Components
             else
             {
                 this.laserSight.SetActive(false);
+            }
+        }
+
+        private void UpdatePointer()
+        {
+            this.laserLine.SetPosition(0, this.laserLine.transform.position);
+
+            Ray aimRay = this.hunk.characterBody.inputBank.GetAimRay();
+            RaycastHit raycastHit;
+            if (Physics.Raycast(aimRay.origin, aimRay.direction, out raycastHit, 5000f, LayerIndex.CommonMasks.bullet))
+            {
+                if (this.pointer)
+                {
+                    this.pointer.transform.position = raycastHit.point;
+                    this.pointer.SetActive(true);
+                }
+                this.laserLine.SetPosition(1, raycastHit.point);
+            }
+            else
+            {
+                if (this.pointer) this.pointer.SetActive(false);
+                this.laserLine.SetPosition(1, aimRay.origin + (aimRay.direction * 5000f));
             }
         }
 

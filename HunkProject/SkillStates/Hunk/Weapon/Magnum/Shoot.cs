@@ -2,6 +2,7 @@
 using R2API.Networking;
 using R2API.Networking.Interfaces;
 using RoR2;
+using RoR2.Orbs;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -47,6 +48,41 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Magnum
             
             if (this.isCrit) Util.PlaySound("sfx_hunk_magnum_shoot", base.gameObject);
             else Util.PlaySound("sfx_hunk_magnum_shoot", base.gameObject);
+
+            base.characterBody.AddSpreadBloom(0.7f);
+
+            if (this.characterBody.HasBuff(Modules.Survivors.Hunk.bulletTimeBuff) && this.hunk.targetHurtbox && this.hunk.targetHurtbox.healthComponent && this.hunk.targetHurtbox.healthComponent.alive)
+            {
+                if (NetworkServer.active)
+                {
+                    float dmg = Shoot.damageCoefficient;
+
+                    if (this.characterBody.inventory && this.characterBody.inventory.GetItemCount(Modules.Weapons.Magnum.longBarrel) > 0)
+                    {
+                        dmg = 48f;
+                    }
+
+                    GenericDamageOrb genericDamageOrb = this.CreateBulletOrb();
+                    genericDamageOrb.damageValue = dmg * this.damageStat * 1.5f;
+                    genericDamageOrb.isCrit = this.isCrit;
+                    genericDamageOrb.teamIndex = TeamComponent.GetObjectTeam(this.gameObject);
+                    genericDamageOrb.attacker = this.gameObject;
+                    genericDamageOrb.procCoefficient = 1f;
+                    genericDamageOrb.damageColorIndex = DamageColorIndex.Sniper;
+
+                    HurtBox hurtBox = this.hunk.targetHurtbox;
+                    if (hurtBox)
+                    {
+                        Transform transform = this.FindModelChild(this.muzzleString);
+                        genericDamageOrb.origin = transform.position;
+                        genericDamageOrb.target = hurtBox;
+                        OrbManager.instance.AddOrb(genericDamageOrb);
+                    }
+                    this.hunk.targetHurtbox.healthComponent.gameObject.AddComponent<Modules.Components.HunkHeadshotTracker>();
+                }
+
+                return;
+            }
 
             if (base.isAuthority)
             {
@@ -121,8 +157,6 @@ namespace HunkMod.SkillStates.Hunk.Weapon.Magnum
 
                 bulletAttack.Fire();
             }
-
-            base.characterBody.AddSpreadBloom(0.7f);
         }
 
         private GameObject tracerPrefab

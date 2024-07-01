@@ -12,6 +12,7 @@ using UnityEngine.UI;
 using HunkMod.Modules.Components;
 using UnityEngine.Rendering.PostProcessing;
 using ThreeEyedGames;
+using RoR2.Orbs;
 
 namespace HunkMod.Modules
 {
@@ -33,6 +34,8 @@ namespace HunkMod.Modules
         public static GameObject railgunTracer;
         public static GameObject railgunImpact;
         public static GameObject railgunMuzzleFlash;
+
+        public static GameObject bulletOrbEffect;
 
         public static GameObject headshotEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Junk/Common/VFX/WeakPointProcEffect.prefab").WaitForCompletion();
         public static GameObject virusPositionIndicator;
@@ -573,6 +576,8 @@ namespace HunkMod.Modules
             if (!shotgunTracerCrit.GetComponent<VFXAttributes>()) shotgunTracerCrit.AddComponent<VFXAttributes>();
             if (!shotgunTracerCrit.GetComponent<NetworkIdentity>()) shotgunTracerCrit.AddComponent<NetworkIdentity>();
 
+            Material uhhhFuck = null;
+
             foreach (LineRenderer i in shotgunTracerCrit.GetComponentsInChildren<LineRenderer>())
             {
                 if (i)
@@ -582,6 +587,7 @@ namespace HunkMod.Modules
                     i.material = material;
                     i.startColor = new Color(0.8f, 0.24f, 0f);
                     i.endColor = new Color(0.8f, 0.24f, 0f);
+                    uhhhFuck = material;
                 }
             }
 
@@ -1012,6 +1018,26 @@ namespace HunkMod.Modules
             scannerTracer.speed = 100f;
 
             AddNewEffectDef(scannerLineIndicator);
+
+
+            bulletOrbEffect = PrefabAPI.InstantiateClone(LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/OrbEffects/ArrowOrbEffect"), "HunkBulletOrbEffect", false);
+
+            Material orbMat = Material.Instantiate(uhhhFuck);
+
+            orbMat.SetColor("_TintColor", new Color(174f / 255f, 107f / 255f, 24f / 255f));
+
+            bulletOrbEffect.GetComponentInChildren<TrailRenderer>().material = orbMat;
+            bulletOrbEffect.GetComponentInChildren<TrailRenderer>().widthMultiplier = 0.1f;
+            bulletOrbEffect.transform.Find("Quad").gameObject.SetActive(false);
+
+            OrbEffect orbEffect = bulletOrbEffect.GetComponent<OrbEffect>();
+            orbEffect.endEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/OmniImpactVFX.prefab").WaitForCompletion();
+            orbEffect.startVelocity1 = Vector3.zero;
+            orbEffect.startVelocity2 = Vector3.zero;
+            orbEffect.endVelocity1 = Vector3.zero;
+            orbEffect.endVelocity2 = Vector3.zero;
+
+            AddNewEffectDef(bulletOrbEffect);
         }
 
         private static GameObject CreateBloodExplosionEffect(string effectName, Material bloodMat, float scale = 1f, float lifetimeModifier = 1f)

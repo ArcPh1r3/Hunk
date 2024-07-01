@@ -308,18 +308,29 @@ namespace HunkMod.Modules.Components
                         weaponDef = Modules.Weapons.MUP.instance.weaponDef,
                         totalAmmo = Modules.Weapons.MUP.instance.magSize * 2,
                         currentAmmo = Modules.Weapons.MUP.instance.magSize
-                    },
-                    new HunkWeaponData
-                    {
-                        weaponDef = Modules.Weapons.ScanGun.instance.weaponDef,
-                        totalAmmo = 999,
-                        currentAmmo = 999
                     }
                     };
 
                     this.AddWeaponItem(Modules.Weapons.SMG.instance.weaponDef);
                     this.AddWeaponItem(Modules.Weapons.MUP.instance.weaponDef);
-                    this.AddWeaponItem(Modules.Weapons.ScanGun.instance.weaponDef);
+
+                    if (this.hunk.passive)
+                    {
+                        if (this.hunk.passive.toolSkillSlot)
+                        {
+                            if (this.hunk.passive.toolSkillSlot.skillDef == Modules.Survivors.Hunk.scanGunDef)
+                            {
+                                this.inventory.GiveItem(Modules.Weapons.ScanGun.instance.itemDef);
+                            }
+
+                            if (this.hunk.passive.toolSkillSlot.skillDef == Modules.Survivors.Hunk.grappleGunDef)
+                            {
+                                this.inventory.GiveItem(Modules.Weapons.GrappleGun.instance.itemDef);
+                            }
+                        }
+
+                        this.ValidateWeapons();
+                    }
                 }
             }
 
@@ -500,6 +511,13 @@ namespace HunkMod.Modules.Components
 
         private void SpawnKeycard()
         {
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "moon2")
+            {
+                this.spawnedKeycardThisStage = true;
+                this.CancelInvoke();
+                return;
+            }
+
             if (this.hunk && this.variantHandler)
             {
                 this.spawnedKeycardThisStage = true;

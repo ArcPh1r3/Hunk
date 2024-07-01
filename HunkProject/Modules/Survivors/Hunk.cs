@@ -160,6 +160,11 @@ namespace HunkMod.Modules.Survivors
         public static SkillDef re4KnifeDef;
         internal static UnlockableDef re4KnifeUnlockableDef;
 
+        public static SkillDef scanGunDef;
+        public static SkillDef grappleGunDef;
+        public static SkillDef flashlightDef;
+
+        internal static BuffDef bulletTimeBuff;
         internal static BuffDef immobilizedBuff;
         internal static BuffDef grenadeInMouthBuff;
         internal static BuffDef infectedBuff;
@@ -219,7 +224,8 @@ namespace HunkMod.Modules.Survivors
                 //else Modules.Prefabs.RegisterNewSurvivor(characterPrefab, displayPrefab, "DRIVER", characterUnlockableDef);
 
                 umbraMaster = CreateMaster(characterPrefab, "RobHunkMonsterMaster");
-                
+
+                bulletTimeBuff = Modules.Buffs.AddNewBuff("buffHunkBulletTime", null, Color.white, false, false, true);
                 immobilizedBuff = Modules.Buffs.AddNewBuff("buffHunkImmobilized", null, Color.white, false, false, true);
                 grenadeInMouthBuff = Modules.Buffs.AddNewBuff("buffHunkGrenadeInMouth", null, Color.white, false, false, true);
                 infectedBuff = Modules.Buffs.AddNewBuff("buffHunkInfected", null, Color.yellow, false, false, true);
@@ -238,6 +244,9 @@ namespace HunkMod.Modules.Survivors
         {
             bodyNameToken = MainPlugin.developerPrefix + "_HUNK_BODY_NAME";
 
+            Texture charIcon = Modules.Assets.LoadCharacterIcon("Hunk");
+            if (Modules.Config.rorStyle.Value) charIcon = Modules.Assets.LoadCharacterIcon("Hunk2");
+
             #region Body
             GameObject newPrefab = Modules.Prefabs.CreatePrefab("RobHunkBody", "mdlHunk", new BodyInfo
             {
@@ -246,7 +255,7 @@ namespace HunkMod.Modules.Survivors
                 bodyName = "RobHunkBody",
                 bodyNameToken = bodyNameToken,
                 bodyColor = characterColor,
-                characterPortrait = Modules.Assets.LoadCharacterIcon("Hunk"),
+                characterPortrait = charIcon,
                 crosshair = Modules.Assets.LoadCrosshair("Standard"),
                 damage = Config.baseDamage.Value,
                 healthGrowth = Config.healthGrowth.Value,
@@ -688,6 +697,64 @@ namespace HunkMod.Modules.Survivors
             null, completionUnlockableDef);
             #endregion
 
+            #region Tool
+            scanGunDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = Modules.Weapons.ScanGun.instance.weaponNameTokenFull,
+                skillNameToken = Modules.Weapons.ScanGun.instance.weaponNameTokenFull,
+                skillDescriptionToken = Modules.Weapons.ScanGun.instance.weaponDescToken,
+                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texScanGunSkillIcon"),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Idle)),
+                activationStateMachineName = "",
+                baseMaxStock = 1,
+                baseRechargeInterval = 0f,
+                beginSkillCooldownOnSkillEnd = false,
+                canceledFromSprinting = false,
+                forceSprintDuringState = false,
+                fullRestockOnAssign = true,
+                interruptPriority = EntityStates.InterruptPriority.Any,
+                resetCooldownTimerOnUse = false,
+                isCombatSkill = false,
+                mustKeyPress = false,
+                cancelSprintingOnActivation = false,
+                rechargeStock = 1,
+                requiredStock = 2,
+                stockToConsume = 1
+            });
+
+            grappleGunDef = Modules.Skills.CreateSkillDef(new SkillDefInfo
+            {
+                skillName = Modules.Weapons.GrappleGun.instance.weaponNameTokenFull,
+                skillNameToken = Modules.Weapons.GrappleGun.instance.weaponNameTokenFull,
+                skillDescriptionToken = Modules.Weapons.GrappleGun.instance.weaponDescToken,
+                skillIcon = Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texGrappleGunSkillIcon"),
+                activationState = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Idle)),
+                activationStateMachineName = "",
+                baseMaxStock = 1,
+                baseRechargeInterval = 0f,
+                beginSkillCooldownOnSkillEnd = false,
+                canceledFromSprinting = false,
+                forceSprintDuringState = false,
+                fullRestockOnAssign = true,
+                interruptPriority = EntityStates.InterruptPriority.Any,
+                resetCooldownTimerOnUse = false,
+                isCombatSkill = false,
+                mustKeyPress = false,
+                cancelSprintingOnActivation = false,
+                rechargeStock = 1,
+                requiredStock = 2,
+                stockToConsume = 1
+            });
+
+            Modules.Skills.AddPassiveSkills(passive.toolSkillSlot.skillFamily, new SkillDef[]{
+                    scanGunDef,
+                    grappleGunDef
+                });
+
+            Modules.Skills.AddUnlockablesToFamily(passive.toolSkillSlot.skillFamily,
+            null, completionUnlockableDef);
+            #endregion
+
             #region Primary
             SkillDef knife = Modules.Skills.CreatePrimarySkillDef(new EntityStates.SerializableEntityStateType(typeof(SkillStates.Hunk.SwingKnife)),
                 "Weapon",
@@ -1063,8 +1130,11 @@ Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
 
             List<SkinDef> skins = new List<SkinDef>();
 
+            string skinName = MainPlugin.developerPrefix + "_HUNK_BODY_DEFAULT_SKIN_NAME";
+
             #region DefaultSkin
-            SkinDef defaultSkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_DEFAULT_SKIN_NAME",
+            if (Modules.Config.rorStyle.Value) skinName = MainPlugin.developerPrefix + "_HUNK_BODY_CLASSIC_SKIN_NAME";
+            SkinDef defaultSkin = Modules.Skins.CreateSkinDef(skinName,
                 Assets.mainAssetBundle.LoadAsset<Sprite>("texMainSkin"),
                 defaultRenderers,
                 mainRenderer,
@@ -1103,9 +1173,64 @@ Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
                     mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("0005_Resident Evil 7_ 2")
                 }
             };
-
-            skins.Add(defaultSkin);
             #endregion
+
+            #region RoRStyleSkin
+            if (!Modules.Config.rorStyle.Value) skinName = MainPlugin.developerPrefix + "_HUNK_BODY_ROR_SKIN_NAME";
+            else skinName = MainPlugin.developerPrefix + "_HUNK_BODY_DEFAULT_SKIN_NAME";
+            SkinDef rorSkin = Modules.Skins.CreateSkinDef(skinName,
+    Assets.mainAssetBundle.LoadAsset<Sprite>("texMainSkin"),
+    SkinRendererInfos(defaultRenderers,
+    new Material[]
+    {
+                    Modules.Assets.CreateMaterial("matHunk", 1f, Color.white)
+    }),
+    mainRenderer,
+    model);
+
+            rorSkin.meshReplacements = new SkinDef.MeshReplacement[]
+            {
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model01").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("meshHunk")
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model02").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = null
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model03").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = null
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model04").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = null
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model05").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = null
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model06").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = null
+                }
+            };
+            #endregion
+
+            if (Modules.Config.rorStyle.Value)
+            {
+                skins.Add(rorSkin);
+            }
+            else
+            {
+                skins.Add(defaultSkin);
+            }
 
             #region MasterySkin
             SkinDef masterySkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_TOFU_SKIN_NAME",
@@ -1157,6 +1282,12 @@ Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
             skins.Add(masterySkin);
             #endregion
 
+            if (!Modules.Config.rorStyle.Value)
+            {
+                skins.Add(rorSkin);
+            }
+            else if (Modules.Config.cursed.Value) skins.Add(defaultSkin);
+
             #region LightweightSkin
             SkinDef lightweightSkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_LIGHTWEIGHT_SKIN_NAME",
                 Assets.mainAssetBundle.LoadAsset<Sprite>("texLightweightSkin"),
@@ -1183,9 +1314,57 @@ Modules.Assets.mainAssetBundle.LoadAsset<Sprite>("texKnifeIcon"), false);
                     mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("meshHunkB03")
                 }
             };
-
-            skins.Add(lightweightSkin);
             #endregion
+
+            #region LightweightSkinNew
+            SkinDef lightweightSkinNew = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_LIGHTWEIGHT_SKIN_NAME",
+                Assets.mainAssetBundle.LoadAsset<Sprite>("texLightweightSkin"),
+                SkinRendererInfos(defaultRenderers,
+                new Material[]
+                {
+                    Modules.Assets.CreateMaterial("matHunk", 1f, Color.white)
+                }),
+                mainRenderer,
+                model,
+                lightweightUnlockableDef);
+
+            lightweightSkinNew.meshReplacements = new SkinDef.MeshReplacement[]
+            {
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model01").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = Modules.Assets.mainAssetBundle.LoadAsset<Mesh>("meshLightweightNew")
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model02").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = null
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model03").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = null
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model04").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = null
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model05").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = null
+                },
+                new SkinDef.MeshReplacement
+                {
+                    renderer = childLocator.FindChild("Model06").GetComponent<SkinnedMeshRenderer>(),
+                    mesh = null
+                }
+            };
+            #endregion
+
+            if (Modules.Config.rorStyle.Value) skins.Add(lightweightSkinNew);
+            else skins.Add(lightweightSkin);
 
             #region CommandoSkin
             SkinDef commandoSkin = Modules.Skins.CreateSkinDef(MainPlugin.developerPrefix + "_HUNK_BODY_COMMANDO_SKIN_NAME",
@@ -4565,6 +4744,7 @@ localScale = new Vector3(0.23261F, 0.23261F, 0.28259F)
             // uhh
             Modules.ItemDisplays.PopulateDisplays();
 
+            #region Custom Items
             itemDisplayRules.Add(new ItemDisplayRuleSet.KeyAssetRuleGroup
             {
                 keyAsset = Hunk.spadeKeycard,
@@ -4775,6 +4955,7 @@ localScale = new Vector3(15.77204F, 15.77204F, 15.77204F)
                 }
             });
 
+            #endregion
             //if (!Modules.Config.enableItemDisplays) return;
 
             ReplaceItemDisplay(RoR2Content.Items.SecondarySkillMagazine, new ItemDisplayRule[]
@@ -4784,10 +4965,10 @@ localScale = new Vector3(15.77204F, 15.77204F, 15.77204F)
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemDisplays.LoadDisplay("DisplayDoubleMag"),
                     limbMask = LimbFlags.None,
-childName = "HandR",
-localPos = new Vector3(0.00888F, -0.03648F, -0.20898F),
-localAngles = new Vector3(39.35415F, 348.9445F, 164.0792F),
-localScale = new Vector3(0.06F, 0.06F, 0.06F)
+childName = "Weapon",
+localPos = new Vector3(0.0007F, -0.33328F, 10.60788F),
+localAngles = new Vector3(305.6733F, 0F, 0F),
+localScale = new Vector3(5.48815F, 5.48815F, 5.48815F)
                 }
             });
 
@@ -4840,10 +5021,10 @@ localScale = new Vector3(15.58726F, 15.58725F, 15.58725F)
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemDisplays.LoadDisplay("DisplayWarhammer"),
                     limbMask = LimbFlags.None,
-childName = "Head",
-localPos = new Vector3(0.0006F, 0.25054F, 0.04672F),
-localAngles = new Vector3(314.7648F, 358.1459F, 0.48047F),
-localScale = new Vector3(0.30902F, 0.09537F, 0.30934F)
+childName = "Stomach",
+localPos = new Vector3(14.65925F, 12.18941F, -10.97824F),
+localAngles = new Vector3(0F, 90F, 90F),
+localScale = new Vector3(9.86516F, 9.86516F, 9.86516F)
                 }
 });
 
@@ -4883,9 +5064,9 @@ localScale = new Vector3(7.26354F, 7.26354F, 7.26354F)
                     followerPrefab = ItemDisplays.LoadDisplay("DisplayBandolier"),
                     limbMask = LimbFlags.None,
 childName = "Stomach",
-localPos = new Vector3(0.04472F, 26.87948F, -11.56151F),
-localAngles = new Vector3(21.51934F, 178.8835F, 359.2931F),
-localScale = new Vector3(23.00528F, 23.00528F, 23.00528F)
+localPos = new Vector3(-0.03132F, 15.26336F, 2.42885F),
+localAngles = new Vector3(89.13453F, 129.7145F, 310.5684F),
+localScale = new Vector3(37.71784F, 50.32515F, 49.15318F)
                 }
 });
 
@@ -4911,9 +5092,9 @@ localScale = new Vector3(19.83379F, 28.175F, 28.175F)
                     followerPrefab = ItemDisplays.LoadDisplay("DisplaySunHeadNeck"),
                     limbMask = LimbFlags.None,
 childName = "Chest",
-localPos = new Vector3(-0.02605F, 0.38179F, -0.0112F),
-localAngles = new Vector3(-0.00001F, 262.1551F, 0.00001F),
-localScale = new Vector3(1.76594F, 1.84475F, 1.84475F)
+localPos = new Vector3(-1.07153F, 20.35156F, 2.80424F),
+localAngles = new Vector3(3.63677F, 262.1551F, 351.1968F),
+localScale = new Vector3(152.1358F, 158.9252F, 158.9252F)
                 },
                 new ItemDisplayRule
                 {
@@ -4921,19 +5102,9 @@ localScale = new Vector3(1.76594F, 1.84475F, 1.84475F)
                     followerPrefab = ItemDisplays.LoadDisplay("DisplaySunHead"),
                     limbMask = LimbFlags.Head,
 childName = "Head",
-localPos = new Vector3(0F, 0.10143F, -0.01147F),
+localPos = new Vector3(-0.00014F, 5.10016F, 1.83296F),
 localAngles = new Vector3(0F, 0F, 0F),
-localScale = new Vector3(0.90836F, 0.90836F, 0.90836F)
-                },
-                new ItemDisplayRule
-                {
-                    ruleType = ItemDisplayRuleType.ParentedPrefab,
-                    followerPrefab = ItemDisplays.LoadDisplay("DisplaySunHead"),
-                    limbMask = LimbFlags.Head,
-childName = "Head",
-localPos = new Vector3(0F, 0.10143F, -0.01147F),
-localAngles = new Vector3(0F, 0F, 0F),
-localScale = new Vector3(0.90836F, 0.90836F, 0.90836F)
+localScale = new Vector3(78.92233F, 78.92233F, 78.92233F)
                 }
 });
 
@@ -4945,9 +5116,9 @@ localScale = new Vector3(0.90836F, 0.90836F, 0.90836F)
                     followerPrefab = ItemDisplays.LoadDisplay("DisplayMask"),
                     limbMask = LimbFlags.None,
 childName = "Head",
-localPos = new Vector3(0.0029F, 0.15924F, 0.07032F),
-localAngles = new Vector3(355.7367F, 0.15F, 0F),
-localScale = new Vector3(0.6F, 0.6F, 0.6F)
+localPos = new Vector3(0.02052F, 6.59699F, 7.02709F),
+localAngles = new Vector3(354.8295F, 0.15F, 0F),
+localScale = new Vector3(42.94024F, 42.94024F, 74.42153F)
                 }
 });
 
@@ -4959,9 +5130,9 @@ localScale = new Vector3(0.6F, 0.6F, 0.6F)
                     followerPrefab = ItemDisplays.LoadDisplay("DisplayBoneCrown"),
                     limbMask = LimbFlags.None,
 childName = "Head",
-localPos = new Vector3(0F, 0.15159F, -0.0146F),
+localPos = new Vector3(-0.00042F, 6.56505F, 0.94706F),
 localAngles = new Vector3(8.52676F, 0F, 0F),
-localScale = new Vector3(0.90509F, 0.90509F, 0.90509F)
+localScale = new Vector3(99.19683F, 99.19683F, 99.19683F)
                 }
 });
 
@@ -4973,9 +5144,9 @@ localScale = new Vector3(0.90509F, 0.90509F, 0.90509F)
                     followerPrefab = ItemDisplays.LoadDisplay("DisplayWaxBird"),
                     limbMask = LimbFlags.None,
 childName = "Head",
-localPos = new Vector3(0F, -0.228F, -0.108F),
+localPos = new Vector3(-0.00049F, -3.53515F, -0.10786F),
 localAngles = new Vector3(0F, 0F, 0F),
-localScale = new Vector3(0.79857F, 0.79857F, 0.79857F)
+localScale = new Vector3(43.85883F, 43.85883F, 43.85883F)
                 }
 });
 
@@ -4987,9 +5158,9 @@ localScale = new Vector3(0.79857F, 0.79857F, 0.79857F)
                     followerPrefab = ItemDisplays.LoadDisplay("DisplayBrainstalk"),
                     limbMask = LimbFlags.None,
 childName = "Head",
-localPos = new Vector3(0F, 0.12823F, 0.035F),
+localPos = new Vector3(-0.00036F, 12.62529F, 2.51643F),
 localAngles = new Vector3(0F, 0F, 0F),
-localScale = new Vector3(0.17982F, 0.17982F, 0.17982F)
+localScale = new Vector3(17.60336F, 17.60336F, 17.60336F)
                 }
 });
 
@@ -5001,9 +5172,23 @@ localScale = new Vector3(0.17982F, 0.17982F, 0.17982F)
                     followerPrefab = ItemDisplays.LoadDisplay("DisplayBirdEye"),
                     limbMask = LimbFlags.None,
 childName = "HandL",
-localPos = new Vector3(0F, 0.18736F, 0.08896F),
-localAngles = new Vector3(306.9798F, 180F, 180F),
-localScale = new Vector3(0.31302F, 0.31302F, 0.31302F)
+localPos = new Vector3(-7.072F, -5.2965F, 2.20226F),
+localAngles = new Vector3(0F, 0F, 0F),
+localScale = new Vector3(18.88767F, 18.88767F, 18.88767F)
+                }
+});
+
+            ReplaceItemDisplay(RoR2Content.Items.LunarSecondaryReplacement, new ItemDisplayRule[]
+{
+                new ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = ItemDisplays.LoadDisplay("DisplayBirdClaw"),
+                    limbMask = LimbFlags.None,
+childName = "LowerArmR",
+localPos = new Vector3(-3.68162F, 4.14723F, 0.31585F),
+localAngles = new Vector3(356.8419F, 265.8387F, 322.8672F),
+localScale = new Vector3(59.14573F, 59.14573F, 59.14573F)
                 }
 });
 
@@ -5015,9 +5200,9 @@ localScale = new Vector3(0.31302F, 0.31302F, 0.31302F)
                     followerPrefab = ItemDisplays.LoadDisplay("DisplayDelicateWatch"),
                     limbMask = LimbFlags.None,
 childName = "HandL",
-localPos = new Vector3(0.001145094f, -0.01941454f, 0.001435831f),
-localAngles = new Vector3(84.24088f, 213.1651f, 131.5774f),
-localScale = new Vector3(0.5f, 0.5f, 0.5f)
+localPos = new Vector3(-0.52429F, -1.65315F, 1.30511F),
+localAngles = new Vector3(306.0397F, 279.3766F, 359.8741F),
+localScale = new Vector3(35.74967F, 46.70814F, 46.70814F)
                 }
 });
 
@@ -5029,9 +5214,9 @@ localScale = new Vector3(0.5f, 0.5f, 0.5f)
                     followerPrefab = ItemDisplays.LoadDisplay("DisplayAegis"),
                     limbMask = LimbFlags.None,
 childName = "LowerArmL",
-localPos = new Vector3(0.01781F, 0.11702F, 0.01516F),
-localAngles = new Vector3(90F, 270F, 0F),
-localScale = new Vector3(0.3F, 0.3F, 0.3F)
+localPos = new Vector3(0.36116F, 9.34868F, -4.23059F),
+localAngles = new Vector3(90F, 355.3774F, 0F),
+localScale = new Vector3(14.93699F, 14.93699F, 14.93699F)
                 }
 });
 
@@ -5043,9 +5228,9 @@ localScale = new Vector3(0.3F, 0.3F, 0.3F)
                     followerPrefab = ItemDisplays.LoadDisplay("DisplayBuckler"),
                     limbMask = LimbFlags.None,
 childName = "LowerArmL",
-localPos = new Vector3(-0.012F, 0.171F, -0.027F),
-localAngles = new Vector3(0F, 90F, 0F),
-localScale = new Vector3(0.3F, 0.3F, 0.3F)
+localPos = new Vector3(-0.04725F, 9.48143F, -0.6192F),
+localAngles = new Vector3(0F, 183.4253F, 0F),
+localScale = new Vector3(18.80545F, 18.80545F, 18.80545F)
                 }
 });
 
@@ -5057,9 +5242,9 @@ localScale = new Vector3(0.3F, 0.3F, 0.3F)
                     followerPrefab = ItemDisplays.LoadDisplay("DisplayRepulsionArmorPlate"),
                     limbMask = LimbFlags.None,
 childName = "CalfR",
-localPos = new Vector3(-0.02573F, 0.22602F, 0.0361F),
-localAngles = new Vector3(90F, 180F, 0F),
-localScale = new Vector3(-0.2958F, 0.2958F, 0.29581F)
+localPos = new Vector3(-11.19287F, 1.21005F, 1.32818F),
+localAngles = new Vector3(71.23589F, 190.8648F, 89.99999F),
+localScale = new Vector3(-23.22266F, 23.22266F, 23.22266F)
                 }
 });
 
@@ -5070,10 +5255,34 @@ localScale = new Vector3(-0.2958F, 0.2958F, 0.29581F)
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemDisplays.LoadDisplay("DisplayLaserSight"),
                     limbMask = LimbFlags.None,
-childName = "HandR",
-localPos = new Vector3(-0.01876F, 0.26245F, 0.11694F),
-localAngles = new Vector3(0F, 0F, 270F),
-localScale = new Vector3(0.05261F, 0.05261F, 0.05261F)
+childName = "Head",
+localPos = new Vector3(6.62753F, 6.59275F, 3.92347F),
+localAngles = new Vector3(69.49055F, 271.1703F, 181.2494F),
+localScale = new Vector3(5F, 5F, 5F)
+                }
+});
+
+            ReplaceItemDisplay(RoR2Content.Items.Hoof, new ItemDisplayRule[]
+{
+                new ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = ItemDisplays.LoadDisplay("DisplayHoof"),
+                    limbMask = LimbFlags.RightCalf,
+childName = "CalfR",
+localPos = new Vector3(-0.00939F, 29.07608F, 8.414F),
+localAngles = new Vector3(75.75329F, 180F, 0.00001F),
+localScale = new Vector3(8.68385F, 8.68385F, 8.68385F)
+                },
+                new ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.LimbMask,
+                    followerPrefab = ItemDisplays.LoadDisplay("DisplayHoof"),
+                    limbMask = LimbFlags.RightCalf,
+childName = "CalfR",
+localPos = new Vector3(-0.00939F, 29.07608F, 8.414F),
+localAngles = new Vector3(75.75329F, 180F, 0.00001F),
+localScale = new Vector3(8.68385F, 8.68385F, 8.68385F)
                 }
 });
 
@@ -7211,7 +7420,8 @@ Vector3.up * 20f);
                     if (i && i.token == "LOADOUT_SKILL_MISC")
                     {
                         if (j <= 0) i.token = "Passive";
-                        else if (j == 1) i.token = "Knife";
+                        else if (j == 1) i.token = "Tool";
+                        else if (j == 2) i.token = "Knife";
                         else i.token = "Aspect";
                         j++;
                     }
@@ -8054,7 +8264,10 @@ Vector3.up * 20f);
             if (self.characterBody.baseNameToken == bodyNameToken)
             {
                 self.PlayAnimation("Gesture, Override", "FireVisions");
-                //EffectManager.SimpleMuzzleFlash(EntityStates.GlobalSkills.LunarNeedle.FireLunarNeedle.muzzleFlashEffectPrefab, self.gameObject, "HandL", false);
+                Vector3 scale = i.transform.localScale;
+                i.transform.localScale *= 0.5f;
+                EffectManager.SimpleMuzzleFlash(i, self.gameObject, "HandL", false);
+                i.transform.localScale = scale;
             }
         }
 

@@ -114,9 +114,13 @@ namespace HunkMod.SkillStates.Hunk.Counter
             {
                 if (base.fixedAge >= this.duration)
                 {
+                    this.hunk.immobilized = false;
                     this.outer.SetNextState(new GenericCounterAirDodge
                     {
-                        overrideVelocity = new Vector3(0f, 4f, 0f)
+                        overrideVelocity = new Vector3(0f, 5f, 0f),
+                        fastLanding = true,
+                        resetCooldown = false,
+                        allowCounter = false
                     });
                     return;
                 }
@@ -148,9 +152,13 @@ namespace HunkMod.SkillStates.Hunk.Counter
                 {
                     if (this.inputBank.moveVector != Vector3.zero)
                     {
+                        this.hunk.immobilized = false;
                         this.outer.SetNextState(new GenericCounterAirDodge
                         {
-                            overrideVelocity = new Vector3(0f, 4f, 0f)
+                            overrideVelocity = new Vector3(0f, 5f, 0f),
+                            fastLanding = true,
+                            resetCooldown = false,
+                            allowCounter = false
                         });
                         return;
                     }

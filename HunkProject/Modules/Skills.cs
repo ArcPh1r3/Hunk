@@ -29,6 +29,7 @@ namespace HunkMod.Modules
             if (passive)
             {
                 passive.passiveSkillSlot = CreateGenericSkillWithSkillFamily(targetPrefab, "Passive");
+                passive.toolSkillSlot = CreateGenericSkillWithSkillFamily(targetPrefab, "Tool");
             }
 
             if ((families & (1 << 0)) != 0) {

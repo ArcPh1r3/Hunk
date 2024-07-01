@@ -92,7 +92,7 @@ namespace HunkMod.SkillStates.Hunk.Cling
 
         public override void OnExit()
         {
-            if (!this.cancelling) this.PlayAnimation("FullBody, Override", "BufferEmpty");
+            this.PlayAnimation("FullBody, Override", "BufferEmpty");
             if (!this.knifeHidden)
             {
                 this.knifeHidden = true;
@@ -102,6 +102,8 @@ namespace HunkMod.SkillStates.Hunk.Cling
 
             this.GetModelChildLocator().FindChild("Weapon").gameObject.SetActive(true);
             this.FindModelChild("KnifeModel").gameObject.SetActive(this.knifeWasActive);
+
+            this.characterMotor.velocity = new Vector3(0f, 4f, 0f);
 
             this.skillLocator.utility.AddOneStock();
             this.skillLocator.utility.stock = this.skillLocator.utility.maxStock;
@@ -178,7 +180,7 @@ namespace HunkMod.SkillStates.Hunk.Cling
             if (this.cancelling)
             {
                 this.hunk.immobilized = false;
-                this.outer.SetNextState(new SkillStates.Hunk.Counter.GenericCounterAirDodge());
+                this.outer.SetNextStateToMain();
                 return;
             }
         }

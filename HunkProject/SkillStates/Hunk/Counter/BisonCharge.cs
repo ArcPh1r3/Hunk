@@ -94,41 +94,44 @@ namespace HunkMod.SkillStates.Hunk.Counter
 				this.overlapResetStopwatch -= 1f / Charge.overlapResetFrequency;
 			}
 
-			if (base.isAuthority && Physics.OverlapSphere(this.sphereCheckTransform.position, Charge.overlapSphereRadius, LayerIndex.world.mask).Length != 0)
-			{
-				Util.PlaySound("sfx_hunk_kick_impact", this.gameObject);
-				Util.PlaySound(Charge.headbuttImpactSound, base.gameObject);
-				EffectManager.SimpleMuzzleFlash(Charge.hitEffectPrefab, base.gameObject, "SphereCheckTransform", true);
-				base.healthComponent.TakeDamageForce(forward * Charge.selfStunForce, true, false);
+			if (base.fixedAge >= 0.1f)
+            {
+				if (base.isAuthority && Physics.OverlapSphere(this.sphereCheckTransform.position, Charge.overlapSphereRadius, LayerIndex.world.mask).Length != 0)
+				{
+					Util.PlaySound("sfx_hunk_kick_impact", this.gameObject);
+					Util.PlaySound(Charge.headbuttImpactSound, base.gameObject);
+					EffectManager.SimpleMuzzleFlash(Charge.hitEffectPrefab, base.gameObject, "SphereCheckTransform", true);
+					base.healthComponent.TakeDamageForce(forward * Charge.selfStunForce, true, false);
 
-				if (this.ownerBody)
-                {
-					BlastAttack blastAttack = new BlastAttack();
-					blastAttack.radius = 2f;
-					blastAttack.procCoefficient = 1f;
-					blastAttack.position = this.characterBody.corePosition;
-					blastAttack.attacker = this.ownerBody.gameObject;
-					blastAttack.crit = Util.CheckRoll(this.ownerBody.crit, this.ownerBody.master);
-					blastAttack.baseDamage = this.ownerBody.damage * 80f;
-					blastAttack.falloffModel = BlastAttack.FalloffModel.None;
-					blastAttack.baseForce = 0f;
-					blastAttack.bonusForce = Vector3.zero;
-					blastAttack.teamIndex = TeamComponent.GetObjectTeam(this.ownerBody.gameObject);
-					blastAttack.damageType = DamageType.ClayGoo;
-					blastAttack.attackerFiltering = AttackerFiltering.AlwaysHitSelf;
-					blastAttack.Fire();
-
-					EffectManager.SpawnEffect(Modules.Assets.kickImpactEffect, new EffectData
+					if (this.ownerBody)
 					{
-						origin = this.characterBody.corePosition,
-						scale = 2f
-					}, true);
-				}
+						BlastAttack blastAttack = new BlastAttack();
+						blastAttack.radius = 2f;
+						blastAttack.procCoefficient = 1f;
+						blastAttack.position = this.characterBody.corePosition;
+						blastAttack.attacker = this.ownerBody.gameObject;
+						blastAttack.crit = Util.CheckRoll(this.ownerBody.crit, this.ownerBody.master);
+						blastAttack.baseDamage = this.ownerBody.damage * 80f;
+						blastAttack.falloffModel = BlastAttack.FalloffModel.None;
+						blastAttack.baseForce = 0f;
+						blastAttack.bonusForce = Vector3.zero;
+						blastAttack.teamIndex = TeamComponent.GetObjectTeam(this.ownerBody.gameObject);
+						blastAttack.damageType = DamageType.ClayGoo;
+						blastAttack.attackerFiltering = AttackerFiltering.AlwaysHitSelf;
+						blastAttack.Fire();
 
-				StunState stunState = new StunState();
-				stunState.stunDuration = Charge.selfStunDuration;
-				this.outer.SetNextState(stunState);
-				return;
+						EffectManager.SpawnEffect(Modules.Assets.kickImpactEffect, new EffectData
+						{
+							origin = this.characterBody.corePosition,
+							scale = 2f
+						}, true);
+					}
+
+					StunState stunState = new StunState();
+					stunState.stunDuration = Charge.selfStunDuration;
+					this.outer.SetNextState(stunState);
+					return;
+				}
 			}
 
 			this.stopwatch += Time.fixedDeltaTime;
@@ -154,8 +157,8 @@ namespace HunkMod.SkillStates.Hunk.Counter
 			}
 
 			this.attack = new OverlapAttack();
-			this.attack.attacker = this.ownerBody.gameObject;
-			this.attack.inflictor = this.ownerBody.gameObject;
+			this.attack.attacker = this.gameObject;
+			this.attack.inflictor = this.gameObject;
 			this.attack.teamIndex = TeamComponent.GetObjectTeam(this.ownerBody.gameObject);
 			this.attack.damage = 40f * this.ownerBody.damage;
 			this.attack.hitEffectPrefab = Modules.Assets.kickImpactEffect;

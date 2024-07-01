@@ -38,7 +38,7 @@ namespace HunkMod.SkillStates.Hunk
 
         private void OpenMenu()
         {
-            if (RoR2Application.isInSinglePlayer)
+            if (RoR2Application.isInSinglePlayer && Modules.Config.rSlowdown.Value)
             {
                 this.slowing = true;
                 this.currentTimeScale = 0.1f;

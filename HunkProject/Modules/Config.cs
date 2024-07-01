@@ -12,6 +12,7 @@ namespace HunkMod.Modules
         public static ConfigFile myConfig;
 
         public static ConfigEntry<float> baseDropRate;
+        public static ConfigEntry<bool> rorStyle;
         public static ConfigEntry<bool> dynamicCrosshair;
         public static ConfigEntry<bool> enableRecoil;
         public static ConfigEntry<bool> capInfection;
@@ -39,6 +40,7 @@ namespace HunkMod.Modules
         public static ConfigEntry<bool> allRandomWeapons;
         public static ConfigEntry<bool> reduceScreenShake;
         public static ConfigEntry<bool> toggleAim;
+        public static ConfigEntry<bool> rSlowdown;
         public static ConfigEntry<bool> menuSFX;
         public static ConfigEntry<bool> blacklistHunkItems;
         public static ConfigEntry<bool> overTheShoulderCamera;
@@ -66,6 +68,12 @@ namespace HunkMod.Modules
 "Base Drop Rate",
 4f,
 "Base chance for ammo to drop on kill", 0f, 100f);
+
+            rorStyle
+= Config.BindAndOptions("01 - General",
+"RoR2-Friendly",
+true,
+"If set to true, will change default skin to something more fitting in Risk of Rain 2", true);
 
             dynamicCrosshair
 = Config.BindAndOptions("01 - General",
@@ -222,6 +230,12 @@ false,
 "Toggle Aim Mode",
 false,
 "Set to true to require a second press to exit your secondary skill's aim mode.", false);
+
+            rSlowdown
+= Config.BindAndOptions("01 - General",
+"Special Slowdown",
+true,
+"Set to false to disable the brief slowdown when using your special skill in singleplayer.", false);
 
             menuSFX
 = Config.BindAndOptions("01 - General",

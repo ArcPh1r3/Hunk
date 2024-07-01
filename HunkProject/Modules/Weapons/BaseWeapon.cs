@@ -42,6 +42,22 @@ namespace HunkMod.Modules.Weapons
         public abstract float reloadFillValue { get; }
         public abstract float accuracyFillValue { get; }
 
+        public virtual string weaponNameTokenFull
+        {
+            get
+            {
+                return "ROB_HUNK_WEAPON_" + weaponNameToken + "_NAME";
+            }
+        }
+
+        public virtual string weaponDescToken
+        {
+            get
+            {
+                return "ROB_HUNK_WEAPON_" + weaponNameToken + "_DESC";
+            }
+        }
+
         public virtual void Init()
         {
             CreateLang();

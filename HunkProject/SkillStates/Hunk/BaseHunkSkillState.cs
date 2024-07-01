@@ -2,6 +2,7 @@
 using EntityStates;
 using HunkMod.Modules.Components;
 using System;
+using RoR2.Orbs;
 
 namespace HunkMod.SkillStates.Hunk
 {
@@ -23,6 +24,11 @@ namespace HunkMod.SkillStates.Hunk
             {
                 return false;
             }
+        }
+
+        protected virtual GenericDamageOrb CreateBulletOrb()
+        {
+            return new Modules.Misc.HunkBulletOrb();
         }
 
         public virtual void AddRecoil2(float x1, float x2, float y1, float y2)

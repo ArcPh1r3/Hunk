@@ -22,6 +22,7 @@ namespace HunkMod.SkillStates.Hunk
         private bool success;
 
         protected virtual bool forcePerfect => false;
+        protected virtual bool forceFastLanding => false;
 
         public override void OnEnter()
         {
@@ -273,7 +274,8 @@ namespace HunkMod.SkillStates.Hunk
             }
             else
             {
-                this.outer.SetNextState(new SlowRoll());
+                if (this.forceFastLanding) this.outer.SetNextState(new PerfectLanding());
+                else this.outer.SetNextState(new SlowRoll());
             }
         }
 

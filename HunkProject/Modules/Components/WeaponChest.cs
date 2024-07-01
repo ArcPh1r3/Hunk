@@ -106,7 +106,7 @@ namespace HunkMod.Modules.Components
                 {
                     if (Modules.Helpers.HunkHasWeapon(Modules.Weapons.Magnum.instance.weaponDef) || Modules.Helpers.HunkHasWeapon(Modules.Weapons.Revolver.instance.weaponDef))
                     {
-                        if (Modules.Helpers.HunkHasWeapon(Modules.Weapons.Flamethrower.instance.weaponDef))
+                        if (Modules.Helpers.HunkHasWeapon(Modules.Weapons.Flamethrower.instance.weaponDef) || Modules.Helpers.HunkHasWeapon(Modules.Weapons.GrenadeLauncher.instance.weaponDef))
                         {
                             // start giving the rest of the unowned weapons
                             List<ItemDef> itemPool = new List<ItemDef>();

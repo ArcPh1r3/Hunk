@@ -258,7 +258,7 @@ namespace HunkMod.SkillStates.Hunk.Counter
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            if (base.fixedAge >= 0.46f * this.duration) return InterruptPriority.Skill;
+            if (base.fixedAge >= 0.68f * this.duration) return InterruptPriority.Skill;
             return InterruptPriority.Frozen;
         }
 

@@ -1,6 +1,8 @@
 ﻿using EntityStates;
 using RoR2;
+using RoR2.Orbs;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace HunkMod.SkillStates.Hunk.Weapon.AssaultRifle
 {
@@ -46,6 +48,34 @@ namespace HunkMod.SkillStates.Hunk.Weapon.AssaultRifle
             else Util.PlaySound("sfx_hunk_assaultrifle_shoot", base.gameObject);
 
             float spreadBloom = 0.27f;
+
+            base.characterBody.AddSpreadBloom(spreadBloom);
+
+            if (this.characterBody.HasBuff(Modules.Survivors.Hunk.bulletTimeBuff) && this.hunk.targetHurtbox && this.hunk.targetHurtbox.healthComponent && this.hunk.targetHurtbox.healthComponent.alive)
+            {
+                if (NetworkServer.active)
+                {
+                    GenericDamageOrb genericDamageOrb = this.CreateBulletOrb();
+                    genericDamageOrb.damageValue = Shoot.damageCoefficient * this.damageStat * 1.5f;
+                    genericDamageOrb.isCrit = this.isCrit;
+                    genericDamageOrb.teamIndex = TeamComponent.GetObjectTeam(this.gameObject);
+                    genericDamageOrb.attacker = this.gameObject;
+                    genericDamageOrb.procCoefficient = 1f;
+                    genericDamageOrb.damageColorIndex = DamageColorIndex.Sniper;
+
+                    HurtBox hurtBox = this.hunk.targetHurtbox;
+                    if (hurtBox)
+                    {
+                        Transform transform = this.FindModelChild(this.muzzleString);
+                        genericDamageOrb.origin = transform.position;
+                        genericDamageOrb.target = hurtBox;
+                        OrbManager.instance.AddOrb(genericDamageOrb);
+                    }
+                    this.hunk.targetHurtbox.healthComponent.gameObject.AddComponent<Modules.Components.HunkHeadshotTracker>();
+                }
+
+                return;
+            }
 
             if (base.isAuthority)
             {
@@ -111,8 +141,6 @@ namespace HunkMod.SkillStates.Hunk.Weapon.AssaultRifle
 
                 bulletAttack.Fire();
             }
-
-            base.characterBody.AddSpreadBloom(spreadBloom);
         }
 
         private GameObject tracerPrefab

@@ -132,6 +132,7 @@ Big thanks to everyone in the community for all the valuable feedback and critic
 - Most item displays are missing
 - Ally projectiles trigger perfect dodges; haven't decided if this is worth keeping as a mechanic yet
 - Lore accurate Weskah config does not seem to be working
+- Character is permanently highlighted..
 
 ## Recommended Mods
 

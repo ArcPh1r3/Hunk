@@ -118,7 +118,12 @@ namespace HunkMod.SkillStates.Hunk.Counter
             {
                 if (base.fixedAge >= this.duration)
                 {
-                    this.outer.SetNextState(new GenericCounterAirDodge());
+                    this.outer.SetNextState(new GenericCounterAirDodge
+                    {
+                        fastLanding = true,
+                        resetCooldown = false,
+                        allowCounter = true
+                    });
                     return;
                 }
 
@@ -146,7 +151,12 @@ namespace HunkMod.SkillStates.Hunk.Counter
                 {
                     if (this.inputBank.moveVector != Vector3.zero)
                     {
-                        this.outer.SetNextState(new GenericCounterAirDodge());
+                        this.outer.SetNextState(new GenericCounterAirDodge
+                        {
+                            fastLanding = true,
+                            resetCooldown = false,
+                            allowCounter = true
+                        });
                         return;
                     }
                 }

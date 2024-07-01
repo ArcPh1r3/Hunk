@@ -44,7 +44,7 @@ namespace HunkMod
     {
         public const string MODUID = "com.rob.Hunk";
         public const string MODNAME = "Hunk";
-        public const string MODVERSION = "1.5.14";
+        public const string MODVERSION = "1.6.1";
 
         public const string developerPrefix = "ROB";
 
@@ -82,6 +82,8 @@ namespace HunkMod
             Modules.Tokens.AddTokens();
             Modules.ItemDisplays.PopulateDisplays();
 
+            CreateWeapons();
+
             new Modules.Survivors.Hunk().CreateCharacter();
             new Modules.Enemies.Parasite().CreateCharacter();
 
@@ -110,8 +112,6 @@ namespace HunkMod
             new Modules.ContentPacks().Initialize();
 
             RoR2.ContentManagement.ContentManager.onContentPacksAssigned += LateSetup;
-
-            CreateWeapons();
         }
 
         private void LateSetup(global::HG.ReadOnlyArray<RoR2.ContentManagement.ReadOnlyContentPack> obj)
@@ -139,6 +139,7 @@ namespace HunkMod
 
             new Modules.Weapons.Flashlight().Init();
             new Modules.Weapons.ScanGun().Init();
+            new Modules.Weapons.GrappleGun().Init();
         }
 
         private void Hook()
@@ -180,6 +181,8 @@ namespace HunkMod
             if (self)
             {
                 if (self.HasBuff(Modules.Survivors.Hunk.immobilizedBuff)) self.moveSpeed = 0f;
+
+                if (self.HasBuff(Modules.Survivors.Hunk.bulletTimeBuff)) self.attackSpeed += 1f;
 
                 if (self.inventory)
                 {

@@ -1,6 +1,8 @@
 ﻿using EntityStates;
 using RoR2;
+using RoR2.Orbs;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace HunkMod.SkillStates.Hunk.Weapon.SMG
 {
@@ -47,21 +49,55 @@ namespace HunkMod.SkillStates.Hunk.Weapon.SMG
 
             float spreadBloom = 0.3f;
 
+            float spread = this.characterBody.spreadBloomAngle * 2.8f;
+            BulletAttack.FalloffModel falloff = BulletAttack.FalloffModel.DefaultBullet;
+            float recoilAmplitude = Shoot.recoil / this.attackSpeedStat;
+
+            if (this.characterBody.inventory && this.characterBody.inventory.GetItemCount(Modules.Weapons.SMG.laserSight) > 0)
+            {
+                recoil *= 0.25f;
+                spread = 0f;
+                falloff = BulletAttack.FalloffModel.None;
+                spreadBloom = 0f;
+            }
+
+            base.characterBody.AddSpreadBloom(spreadBloom);
+
+            if (this.characterBody.HasBuff(Modules.Survivors.Hunk.bulletTimeBuff) && this.hunk.targetHurtbox && this.hunk.targetHurtbox.healthComponent && this.hunk.targetHurtbox.healthComponent.alive)
+            {
+                if (NetworkServer.active)
+                {
+                    float headshotMod = 1.25f;
+                    if (this.characterBody.inventory && this.characterBody.inventory.GetItemCount(Modules.Weapons.SMG.laserSight) > 0)
+                    {
+                        headshotMod = 1.5f;
+                    }
+
+                    GenericDamageOrb genericDamageOrb = this.CreateBulletOrb();
+                    genericDamageOrb.damageValue = Shoot.damageCoefficient * this.damageStat * headshotMod;
+                    genericDamageOrb.isCrit = this.isCrit;
+                    genericDamageOrb.teamIndex = TeamComponent.GetObjectTeam(this.gameObject);
+                    genericDamageOrb.attacker = this.gameObject;
+                    genericDamageOrb.procCoefficient = 1f;
+                    genericDamageOrb.damageColorIndex = DamageColorIndex.Sniper;
+
+                    HurtBox hurtBox = this.hunk.targetHurtbox;
+                    if (hurtBox)
+                    {
+                        Transform transform = this.FindModelChild(this.muzzleString);
+                        genericDamageOrb.origin = transform.position;
+                        genericDamageOrb.target = hurtBox;
+                        OrbManager.instance.AddOrb(genericDamageOrb);
+                    }
+                    if (this.isCrit) this.hunk.targetHurtbox.healthComponent.gameObject.AddComponent<Modules.Components.HunkHeadshotTracker>();
+                }
+
+                return;
+            }
+
             if (base.isAuthority)
             {
                 Ray aimRay = base.GetAimRay2();
-
-                float spread = this.characterBody.spreadBloomAngle * 2.8f;
-                BulletAttack.FalloffModel falloff = BulletAttack.FalloffModel.DefaultBullet;
-                float recoilAmplitude = Shoot.recoil / this.attackSpeedStat;
-
-                if (this.characterBody.inventory && this.characterBody.inventory.GetItemCount(Modules.Weapons.SMG.laserSight) > 0)
-                {
-                    recoil *= 0.25f;
-                    spread = 0f;
-                    falloff = BulletAttack.FalloffModel.None;
-                    spreadBloom = 0f;
-                }
 
                 base.AddRecoil2(-1f * recoilAmplitude, -2f * recoilAmplitude, -0.5f * recoilAmplitude, 0.5f * recoilAmplitude);
 
@@ -123,8 +159,6 @@ namespace HunkMod.SkillStates.Hunk.Weapon.SMG
 
                 bulletAttack.Fire();
             }
-
-            base.characterBody.AddSpreadBloom(spreadBloom);
         }
 
         private GameObject tracerPrefab

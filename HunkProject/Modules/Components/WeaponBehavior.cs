@@ -11,9 +11,10 @@ namespace HunkMod.Modules.Components
         private void Awake()
         {
             this.childLocator = this.GetComponent<ChildLocator>();
+            this.GetHunkController();
         }
 
-        private void GetHunkController()
+        protected void GetHunkController()
         {
             if (!this.hunk)
             {

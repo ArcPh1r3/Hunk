@@ -1639,7 +1639,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Run
-  m_Speed: 0.285
+  m_Speed: 0.295
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 781510084761156101}
@@ -4259,7 +4259,7 @@ BlendTree:
     m_Motion: {fileID: 7400000, guid: 5d2eeffe08d3cee4caf42a56939889ef, type: 2}
     m_Threshold: 0.25
     m_Position: {x: -1, y: 0}
-    m_TimeScale: -1
+    m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: upSpeed
     m_Mirror: 0

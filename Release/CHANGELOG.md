@@ -1,12 +1,34 @@
 ## Changelog
 
+`1.6.1`
+- Added a handful of item displays
+- Sped up Hookshot landing animation, made it possible to start counterattacks out of this state as well
+- Applied the same landing change to a couple counters as well
+- Aiming out of a perfect dodge now grants 100% bonus attack speed for a short time, as well as making all shots on your dodge target count as a headshot
+- ^shooting was better out of a dodge in most cases but a little reward can't hurt
+- Fixed a niche weapon progression oversight
+- Fixed Beetle Guard frontal counter being cancellable before the damage came out
+- Fixed all dodges locking onto the rocket launcher case after it'd spawned in the Mithrix fight
+
+`1.6.0`
+- Added an RoR2-style skin as the new default- config can restore the old look, and cursed config enables the classic skin without changing the default
+- Added new passive allowing you to choose a specialized tool to start the run with
+- Added tool: Hookshot - does exactly what you might expect it to do
+- Added config option to disable the slowdown when opening the weapon menu
+- Killing an enemy while clinging onto them no longer enters an airdodge state
+- Adjusted color of Long Barrel (Lightning Hawk) - people called it ugly so it's white like the normal barrel now
+- Adjusted laser sights to accurately point where you're aiming
+- Fixed missing backwards strafe animation.... this has been broken since the very first test build
+- Fixed Buffalo counter again
+- Fixed virus events starting on Commencement, allegedly softlocking Mithrix
+
 `1.5.14`
 - Half reverted previous change, delay is now 0 by default and original behavior is restored- feature now must be opted into
 - Added a custom C4 interactable to the Catacombs map to allow access to the second weapon case even when the lower crypt is blocked off
 - Fixed a couple harmless stray errors
 
 `1.5.13`
-- Added a VERY slightly delay to the weapon menu opening up after pressing the key, should be too small to feel, but just enough to tap swap guns without a slowdown
+- Added a VERY slight delay to the weapon menu opening up after pressing the key, should be too small to feel, but just enough to tap swap guns without a slowdown
 - ^this is configurable and can be reverted completely if it's not liked
 - Dropping a gun and then closing the menu immediately no longer switches guns
 

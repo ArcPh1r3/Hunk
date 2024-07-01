@@ -46,7 +46,7 @@ namespace HunkMod.Modules.Components
         public Vector3 suplexOffset = new Vector3(0f, 0f, 0f);
         public HunkNotificationHandler notificationHandler;
         public CharacterBody characterBody { get; private set; }
-        private ChildLocator childLocator;
+        public ChildLocator childLocator { get; private set; }
         private CharacterModel characterModel;
         private Animator animator;
         private SkillLocator skillLocator;
@@ -612,7 +612,11 @@ namespace HunkMod.Modules.Components
             {
                 this.TryLockOn();
             }
-            else this.lastVector = Vector3.zero;
+            else
+            {
+                this.lastVector = Vector3.zero;
+                this.targetTransform = null;
+            }
 
             //this.yOffset = Mathf.Lerp(this.yOffset, this.desiredYOffset, 5f * Time.fixedDeltaTime);
             //this.zOffset = Mathf.Lerp(this.zOffset, this.desiredZOffset, 5f * Time.fixedDeltaTime);
@@ -675,7 +679,7 @@ namespace HunkMod.Modules.Components
                 if (this.targetHurtbox)
                 {
                     if (this.lastVector == Vector3.zero) this.lastVector = this.characterBody.inputBank.aimDirection;
-                    Vector3 targetVector = (this.targetHurtbox.healthComponent.body.corePosition - this.cameraPivot.position).normalized;
+                    Vector3 targetVector = (this.targetHurtbox.transform.position - this.cameraPivot.position).normalized;
                     Vector3 lookVector = Vector3.Lerp(this.lastVector, targetVector, 12f * Time.fixedDeltaTime);
 
                     //if (Input.mouse)
@@ -1306,6 +1310,8 @@ namespace HunkMod.Modules.Components
         {
             if (!NetworkServer.active) return;
             if (!this.characterBody.isPlayerControlled) return;
+
+            if (this.variant) return;
 
             if (this.weaponTracker.spawnedTerminalThisStage) return;
 

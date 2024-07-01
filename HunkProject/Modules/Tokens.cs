@@ -33,6 +33,8 @@ namespace HunkMod.Modules
 
             #region Skins
             LanguageAPI.Add(prefix + "DEFAULT_SKIN_NAME", "Default");
+            LanguageAPI.Add(prefix + "ROR_SKIN_NAME", "Reaper");
+            LanguageAPI.Add(prefix + "CLASSIC_SKIN_NAME", "Classic");
             LanguageAPI.Add(prefix + "TOFU_SKIN_NAME", "Tofu");
             LanguageAPI.Add(prefix + "SUPER_SKIN_NAME", "<color=#" + Helpers.yellowItemHex + ">Early Supporter" + Helpers.colorSuffix);
             LanguageAPI.Add(prefix + "LIGHTWEIGHT_SKIN_NAME", "Lightweight");
